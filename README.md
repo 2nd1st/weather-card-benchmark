@@ -12,6 +12,8 @@
 [The data](#the-data) &nbsp;·&nbsp;
 MIT
 
+**English** &nbsp;·&nbsp; [中文](README.zh.md)
+
 </div>
 
 ---
@@ -158,6 +160,21 @@ site/       Next.js site: gallery / matrix / compare / methodology
 data/       SCHEMA (frozen JSON Schemas) · batches (flagship subset)
 prompts/    the two verbatim task prompts
 ```
+
+## Help expand coverage
+
+This is one person's ongoing sweep, and the frontier moves every week. Ways to help:
+
+- **Contribute a run.** The site's **Contribute** flow takes a card you generated
+  locally, renders and scores it the same way, and folds it into the set.
+- **Point at a gap.** Missing a model, a harness, or an effort tier? Open an
+  [issue](https://github.com/2nd1st/weather-card-benchmark/issues) — the coverage view
+  on the site tracks what's in and what's planned.
+- **Lend access.** If you have an account or API access to a model or harness that
+  isn't covered yet — and you're willing to let it run this benchmark — open an issue
+  and we'll arrange a private channel to coordinate. **Never post a key, token, or
+  cookie in public** (an issue, a PR, a comment — anywhere), and I will never ask you
+  to. Secrets only ever move through a private channel you control.
 
 ## License
 
