@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>Weather Card</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  [hidden]{display:none!important}
+  :root{
+    --accent:#ffca5f;
+    --accent2:#ff8f5a;
+    --accentSoft:rgba(255,202,95,.16);
+    --ink:#eef2fa;
+    --muted:#8fa0bb;
+    --line:rgba(255,255,255,.08);
+  }
+  html,body{height:100%}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:#070c18;
+    color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .bg{position:fixed;inset:0;pointer-events:none;transition:background .6s ease;
+    background:
+      radial-gradient(720px 460px at 18% 8%, var(--accentSoft), transparent 62%),
+      radial-gradient(860px 560px at 86% 92%, rgba(90,120,255,.10), transparent 60%);
+  }
+  .bg2{position:fixed;inset:0;pointer-events:none;opacity:.45;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  .card{
+    position:relative;width:960px;border-radius:28px;padding:36px 44px 26px;
+    background:linear-gradient(165deg,rgba(255,255,255,.09),rgba(255,255,255,.03) 42%,rgba(255,255,255,.05));
+    border:1px solid rgba(255,255,255,.11);
+    box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.09);
+    backdrop-filter:blur(16px);
+    overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:.9}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .overline{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+  h1{font-size:36px;font-weight:750;letter-spacing:-.02em;line-height:1.05}
+  .coords{margin-top:7px;font-size:13px;color:var(--muted);letter-spacing:.04em}
+  .datebox{text-align:right;flex:none}
+  .date{font-size:15px;font-weight:600;color:#dbe4f4}
+  .badge{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);background:var(--accentSoft);border:1px solid rgba(255,255,255,.13);
+    padding:5px 11px;border-radius:999px}
+  .summary{display:flex;align-items:center;gap:30px;margin-top:24px;padding:24px 4px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .icon{width:92px;height:92px;flex:none;filter:drop-shadow(0 8px 20px var(--accentSoft))}
+  .icon svg{width:100%;height:100%}
+  .ic-stroke{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .ic-fill{fill:var(--accentSoft);stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round}
+  .ic-solid{fill:var(--accent)}
+  .cond-wrap{flex:1;min-width:0}
+  .cond{font-size:26px;font-weight:700;letter-spacing:-.01em}
+  .cond-sub{margin-top:6px;color:var(--muted);font-size:13px}
+  .bigtemps{display:flex;align-items:center;gap:26px;flex:none}
+  .tcol{text-align:center}
+  .tval{font-size:54px;font-weight:800;letter-spacing:-.03em;line-height:1;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .tcol.lo .tval{font-size:34px;background:none;color:#9fc0e8;font-weight:700}
+  .tlab{margin-top:8px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .vdiv{width:1px;height:64px;background:var(--line)}
+  .hourly{margin-top:24px}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .sec-head h2{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#cdd8ea}
+  .sec-head span{font-size:12px;color:var(--muted);letter-spacing:.05em}
+  #chart{width:100%;height:auto;display:block}
+  .strip{display:grid;grid-template-columns:repeat(24,1fr);gap:5px;margin-top:12px}
+  .chip{border-radius:10px;padding:7px 1px 6px;text-align:center;transition:transform .15s ease,filter .15s ease}
+  .chip:hover{transform:translateY(-2px);filter:brightness(1.25)}
+  .chip .h{display:block;font-size:9.5px;color:var(--muted);font-weight:600;letter-spacing:.03em}
+  .chip .t{display:block;font-size:12px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  footer{display:flex;justify-content:space-between;margin-top:20px;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
+  .state{padding:64px 0 56px;text-align:center}
+  .spinner{width:44px;height:44px;margin:0 auto 18px;border-radius:50%;
+    border:3px solid var(--accentSoft);border-top-color:var(--accent);animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .state>p{color:var(--muted);font-size:14px;letter-spacing:.04em}
+  .err-ic{width:54px;height:54px;margin:0 auto 16px}
+  .err h3{font-size:20px;margin-bottom:8px;letter-spacing:-.01em}
+  .err p{color:var(--muted);font-size:14px;max-width:540px;margin:0 auto;line-height:1.55}
+  .err .detail{margin-top:12px;font-size:12px;color:#67758f;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="bg2"></div>
+
+  <main class="card">
+    <header>
+      <div>
+        <div class="overline">Weather Card</div>
+        <h1 id="loc">—</h1>
+        <div class="coords" id="coords">—</div>
+      </div>
+      <div class="datebox">
+        <div class="date" id="date">—</div>
+        <span class="badge" id="badge">—</span>
+      </div>
+    </header>
+
+    <div class="state" id="loading">
+      <div class="spinner"></div>
+      <p>Loading weather data…</p>
+    </div>
+
+    <div class="state err" id="error" hidden>
+      <svg class="err-ic" viewBox="0 0 64 64">
+        <path d="M32 8 L58 54 H6 Z" fill="rgba(255,143,122,.12)" stroke="#ff8f7a" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M32 24 V38" stroke="#ff8f7a" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="32" cy="46" r="2.4" fill="#ff8f7a"/>
+      </svg>
+      <h3>Weather data could not be loaded</h3>
+      <p>The weather for this location and date is unavailable right now. Please check the parameters or try again later.</p>
+      <div class="detail" id="errDetail"></div>
+    </div>
+
+    <div id="content" hidden>
+      <section class="summary">
+        <div class="icon" id="icon"></div>
+        <div class="cond-wrap">
+          <div class="cond" id="cond">—</div>
+          <div class="cond-sub" id="condSub">—</div>
+        </div>
+        <div class="bigtemps">
+          <div class="tcol hi"><div class="tval" id="tmax">–</div><div class="tlab">High</div></div>
+          <div class="vdiv"></div>
+          <div class="tcol lo"><div class="tval" id="tmin">–</div><div class="tlab">Low</div></div>
+        </div>
+      </section>
+
+      <section class="hourly">
+        <div class="sec-head">
+          <h2>Hourly Temperature</h2>
+          <span>°C · UTC</span>
+        </div>
+        <svg id="chart" viewBox="0 0 872 215" role="img" aria-label="Hourly temperature chart"></svg>
+        <div class="strip" id="strip"></div>
+      </section>
+
+      <footer>
+        <span>Source: Open-Meteo compatible API (same-origin)</span>
+        <span id="footNote">All times UTC</span>
+      </footer>
+    </div>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Parameters ---------- */
+  var q = new URLSearchParams(location.search);
+  function num(v, d){ var n = parseFloat(v); return Number.isFinite(n) ? n : d; }
+  var LAT  = num(q.get("lat"), 52.52);
+  var LON  = num(q.get("lon"), 13.405);
+  var NAME = q.get("name") || "Berlin";
+  function todayUTC(){ return new Date().toISOString().slice(0,10); }
+  var DATE = q.get("date") || "";
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(DATE) || isNaN(Date.parse(DATE + "T00:00:00Z"))) DATE = todayUTC();
+  var TODAY = todayUTC();
+
+  /* ---------- DOM ---------- */
+  var $ = function(id){ return document.getElementById(id); };
+  var elLoc=$("loc"), elCoords=$("coords"), elDate=$("date"), elBadge=$("badge"),
+      elLoading=$("loading"), elError=$("error"), elErrDetail=$("errDetail"), elContent=$("content"),
+      elIcon=$("icon"), elCond=$("cond"), elCondSub=$("condSub"),
+      elTmax=$("tmax"), elTmin=$("tmin"), elChart=$("chart"), elStrip=$("strip");
+
+  /* ---------- Header (render immediately) ---------- */
+  elLoc.textContent = NAME;
+  elCoords.textContent =
+    Math.abs(LAT).toFixed(2) + "°" + (LAT >= 0 ? "N" : "S") + ", " +
+    Math.abs(LON).toFixed(2) + "°" + (LON >= 0 ? "E" : "W");
+  var dObj = new Date(DATE + "T00:00:00Z");
+  elDate.textContent = new Intl.DateTimeFormat("en-US",
+    { weekday:"long", year:"numeric", month:"long", day:"numeric", timeZone:"UTC" }).format(dObj);
+  elBadge.textContent = DATE === TODAY ? "Today" : (DATE < TODAY ? "Archive" : "Forecast");
+  document.title = "Weather — " + NAME;
+
+  /* ---------- Weather code mapping ---------- */
+  function codeInfo(c){
+    if(c === 0)  return { label:"Clear sky",        kind:"clear"   };
+    if(c === 1)  return { label:"Mainly clear",     kind:"clear"   };
+    if(c === 2)  return { label:"Partly cloudy",    kind:"partly"  };
+    if(c === 3)  return { label:"Overcast",         kind:"cloud"   };
+    if(c === 45 || c === 48) return { label:"Fog",  kind:"fog"     };
+    if(c >= 51 && c <= 57) return { label:"Drizzle",kind:"drizzle" };
+    if((c >= 61 && c <= 67) || (c >= 80 && c <= 82)) return { label:"Rain", kind:"rain" };
+    if((c >= 71 && c <= 77) || c === 85 || c === 86) return { label:"Snow", kind:"snow" };
+    if(c >= 95)  return { label:"Thunderstorm",     kind:"thunder" };
+    return { label:"Unknown conditions", kind:"cloud" };
+  }
+
+  var THEMES = {
+    clear:   ["#ffca5f", "#ff8f5a"],
+    partly:  ["#ffd166", "#7aa2ff"],
+    cloud:   ["#a8c0d8", "#6d84a6"],
+    fog:     ["#b8c2cf", "#7d8aa0"],
+    drizzle: ["#8fd0ff", "#5b8fe8"],
+    rain:    ["#63b3ff", "#4a6cf7"],
+    snow:    ["#d6ecff", "#9db8e8"],
+    thunder: ["#c9a2ff", "#7a5cff"]
+  };
+
+  function hexRgb(h){
+    h = h.replace("#","");
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+  function rgba(hex, a){
+    var c = hexRgb(hex);
+    return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
+  }
+
+  /* ---------- Icons ---------- */
+  var CLOUD = "M20 46 H43 A10 10 0 0 0 45 28 A13 13 0 0 0 23 29 A9 9 0 0 0 20 46 Z";
+  var SUN_RAYS = "M32 16.5 V12.5 M32 47.5 V51.5 M16.5 32 H12.5 M47.5 32 H51.5 " +
+                 "M42.96 21.04 L45.79 18.21 M21.04 42.96 L18.21 45.79 " +
+                 "M21.04 21.04 L18.21 18.21 M42.96 42.96 L45.79 45.79";
+  function flake(x, y){
+    return "M" + x + " " + (y-3.4) + " V" + (y+3.4) +
+           " M" + (x-3) + " " + (y-1.75) + " L" + (x+3) + " " + (y+1.75) +
+           " M" + (x-3) + " " + (y+1.75) + " L" + (x+3) + " " + (y-1.75);
+  }
+  var ICONS = {
+    clear:
+      '<circle cx="32" cy="32" r="11" class="ic-fill"/>' +
+      '<path d="' + SUN_RAYS + '" class="ic-stroke"/>',
+    partly:
+      '<circle cx="23" cy="21" r="7" class="ic-fill"/>' +
+      '<path d="M23 11 V8.5 M31 21 H33.5 M15 21 H12.5 M28.07 15.93 L29.84 14.16 M17.93 15.93 L16.16 14.16" class="ic-stroke"/>' +
+      '<g transform="translate(7 9) scale(.92)"><path d="' + CLOUD + '" class="ic-fill"/></g>',
+    cloud:  '<path d="' + CLOUD + '" class="ic-fill"/>',
+    fog:    '<path d="' + CLOUD + '" class="ic-fill"/>' +
+            '<path d="M21 53 H43 M25 58 H39" class="ic-stroke"/>',
+    drizzle:'<path d="' + CLOUD + '" class="ic-fill"/>' +
+            '<path d="M25.5 52 v3.5 M32 52 v3.5 M38.5 52 v3.5" class="ic-stroke"/>',
+    rain:   '<path d="' + CLOUD + '" class="ic-fill"/>' +
+            '<path d="M25 51.5 l-3.5 6 M33 51.5 l-3.5 6 M41 51.5 l-3.5 6" class="ic-stroke"/>',
+    snow:   '<path d="' + CLOUD + '" class="ic-fill"/>' +
+            '<path d="' + flake(24,55) + " " + flake(32,55) + " " + flake(40,55) + '" class="ic-stroke" stroke-width="2"/>',
+    thunder:'<path d="' + CLOUD + '" class="ic-fill"/>' +
+            '<path d="M34 47 L27.5 56.5 H32 L30 63 L38.5 53.5 H34 L36.5 47 Z" class="ic-solid"/>'
+  };
+
+  /* ---------- Theme ---------- */
+  function applyTheme(kind){
+    var t = THEMES[kind] || THEMES.cloud;
+    var r = document.documentElement.style;
+    r.setProperty("--accent", t[0]);
+    r.setProperty("--accent2", t[1]);
+    r.setProperty("--accentSoft", rgba(t[0], 0.16));
+    return t[0];
+  }
+
+  /* ---------- Chart ---------- */
+  function smoothPath(p){
+    var d = "M " + p[0][0].toFixed(1) + " " + p[0][1].toFixed(1);
+    for(var i = 0; i < p.length - 1; i++){
+      var p0 = p[Math.max(0, i-1)], p1 = p[i], p2 = p[i+1], p3 = p[Math.min(p.length-1, i+2)];
+      var c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
+      var c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
+      d += " C " + c1x.toFixed(1) + " " + c1y.toFixed(1) + " " +
+                   c2x.toFixed(1) + " " + c2y.toFixed(1) + " " +
+                   p2[0].toFixed(1) + " " + p2[1].toFixed(1);
+    }
+    return d;
+  }
+
+  function renderChart(hours, temps, accent){
+    var W = 872, H = 215, padL = 40, padR = 18, padT = 26, padB = 28;
+    var pts = [], i;
+    for(i = 0; i < temps.length; i++){
+      if(temps[i] != null && isFinite(temps[i])) pts.push({ h: hours[i], v: temps[i] });
+    }
+    if(!pts.length) return;
+
+    var min = Infinity, max = -Infinity;
+    pts.forEach(function(p){ if(p.v < min) min = p.v; if(p.v > max) max = p.v; });
+    var span = Math.max(max - min, 1);
+    var y0 = min - span * 0.25 - 0.4, y1 = max + span * 0.25 + 0.4;
+    var x = function(h){ return padL + (h / 23) * (W - padL - padR); };
+    var y = function(t){ return padT + ((y1 - t) / (y1 - y0)) * (H - padT - padB); };
+
+    var linePts = pts.map(function(p){ return [x(p.h), y(p.v)]; });
+    var line = smoothPath(linePts);
+    var baseY = H - padB;
+    var area = line + " L " + linePts[linePts.length-1][0].toFixed(1) + " " + baseY +
+                      " L " + linePts[0][0].toFixed(1) + " " + baseY + " Z";
+
+    var html = "";
+    html += '<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="' + accent + '" stop-opacity=".32"/>' +
+            '<stop offset="1" stop-color="' + accent + '" stop-opacity="0"/></linearGradient></defs>';
+
+    // horizontal gridlines + labels
+    var lo = Math.floor(min), hi = Math.ceil(max), ticks = [], step;
+    if(hi - lo <= 4){ for(i = lo; i <= hi; i++) ticks.push(i); }
+    else { step = Math.ceil((hi - lo) / 4); for(i = lo; i <= hi; i += step) ticks.push(i); }
+    ticks.forEach(function(t){
+      var ty = y(t);
+      if(ty < padT - 4 || ty > baseY + 4) return;
+      html += '<line x1="' + padL + '" y1="' + ty.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + ty.toFixed(1) +
+              '" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';
+      html += '<text x="' + (padL - 9) + '" y="' + (ty + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#67758f">' + t + '°</text>';
+    });
+    // baseline
+    html += '<line x1="' + padL + '" y1="' + baseY + '" x2="' + (W - padR) + '" y2="' + baseY + '" stroke="rgba(255,255,255,.14)" stroke-width="1"/>';
+
+    // x labels every 3 hours
+    for(i = 0; i < 24; i += 3){
+      html += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10.5" fill="#67758f">' +
+              String(i).padStart(2,"0") + ":00</text>";
+    }
+
+    // area + line
+    html += '<path d="' + area + '" fill="url(#ag)"/>';
+    html += '<path d="' + line + '" fill="none" stroke="' + accent + '" stroke-width="2.6" stroke-linecap="round"/>';
+
+    // dots
+    linePts.forEach(function(pt){
+      html += '<circle cx="' + pt[0].toFixed(1) + '" cy="' + pt[1].toFixed(1) + '" r="2.3" fill="' + accent + '"/>';
+    });
+
+    // min / max callouts
+    var iMax = 0, iMin = 0;
+    pts.forEach(function(p, idx){ if(p.v > pts[iMax].v) iMax = idx; if(p.v < pts[iMin].v) iMin = idx; });
+    function callout(p, above){
+      var cx = Math.min(Math.max(x(p.h), padL + 16), W - padR - 16);
+      var cy = above ? y(p.v) - 12 : y(p.v) + 20;
+      html += '<circle cx="' + x(p.h).toFixed(1) + '" cy="' + y(p.v).toFixed(1) + '" r="4.2" fill="#0b1220" stroke="' + accent + '" stroke-width="2.4"/>';
+      html += '<text x="' + cx.toFixed(1) + '" y="' + cy.toFixed(1) + '" text-anchor="middle" font-size="12.5" font-weight="700" fill="' + accent +
+              '" style="paint-order:stroke;stroke:#0b1220;stroke-width:5">' + Math.round(p.v) + '°</text>';
+    }
+    callout(pts[iMax], true);
+    if(iMin !== iMax) callout(pts[iMin], false);
+
+    elChart.innerHTML = html;
+  }
+
+  /* ---------- Hourly strip ---------- */
+  function tempColor(t, min, max){
+    var n = max > min ? (t - min) / (max - min) : 0.5;
+    var c0 = [87,168,255], c1 = [255,179,92];
+    var c = c0.map(function(v, i){ return Math.round(v + (c1[i] - v) * n); });
+    return c;
+  }
+  function renderStrip(times, temps){
+    var vals = temps.filter(function(v){ return v != null && isFinite(v); });
+    if(!vals.length) return;
+    var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+    var html = "";
+    for(var i = 0; i < temps.length; i++){
+      var h = (times[i] || "").slice(11, 13) || String(i).padStart(2,"0");
+      var v = temps[i];
+      if(v == null || !isFinite(v)){
+        html += '<div class="chip" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)">' +
+                '<span class="h">' + h + '</span><span class="t" style="color:#5a6residual780">–</span></div>';
+      } else {
+        var c = tempColor(v, min, max);
+        var col = "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")";
+        html += '<div class="chip" style="background:rgba(' + c[0] + "," + c[1] + "," + c[2] +
+                ',.14);border:1px solid rgba(' + c[0] + "," + c[1] + "," + c[2] + ',.28)">' +
+                '<span class="h">' + h + '</span><span class="t" style="color:' + col + '">' +
+                Math.round(v) + '°</span></div>';
+      }
+    }
+    elStrip.innerHTML = html;
+  }
+
+  /* ---------- Data loading ---------- */
+  function showError(err){
+    elLoading.hidden = true;
+    elContent.hidden = true;
+    elError.hidden = false;
+    elErrDetail.textContent = err && err.message ? String(err.message) : "";
+  }
+
+  async function load(){
+    var endpoint = DATE < TODAY ? "/api/om/archive" : "/api/om/forecast";
+    var params = new URLSearchParams({
+      latitude: LAT,
+      longitude: LON,
+      daily: "temperature_2m_max,temperature_2m_min,weather_code",
+      hourly: "temperature_2m",
+      timezone: "UTC",
+      temperature_unit: "celsius",
+      start_date: DATE,
+      end_date: DATE
+    });
+    var res;
+    try{
+      res = await fetch(endpoint + "?" + params.toString());
+    }catch(e){
+      throw new Error("Network request to " + endpoint + " failed");
+    }
+    if(!res.ok) throw new Error(endpoint + " responded with HTTP " + res.status);
+    var data = await res.json();
+    if(data && data.error) throw new Error(data.reason || "API returned an error");
+    if(!data || !data.daily || !data.daily.time || !data.daily.time.length)
+      throw new Error("No daily data returned for " + DATE);
+    var tmax = data.daily.temperature_2m_max && data.daily.temperature_2m_max[0];
+    var tmin = data.daily.temperature_2m_min && data.daily.temperature_2m_min[0];
+    if(tmax == null || tmin == null) throw new Error("Temperature data is incomplete for " + DATE);
+    return data;
+  }
+
+  load().then(function(data){
+    var code = (data.daily.weather_code || [])[0];
+    var info = codeInfo(code);
+    var accent = applyTheme(info.kind);
+
+    elIcon.innerHTML = '<svg viewBox="0 0 64 64">' + (ICONS[info.kind] || ICONS.cloud) + "</svg>";
+    elCond.textContent = info.label;
+    elCondSub.textContent = "WMO weather code " + (code == null ? "—" : code) + " · " + DATE;
+    elTmax.textContent = Math.round(data.daily.temperature_2m_max[0]) + "°";
+    elTmin.textContent = Math.round(data.daily.temperature_2m_min[0]) + "°";
+
+    var times = (data.hourly && data.hourly.time) || [];
+    var temps = (data.hourly && data.hourly.temperature_2m) || [];
+    var hours = times.map(function(t, i){ return t.length >= 13 ? +t.slice(11, 13) : i; });
+
+    renderChart(hours, temps, accent);
+    renderStrip(times, temps);
+
+    elLoading.hidden = true;
+    elContent.hidden = false;
+  }).catch(showError);
+})();
+</script>
+</body>
+</html>

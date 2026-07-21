@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Weather Card</title>
+<style>
+  @import url('data:text/css,');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1280px;
+    height: 800px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  .card {
+    width: 900px;
+    min-height: 620px;
+    border-radius: 28px;
+    padding: 48px 52px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 32px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 20%, rgba(120,160,255,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(255,120,200,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card > * { position: relative; z-index: 1; }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+  }
+
+  .location-name {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .date-label {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .condition-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .weather-icon {
+    font-size: 52px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+
+  .condition-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .temp-section {
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 44px;
+  }
+
+  .temp-main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .temp-max {
+    font-size: 88px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -4px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .temp-max span {
+    font-size: 44px;
+    font-weight: 300;
+    vertical-align: super;
+    letter-spacing: 0;
+    margin-left: 2px;
+    opacity: 0.7;
+  }
+
+  .temp-min {
+    font-size: 30px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+    letter-spacing: -1px;
+  }
+
+  .temp-min span {
+    font-size: 18px;
+  }
+
+  .divider {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+    align-self: center;
+  }
+
+  .temp-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 8px;
+  }
+
+  .temp-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .temp-detail-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot.high { background: #ff7e7e; box-shadow: 0 0 8px rgba(255,126,126,0.5); }
+  .dot.low { background: #7eb8ff; box-shadow: 0 0 8px rgba(126,184,255,0.5); }
+
+  .hourly-section {
+    margin-top: 8px;
+  }
+
+  .hourly-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  canvas#tempChart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .error-icon {
+    font-size: 64px;
+    opacity: 0.5;
+  }
+
+  .error-title {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .error-msg {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+    gap: 20px;
+  }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .loading-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="card" id="app">
+  <div class="loading-container" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Fetching weather data…</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const lat = parseFloat(params.get('lat')) || 52.52;
+  const lon = parseFloat(params.get('lon')) || 13.405;
+  const locationName = params.get('name') || 'Berlin';
+
+  let dateParam = params.get('date');
+  let targetDate;
+  if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+    targetDate = dateParam;
+  } else {
+    const now = new Date();
+    targetDate = now.toISOString().split('T')[0];
+  }
+
+  const todayUTC = new Date().toISOString().split('T')[0];
+  const isPast = targetDate < todayUTC;
+  const apiBase = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  const weatherDescriptions = {
+    0: ['Clear Sky', '☀️'],
+    1: ['Mainly Clear', '🌤️'],
+    2: ['Partly Cloudy', '⛅'],
+    3: ['Overcast', '☁️'],
+    45: ['Fog', '🌫️'],
+    48: ['Depositing Rime Fog', '🌫️'],
+    51: ['Light Drizzle', '🌦️'],
+    53: ['Moderate Drizzle', '🌦️'],
+    55: ['Dense Drizzle', '🌧️'],
+    56: ['Light Freezing Drizzle', '🌧️'],
+    57: ['Dense Freezing Drizzle', '🌧️'],
+    61: ['Slight Rain', '🌧️'],
+    63: ['Moderate Rain', '🌧️'],
+    65: ['Heavy Rain', '🌧️'],
+    66: ['Light Freezing Rain', '🌨️'],
+    67: ['Heavy Freezing Rain', '🌨️'],
+    71: ['Slight Snowfall', '🌨️'],
+    73: ['Moderate Snowfall', '❄️'],
+    75: ['Heavy Snowfall', '❄️'],
+    77: ['Snow Grains', '🌨️'],
+    80: ['Slight Rain Showers', '🌦️'],
+    81: ['Moderate Rain Showers', '🌧️'],
+    82: ['Violent Rain Showers', '⛈️'],
+    85: ['Slight Snow Showers', '🌨️'],
+    86: ['Heavy Snow Showers', '❄️'],
+    95: ['Thunderstorm', '⛈️'],
+    96: ['Thunderstorm with Slight Hail', '⛈️'],
+    99: ['Thunderstorm with Heavy Hail', '⛈️'],
+  };
+
+  function getWeatherInfo(code) {
+    return weatherDescriptions[code] || ['Unknown', '❓'];
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T12:00:00Z');
+    return d.toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
+    });
+  }
+
+  const url = `${apiBase}?latitude=${lat}&longitude=${lon}` +
+    `&daily=temperature_2m_max,temperature_2m_min,weather_code` +
+    `&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius` +
+    `&start_date=${targetDate}&end_date=${targetDate}`;
+
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => renderWeather(data))
+    .catch(err => showError(err.message));
+
+  function renderWeather(data) {
+    const app = document.getElementById('app');
+    const daily = data.daily;
+    const hourly = data.hourly;
+
+    if (!daily || !daily.temperature_2m_max || daily.temperature_2m_max.length === 0) {
+      showError('No data returned for this date.');
+      return;
+    }
+
+    const maxTemp = daily.temperature_2m_max[0];
+    const minTemp = daily.temperature_2m_min[0];
+    const weatherCode = daily.weather_code[0];
+    const [conditionName, conditionIcon] = getWeatherInfo(weatherCode);
+
+    const hourlyTemps = hourly.temperature_2m || [];
+    const hourlyTimes = hourly.temperature_2m ? Array.from({length: 24}, (_, i) => i) : [];
+
+    app.innerHTML = '';
+
+    // Header
+    const header = el('div', 'header');
+
+    const leftHeader = el('div');
+    const nameEl = el('div', 'location-name');
+    nameEl.textContent = locationName;
+    const dateEl = el('div', 'date-label');
+    dateEl.textContent = formatDate(targetDate);
+    leftHeader.append(nameEl, dateEl);
+
+    const rightHeader = el('div', 'condition-badge');
+    const iconEl = el('div', 'weather-icon');
+    iconEl.textContent = conditionIcon;
+    const condText = el('div', 'condition-text');
+    condText.textContent = conditionName;
+    rightHeader.append(iconEl, condText);
+
+    header.append(leftHeader, rightHeader);
+
+    // Temp section
+    const tempSection = el('div', 'temp-section');
+
+    const tempMain = el('div', 'temp-main');
+    const tempMaxEl = el('div', 'temp-max');
+    tempMaxEl.innerHTML = `${Math.round(maxTemp)}<span>°C</span>`;
+    const tempMinEl = el('div', 'temp-min');
+    tempMinEl.innerHTML = `${Math.round(minTemp)}<span>°C</span>`;
+    tempMain.append(tempMaxEl, tempMinEl);
+
+    const divider = el('div', 'divider');
+
+    const detailList = el('div', 'temp-detail-list');
+    const highItem = el('div', 'temp-detail-item');
+    highItem.innerHTML = `<span class="dot high"></span> High: ${maxTemp.toFixed(1)} °C`;
+    const lowItem = el('div', 'temp-detail-item');
+    lowItem.innerHTML = `<span class="dot low"></span> Low: ${minTemp.toFixed(1)} °C`;
+    const rangeItem = el('div', 'temp-detail-item');
+    const rangeDot = el('span');
+    rangeDot.className = 'dot';
+    rangeDot.style.background = 'linear-gradient(135deg, #ff7e7e, #7eb8ff)';
+    rangeDot.style.boxShadow = '0 0 8px rgba(200,150,255,0.5)';
+    const rangeSpan = el('span');
+    rangeSpan.textContent = `Range: ${(maxTemp - minTemp).toFixed(1)} °C`;
+    rangeItem.append(rangeDot, rangeSpan);
+    detailList.append(highItem, lowItem, rangeItem);
+
+    tempSection.append(tempMain, divider, detailList);
+
+    // Hourly section
+    const hourlySection = el('div', 'hourly-section');
+    const hourlyTitle = el('div', 'hourly-title');
+    hourlyTitle.textContent = 'Hourly Temperatures';
+    const chartContainer = el('div', 'chart-container');
+    const canvas = document.createElement('canvas');
+    canvas.id = 'tempChart';
+    chartContainer.appendChild(canvas);
+    hourlySection.append(hourlyTitle, chartContainer);
+
+    app.append(header, tempSection, hourlySection);
+
+    drawChart(canvas, hourlyTemps, hourlyTimes);
+  }
+
+  function drawChart(canvas, temps, hours) {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const W = rect.width;
+    const H = rect.height;
+    const padLeft = 36;
+    const padRight = 20;
+    const padTop = 24;
+    const padBottom = 36;
+    const chartW = W - padLeft - padRight;
+    const chartH = H - padTop - padBottom;
+
+    if (!temps || temps.length === 0) return;
+
+    const minT = Math.floor(Math.min(...temps) - 1);
+    const maxT = Math.ceil(Math.max(...temps) + 1);
+    const rangeT = maxT - minT || 1;
+
+    function x(i) { return padLeft + (i / (temps.length - 1)) * chartW; }
+    function y(t) { return padTop + (1 - (t - minT) / rangeT) * chartH; }
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    const gridLines = 5;
+    for (let i = 0; i <= gridLines; i++) {
+      const gy = padTop + (i / gridLines) * chartH;
+      ctx.beginPath();
+      ctx.moveTo(padLeft, gy);
+      ctx.lineTo(W - padRight, gy);
+      ctx.stroke();
+
+      const tempLabel = maxT - (i / gridLines) * rangeT;
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '11px Segoe UI, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(Math.round(tempLabel) + '°', padLeft - 8, gy);
+    }
+
+    // Hour labels
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '11px Segoe UI, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const labelStep = temps.length > 24 ? Math.ceil(temps.length / 24) : 1;
+    for (let i = 0; i < temps.length; i += labelStep) {
+      ctx.fillText(i.toString().padStart(2, '0') + ':00', x(i), H - padBottom + 12);
+    }
+
+    // Gradient fill under curve
+    const grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+    grad.addColorStop(0, 'rgba(120,180,255,0.25)');
+    grad.addColorStop(1, 'rgba(120,180,255,0.0)');
+
+    ctx.beginPath();
+    ctx.moveTo(x(0), padTop + chartH);
+    for (let i = 0; i < temps.length; i++) {
+      if (i === 0) ctx.lineTo(x(i), y(temps[i]));
+      else {
+        const cx1 = x(i - 1) + (x(i) - x(i - 1)) * 0.4;
+        const cx2 = x(i) - (x(i) - x(i - 1)) * 0.4;
+        ctx.bezierCurveTo(cx1, y(temps[i-1]), cx2, y(temps[i]), x(i), y(temps[i]));
+      }
+    }
+    ctx.lineTo(x(temps.length - 1), padTop + chartH);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Line
+    const lineGrad = ctx.createLinearGradient(padLeft, 0, W - padRight, 0);
+    lineGrad.addColorStop(0, '#64b5f6');
+    lineGrad.addColorStop(0.5, '#ce93d8');
+    lineGrad.addColorStop(1, '#f48fb1');
+
+    ctx.beginPath();
+    for (let i = 0; i < temps.length; i++) {
+      if (i === 0) ctx.moveTo(x(i), y(temps[i]));
+      else {
+        const cx1 = x(i - 1) + (x(i) - x(i - 1)) * 0.4;
+        const cx2 = x(i) - (x(i) - x(i - 1)) * 0.4;
+        ctx.bezierCurveTo(cx1, y(temps[i-1]), cx2, y(temps[i]), x(i), y(temps[i]));
+      }
+    }
+    ctx.strokeStyle = lineGrad;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Dots
+    for (let i = 0; i < temps.length; i += labelStep) {
+      ctx.beginPath();
+      ctx.arc(x(i), y(temps[i]), 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(120,180,255,0.5)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+
+  function showError(msg) {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+      <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">Weather Data Unavailable</div>
+        <div class="error-msg">Unable to load weather data for <strong>${locationName}</strong> on <strong>${targetDate}</strong>.<br>${msg}</div>
+      </div>`;
+  }
+
+  function el(tag, cls) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    return e;
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "title": "Matrix",
+    "description": "Cross-config similarity across 17 channels, per measured set. Contrast-stretched or fixed [0,1] viridis; similarity is a measurement, not a quality score."
+  },
+  "tag": "matrix · cross-config similarity",
+  "num": "§ matrix",
+  "title": "Matrix",
+  "subtitle": "Every config against every other, across all 17 similarity channels.",
+  "honesty": "Similarity is a measurement, not a quality score — it captures convergence, nothing else. Values are only comparable within one measured set — the same fixture.",
+  "set": "{city} · {date} · {n} of {m} configs measured together",
+  "session": {
+    "none": "No measured set on disk carries similarity data yet."
+  },
+  "filters": {
+    "grade": "grade",
+    "arm": "arm",
+    "armGroup": "arm group",
+    "harness": "Harness",
+    "api": "API",
+    "variant": "variant",
+    "allArms": "all",
+    "count": "{n} of {m} configs"
+  },
+  "notice": {
+    "sparse": "{n} of {m} configs match the current filters — too few for a meaningful matrix.",
+    "reset": "Show all {m} configs"
+  },
+  "colormode": {
+    "label": "colour",
+    "contrast": "contrast",
+    "fixed": "fixed 0–1"
+  },
+  "order": {
+    "label": "order",
+    "catalog": "catalog",
+    "clustered": "clustered",
+    "title": "Clustered order is computed from this view — it changes with the channel, variant, and filters."
+  },
+  "width": {
+    "label": "width",
+    "detail": "detail",
+    "fit": "fit",
+    "title": "Detail keeps every config name and scrolls horizontally. Fit puts the whole matrix in the viewport with model-cluster bands instead of names."
+  },
+  "legend": {
+    "low": "0",
+    "high": "1",
+    "scale": "fixed [0,1] · viridis",
+    "stretchScale": "contrast-stretched · viridis",
+    "stretchRange": "p5–p95 of this view",
+    "insufficient": "insufficient data"
+  },
+  "main": {
+    "diagnostic": "diagnostic",
+    "diagnosticTitle": "permanent diagnostic (not in the formal 15)",
+    "hint": "Hover a cell to sync all 17 channels · click a cell for pair detail · click a header to open that config. The bordered diagonal is self-consistency.",
+    "family": {
+      "v": "Visual",
+      "c": "Code",
+      "d": "DOM structure"
+    }
+  },
+  "multiples": {
+    "title": "17 channels — pick one for the main view"
+  },
+  "channelDesc": {
+    "v-phash": "Perceptual hash — coarse whole-image visual fingerprint.",
+    "v-dhash": "Difference hash — gradient-direction visual fingerprint.",
+    "v-color": "Global color-histogram distance.",
+    "v-palette": "Dominant-palette overlap.",
+    "v-layout": "Block-layout / region-structure similarity.",
+    "v-edge": "Edge-map (outline) similarity.",
+    "v-ssim": "Structural similarity (SSIM) of the rendered image.",
+    "c-shingle": "k-shingle overlap of the HTML/CSS source.",
+    "c-winnow": "Winnowing fingerprint overlap (robust to reordering).",
+    "c-feature": "Token feature-vector similarity of the source.",
+    "c-ast-js": "JavaScript AST structural similarity.",
+    "c-css-prop": "CSS property-set overlap.",
+    "c-ncd": "Normalized compression distance (diagnostic).",
+    "d-geom": "DOM box-geometry (bounding-box) similarity.",
+    "d-text": "DOM text-content overlap.",
+    "d-pqgram": "pq-gram tree-edit similarity of the DOM.",
+    "d-tagpath": "Tag-path profile similarity (diagnostic)."
+  },
+  "tooltip": {
+    "self": "self-consistency",
+    "noCard": "no card",
+    "median": "median",
+    "iqr": "IQR",
+    "nEff": "n_eff",
+    "m": "m"
+  },
+  "drawer": {
+    "title": "Pair detail",
+    "subtitle": "Two configs across all 17 channels. Similarity is a measurement, not a quality score.",
+    "self": "self-consistency",
+    "cross": "cross",
+    "aggregateHeading": "Aggregate similarity — all 17 channels",
+    "aggregateNote": "Median across non-empty slot-pairs, on the fixed [0,1] scale. A value only shows with enough effective comparisons (n_eff ≥ 4, and ≥2 valid slots per side for a cross pair); otherwise insufficient data, never a number.",
+    "perPairHeading": "Per slot-pair (raw, ungated)",
+    "perPairNote": "Per-slot-pair values are shown raw (no gate) so the underlying distribution is fully visible — the gated aggregate above is what the matrix uses.",
+    "loadingSummary": "loading summary…",
+    "loadingDetail": "loading slot-pair detail…",
+    "noDetail": "no slot-pair detail materialized for this pair",
+    "noPairs": "no slot-pairs",
+    "noSlot": "no slot",
+    "slot": "slot",
+    "openCard": "open card ↗",
+    "openCompare": "open both in compare ↗",
+    "close": "close"
+  },
+  "empty": {
+    "title": "No configs match these filters",
+    "message": "No config in this measured set passes the current grade / arm filters. Reset to show every config."
+  },
+  "merged": {
+    "group": "consensus",
+    "desc": "All scored channels folded into one view: each channel is contrast-stretched over its own p5–p95 first (so no channel dominates by scale), then averaged. Diagnostic channels are excluded; a pair needs ≥6 contributing channels."
+  }
+}

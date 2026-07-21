@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/manifest.schema.json",
+  "title": "Batch Manifest",
+  "description": "Per-batch frozen manifest. This is the SOLE byte stream from which manifest_hash is derived (scheme v12 §1.2). It is generated BEFORE any randomization/assignment is drawn and excludes ALL runtime fields (assignment results, seeds, timestamps). WARNING: JSON Schema validates SHAPE ONLY. The byte-exact canonicalization contract — RFC 8785 (JCS) serialization, NFC-first on every string, the canonical decimal-string grammar for non-integers, uniqueItems checked AFTER NFC, cities dedup on (city,date) AFTER NFC, and the manifest_hash / seed_assign formulas — lives in CONTRACT-NOTES.md and MUST be enforced by the runner. Passing this schema is necessary but NOT sufficient. The SHA256 of THIS schema file plus schema_version are frozen into the lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. Byte-exact rules that JSON Schema cannot express are in CONTRACT-NOTES.md — read it before implementing the manifest builder.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "prompt_min_sha256",
+    "prompt_q_sha256",
+    "snapshot_sha256",
+    "cities",
+    "config_ids",
+    "N",
+    "env_digest",
+    "pipeline_commit"
+  ],
+  "properties": {
+    "prompt_min_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA256 of the raw bytes of prompt-v5-min.txt (P-min), file bytes as-is (scheme §1.2, §9)."
+    },
+    "prompt_q_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA256 of the raw bytes of prompt-v5-q.txt (P-q = P-min + fixed_suffix; byte assertion q_bytes == min_bytes + fixed_suffix per §9)."
+    },
+    "snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA256 of the frozen weather snapshot (canary values, e.g. max 27.4/min 13.9/code 61; expected-value table persisted with extractor version). See weather-snapshot.json (scheme §1.2)."
+    },
+    "cities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Measurement fixture cities. Element shape fixed to {city,date,lat,lon}. Persisted SORT ORDER = byte order of each element's canonical JSON (JCS) — NOT expressible here; runner MUST sort. Duplicate (city,date) rejected AFTER NFC (see CONTRACT-NOTES). uniqueItems here only catches whole-item exact dupes.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["city", "date", "lat", "lon"],
+        "properties": {
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "description": "City name string. NFC-normalized before hashing (runner-enforced)."
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "description": "UTC calendar date (ISO 8601 date). harness always passes ?date= explicitly in UTC (scheme §1.2)."
+          },
+          "lat": {
+            "type": "string",
+            "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$",
+            "description": "Latitude as a canonical decimal STRING (no exponent / no leading + / no leading zero except 0.x / no trailing decimal zero / no -0). Represented as string to keep the manifest byte stream fully controlled rather than relying on JCS number formatting. JUDGMENT CALL (flagged): scheme mandates decimal strings for NON-integers and is silent on integer-valued coordinates; this contract requires ALL coordinates to be canonical decimal strings for type stability (an integer coordinate serializes as e.g. \"52\", the grammar's no-fraction form). See CONTRACT-NOTES."
+          },
+          "lon": {
+            "type": "string",
+            "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$",
+            "description": "Longitude as a canonical decimal STRING. Same grammar and same JUDGMENT-CALL note as lat."
+          }
+        }
+      }
+    },
+    "config_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Config identifiers. Persisted SORT ORDER = NFC UTF-8 byte order, fixed at BUILD time; every downstream use site (config/block traversal, pooled PRNG sampling map, mask iteration) MUST take this persisted array order verbatim and is FORBIDDEN from re-sorting by any local collation (scheme §1.2 v12 config-order rule). Duplicates rejected AFTER NFC (uniqueItems here only catches exact-string dupes)."
+    },
+    "N": {
+      "type": "integer",
+      "enum": [3, 4, 5],
+      "description": "Slots per config per variant, frozen batch-wide before any assignment draw (scheme §1.1 min 3, target 5; §1.2 batch-uniform N)."
+    },
+    "env_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Digest of the pinned render environment (Chromium version, fonts, flags, image libs — appendix A). JUDGMENT CALL (flagged): scheme names the field but not its exact construction; contract fixes it as a lowercase-hex SHA256 over the canonical env descriptor. Exact input bytes to be pinned in CONTRACT-NOTES / appendix A follow-up."
+    },
+    "pipeline_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "description": "Git commit of the pipeline. Working tree MUST be clean — a dirty tree rejects the whole batch, there is NO source_digest fallback (scheme §1.2). JUDGMENT CALL (flagged): pattern assumes 40-hex SHA-1 git; a SHA-256 git repo would need 64-hex — widen the pattern if the repo migrates."
+    }
+  }
+}

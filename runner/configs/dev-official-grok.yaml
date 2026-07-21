@@ -1,0 +1,82 @@
+# dev-official-grok.yaml — xAI 官方 API(/chat/completions)。N=4 正式规格。
+# 档位行为实证:4.3/4.5 均接受 reasoning_effort low/medium/high;null=模型默认档。
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.x.ai/v1
+  descriptor: xai-official-api
+  proxy: none
+
+configs:
+  - config_id: grok-4.5--api--official--dev
+    family: grok
+    model_id: grok-4.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.5-eff-low--api--official--dev
+    family: grok
+    model_id: grok-4.5
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.5-eff-medium--api--official--dev
+    family: grok
+    model_id: grok-4.5
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.5-eff-high--api--official--dev
+    family: grok
+    model_id: grok-4.5
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.3--api--official--dev
+    family: grok
+    model_id: grok-4.3
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.3-eff-low--api--official--dev
+    family: grok
+    model_id: grok-4.3
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.3-eff-medium--api--official--dev
+    family: grok
+    model_id: grok-4.3
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }
+
+  - config_id: grok-4.3-eff-high--api--official--dev
+    family: grok
+    model_id: grok-4.3
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_XAI_OFFICIAL_KEY }

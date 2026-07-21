@@ -1,0 +1,47 @@
+# dev-official-mimo.yaml — 小米 MiMo 官方 API(N=4,metered)。
+# 探针 2026-07-19:reasoning_effort none/low/medium/high 实证(banana→400 枚举)。
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.xiaomimimo.com/v1
+  descriptor: xiaomi-mimo-official-api
+  proxy: none
+
+configs:
+  - config_id: mimo-v2.5-pro-eff-none--api--official--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: none
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_MIMO_KEY }
+
+  - config_id: mimo-v2.5-pro-eff-low--api--official--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_MIMO_KEY }
+
+  - config_id: mimo-v2.5-pro-eff-medium--api--official--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_MIMO_KEY }
+
+  - config_id: mimo-v2.5-pro-eff-high--api--official--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_MIMO_KEY }
+

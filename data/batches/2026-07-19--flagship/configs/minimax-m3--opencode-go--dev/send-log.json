@@ -1,0 +1,98 @@
+{
+  "N": 2,
+  "batch_id": "2026-07-19--go-requeue2",
+  "config_id": "minimax-m3--opencode-go--dev",
+  "positions": [
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T01:40:36.535321+00:00",
+          "http_status": 200,
+          "outcome": "model-failed",
+          "reached_model": true,
+          "reason": "no-valid-html",
+          "request_id": null,
+          "started_at": "2026-07-20T01:32:45.737556+00:00"
+        }
+      ],
+      "block_index": 0,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 0,
+      "terminal_state": "model-failed",
+      "variant": "P-q"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T01:41:01.789592+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T01:40:36.747764+00:00"
+        }
+      ],
+      "block_index": 0,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 0,
+      "terminal_state": "valid",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T01:44:38.085964+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T01:41:05.177886+00:00"
+        }
+      ],
+      "block_index": 1,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 1,
+      "terminal_state": "valid",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T01:51:35.747591+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T01:44:41.633581+00:00"
+        }
+      ],
+      "block_index": 1,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 1,
+      "terminal_state": "valid",
+      "variant": "P-q"
+    }
+  ],
+  "retry_policy": {
+    "max_unreachable_retries": 5,
+    "rate_limit_backoff": {
+      "max_attempts": 4,
+      "max_total_ms": 60000
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Gallery — weather-card-benchmark",
+    "description": "One prompt, every model. Browse every weather card in one filterable grid — live-render any tile, filter by family, arm, and channel."
+  },
+  "title": "Gallery",
+  "intro": "Every config, one grid. Filter by family, arm, and channel; toggle any tile to a live render. Order is fixed: family → model → effort → arm.",
+  "search": {
+    "placeholder": "search model id",
+    "label": "search by model id"
+  },
+  "facet": {
+    "family": "family",
+    "arm": "arm",
+    "grade": "channel",
+    "api": "api",
+    "harness": "harness"
+  },
+  "toggle": {
+    "live": "live",
+    "validOnly": "valid only",
+    "hasPatch": "patched",
+    "showDev": "show dev-channel"
+  },
+  "devNote": "dev-channel runs go through a private reverse-proxy — shown for transparency, not publishable.",
+  "density": {
+    "label": "density",
+    "comfortable": "comfortable",
+    "compact": "compact"
+  },
+  "variant": {
+    "label": "variant"
+  },
+  "delay": {
+    "label": "delay",
+    "off": "0s"
+  },
+  "reloadLive": "reload live",
+  "filters": {
+    "show": "Filters · {count} results",
+    "hide": "Hide filters",
+    "active": "active",
+    "remove": "remove filter",
+    "clearAll": "clear all"
+  },
+  "blank": "blank render",
+  "result": {
+    "showing": "{shown} of {total} configs",
+    "live": "live · ≤8 frames on screen",
+    "order": "order · family → model → effort → arm",
+    "noOutputHidden": "{count} no-output configs hidden — see Progress"
+  },
+  "loadMore": "load {count} more",
+  "loadRemaining": "{count} remaining",
+  "empty": {
+    "title": "no configs match",
+    "message": "No config matches the current filters. Clear them to see the full grid.",
+    "clear": "clear filters",
+    "enableDev": "show {count} dev-channel configs"
+  },
+  "gate": {
+    "title": "Three blind picks",
+    "subtitle": "One prompt, every model. Pick the card you'd rather look at — identities stay hidden until you vote. Three picks and the gallery is yours.",
+    "loading": "loading a pair…",
+    "waitLoad": "loading both cards…",
+    "choose": {
+      "a": "A",
+      "b": "B",
+      "tie": "tie",
+      "bothBad": "both bad"
+    },
+    "cardA": "card A",
+    "cardB": "card B",
+    "skip": "browse without voting",
+    "error": "arena is quiet right now — browse the gallery freely.",
+    "retry": "try again"
+  }
+}

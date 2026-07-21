@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "title": "对比 — weather-card-benchmark",
+    "description": "把 2–4 张模型天气卡并排放在一起，用同一个城市、同一时刻实时渲染。相同 prompt，相同数据。"
+  },
+  "title": "对比",
+  "subtitle": "把 2–4 个 config 并排放在一起——共享同一个城市、日期与 API 延迟，在沙箱 frame 中实时渲染。",
+  "add": "添加 config",
+  "addMore": "再加一个",
+  "remove": "移除",
+  "openCard": "打开卡片 ↗",
+  "picker": {
+    "title": "添加一个 config",
+    "search": "搜索 model、arm、family…",
+    "noResults": "没有匹配的 config",
+    "added": "已添加",
+    "full": "最多 4 个 config——先移除一个再添加",
+    "validShort": "{count} 个有效"
+  },
+  "controls": {
+    "city": "城市",
+    "date": "日期",
+    "delay": "API 延迟",
+    "variant": "变体",
+    "variantHint": "Prompt 变体：P-min 是最小的纯数据契约（不含任何样式提示）；P-q 是同一 prompt 末尾多加一句「特别注意视觉设计质量」。切换查看差异。",
+    "variantTitle": {
+      "P-min": "P-min——最小的纯数据 prompt（不含样式提示）。",
+      "P-q": "P-q——P-min 末尾多加一句「特别注意视觉设计质量」。"
+    },
+    "reload": "全部重载",
+    "reloadHint": "用当前的城市、日期与延迟重载每一个 frame"
+  },
+  "slot": {
+    "cycle": "slot {index} / {total}",
+    "one": "1 个有效 slot"
+  },
+  "tombstone": {
+    "title": "没有有效 slot",
+    "message": "这个 config 在 {variant} 下没有可渲染的有效卡片。它的状态与原始输出可以在卡片页查看。"
+  },
+  "empty": {
+    "title": "还没有可对比的内容",
+    "message": "添加 2 到 4 个 config，把它们的实时天气卡并排放在一起。"
+  },
+  "hint": "对比 2–4 个 config · 相同 prompt · 相同数据",
+  "share": {
+    "copy": "复制链接",
+    "copied": "链接已复制"
+  },
+  "live": {
+    "note": "实时天气在 frame 内针对共享城市渲染——卡片页上的冻结截图才是被测量的像素",
+    "loading": "渲染中",
+    "unavailable": "卡片不可用"
+  }
+}

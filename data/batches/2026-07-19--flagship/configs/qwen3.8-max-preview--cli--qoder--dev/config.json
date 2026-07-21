@@ -1,0 +1,27 @@
+{
+  "N": 2,
+  "auth": {
+    "credential_ref": "WCB_NONE",
+    "method": "oauth-login"
+  },
+  "billing": "plan",
+  "config_id": "qwen3.8-max-preview--cli--qoder--dev",
+  "effort": null,
+  "family": "qwen",
+  "m": {
+    "min": 2,
+    "q": 2
+  },
+  "model_id": "qwen3.8-max-preview",
+  "protocol": "cli",
+  "served_model": "Qwen3.8-Max-Preview",
+  "telemetry": {
+    "completion_tokens": null,
+    "cost_usd": null,
+    "prompt_tokens": null,
+    "total_tokens": null,
+    "wall_ms": 327329
+  },
+  "transport": "qoder-cli-stock-login-alibaba",
+  "vendor_sanction_ref": null
+}

@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "观察 — weather-card-benchmark",
+    "description": "构建数据集过程中的观察:全是描述性测量,每条都指向产生它的原始数据。单一提示族、小 N——当信号看,别当结论。"
+  },
+  "title": "观察",
+  "lead": "构建数据集过程中的观察——全是描述性测量,每条都指向产生它的原始数据。",
+  "updated": "更新于 {date}",
+  "count": "{n, plural, other {# 条观察}}",
+  "labels": {
+    "figures": "数据",
+    "caveat": "注意",
+    "sources": "来源",
+    "browse": "去画廊看卡片",
+    "browseFamily": "去看 {family} 卡片"
+  },
+  "empty": {
+    "title": "暂无已发布的观察",
+    "message": "随着数据集扩充,观察会陆续出现在这里——每条都是一次测量,并附上背后原始批次的链接。目前还没有发布任何内容。",
+    "action": "去逛画廊"
+  }
+}

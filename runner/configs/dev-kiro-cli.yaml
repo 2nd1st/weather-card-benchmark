@@ -1,0 +1,551 @@
+# dev-kiro-cli.yaml — kiro-cli harness 臂:17 模型 + 8 个 effort-capable 模型全档展开(47 configs)。
+#
+# kiro-cli (AWS Kiro, GitHub social login, credit-plan billing) 是首个单一
+# harness 覆盖 claude+gpt+中国系三族的臂。effort 判定(2026-07-19 修正):
+#   * claude sonnet-5/opus-4.8/4.7 → output_config.effort 五档(opus-4.7 默认 xhigh,其余默认 high)
+#   * claude opus-4.6/sonnet-4.6 → 四档(无 xhigh)
+#   * gpt sol/terra/luna → reasoning.effort(后端 none..max,CLI 暴露 low..max;默认 high)
+#   * 其余 9 模型无 effort 概念 → effort: null
+# 注意:--no-interactive 会静默丢弃 effort(flag 与 chat.modelDefaults 两路皆丢),
+# 所以带 effort 的 config 由 adapter 走 pty(interactive TUI)驱动;null 走 headless。
+# provider_model_id = kiro 侧模型名(site id 命名差异:claude 连字符惯例、
+# deepseek-3.2 → deepseek-v3.2)。
+# 探针实测单卡 credits:qwen 0.02 / luna 0.27(@xhigh tty 0.42)/ sonnet-5 ~1.8。
+# 预算(credit 池 700):47 configs × 4 slots ≈ 400cr typical / worst 600。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: kiro-cli-isolated-home-github-social
+  proxy: none
+
+configs:
+  # ---- 便宜签发在前:早期失败先暴露,再进贵模型 ----
+  # (effort-capable 模型不设 null 席:后端默认=high,与显式 high 档行为重复)
+  - config_id: qwen3-coder-next--cli--kiro--dev
+    family: qwen
+    model_id: qwen3-coder-next
+    provider_model_id: qwen3-coder-next
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: minimax-m2.1--cli--kiro--dev
+    family: minimax
+    model_id: minimax-m2.1
+    provider_model_id: minimax-m2.1
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: minimax-m2.5--cli--kiro--dev
+    family: minimax
+    model_id: minimax-m2.5
+    provider_model_id: minimax-m2.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: deepseek-v3.2--cli--kiro--dev
+    family: deepseek
+    model_id: deepseek-v3.2
+    provider_model_id: deepseek-3.2
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: glm-5--cli--kiro--dev
+    family: glm
+    model_id: glm-5
+    provider_model_id: glm-5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+
+  - config_id: claude-haiku-4-5--cli--kiro--dev
+    family: claude
+    model_id: claude-haiku-4-5
+    provider_model_id: claude-haiku-4.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+
+
+  - config_id: claude-sonnet-4--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4
+    provider_model_id: claude-sonnet-4
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-4-5--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4-5
+    provider_model_id: claude-sonnet-4.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+
+
+  - config_id: claude-opus-4-5--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-5
+    provider_model_id: claude-opus-4.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+
+
+
+  # ---- effort 展开(pty/TTY 驱动;便宜家族在前) ----
+
+  - config_id: gpt-5.6-luna-eff-low--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    provider_model_id: gpt-5.6-luna
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-medium--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    provider_model_id: gpt-5.6-luna
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-high--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    provider_model_id: gpt-5.6-luna
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-xhigh--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    provider_model_id: gpt-5.6-luna
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-max--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    provider_model_id: gpt-5.6-luna
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-low--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    provider_model_id: gpt-5.6-terra
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-medium--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    provider_model_id: gpt-5.6-terra
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-high--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    provider_model_id: gpt-5.6-terra
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-xhigh--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    provider_model_id: gpt-5.6-terra
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-max--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    provider_model_id: gpt-5.6-terra
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-low--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    provider_model_id: gpt-5.6-sol
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-medium--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    provider_model_id: gpt-5.6-sol
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-high--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    provider_model_id: gpt-5.6-sol
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-xhigh--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    provider_model_id: gpt-5.6-sol
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-max--cli--kiro--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    provider_model_id: gpt-5.6-sol
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-4-6-eff-low--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4-6
+    provider_model_id: claude-sonnet-4.6
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-4-6-eff-medium--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4-6
+    provider_model_id: claude-sonnet-4.6
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-4-6-eff-high--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4-6
+    provider_model_id: claude-sonnet-4.6
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-4-6-eff-max--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-4-6
+    provider_model_id: claude-sonnet-4.6
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-5-eff-low--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-5
+    provider_model_id: claude-sonnet-5
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-5-eff-medium--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-5
+    provider_model_id: claude-sonnet-5
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-5-eff-high--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-5
+    provider_model_id: claude-sonnet-5
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-5-eff-xhigh--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-5
+    provider_model_id: claude-sonnet-5
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-sonnet-5-eff-max--cli--kiro--dev
+    family: claude
+    model_id: claude-sonnet-5
+    provider_model_id: claude-sonnet-5
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-6-eff-low--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-6
+    provider_model_id: claude-opus-4.6
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-6-eff-medium--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-6
+    provider_model_id: claude-opus-4.6
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-6-eff-high--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-6
+    provider_model_id: claude-opus-4.6
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-6-eff-max--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-6
+    provider_model_id: claude-opus-4.6
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-7-eff-low--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-7
+    provider_model_id: claude-opus-4.7
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-7-eff-medium--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-7
+    provider_model_id: claude-opus-4.7
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-7-eff-high--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-7
+    provider_model_id: claude-opus-4.7
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-7-eff-xhigh--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-7
+    provider_model_id: claude-opus-4.7
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-7-eff-max--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-7
+    provider_model_id: claude-opus-4.7
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-8-eff-low--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-8
+    provider_model_id: claude-opus-4.8
+    effort: low
+    effort_param: low
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-8-eff-medium--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-8
+    provider_model_id: claude-opus-4.8
+    effort: medium
+    effort_param: medium
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-8-eff-high--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-8
+    provider_model_id: claude-opus-4.8
+    effort: high
+    effort_param: high
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-8-eff-xhigh--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-8
+    provider_model_id: claude-opus-4.8
+    effort: xhigh
+    effort_param: xhigh
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-opus-4-8-eff-max--cli--kiro--dev
+    family: claude
+    model_id: claude-opus-4-8
+    provider_model_id: claude-opus-4.8
+    effort: max
+    effort_param: max
+    protocol: cli
+    harness: kiro
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

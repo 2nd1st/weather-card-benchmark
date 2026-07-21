@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Progress",
+    "description": "Coverage board: what is planned versus what has landed across every arm and effort, with the Chinese-model gap called out honestly."
+  },
+  "title": "Coverage — planned vs landed",
+  "intro": "Every planned model × effort × arm, matched against landed data. Batches land incrementally — this board is the honest map of what exists and what is still a gap.",
+  "asOf": "as of",
+  "summary": {
+    "aria": "coverage summary",
+    "landedCaption": "landed · {pct}% of {planned} planned",
+    "validSlots": "{n} valid slots collected"
+  },
+  "totals": {
+    "aria": "coverage totals",
+    "planned": "planned",
+    "landed": "landed",
+    "partial": "partial",
+    "gap": "gap",
+    "paused": "paused",
+    "validSlots": "valid slots"
+  },
+  "china": {
+    "headline": "Chinese models: {apiMissing} official-API seats still unrun, {zeroFamilies} families with zero data so far.",
+    "body": "This is the gap we most want closed. Every figure here is computed from the plan against landed data — never a hand-written count. Click any gap cell below to run it yourself with your own key.",
+    "families": "families planned",
+    "apiSeats": "api seats open",
+    "zeroData": "zero-data families",
+    "landed": "cells with data"
+  },
+  "status": {
+    "landed": "landed",
+    "partial": "partial",
+    "attempted": "attempted",
+    "missing": "missing",
+    "paused": "paused"
+  },
+  "statusDef": {
+    "landed": "every variant has ≥1 valid slot",
+    "partial": "some valid slots, but not every variant",
+    "attempted": "config exists, zero valid slots",
+    "missing": "no config yet",
+    "paused": "planned but disabled in the matrix"
+  },
+  "filter": {
+    "show": "show",
+    "all": "all",
+    "gaps": "gaps only",
+    "landedOnly": "landed only",
+    "searchPlaceholder": "search model…",
+    "searchAria": "search by model id",
+    "clearSearch": "clear search",
+    "noMatch": "No models match the current view.",
+    "models": "{n, plural, one {# model} other {# models}}"
+  },
+  "empty": {
+    "title": "No coverage plan loaded",
+    "message": "The production matrix and harness plan seed files are absent, so there is nothing to chart yet."
+  },
+  "cost": {
+    "title": "Cost reference",
+    "subtitle": "Per-call USD ranges observed while building this dataset. A config is N valid slots × 2 prompt variants.",
+    "family": "family",
+    "arm": "arm",
+    "range": "per-call USD",
+    "basis": "basis",
+    "note": "note",
+    "free": "plan / free",
+    "disclaimer": "Observed ranges — they vary strongly with effort tier; treat as planning numbers, not quotes."
+  },
+  "tray": {
+    "count": "{n} cells selected",
+    "calls": "≈ {calls} calls",
+    "clear": "clear",
+    "go": "estimate & contribute →",
+    "hint": "Click any missing or attempted cell to add it to a contribute batch."
+  }
+}

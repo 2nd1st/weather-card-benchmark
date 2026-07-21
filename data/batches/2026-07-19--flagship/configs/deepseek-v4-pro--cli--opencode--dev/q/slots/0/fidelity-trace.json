@@ -1,0 +1,115 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 0,
+  "occurrences": [],
+  "arbitration": {
+    "considered": []
+  },
+  "salience": {
+    "f_max": null,
+    "candidates": [],
+    "E": []
+  },
+  "max_min_binding": {
+    "branch": "E-empty",
+    "distances": [],
+    "max": {
+      "label_id": null,
+      "temp_id": null,
+      "canonical_id": null,
+      "value": null,
+      "display_decimals": null
+    },
+    "min": {
+      "label_id": null,
+      "temp_id": null,
+      "canonical_id": null,
+      "value": null,
+      "display_decimals": null
+    },
+    "canonical_published": false,
+    "decision_path": [
+      {
+        "code": "e-empty",
+        "detail": "no temperature candidate"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "no-candidate-not-found",
+    "has_label": null,
+    "candidates": [],
+    "label_parse": [],
+    "bindings": [],
+    "signature": [],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "no temperature candidate"
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "name-no-substring-hit",
+          "detail": null
+        }
+      ]
+    },
+    "date": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "date-unparseable",
+          "detail": null
+        }
+      ]
+    },
+    "condition": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "condition-not-found",
+          "detail": "icon-only"
+        }
+      ]
+    },
+    "max": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "e-empty",
+          "detail": "no temperature candidate"
+        }
+      ]
+    },
+    "min": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "e-empty",
+          "detail": "no temperature candidate"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "no temperature candidate"
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 29,
+      "text_coord_base": 0,
+      "codepoint_length": 27
+    }
+  ]
+}

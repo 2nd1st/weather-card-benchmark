@@ -1,0 +1,182 @@
+{
+  "N": 4,
+  "batch_id": "2026-07-20--official-glm",
+  "config_id": "glm-5.2-eff-enabled--api--official--dev",
+  "positions": [
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T14:20:24.201654+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T14:08:52.418236+00:00"
+        }
+      ],
+      "block_index": 0,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 0,
+      "terminal_state": "valid",
+      "variant": "P-q"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T14:26:01.915376+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T14:20:29.369501+00:00"
+        }
+      ],
+      "block_index": 0,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 0,
+      "terminal_state": "valid",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T14:38:10.691354+00:00",
+          "http_status": 200,
+          "outcome": "model-failed",
+          "reached_model": true,
+          "reason": "no-valid-html",
+          "request_id": null,
+          "started_at": "2026-07-20T14:26:05.394393+00:00"
+        }
+      ],
+      "block_index": 1,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 1,
+      "terminal_state": "model-failed",
+      "variant": "P-q"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T15:11:47.637915+00:00",
+          "http_status": 200,
+          "outcome": "infra-failed",
+          "reached_model": true,
+          "reason": "mid-stream-death",
+          "request_id": null,
+          "started_at": "2026-07-20T14:38:10.694527+00:00"
+        }
+      ],
+      "block_index": 1,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 1,
+      "terminal_state": "infra-failed",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T15:19:26.534792+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T15:11:47.861704+00:00"
+        }
+      ],
+      "block_index": 2,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 2,
+      "terminal_state": "valid",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T15:34:24.649220+00:00",
+          "http_status": 200,
+          "outcome": "model-failed",
+          "reached_model": true,
+          "reason": "no-valid-html",
+          "request_id": null,
+          "started_at": "2026-07-20T15:19:29.837322+00:00"
+        }
+      ],
+      "block_index": 2,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 2,
+      "terminal_state": "model-failed",
+      "variant": "P-q"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T15:42:45.194772+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T15:34:24.863875+00:00"
+        }
+      ],
+      "block_index": 3,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 3,
+      "terminal_state": "valid",
+      "variant": "P-min"
+    },
+    {
+      "attempts": [
+        {
+          "attempt_index": 0,
+          "backoff_ms": null,
+          "charged": true,
+          "ended_at": "2026-07-20T15:54:07.070891+00:00",
+          "http_status": 200,
+          "outcome": "valid",
+          "reached_model": true,
+          "reason": "ok",
+          "request_id": null,
+          "started_at": "2026-07-20T15:42:48.922973+00:00"
+        }
+      ],
+      "block_index": 3,
+      "model_reaching_attempt_index": 0,
+      "slot_index": 3,
+      "terminal_state": "valid",
+      "variant": "P-q"
+    }
+  ],
+  "retry_policy": {
+    "max_unreachable_retries": 5,
+    "rate_limit_backoff": {
+      "max_attempts": 4,
+      "max_total_ms": 60000
+    }
+  }
+}

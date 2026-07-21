@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "title": "同一道题，每个模型",
+    "description": "一个开放的基准站：每个模型都来做同一张天气卡片。原始产物、可复现的相似度，以及盲测的社区偏好——赢家由你来选。"
+  },
+  "hero": {
+    "kicker": "开放基准 · 可复现数据 · 社区偏好",
+    "title1": "同一道题。",
+    "title2": "每个模型。",
+    "title3": "赢家由你来选。",
+    "sub": "每个模型拿到的要求都一样：做一张天气卡片。我们公开每一份原始产物，用确定性方法逐对度量相似度，并让社区在盲测中投票——选出他们更愿意看的那张卡片。",
+    "ctaArena": "进入竞技场",
+    "ctaMethodology": "阅读方法论"
+  },
+  "stats": {
+    "aria": "实时数据",
+    "models": "模型",
+    "configs": "配置",
+    "validCards": "有效卡片",
+    "votes": "社区投票",
+    "scopeNote": "统计覆盖整个 registry · qualified 是 gallery 的默认视图"
+  },
+  "featured": {
+    "title": "精选卡片",
+    "caption": "轮换样本 · 每日重新抽取"
+  },
+  "gate": {
+    "title": "三次盲选，解锁 gallery",
+    "sub": "两张匿名卡片，完全相同的实时数据。选出你更喜欢的那张——每次选择后才揭示身份。你的选择会成为公开的社区偏好数据。",
+    "skip": "不投票，直接浏览",
+    "metaAngle": "维度",
+    "metaVariant": "变体",
+    "metaCity": "城市",
+    "metaFixture": "数据快照",
+    "nextPick": "下一对",
+    "continueLabel": "看看解锁了什么",
+    "pair": {
+      "cardA": "卡片 A",
+      "cardB": "卡片 B",
+      "identityHidden": "身份隐藏",
+      "preferA": "选 A",
+      "preferB": "选 B",
+      "tie": "平局",
+      "tieSub": "都还不错",
+      "bothBad": "都不行",
+      "bothBadSub": "都不合格",
+      "revealTitle": "已记录——身份揭晓",
+      "yourPick": "你的选择",
+      "tooFast": "先看清两张卡片，再做选择。",
+      "voteError": "出了点问题——换下一对试试。",
+      "loading": "加载中",
+      "noOutput": "无渲染输出"
+    },
+    "unlock": {
+      "title": "Gallery 已解锁",
+      "body": "三次盲选完成——这已经是真实的社区偏好数据了。完整的 gallery 已经开放。分享你的选择，或者直接进去看。",
+      "enter": "进入 gallery",
+      "shareLabel": "分享你的选择",
+      "copy": "复制分享文案",
+      "copied": "已复制",
+      "x": "发到 X",
+      "text": "3 次盲选 · 同一道题，每个模型 · {url}"
+    }
+  },
+  "latest": {
+    "title": "最新加入",
+    "caption": "最近进入基准的模型,每个模型一张卡。"
+  },
+  "ranked": {
+    "title": "社区偏好",
+    "caption": "按盲测两两投票排序(Bradley–Terry 强度),每个模型一张卡。"
+  },
+  "prompt": {
+    "title": "每个模型收到的任务",
+    "caption": "任务原文 —— 对所有模型完全一致。",
+    "heading": "prompt",
+    "download": "下载"
+  }
+}

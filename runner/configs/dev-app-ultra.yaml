@@ -1,0 +1,39 @@
+# dev-app-ultra.yaml — codex-app arm (plan × app), MANUAL ingest.
+# The gpt-5.6-terra @ultra cards were produced BY HAND in the ChatGPT app (codex,
+# effort=ultra — an app-only tier): fresh session per run, exact standard prompts,
+# artifact stored byte-for-byte. There is no automated adapter for this arm; the
+# batch is materialized by scratchpad ingest_app_ultra.py, which reuses the SAME
+# render/measure pipeline (runner.slot_pipeline / runner.manifest / runner.fidelity)
+# as every other arm. This file is the provenance record (run_batch does NOT drive it).
+#
+# REMOVED FROM MEASURED SET 2026-07-20: both sol + terra @ultra are N=1 manual
+# captures → m=1 per variant → can NEVER reach the sufficiency floor (每侧 ≥2 valid
+# slot), so they permanently read "insufficient" in the matrix. A local/manual re-run
+# has no value: the ChatGPT app carries session memory/chronicle that contaminates a
+# "fresh" capture. The ultra tier stays represented by the codex-OAUTH CLI ultra seats
+# (gpt-5.6-sol/terra-eff-ultra--cli--codex-oauth--dev, automated, valid=4). Provenance
+# artifacts kept under data/incoming/app-ultra/; the two unified config dirs were dropped.
+version: 1
+N: 1   # one manual output per prompt variant (honest; schema enum is [3,4,5])
+
+transport:
+  base_url: none
+  descriptor: chatgpt-app-codex-manual   # no 'sub2' substring -> grades qualified
+  proxy: none
+
+configs:
+  - config_id: gpt-5.6-terra-eff-ultra--app--codex-app--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: ultra
+    protocol: app          # app-only manual tier (config.schema enum extended +app 2026-07-18)
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+    notes: >-
+      Manual fresh-session protocol per data/incoming/app-ultra/README-操作卡.md:
+      each generation is a brand-new ChatGPT-app session, the standard prompt is
+      pasted verbatim (BEGIN..END, no added words), and the model's single-file HTML
+      output is archived one byte unchanged. P-min slot0 delivered 2026-07-18 ~02:12
+      local; P-q slot0 delivered ~12:04 local. No API telemetry (token/wall/cost) and
+      no served-model signal are available for a manual app capture. The sol pair from
+      the same tier is held for re-delivery (found byte-identical — a save mistake).

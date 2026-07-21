@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/similarity-summary.schema.json",
+  "title": "similarity/summary.json",
+  "description": "Batch-level L3 descriptive aggregates: config x config x channel, the single data source for /matrix (DESIGN §5). Per variant (P-min / P-q each has its own matrix, DESIGN §5). Cells carry median / IQR / n_eff / both-m (BRIEF §4, DESIGN §5 tooltip). JUDGMENT CALL (flagged): scheme fixes the L3 STATISTICS byte-exactly (§5) but not the JSON shape of summary.json; the array-of-cells layout below is this contract's design. Diagonal cells = self pairs (self-consistency, a MEAN per §5, is reported in stats.json; the diagonal median here is the display value per DESIGN §5). Numeric fields are JSON numbers | null; see CONTRACT-NOTES for the rehash-determinism caveat. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. The file-level schema_version lives here (structured $comment) so the lock-population loop (DATA-LAYOUT §4) reads one uniform source across all eleven schema files. All 17 channels (15 formal + 2 permanent diagnostics c-ncd / d-tagpath). Numeric cell fields are JSON numbers | null; the runner fixes one canonical float serialization for rehashed outputs (CONTRACT-NOTES §8).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "variant", "channels", "configs", "cells"],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Owning batch id (date + event slug, DESIGN §2.2)."
+    },
+    "variant": {
+      "type": "string",
+      "enum": ["P-min", "P-q"],
+      "description": "Prompt variant this matrix set is computed over (scheme §9). Cross-variant analysis lives in /experiment/quality, not here."
+    },
+    "channels": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 17,
+      "maxItems": 17,
+      "description": "All 17 L2 channel names (scheme §4). Includes the 2 permanent DIAGNOSTIC channels (c-ncd, d-tagpath) which are DISPLAYED but never enter greedy pruning / statistics / hypothesis families (scheme §4 v9). The 15 formal channels are the remainder.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
+          "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
+          "d-geom", "d-text", "d-pqgram", "d-tagpath"
+        ]
+      }
+    },
+    "configs": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "description": "Config ids in the manifest's PERSISTED array order (NFC UTF-8 byte order; scheme §1.2 — use sites never re-sort). Matrix row/column order is exactly this."
+    },
+    "cells": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "One entry per (config_a, config_b, channel). Self cells: config_a == config_b (kind=self). Cross cells: kind=cross, A x B full cartesian, asymmetric-not-doubled (scheme §5). Whether both orderings (a,b)/(b,a) are materialized or only one is a runner choice — FLAGGED in CONTRACT-NOTES.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["config_a", "config_b", "channel", "kind", "median", "iqr", "n_eff", "m_a", "m_b"],
+        "properties": {
+          "config_a": {"type": "string", "minLength": 1},
+          "config_b": {"type": "string", "minLength": 1},
+          "channel": {
+            "type": "string",
+            "enum": [
+              "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
+              "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
+              "d-geom", "d-text", "d-pqgram", "d-tagpath"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["self", "cross"],
+            "description": "self = self pair set C(m,2); cross = A x B cartesian (scheme §5)."
+          },
+          "median": {
+            "type": ["number", "null"],
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Median of non-null S over the pair set. null when ineligible (n_eff<4, or cross with m_a<2 or m_b<2, or all-null) — matrix renders a gray 'insufficient data' cell (DESIGN §4.4). S in [0,1] by construction."
+          },
+          "iqr": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["p25", "p75"],
+            "description": "Inter-quartile range via linear interpolation, IQR=P75-P25 (appendix A). null when ineligible.",
+            "properties": {
+              "p25": {"type": "number", "minimum": 0, "maximum": 1},
+              "p75": {"type": "number", "minimum": 0, "maximum": 1}
+            }
+          },
+          "n_eff": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Count of non-null S in this pair set (scheme §5). Summary eligibility needs n_eff>=4 (+ m_a>=2 & m_b>=2 for cross)."
+          },
+          "m_a": {"type": "integer", "minimum": 0, "description": "count(valid) of config_a (both-m badge, DESIGN §5)."},
+          "m_b": {"type": "integer", "minimum": 0, "description": "count(valid) of config_b."}
+        }
+      }
+    }
+  }
+}

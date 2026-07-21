@@ -1,0 +1,21 @@
+# dev-claude.yaml — 单 config 增量:本地 Claude Code CLI headless(plan×harness)。
+# DEV ONLY;US 零 proxy 合规:官方客户端直登,无任何代理。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli            # 不走 HTTP;字段仅为 schema 占位
+  descriptor: claude-code-cli-headless
+  proxy: none
+
+configs:
+  - config_id: claude-fable-5--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: null                 # harness 默认 effort(CLI 默认 xhigh)——harness 臂不展开 effort
+    effort_param: null
+    protocol: cli
+    billing: plan
+    auth:
+      method: oauth-login
+      credential_ref: WCB_NONE   # 本地登录态,无 key

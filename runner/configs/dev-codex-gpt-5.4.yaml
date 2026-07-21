@@ -1,0 +1,55 @@
+# dev-codex-gpt-5.4.yaml — codex harness 全 effort(自动生成)。DEV ONLY。
+version: 1
+N: 2
+
+transport:
+  base_url: http://localhost:8080/v1
+  descriptor: codex-cli-isolated-home
+  proxy: sub2api
+
+configs:
+  - config_id: gpt-5.4-eff-minimal--cli--codex--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: minimal
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan  # ChatGPT Pro 20x via sub2 (dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.4-eff-low--cli--codex--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: low
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan  # ChatGPT Pro 20x via sub2 (dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.4-eff-medium--cli--codex--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: medium
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan  # ChatGPT Pro 20x via sub2 (dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.4-eff-high--cli--codex--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: high
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan  # ChatGPT Pro 20x via sub2 (dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.4-eff-xhigh--cli--codex--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: xhigh
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan  # ChatGPT Pro 20x via sub2 (dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+

@@ -1,0 +1,205 @@
+{
+  "fidelity": {
+    "condition": {
+      "reason": "icon-only",
+      "state": "not-found"
+    },
+    "date": {
+      "reason": "no-parseable-date",
+      "state": "not-found"
+    },
+    "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+    "hourly": {
+      "coverage": null,
+      "points": [
+        {
+          "hour": 0,
+          "state": "not-shown"
+        },
+        {
+          "hour": 1,
+          "state": "not-shown"
+        },
+        {
+          "hour": 2,
+          "state": "not-shown"
+        },
+        {
+          "hour": 3,
+          "state": "not-shown"
+        },
+        {
+          "hour": 4,
+          "state": "not-shown"
+        },
+        {
+          "hour": 5,
+          "state": "not-shown"
+        },
+        {
+          "hour": 6,
+          "state": "not-shown"
+        },
+        {
+          "hour": 7,
+          "state": "not-shown"
+        },
+        {
+          "hour": 8,
+          "state": "not-shown"
+        },
+        {
+          "hour": 9,
+          "state": "not-shown"
+        },
+        {
+          "hour": 10,
+          "state": "not-shown"
+        },
+        {
+          "hour": 11,
+          "state": "not-shown"
+        },
+        {
+          "hour": 12,
+          "state": "not-shown"
+        },
+        {
+          "hour": 13,
+          "state": "not-shown"
+        },
+        {
+          "hour": 14,
+          "state": "not-shown"
+        },
+        {
+          "hour": 15,
+          "state": "not-shown"
+        },
+        {
+          "hour": 16,
+          "state": "not-shown"
+        },
+        {
+          "hour": 17,
+          "state": "not-shown"
+        },
+        {
+          "hour": 18,
+          "state": "not-shown"
+        },
+        {
+          "hour": 19,
+          "state": "not-shown"
+        },
+        {
+          "hour": 20,
+          "state": "not-shown"
+        },
+        {
+          "hour": 21,
+          "state": "not-shown"
+        },
+        {
+          "hour": 22,
+          "state": "not-shown"
+        },
+        {
+          "hour": 23,
+          "state": "not-shown"
+        }
+      ],
+      "points_match": 0,
+      "points_mismatch": 0,
+      "points_not_shown": 24,
+      "reason": "no-temperature-candidate",
+      "state": "not-found"
+    },
+    "max": {
+      "display_decimals": null,
+      "reason": "no-temperature-candidate",
+      "state": "not-found",
+      "value": null
+    },
+    "min": {
+      "display_decimals": null,
+      "reason": "no-temperature-candidate",
+      "state": "not-found",
+      "value": null
+    },
+    "name": {
+      "reason": "text-present-no-name-hit",
+      "state": "not-found"
+    },
+    "request_side": {
+      "status": "match",
+      "violations": []
+    }
+  },
+  "flags": [
+    "content-not-ready"
+  ],
+  "l1": {
+    "bytes": {
+      "css": 4856,
+      "html": 1089,
+      "js": 6365,
+      "total": 12310
+    },
+    "palette_top8": [
+      {
+        "bin_index": 20,
+        "lab": {
+          "L": 12.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.9880859375
+      },
+      {
+        "bin_index": 14,
+        "lab": {
+          "L": 12.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.0109375
+      },
+      {
+        "bin_index": 56,
+        "lab": {
+          "L": 37.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.0009765625
+      }
+    ],
+    "structure": {
+      "css_rules": 40,
+      "dom_depth": 6,
+      "dom_nodes": 27,
+      "js_bytes_present": true
+    },
+    "visual": {
+      "brightness": 20.885200390625002,
+      "colorfulness": 19.209178353823045,
+      "contrast": 12.71871706290575,
+      "frame_change": {
+        "max": 0.0,
+        "median": 0.0
+      },
+      "whitespace_ratio": 0.84501953125
+    }
+  },
+  "slot_index": 0,
+  "state": "valid",
+  "telemetry": {
+    "completion_tokens": null,
+    "cost_usd": null,
+    "prompt_tokens": null,
+    "request_id": null,
+    "total_tokens": null,
+    "wall_ms": 87224
+  }
+}

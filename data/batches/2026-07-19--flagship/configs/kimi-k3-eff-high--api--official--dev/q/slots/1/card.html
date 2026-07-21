@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Card</title>
+<style>
+  :root {
+    --bg1: #0f2027;
+    --bg2: #203a43;
+    --bg3: #2c5364;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.16);
+    --text: #eef4f8;
+    --text-dim: rgba(238, 244, 248, 0.62);
+    --accent: #6dd5fa;
+    --warm: #ffb347;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    height: 100%;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+  }
+  body {
+    background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Ambient decorative blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .blob.b1 { width: 480px; height: 480px; background: #2980b9; top: -140px; left: -120px; }
+  .blob.b2 { width: 420px; height: 420px; background: #6dd5fa; bottom: -160px; right: -100px; animation-delay: -6s; opacity: 0.22; }
+  .blob.b3 { width: 300px; height: 300px; background: #ffb347; top: 55%; left: 12%; opacity: 0.14; animation-delay: -11s; }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, -30px) scale(1.08); }
+  }
+
+  .card {
+    position: relative;
+    width: 880px;
+    max-height: 720px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    padding: 44px 52px 40px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--warm), transparent);
+    opacity: 0.8;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .location-block h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+  .location-block .date {
+    margin-top: 6px;
+    font-size: 16px;
+    color: var(--text-dim);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .cond-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .cond-badge .icon { font-size: 30px; line-height: 1; }
+
+  .main-temps {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    margin: 26px 0 8px;
+  }
+  .temp-big {
+    display: flex;
+    align-items: baseline;
+  }
+  .temp-big .value {
+    font-size: 108px;
+    font-weight: 200;
+    line-height: 1;
+    background: linear-gradient(180deg, #ffffff, #a8d8f0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .temp-big .unit {
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+  .hi-lo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hi-lo .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+  }
+  .hi-lo .label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 40px;
+  }
+  .hi-lo .t { font-weight: 700; font-size: 26px; }
+  .hi-lo .hi .t { color: var(--warm); }
+  .hi-lo .lo .t { color: var(--accent); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot.warm { background: var(--warm); box-shadow: 0 0 10px var(--warm); }
+  .dot.cool { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+    margin: 20px 0 18px;
+  }
+
+  .hourly-title {
+    font-size: 13px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+  }
+  canvas { display: block; width: 100%; height: 100%; }
+
+  .hour-strip {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    gap: 4px;
+  }
+  .hour-cell {
+    flex: 1;
+    text-align: center;
+    padding: 7px 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hour-cell:hover { background: rgba(255,255,255,0.13); transform: translateY(-2px); }
+  .hour-cell .h { font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
+  .hour-cell .v { font-size: 14px; font-weight: 700; margin-top: 2px; }
+
+  .status {
+    text-align: center;
+    padding: 90px 20px;
+    font-size: 20px;
+    color: var(--text-dim);
+  }
+  .status.error { color: #ff9a9a; }
+  .status .big { font-size: 46px; display: block; margin-bottom: 16px; }
+  .spinner {
+    width: 42px; height: 42px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <div class="card">
+    <div id="loading" class="status">
+      <div class="spinner"></div>
+      Loading weather data…
+    </div>
+
+    <div id="error" class="status error hidden">
+      <span class="big">⚠️</span>
+      <strong>Weather data could not be loaded.</strong>
+      <div id="errorDetail" style="margin-top:10px; font-size:15px; opacity:0.75;"></div>
+    </div>
+
+    <div id="content" class="hidden">
+      <div class="header">
+        <div class="location-block">
+          <h1 id="locName">—</h1>
+          <div class="date" id="dateLabel">—</div>
+        </div>
+        <div class="cond-badge">
+          <span class="icon" id="condIcon">🌡️</span>
+          <span id="condText">—</span>
+        </div>
+      </div>
+
+      <div class="main-temps">
+        <div class="temp-big">
+          <span class="value" id="tempMax">—</span>
+          <span class="unit">°C</span>
+        </div>
+        <div class="hi-lo">
+          <div class="row hi">
+            <span class="dot warm"></span>
+            <span class="label">High</span>
+            <span class="t" id="tempHi">—</span>
+          </div>
+          <div class="row lo">
+            <span class="dot cool"></span>
+            <span class="label">Low</span>
+            <span class="t" id="tempLo">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="hourly-title">Hourly Temperatures</div>
+      <div class="chart-wrap"><canvas id="chart"></canvas></div>
+      <div class="hour-strip" id="hourStrip"></div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- Query parameters ----------
+  var params = new URLSearchParams(window.location.search);
+  var lat = parseFloat(params.get("lat"));
+  var lon = parseFloat(params.get("lon"));
+  if (!isFinite(lat)) lat = 52.52;
+  if (!isFinite(lon)) lon = 13.405;
+  var name = params.get("name") || "Berlin";
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function toISODate(d) {
+    return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+  }
+  var todayUTC = toISODate(new Date());
+  var dateParam = params.get("date");
+  var date = /^\d{4}-\d{2}-\d{2}$/.test(dateParam || "") ? dateParam : todayUTC;
+
+  var isPast = date < todayUTC;
+  var endpoint = isPast ? "/api/om/archive" : "/api/om/forecast";
+
+  // ---------- WMO weather code mapping ----------
+  var WMO = {
+    0:  ["Clear sky", "☀️"],
+    1:  ["Mainly clear", "🌤️"],
+    2:  ["Partly cloudy", "⛅"],
+    3:  ["Overcast", "☁️"],
+    45: ["Fog", "🌫️"],
+    48: ["Depositing rime fog", "🌫️"],
+    51: ["Light drizzle", "🌦️"],
+    53: ["Moderate drizzle", "🌦️"],
+    55: ["Dense drizzle", "🌧️"],
+    56: ["Light freezing drizzle", "🌧️"],
+    57: ["Dense freezing drizzle", "🌧️"],
+    61: ["Slight rain", "🌦️"],
+    63: ["Moderate rain", "🌧️"],
+    65: ["Heavy rain", "🌧️"],
+    66: ["Light freezing rain", "🌧️"],
+    67: ["Heavy freezing rain", "🌧️"],
+    71: ["Slight snow", "🌨️"],
+    73: ["Moderate snow", "🌨️"],
+    75: ["Heavy snow", "❄️"],
+    77: ["Snow grains", "❄️"],
+    80: ["Slight rain showers", "🌦️"],
+    81: ["Moderate rain showers", "🌧️"],
+    82: ["Violent rain showers", "⛈️"],
+    85: ["Slight snow showers", "🌨️"],
+    86: ["Heavy snow showers", "❄️"],
+    95: ["Thunderstorm", "⛈️"],
+    96: ["Thunderstorm, slight hail", "⛈️"],
+    99: ["Thunderstorm, heavy hail", "⛈️"]
+  };
+
+  function fmtTemp(v) {
+    return (v == null ? "—" : Math.round(v)) + "°";
+  }
+
+  function showError(msg) {
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.add("hidden");
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("errorDetail").textContent = msg || "";
+  }
+
+  // ---------- Fetch ----------
+  var url = endpoint +
+    "?latitude=" + encodeURIComponent(lat) +
+    "&longitude=" + encodeURIComponent(lon) +
+    "&daily=temperature_2m_max,temperature_2m_min,weather_code" +
+    "&hourly=temperature_2m" +
+    "&timezone=UTC" +
+    "&temperature_unit=celsius" +
+    "&start_date=" + encodeURIComponent(date) +
+    "&end_date=" + encodeURIComponent(date);
+
+  fetch(url)
+    .then(function (res) {
+      if (!res.ok) throw new Error("API responded with HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (!data || !data.daily || !data.hourly) {
+        throw new Error("The API response did not contain the expected data.");
+      }
+      render(data);
+    })
+    .catch(function (err) {
+      showError(err && err.message ? err.message : "Unknown error.");
+    });
+
+  // ---------- Render ----------
+  function render(data) {
+    var d = data.daily;
+    var idx = (d.time || []).indexOf(date);
+    if (idx === -1) idx = 0;
+
+    var tMax = d.temperature_2m_max ? d.temperature_2m_max[idx] : null;
+    var tMin = d.temperature_2m_min ? d.temperature_2m_min[idx] : null;
+    var code = d.weather_code ? d.weather_code[idx] : null;
+    var cond = WMO[code] || ["Unknown conditions", "🌡️"];
+
+    // Hourly values for the requested date only
+    var hours = [];
+    var times = data.hourly.time || [];
+    var temps = data.hourly.temperature_2m || [];
+    for (var i = 0; i < times.length; i++) {
+      if (typeof times[i] === "string" && times[i].slice(0, 10) === date && temps[i] != null) {
+        hours.push({ hour: parseInt(times[i].slice(11, 13), 10), temp: temps[i] });
+      }
+    }
+    if (!hours.length) throw new Error("No hourly data available for this date.");
+
+    // Header
+    document.getElementById("locName").textContent = name;
+    var dateObj = new Date(date + "T00:00:00Z");
+    document.getElementById("dateLabel").textContent =
+      dateObj.toLocaleDateString("en-GB", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC"
+      });
+
+    document.getElementById("condIcon").textContent = cond[1];
+    document.getElementById("condText").textContent = cond[0];
+    document.getElementById("tempMax").textContent = tMax != null ? Math.round(tMax) : "—";
+    document.getElementById("tempHi").textContent = fmtTemp(tMax);
+    document.getElementById("tempLo").textContent = fmtTemp(tMin);
+
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+
+    drawChart(hours);
+    buildStrip(hours);
+  }
+
+  // ---------- Hourly strip (every 3 hours) ----------
+  function buildStrip(hours) {
+    var strip = document.getElementById("hourStrip");
+    strip.innerHTML = "";
+    hours.forEach(function (h) {
+      if (h.hour % 3 !== 0) return;
+      var cell = document.createElement("div");
+      cell.className = "hour-cell";
+      var hh = document.createElement("div");
+      hh.className = "h";
+      hh.textContent = pad(h.hour) + ":00";
+      var vv = document.createElement("div");
+      vv.className = "v";
+      vv.textContent = Math.round(h.temp) + "°";
+      cell.appendChild(hh);
+      cell.appendChild(vv);
+      strip.appendChild(cell);
+    });
+  }
+
+  // ---------- Canvas chart ----------
+  function drawChart(hours) {
+    var canvas = document.getElementById("chart");
+    var wrap = canvas.parentElement;
+    var dpr = window.devicePixelRatio || 1;
+    var W = wrap.clientWidth, H = wrap.clientHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    var ctx = canvas.getContext("2d");
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, W, H);
+
+    var padL = 34, padR = 34, padT = 30, padB = 28;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+
+    var temps = hours.map(function (h) { return h.temp; });
+    var min = Math.min.apply(null, temps);
+    var max = Math.max.apply(null, temps);
+    if (max - min < 2) { max += 1; min -= 1; }
+    var range = max - min;
+    min -= range * 0.15;
+    max += range * 0.15;
+
+    function x(i) { return padL + (i / (hours.length - 1)) * plotW; }
+    function y(t) { return padT + (1 - (t - min) / (max - min)) * plotH; }
+
+    // Grid lines
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 1;
+    ctx.font = "11px 'Segoe UI', sans-serif";
+    ctx.fillStyle = "rgba(238,244,248,0.45)";
+    ctx.textAlign = "right";
+    var gridSteps = 4;
+    for (var g = 0; g <= gridSteps; g++) {
+      var gv = min + (g / gridSteps) * (max - min);
+      var gy = y(gv);
+      ctx.beginPath();
+      ctx.moveTo(padL, gy);
+      ctx.lineTo(W - padR, gy);
+      ctx.stroke();
+      ctx.fillText(Math.round(gv) + "°", padL - 8, gy + 4);
+    }
+
+    // X labels
+    ctx.textAlign = "center";
+    hours.forEach(function (h, i) {
+      if (h.hour % 6 === 0) {
+        ctx.fillText(pad(h.hour) + ":00", x(i), H - 8);
+      }
+    });
+
+    // Smooth path (Catmull-Rom -> Bezier)
+    function tracePath() {
+      ctx.beginPath();
+      ctx.moveTo(x(0), y(hours[0].temp));
+      for (var i = 0; i < hours.length - 1; i++) {
+        var p0 = hours[Math.max(0, i - 1)];
+        var p1 = hours[i];
+        var p2 = hours[i + 1];
+        var p3 = hours[Math.min(hours.length - 1, i + 2)];
+        var c1x = x(i) + (x(i + 1) - x(Math.max(0, i - 1))) / 6;
+        var c1y = y(p1.temp) + (y(p2.temp) - y(p0.temp)) / 6;
+        var c2x = x(i + 1) - (x(Math.min(hours.length - 1, i + 2)) - x(i)) / 6;
+        var c2y = y(p2.temp) - (y(p3.temp) - y(p1.temp)) / 6;
+        ctx.bezierCurveTo(c1x, c1y, c2x, c2y, x(i + 1), y(p2.temp));
+      }
+    }
+
+    // Area fill
+    var areaGrad = ctx.createLinearGradient(0, padT, 0, H - padB);
+    areaGrad.addColorStop(0, "rgba(109,213,250,0.35)");
+    areaGrad.addColorStop(1, "rgba(109,213,250,0.02)");
+    tracePath();
+    ctx.lineTo(x(hours.length - 1), H - padB);
+    ctx.lineTo(x(0), H - padB);
+    ctx.closePath();
+    ctx.fillStyle = areaGrad;
+    ctx.fill();
+
+    // Line
+    var lineGrad = ctx.createLinearGradient(padL, 0, W - padR, 0);
+    lineGrad.addColorStop(0, "#6dd5fa");
+    lineGrad.addColorStop(0.5, "#a8e0ff");
+    lineGrad.addColorStop(1, "#ffb347");
+    tracePath();
+    ctx.strokeStyle = lineGrad;
+    ctx.lineWidth = 3;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.shadowColor = "rgba(109,213,250,0.5)";
+    ctx.shadowBlur = 10;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Points + value labels at extremes and every 3rd hour
+    var maxI = temps.indexOf(Math.max.apply(null, temps));
+    var minI = temps.indexOf(Math.min.apply(null, temps));
+    hours.forEach(function (h, i) {
+      if (h.hour % 3 !== 0 && i !== maxI && i !== minI) return;
+      var px = x(i), py = y(h.temp);
+      ctx.beginPath();
+      ctx.arc(px, py, (i === maxI || i === minI) ? 5 : 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = (i === maxI) ? "#ffb347" : (i === minI) ? "#6dd5fa" : "#ffffff";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(15,32,39,0.9)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = "bold 12px 'Segoe UI', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "rgba(238,244,248,0.9)";
+      var above = py - 12 > padT - 6;
+      ctx.fillText(Math.round(h.temp) + "°", px, above ? py - 12 : py + 20);
+    });
+  }
+})();
+</script>
+</body>
+</html>

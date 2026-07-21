@@ -1,0 +1,126 @@
+/* TopNav polish + ≤700px collapse (W1). The base nav (.site-nav, .nav-links,
+   .nav-more, .nav-gh, .nav-more-menu) lives in app/globals.css (W6). This module
+   adds only: the "more" chevron, the "more"-active state for pages under the
+   overflow, the GitHub mark, and the mobile menu disclosure. globals.css is
+   imported by the root layout (loads first), so these equal-specificity rules
+   win by source order; the two-class active rule is bumped to be safe. */
+
+/* chevron on the desktop "more" disclosure */
+.chevron {
+  display: inline-block;
+  margin-inline-start: 5px;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--ink-faint);
+  transition: transform 0.15s ease;
+}
+.moreDetails[open] .chevron {
+  transform: rotate(180deg);
+  color: var(--ink-dim);
+}
+
+/* "more" is active when the current page lives under it (contribute / findings /
+   methodology). Two classes → 0,2,1 specificity, beats globals' .nav-more>summary
+   and .nav-more[open]>summary, so the highlight holds open or closed. */
+.moreDetails.moreOn > summary {
+  color: var(--acc);
+  background: rgba(55, 214, 228, 0.07);
+}
+.moreDetails.moreOn .chevron {
+  color: var(--acc);
+}
+
+/* GitHub mark (replaces the cryptic "gh") */
+.ghMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ghMark svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex: none;
+}
+
+/* ---------------- mobile menu (≤700px) ---------------- */
+.mobileMenu {
+  display: none;
+  position: relative;
+}
+.mobileMenu > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-dim);
+  transition: color 0.15s, background 0.15s;
+}
+.mobileMenu > summary::-webkit-details-marker {
+  display: none;
+}
+.mobileMenu[open] > summary,
+.mobileMenu > summary:hover {
+  color: var(--ink);
+  background: var(--panel);
+}
+.mobileMenu > summary svg {
+  width: 18px;
+  height: 18px;
+}
+.menuPanel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  min-width: 208px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+.menuPanel a {
+  font: 12.5px var(--font-mono);
+  color: var(--ink-dim);
+  padding: 9px 11px;
+  border-radius: 7px;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+}
+.menuPanel a:hover {
+  color: var(--ink);
+  background: var(--panel-2);
+}
+.menuPanel a.on {
+  color: var(--acc);
+  background: rgba(55, 214, 228, 0.07);
+}
+.menuSep {
+  height: 1px;
+  background: var(--line);
+  margin: 5px 2px;
+}
+
+@media (max-width: 700px) {
+  .desktopLinks,
+  .desktopMore,
+  .desktopGh {
+    display: none;
+  }
+  .mobileMenu {
+    display: block;
+  }
+  /* with the primary row gone, push brand ↔ (locale + menu) to the edges. */
+  .side {
+    margin-inline-start: auto;
+  }
+}

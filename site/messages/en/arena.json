@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "title": "Arena",
+    "description": "Blind pairwise voting — two anonymous weather cards, identical data. Pick the one you prefer; identities reveal only after. Community UI preference, clearly framed."
+  },
+  "title": "Arena — blind pairs, your preference",
+  "sub": "Two anonymous configs, same variant, identical fixture data. Cast a choice; identity is revealed only after. The standings below are community UI preference — which cards people prefer to look at.",
+  "angle": {
+    "label": "angle",
+    "overall": "overall",
+    "visual": "visual",
+    "clarity": "clarity"
+  },
+  "metaVariant": "variant",
+  "metaCity": "city",
+  "metaFixture": "fixture",
+  "metaIdentical": "both cards get identical data",
+  "tally": "you've cast {n} choices",
+  "attributionExtra": "blind pair · same fixture",
+  "pair": {
+    "cardA": "card A",
+    "cardB": "card B",
+    "identityHidden": "identity hidden",
+    "preferA": "Prefer A",
+    "preferB": "Prefer B",
+    "tie": "Tie",
+    "tieSub": "equally fine",
+    "bothBad": "Both bad",
+    "bothBadSub": "neither works",
+    "revealTitle": "Choice recorded — identities revealed",
+    "yourPick": "your pick",
+    "tooFast": "Take a moment to look at both cards, then choose.",
+    "voteError": "Something went wrong — try the next pair.",
+    "loading": "loading",
+    "noOutput": "no output"
+  },
+  "reveal": {
+    "next": "next pair",
+    "share": "share this matchup",
+    "compare": "open in compare"
+  },
+  "share": {
+    "permalinkLabel": "matchup link",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "x": "Post to X",
+    "text": "Same prompt, every model — can you pick the same one? {url}"
+  },
+  "unavailableTitle": "Arena needs qualified pairs",
+  "unavailableMsg": "No qualified cards are in the pool yet. Once qualified batches land, blind pairs appear here. Explore the gallery in the meantime.",
+  "leaderboard": {
+    "title": "Community preference · this angle",
+    "framing": "Community UI preference — which cards people prefer to look at, not a capability measure.",
+    "gameability": "Unauthenticated, localStorage-identity web votes — trivially gameable; treat as community signal, not measurement.",
+    "csv": "export votes CSV ↓",
+    "insufficientGroup": "insufficient votes",
+    "insufficientSummary": "{n} configs below the vote threshold",
+    "insufficientShow": "show",
+    "insufficientHide": "hide",
+    "orderPref": "preference",
+    "orderNeutral": "neutral order",
+    "variantPqTip": "P-q — the minimal prompt plus one line: “Pay particular attention to visual design quality.”",
+    "variantPminTip": "P-min — the neutral minimal prompt: required fields only, no design guidance.",
+    "empty": "No votes on this angle yet",
+    "emptyMsg": "Cast a few blind picks above — preference standings appear once there are enough votes.",
+    "colVoters": "{n} voters",
+    "attributionExtra": "community UI preference · n={n}"
+  },
+  "matchup": {
+    "metaTitle": "Shared matchup",
+    "metaDescription": "A blind weather-card matchup, shared with you. Same prompt, identical data — pick the one you prefer.",
+    "title": "A matchup, shared with you",
+    "sub": "Someone shared this blind pairing. Same prompt, identical data. Pick the one you prefer — identities reveal after you choose.",
+    "toArena": "Into the arena",
+    "compare": "open in compare",
+    "shareAgain": "share again",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "x": "Post to X",
+    "shareText": "Same prompt, every model — can you pick the same one? {url}",
+    "attributionExtra": "shared blind matchup",
+    "expiredTitle": "This matchup link isn't available",
+    "expiredMsg": "The shared matchup couldn't be found — it may have expired. Head to the arena for fresh blind pairs."
+  }
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280,height=800">
+<title>Weather Card</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  body{
+    width:1280px;height:800px;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;color:#fff;
+  }
+  .card{
+    width:960px;min-height:520px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:32px;padding:48px 56px;
+    box-shadow:0 32px 64px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1);
+    position:relative;overflow:hidden;
+  }
+  .card::before{
+    content:'';position:absolute;top:-50%;right:-30%;width:500px;height:500px;
+    background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%);
+    border-radius:50%;pointer-events:none;
+  }
+  .card.error{display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .error-msg{font-size:1.3rem;color:rgba(255,255,255,0.6);text-align:center;line-height:1.8}
+  .error-msg .icon{font-size:3rem;margin-bottom:16px;display:block}
+
+  .top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+  .location-info{flex:1}
+  .location-name{font-size:2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+  .location-date{font-size:1rem;font-weight:400;color:rgba(255,255,255,0.55);letter-spacing:0.02em}
+
+  .weather-main{text-align:right;flex-shrink:0}
+  .weather-icon-wrap{margin-bottom:8px}
+  .weather-icon-wrap svg{width:80px;height:80px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.2))}
+  .weather-condition{font-size:1.05rem;font-weight:500;color:rgba(255,255,255,0.8);margin-bottom:4px}
+  .temp-range{font-size:0.95rem;color:rgba(255,255,255,0.5);font-weight:400}
+  .temp-range .hi{color:rgba(255,255,255,0.85);font-weight:600}
+  .temp-range .lo{color:rgba(255,255,255,0.45);font-weight:400}
+  .temp-range .sep{margin:0 6px;color:rgba(255,255,255,0.25)}
+
+  .current-temp{font-size:4.5rem;font-weight:300;letter-spacing:-0.04em;line-height:1;margin-bottom:4px}
+  .current-temp .unit{font-size:1.8rem;font-weight:400;vertical-align:super;color:rgba(255,255,255,0.5)}
+
+  .chart-section{margin-top:12px}
+  .chart-title{font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px}
+  .chart-container{position:relative;width:100%;height:200px}
+  .chart-container canvas{width:100%;height:100%;display:block}
+
+  .loading-wrap{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100%}
+  .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.6);border-radius:50%;animation:spin 0.8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text{margin-top:16px;color:rgba(255,255,255,0.4);font-size:0.95rem}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="loading-wrap" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Fetching weather data…</div>
+  </div>
+</div>
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const lat = params.get('lat') || '52.52';
+  const lon = params.get('lon') || '13.405';
+  const name = params.get('name') || 'Berlin';
+  const today = new Date().toISOString().slice(0,10);
+  const date = params.get('date') || today;
+
+  const isPast = date < today;
+  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  const url = endpoint + '?' + new URLSearchParams({
+    latitude: lat,
+    longitude: lon,
+    daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+    hourly: 'temperature_2m',
+    timezone: 'UTC',
+    temperature_unit: 'celsius',
+    start_date: date,
+    end_date: date
+  }).toString();
+
+  const wmoDescriptions = {
+    0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+    45:'Foggy',48:'Rime fog',
+    51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',
+    56:'Light freezing drizzle',57:'Dense freezing drizzle',
+    61:'Slight rain',63:'Moderate rain',65:'Heavy rain',
+    66:'Light freezing rain',67:'Heavy freezing rain',
+    71:'Slight snowfall',73:'Moderate snowfall',75:'Heavy snowfall',
+    77:'Snow grains',
+    80:'Slight rain showers',81:'Moderate rain showers',82:'Violent rain showers',
+    85:'Slight snow showers',86:'Heavy snow showers',
+    95:'Thunderstorm',96:'Thunderstorm with hail',99:'Severe thunderstorm'
+  };
+
+  function weatherIcon(code, size){
+    const s = size || 72;
+    const icons = {
+      clear:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD93D"/><stop offset="100%" stop-color="#FF8C00"/></linearGradient></defs><circle cx="40" cy="40" r="16" fill="url(#sun)"/><g stroke="#FFD93D" stroke-width="3" stroke-linecap="round"><line x1="40" y1="10" x2="40" y2="18"/><line x1="40" y1="62" x2="40" y2="70"/><line x1="10" y1="40" x2="18" y2="40"/><line x1="62" y1="40" x2="70" y2="40"/><line x1="18.8" y1="18.8" x2="24.4" y2="24.4"/><line x1="55.6" y1="55.6" x2="61.2" y2="61.2"/><line x1="61.2" y1="18.8" x2="55.6" y2="24.4"/><line x1="24.4" y1="55.6" x2="18.8" y2="61.2"/></g></svg>`,
+      partlyCloudy:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="sun2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD93D"/><stop offset="100%" stop-color="#FF8C00"/></linearGradient><linearGradient id="cl1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8E8E8"/><stop offset="100%" stop-color="#B0B8C8"/></linearGradient></defs><circle cx="32" cy="28" r="13" fill="url(#sun2)"/><g stroke="#FFD93D" stroke-width="2.5" stroke-linecap="round"><line x1="32" y1="6" x2="32" y2="12"/><line x1="14" y1="28" x2="8" y2="28"/><line x1="16" y1="12" x2="20.5" y2="16.5"/><line x1="48" y1="12" x2="43.5" y2="16.5"/></g><path d="M22 62a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H22z" fill="url(#cl1)" opacity="0.95"/></svg>`,
+      cloudy:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="cl2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D0D0D0"/><stop offset="100%" stop-color="#8892A0"/></linearGradient></defs><path d="M18 58a11 11 0 0 1 0-22h.5a15 15 0 0 1 28 5.5h.5a9 9 0 0 1 0 18H18z" fill="url(#cl2)" opacity="0.7" transform="translate(6,-8)"/><path d="M14 66a13 13 0 0 1 0-26h1a17 17 0 0 1 32 7h1a11 11 0 0 1 0 22H14z" fill="url(#cl2)"/></svg>`,
+      fog:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><g stroke="rgba(200,210,220,0.7)" stroke-width="3.5" stroke-linecap="round"><line x1="12" y1="28" x2="68" y2="28"/><line x1="18" y1="38" x2="62" y2="38"/><line x1="12" y1="48" x2="68" y2="48"/><line x1="22" y1="58" x2="58" y2="58"/></g></svg>`,
+      drizzle:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="cl3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B8C4D4"/><stop offset="100%" stop-color="#7A8A9E"/></linearGradient></defs><path d="M16 50a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z" fill="url(#cl3)"/><g stroke="rgba(120,180,255,0.7)" stroke-width="2" stroke-linecap="round"><line x1="26" y1="56" x2="24" y2="64"/><line x1="40" y1="56" x2="38" y2="64"/><line x1="54" y1="56" x2="52" y2="64"/></g></svg>`,
+      rain:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="cl4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8896A8"/><stop offset="100%" stop-color="#556070"/></linearGradient></defs><path d="M16 46a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z" fill="url(#cl4)"/><g stroke="rgba(80,160,255,0.8)" stroke-width="2.2" stroke-linecap="round"><line x1="22" y1="54" x2="18" y2="66"/><line x1="34" y1="54" x2="30" y2="66"/><line x1="46" y1="54" x2="42" y2="66"/><line x1="58" y1="54" x2="54" y2="66"/></g></svg>`,
+      snow:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="cl5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8D0DC"/><stop offset="100%" stop-color="#8896A8"/></linearGradient></defs><path d="M16 46a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z" fill="url(#cl5)"/><g fill="rgba(200,220,255,0.85)"><circle cx="24" cy="60" r="2.5"/><circle cx="40" cy="58" r="2.5"/><circle cx="56" cy="62" r="2.5"/><circle cx="32" cy="68" r="2"/><circle cx="48" cy="70" r="2"/></g></svg>`,
+      thunder:`<svg viewBox="0 0 80 80" width="${s}" height="${s}"><defs><linearGradient id="cl6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6B7280"/><stop offset="100%" stop-color="#374151"/></linearGradient></defs><path d="M16 42a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z" fill="url(#cl6)"/><polygon points="42,44 34,60 40,60 36,76 52,56 44,56 50,44" fill="#FFD93D" opacity="0.95"/></svg>`
+    };
+    if(code===0) return icons.clear;
+    if(code<=2) return icons.partlyCloudy;
+    if(code===3) return icons.cloudy;
+    if(code===45||code===48) return icons.fog;
+    if(code>=51&&code<=57) return icons.drizzle;
+    if((code>=61&&code<=67)||(code>=80&&code<=82)) return icons.rain;
+    if((code>=71&&code<=77)||(code>=85&&code<=86)) return icons.snow;
+    if(code>=95) return icons.thunder;
+    return icons.cloudy;
+  }
+
+  function weatherBg(code){
+    if(code===0) return 'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)';
+    if(code<=2) return 'linear-gradient(135deg,#1a1a2e,#1e3a5f,#162447)';
+    if(code===3) return 'linear-gradient(135deg,#2d3436,#636e72,#2d3436)';
+    if(code===45||code===48) return 'linear-gradient(135deg,#485460,#808e9b,#485460)';
+    if(code>=51&&code<=57) return 'linear-gradient(135deg,#0c2461,#1e3799,#0c2461)';
+    if((code>=61&&code<=67)||(code>=80&&code<=82)) return 'linear-gradient(135deg,#0c2461,#1B1464,#0c2461)';
+    if((code>=71&&code<=77)||(code>=85&&code<=86)) return 'linear-gradient(135deg,#2c3e50,#4ca1af,#2c3e50)';
+    if(code>=95) return 'linear-gradient(135deg,#0f0c29,#302b63,#24243e)';
+    return 'linear-gradient(135deg,#0f0c29,#302b63,#24243e)';
+  }
+
+  function formatDate(d){
+    const dt = new Date(d+'T12:00:00Z');
+    const opts = {weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'UTC'};
+    return dt.toLocaleDateString('en-US',opts);
+  }
+
+  function drawChart(canvas, hours, temps){
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    const W = rect.width, H = rect.height;
+    const padL=48, padR=20, padT=30, padB=40;
+    const cW = W-padL-padR, cH = H-padT-padB;
+
+    const validTemps = temps.filter(t=>t!==null&&t!==undefined&&!isNaN(t));
+    if(!validTemps.length) return;
+    const tMin = Math.floor(Math.min(...validTemps))-2;
+    const tMax = Math.ceil(Math.max(...validTemps))+2;
+    const tRange = tMax-tMin||1;
+
+    function x(i){return padL + (i/23)*cW}
+    function y(t){return padT + cH - ((t-tMin)/tRange)*cH}
+
+    // grid lines
+    ctx.strokeStyle='rgba(255,255,255,0.06)';
+    ctx.lineWidth=1;
+    const gridSteps=5;
+    for(let i=0;i<=gridSteps;i++){
+      const gy = padT + (i/gridSteps)*cH;
+      ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();
+      const val = tMax - (i/gridSteps)*tRange;
+      ctx.fillStyle='rgba(255,255,255,0.3)';
+      ctx.font='11px Inter,system-ui,sans-serif';
+      ctx.textAlign='right';
+      ctx.textBaseline='middle';
+      ctx.fillText(Math.round(val)+'°',padL-10,gy);
+    }
+
+    // hour labels
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font='11px Inter,system-ui,sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='top';
+    for(let i=0;i<24;i+=3){
+      const xp = x(i);
+      ctx.fillText(String(i).padStart(2,'0')+':00',xp,H-padB+14);
+    }
+
+    // build path points for smooth curve
+    const points = [];
+    for(let i=0;i<24;i++){
+      if(temps[i]!==null&&temps[i]!==undefined&&!isNaN(temps[i])){
+        points.push({x:x(i),y:y(temps[i]),i:i,t:temps[i]});
+      }
+    }
+    if(points.length<2) return;
+
+    // gradient fill under curve
+    const grad = ctx.createLinearGradient(0,padT,0,padT+cH);
+    grad.addColorStop(0,'rgba(99,179,237,0.25)');
+    grad.addColorStop(1,'rgba(99,179,237,0.01)');
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x,padT+cH);
+    ctx.lineTo(points[0].x,points[0].y);
+    for(let i=1;i<points.length;i++){
+      const prev=points[i-1], cur=points[i];
+      const cpx=(prev.x+cur.x)/2;
+      ctx.bezierCurveTo(cpx,prev.y,cpx,cur.y,cur.x,cur.y);
+    }
+    ctx.lineTo(points[points.length-1].x,padT+cH);
+    ctx.closePath();
+    ctx.fillStyle=grad;
+    ctx.fill();
+
+    // curve stroke
+    ctx.beginPath();
+    ctx.moveTo(points[0].x,points[0].y);
+    for(let i=1;i<points.length;i++){
+      const prev=points[i-1], cur=points[i];
+      const cpx=(prev.x+cur.x)/2;
+      ctx.bezierCurveTo(cpx,prev.y,cpx,cur.y,cur.x,cur.y);
+    }
+    ctx.strokeStyle='rgba(99,179,237,0.85)';
+    ctx.lineWidth=2.5;
+    ctx.lineJoin='round';
+    ctx.stroke();
+
+    // data dots
+    points.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,3.5,0,Math.PI*2);
+      ctx.fillStyle='#63b3ed';
+      ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.3)';
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+    });
+
+    // highlight max/min
+    const maxP = points.reduce((a,b)=>b.t>a.t?b:a);
+    const minP = points.reduce((a,b)=>b.t<a.t?b:a);
+
+    [[maxP,'▲','#FFD93D'],[minP,'▼','#63b3ed']].forEach(([p,arrow,col])=>{
+      ctx.fillStyle=col;
+      ctx.font='bold 12px Inter,system-ui,sans-serif';
+      ctx.textAlign='center';
+      ctx.textBaseline='bottom';
+      const offsetY = arrow==='▲'?-12:20;
+      const anchor = arrow==='▲'?'bottom':'top';
+      ctx.textBaseline = arrow==='▲'?'bottom':'top';
+      const yy = arrow==='▲'?p.y-10:p.y+12;
+      ctx.fillText(arrow+' '+p.t.toFixed(1)+'°',p.x,yy);
+      ctx.textBaseline='alphabetic';
+    });
+  }
+
+  fetch(url).then(r=>{
+    if(!r.ok) throw new Error('API error '+r.status);
+    return r.json();
+  }).then(data=>{
+    const card = document.getElementById('card');
+    const daily = data.daily;
+    const hourly = data.hourly;
+    if(!daily||!hourly) throw new Error('Invalid data');
+
+    const tMax = daily.temperature_2m_max[0];
+    const tMin = daily.temperature_2m_min[0];
+    const wmo = daily.weather_code[0];
+    const desc = wmoDescriptions[wmo]||'Unknown';
+    const bg = weatherBg(wmo);
+    document.body.style.background = bg;
+
+    // current or average temp
+    const nowHour = new Date().getUTCHours();
+    const temps = hourly.temperature_2m;
+    const currentTemp = (date===today && temps[nowHour]!==undefined) ? temps[nowHour] : ((tMax+tMin)/2);
+
+    card.innerHTML = `
+      <div class="top-row">
+        <div class="location-info">
+          <div class="location-name">${name}</div>
+          <div class="location-date">${formatDate(date)}</div>
+        </div>
+        <div class="weather-main">
+          <div class="weather-icon-wrap">${weatherIcon(wmo,72)}</div>
+          <div class="weather-condition">${desc}</div>
+          <div class="temp-range">
+            <span class="hi">↑ ${tMax.toFixed(1)}°</span>
+            <span class="sep">·</span>
+            <span class="lo">↓ ${tMin.toFixed(1)}°</span>
+          </div>
+        </div>
+      </div>
+      <div class="current-temp">${currentTemp.toFixed(1)}<span class="unit">°C</span></div>
+      <div class="chart-section">
+        <div class="chart-title">Hourly Temperature</div>
+        <div class="chart-container"><canvas id="chart"></canvas></div>
+      </div>
+    `;
+
+    drawChart(document.getElementById('chart'), null, temps);
+  }).catch(err=>{
+    const card = document.getElementById('card');
+    card.classList.add('error');
+    card.innerHTML = `
+      <div class="error-msg">
+        <span class="icon">⚠️</span>
+        Unable to load weather data.<br>
+        <small style="opacity:0.5">${err.message}</small>
+      </div>`;
+  });
+})();
+</script>
+</body>
+</html>

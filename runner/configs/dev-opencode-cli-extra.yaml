@@ -1,0 +1,69 @@
+# dev-opencode-cli-extra.yaml — go 订阅剩余 6 模型(opencode harness 臂)。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: opencode-cli-isolated-xdg-go-subscription
+  proxy: none
+
+configs:
+  - config_id: glm-5--cli--opencode--dev
+    family: glm
+    model_id: glm-5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: kimi-k2.5--cli--opencode--dev
+    family: kimi
+    model_id: kimi-k2.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: mimo-v2-omni--cli--opencode--dev
+    family: mimo
+    model_id: mimo-v2-omni
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: mimo-v2-pro--cli--opencode--dev
+    family: mimo
+    model_id: mimo-v2-pro
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: minimax-m2.5--cli--opencode--dev
+    family: minimax
+    model_id: minimax-m2.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: qwen3.5-plus--cli--opencode--dev
+    family: qwen
+    model_id: qwen3.5-plus
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

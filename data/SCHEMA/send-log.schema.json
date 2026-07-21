@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/send-log.schema.json",
+  "title": "send-log.json",
+  "description": "Per-config ATTEMPT-level send log (DECISIONS-M0 §6), at data/batches/<batch>/configs/<config_id>/send-log.json. Records every send attempt behind each slot POSITION — the detail meta.json's terminal state summarizes. Ruling model (DECISIONS-M0 §6): a slot is a POSITION; a slot is FILLED by the request that reached the model; unreachable / rate-limited retries are non-slot-consuming (do NOT consume cost / are not samples) but MULTIPLE such attempts precede a position's terminal state — that per-attempt history (429 / quota / not-sent tries, backoff, whether each reached the model) lives here, not in meta.json. Explains both successful slot fills and the rate-limited-exhausted / unreachable UNFILLED positions. JUDGMENT CALL (flagged): scheme fixes the terminal-state SEMANTICS (§1.1) but not the attempt-log JSON shape; the layout is this contract's design (DECISIONS-M0 §6). Timestamps/durations are OBSERVATIONAL and excluded from any verify hash (scheme §0). schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. FLAG (scheme-silent, pre-existing): the frozen layout's slots/<k>/ directory does not encode the P-min/P-q variant dimension, yet each config × variant has its own N positions (scheme §1.1/§1.2 blocks each run one P-min + one P-q). This log makes (variant, slot_index) EXPLICIT per position; the meta.json/slots directory variant dimension remains under-specified in DATA-LAYOUT and is flagged for the owner. attempt.outcome is the per-attempt classification (6 values, 'rate-limited' un-suffixed); terminal_state is the slot-meta 6-state enum ('rate-limited-exhausted' after the backoff budget is spent).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "config_id", "N", "retry_policy", "positions"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1, "description": "Owning batch id."},
+    "config_id": {"type": "string", "minLength": 1, "description": "Config id; equals the parent <config_id> directory and is in manifest.config_ids."},
+    "N": {"type": "integer", "enum": [3, 4, 5], "description": "Slots per config per variant (== manifest.N)."},
+    "retry_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_unreachable_retries", "rate_limit_backoff"],
+      "description": "Frozen batch-wide retry budgets (scheme §1.1). Recorded for auditability of exhaustion terminals.",
+      "properties": {
+        "max_unreachable_retries": {"type": "integer", "const": 5, "description": "'未发送重试上限 5' (scheme §1.1 / appendix A). Exhaustion → terminal unreachable."},
+        "rate_limit_backoff": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_attempts", "max_total_ms"],
+          "description": "Rate-limited exponential-backoff budget, frozen pre-batch (scheme §1.1: 次数上限 + 总时长上限). Exhaustion → terminal rate-limited-exhausted.",
+          "properties": {
+            "max_attempts": {"type": "integer", "minimum": 1, "description": "Max rate-limited retry attempts before exhaustion."},
+            "max_total_ms": {"type": "integer", "minimum": 0, "description": "Max cumulative backoff wall time (ms) before exhaustion."}
+          }
+        }
+      }
+    },
+    "positions": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "One entry per slot POSITION = (variant, slot_index). There are N positions per variant. (variant,slot_index) composite uniqueness is runner-enforced.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["variant", "slot_index", "terminal_state", "model_reaching_attempt_index", "block_index", "attempts"],
+        "properties": {
+          "variant": {"type": "string", "enum": ["P-min", "P-q"], "description": "Prompt variant for this position (scheme §9)."},
+          "slot_index": {"type": "integer", "minimum": 0, "description": "Position index k=0..N-1; matches slots/<k>/ and meta.json.slot_index. Required for ALL terminal states (DECISIONS-M0 §6)."},
+          "block_index": {"type": "integer", "minimum": 0, "description": "Time block 0..N-1 this position belongs to (scheme §1.2 pairing randomization; the block runs one P-min + one P-q)."},
+          "terminal_state": {
+            "type": "string",
+            "enum": ["valid", "model-failed", "infra-failed", "acceptance-unknown", "unreachable", "rate-limited-exhausted"],
+            "description": "Final terminal state of the position (slot-meta 6-state enum, scheme §1.1). unreachable / rate-limited-exhausted = UNFILLED position (no model-reaching attempt succeeded)."
+          },
+          "model_reaching_attempt_index": {"type": ["integer", "null"], "minimum": 0, "description": "attempt_index of the single attempt that reached the model and set the terminal state (for valid / model-failed / infra-failed / acceptance-unknown); null for the two UNFILLED terminals (no attempt reached the model)."},
+          "attempts": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "description": "Every send attempt for this position in chronological order (attempt_index ascending). The last attempt determines terminal_state. Non-slot-consuming (unreachable / rate-limited) attempts may precede the terminal one.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["attempt_index", "outcome", "reached_model", "charged", "reason", "http_status", "backoff_ms", "request_id", "started_at", "ended_at"],
+              "properties": {
+                "attempt_index": {"type": "integer", "minimum": 0, "description": "0-based attempt counter within this position."},
+                "outcome": {
+                  "type": "string",
+                  "enum": ["valid", "model-failed", "infra-failed", "acceptance-unknown", "unreachable", "rate-limited"],
+                  "description": "Per-attempt classification. valid/model-failed/infra-failed/acceptance-unknown = reached the model (a filled outcome). unreachable = provably not sent. rate-limited = provably-uncharged pre-model refusal (this attempt); the position becomes rate-limited-exhausted only when the backoff budget is spent."
+                },
+                "reached_model": {"type": "boolean", "description": "true iff this attempt was delivered to the model (the four filled outcomes); false for unreachable / rate-limited. This is the cost/sample boundary (scheme §1.1)."},
+                "charged": {"type": ["boolean", "null"], "description": "true = provably billed; false = provably uncharged (unreachable, rate-limited with a deterministic 429/quota/503 signal); null = unprovable (acceptance-unknown — conservatively may have billed)."},
+                "reason": {
+                  "type": ["string", "null"],
+                  "enum": ["connection-refused", "dns-failure", "tls-failure", "http-429", "quota-exceeded", "http-503-overloaded", "mid-stream-death", "pre-header-timeout", "no-valid-html", "refusal", "self-truncated", "ok", null],
+                  "description": "Versioned finer-grained reason. unreachable → connection-refused/dns-failure/tls-failure; rate-limited → http-429/quota-exceeded/http-503-overloaded (the deterministic uncharged evidence required by scheme §1.1); infra-failed → mid-stream-death; acceptance-unknown → pre-header-timeout; model-failed → no-valid-html/refusal/self-truncated; valid → ok; or null."
+                },
+                "http_status": {"type": ["integer", "null"], "minimum": 100, "maximum": 599, "description": "HTTP status if one was received (e.g. 429, 503), else null (e.g. connection refused before any response)."},
+                "backoff_ms": {"type": ["integer", "null"], "minimum": 0, "description": "Backoff wall time (ms) applied before the NEXT attempt (rate-limited exponential backoff), or null when no backoff followed."},
+                "request_id": {"type": ["string", "null"], "description": "Vendor request id / response-header evidence, if present. Its presence distinguishes infra-failed / acceptance-unknown (scheme §1.1)."},
+                "started_at": {"type": ["string", "null"], "format": "date-time", "description": "RFC 3339 UTC attempt start. OBSERVATIONAL — excluded from every verify hash (scheme §0)."},
+                "ended_at": {"type": ["string", "null"], "format": "date-time", "description": "RFC 3339 UTC attempt end. OBSERVATIONAL — excluded from verify hashes."}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

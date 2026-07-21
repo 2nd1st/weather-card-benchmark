@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Weather</title>
+<style>
+  :root{
+    --bg-1:#1b2a4a;
+    --bg-2:#3a4a6b;
+    --accent:#8ec5ff;
+    --card:rgba(255,255,255,0.10);
+    --card-brd:rgba(255,255,255,0.22);
+    --ink:#f4f7ff;
+    --ink-dim:rgba(244,247,255,0.68);
+    --ink-faint:rgba(244,247,255,0.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1280px;height:800px;overflow:hidden}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 82% -10%, rgba(255,255,255,0.16), transparent 55%),
+      linear-gradient(150deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;
+    transition:background 700ms ease;
+  }
+
+  .stage{width:1280px;height:800px;display:flex;align-items:center;justify-content:center}
+
+  .card{
+    width:1040px;
+    background:var(--card);
+    border:1px solid var(--card-brd);
+    border-radius:32px;
+    padding:52px 60px 46px;
+    backdrop-filter:blur(26px) saturate(150%);
+    -webkit-backdrop-filter:blur(26px) saturate(150%);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+    position:relative;
+    overflow:hidden;
+    opacity:0;transform:translateY(14px);
+    animation:rise 620ms cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ---- header ---- */
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+  .loc{display:flex;flex-direction:column;gap:6px}
+  .loc .pin{display:flex;align-items:center;gap:9px;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+  .loc .pin svg{width:15px;height:15px;opacity:.85}
+  .loc h1{font-size:44px;font-weight:650;letter-spacing:-.01em;line-height:1.05}
+  .loc .date{font-size:18px;color:var(--ink-dim);margin-top:2px}
+  .coords{font-size:13px;color:var(--ink-faint);margin-top:8px;letter-spacing:.02em}
+
+  .cond{display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right}
+  .cond .icon{width:96px;height:96px;filter:drop-shadow(0 10px 22px rgba(0,0,0,0.28))}
+  .cond .label{font-size:22px;font-weight:600}
+
+  /* ---- hero temps ---- */
+  .hero{display:flex;align-items:flex-end;gap:44px;margin-top:38px}
+  .big{display:flex;align-items:flex-start;line-height:.9}
+  .big .num{font-size:150px;font-weight:250;letter-spacing:-.04em}
+  .big .deg{font-size:56px;font-weight:300;margin-top:14px;color:var(--ink-dim)}
+  .hilo{display:flex;gap:34px;padding-bottom:20px}
+  .hilo .item{display:flex;flex-direction:column;gap:4px}
+  .hilo .k{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .hilo .v{font-size:34px;font-weight:500}
+  .hilo .v.min{color:var(--accent)}
+
+  /* ---- chart ---- */
+  .chart-wrap{margin-top:36px}
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+  .chart-head .t{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+  .chart-head .u{font-size:13px;color:var(--ink-faint)}
+  svg.chart{display:block;width:100%;height:230px;overflow:visible}
+  .grid-line{stroke:rgba(255,255,255,0.09);stroke-width:1}
+  .grid-label{fill:var(--ink-faint);font-size:12px}
+  .hour-label{fill:var(--ink-faint);font-size:12px;text-anchor:middle}
+  .area-line{fill:none;stroke:url(#stroke);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .dot{fill:#fff;stroke:var(--accent);stroke-width:2}
+  .dot-label{fill:var(--ink);font-size:12px;font-weight:600;text-anchor:middle}
+
+  /* ---- states ---- */
+  .msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;min-height:360px;text-align:center}
+  .msg .ring{width:46px;height:46px;border-radius:50%;border:3px solid rgba(255,255,255,0.2);border-top-color:#fff;animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .msg .em{font-size:52px}
+  .msg h2{font-size:26px;font-weight:600}
+  .msg p{font-size:16px;color:var(--ink-dim);max-width:520px;line-height:1.5}
+  .msg code{background:rgba(0,0,0,0.25);padding:2px 8px;border-radius:6px;font-size:14px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="card" id="card">
+    <div class="msg" id="loading">
+      <div class="ring"></div>
+      <p>Loading weather…</p>
+    </div>
+    <div id="content" class="hidden"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- params ----------
+  var q = new URLSearchParams(location.search);
+  function num(v, d){ var n = parseFloat(v); return isFinite(n) ? n : d; }
+  var lat  = num(q.get("lat"), 52.52);
+  var lon  = num(q.get("lon"), 13.405);
+  var name = (q.get("name") || "Berlin").trim() || "Berlin";
+
+  function todayUTC(){
+    var n = new Date();
+    return n.getUTCFullYear() + "-" +
+      String(n.getUTCMonth()+1).padStart(2,"0") + "-" +
+      String(n.getUTCDate()).padStart(2,"0");
+  }
+  var dateStr = q.get("date");
+  if(!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) dateStr = todayUTC();
+
+  // Past dates -> archive endpoint; today & future -> forecast endpoint.
+  var isPast = dateStr < todayUTC();
+  var endpoint = isPast ? "/api/om/archive" : "/api/om/forecast";
+
+  var params = new URLSearchParams({
+    latitude: lat,
+    longitude: lon,
+    daily: "temperature_2m_max,temperature_2m_min,weather_code",
+    hourly: "temperature_2m",
+    timezone: "UTC",
+    temperature_unit: "celsius",
+    start_date: dateStr,
+    end_date: dateStr
+  });
+  var url = endpoint + "?" + params.toString();
+
+  // ---------- weather code metadata ----------
+  function wmo(code){
+    var map = {
+      0:["Clear sky","clear"],
+      1:["Mainly clear","clear"],
+      2:["Partly cloudy","partly"],
+      3:["Overcast","cloud"],
+      45:["Fog","fog"],48:["Rime fog","fog"],
+      51:["Light drizzle","rain"],53:["Drizzle","rain"],55:["Dense drizzle","rain"],
+      56:["Freezing drizzle","rain"],57:["Freezing drizzle","rain"],
+      61:["Light rain","rain"],63:["Rain","rain"],65:["Heavy rain","rain"],
+      66:["Freezing rain","rain"],67:["Freezing rain","rain"],
+      71:["Light snow","snow"],73:["Snow","snow"],75:["Heavy snow","snow"],
+      77:["Snow grains","snow"],
+      80:["Rain showers","rain"],81:["Rain showers","rain"],82:["Violent showers","rain"],
+      85:["Snow showers","snow"],86:["Snow showers","snow"],
+      95:["Thunderstorm","storm"],96:["Thunderstorm, hail","storm"],99:["Thunderstorm, hail","storm"]
+    };
+    return map[code] || ["Unknown","cloud"];
+  }
+
+  // Themed gradients per condition group.
+  var THEMES = {
+    clear:  ["#2b5876","#4e83b6","#8ec5ff"],
+    partly: ["#324a6b","#54749e","#a9c8ef"],
+    cloud:  ["#3a4152","#59637a","#9aa6bd"],
+    fog:    ["#464b57","#6b7280","#aab0bd"],
+    rain:   ["#1f2f45","#37516f","#6f97c4"],
+    snow:   ["#4a5a72","#7a8aa3","#d6e2f2"],
+    storm:  ["#232842","#3d3a63","#7b6fb0"]
+  };
+
+  function iconSVG(group){
+    var sun = '<circle cx="32" cy="32" r="13" fill="#ffd66b"/>' +
+      '<g stroke="#ffd66b" stroke-width="3.5" stroke-linecap="round">' +
+      '<line x1="32" y1="5" x2="32" y2="13"/><line x1="32" y1="51" x2="32" y2="59"/>' +
+      '<line x1="5" y1="32" x2="13" y2="32"/><line x1="51" y1="32" x2="59" y2="32"/>' +
+      '<line x1="13" y1="13" x2="19" y2="19"/><line x1="45" y1="45" x2="51" y2="51"/>' +
+      '<line x1="51" y1="13" x2="45" y2="19"/><line x1="19" y1="45" x2="13" y2="51"/></g>';
+    var cloud = '<path d="M22 44 A12 12 0 0 1 24 20 A16 16 0 0 1 52 30 A11 11 0 0 1 50 52 L24 52 A9 9 0 0 1 22 44 Z" fill="#eef3fb"/>';
+    var cloudDark = '<path d="M22 44 A12 12 0 0 1 24 20 A16 16 0 0 1 52 30 A11 11 0 0 1 50 52 L24 52 A9 9 0 0 1 22 44 Z" fill="#c3ccdb"/>';
+    var drop = function(x,y){ return '<path d="M'+x+' '+y+' q4 6 0 9 a4.5 4.5 0 0 1-4.5-4.5 Z" fill="#8ec5ff"/>'; };
+    var flake = function(x,y){ return '<g stroke="#dbe7f7" stroke-width="2.4" stroke-linecap="round"><line x1="'+x+'" y1="'+(y-4)+'" x2="'+x+'" y2="'+(y+4)+'"/><line x1="'+(x-4)+'" y1="'+y+'" x2="'+(x+4)+'" y2="'+y+'"/></g>'; };
+
+    switch(group){
+      case "clear": return svg(sun);
+      case "partly": return svg('<g transform="translate(-6,-6) scale(0.8)">'+sun+'</g>' + '<g transform="translate(8,10)">'+cloud+'</g>');
+      case "cloud": return svg(cloudDark + '<g transform="translate(-12,-10) scale(0.85)">'+cloud+'</g>');
+      case "fog": return svg(cloud + '<g stroke="#c3ccdb" stroke-width="3" stroke-linecap="round"><line x1="16" y1="52" x2="48" y2="52"/><line x1="20" y1="58" x2="44" y2="58"/></g>');
+      case "rain": return svg(cloudDark + drop(24,54) + drop(34,56) + drop(44,54));
+      case "snow": return svg(cloud + flake(24,56) + flake(34,58) + flake(44,56));
+      case "storm": return svg(cloudDark + '<path d="M32 50 l-7 12 h6 l-4 10 12-15 h-6 l5-7 z" fill="#ffd66b"/>');
+      default: return svg(cloud);
+    }
+    function svg(inner){ return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>'; }
+  }
+
+  function fmtDate(s){
+    var p = s.split("-");
+    var d = new Date(Date.UTC(+p[0], +p[1]-1, +p[2]));
+    return d.toLocaleDateString("en-US",{weekday:"long", month:"long", day:"numeric", year:"numeric", timeZone:"UTC"});
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function r(x){ return Math.round(x); }
+
+  // ---------- smooth path ----------
+  function smooth(pts){
+    if(pts.length < 2) return "";
+    var d = "M " + pts[0].x + " " + pts[0].y;
+    for(var i=0;i<pts.length-1;i++){
+      var p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
+      var c1x=p1.x+(p2.x-p0.x)/6, c1y=p1.y+(p2.y-p0.y)/6;
+      var c2x=p2.x-(p3.x-p1.x)/6, c2y=p2.y-(p3.y-p1.y)/6;
+      d += " C "+c1x+" "+c1y+", "+c2x+" "+c2y+", "+p2.x+" "+p2.y;
+    }
+    return d;
+  }
+
+  function buildChart(hours, temps){
+    var W=920, H=230, padL=6, padR=6, padT=34, padB=26;
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    var lo=Math.min.apply(null,temps), hi=Math.max.apply(null,temps);
+    if(hi-lo < 1){ hi+=0.5; lo-=0.5; }
+    var pad=(hi-lo)*0.18; hi+=pad; lo-=pad;
+    var n=temps.length;
+    function X(i){ return padL + (n<=1 ? innerW/2 : innerW * i/(n-1)); }
+    function Y(t){ return padT + innerH * (1-(t-lo)/(hi-lo)); }
+
+    var pts = temps.map(function(t,i){ return {x:X(i), y:Y(t)}; });
+    var line = smooth(pts);
+    var area = line + " L "+X(n-1)+" "+(padT+innerH)+" L "+X(0)+" "+(padT+innerH)+" Z";
+
+    // horizontal gridlines
+    var grids="";
+    var steps=4;
+    for(var g=0; g<=steps; g++){
+      var tv = lo + (hi-lo)*g/steps;
+      var yy = Y(tv);
+      grids += '<line class="grid-line" x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'"/>';
+      grids += '<text class="grid-label" x="'+(W-padR)+'" y="'+(yy-5)+'" text-anchor="end">'+r(tv)+'°</text>';
+    }
+
+    // hour labels + dots every 3h
+    var marks="";
+    for(var i=0;i<n;i++){
+      if(i%3===0){
+        marks += '<circle class="dot" cx="'+X(i)+'" cy="'+Y(temps[i])+'" r="4"/>';
+        marks += '<text class="dot-label" x="'+X(i)+'" y="'+(Y(temps[i])-12)+'">'+r(temps[i])+'°</text>';
+        marks += '<text class="hour-label" x="'+X(i)+'" y="'+(H-4)+'">'+String(hours[i]).padStart(2,"0")+'</text>';
+      }
+    }
+
+    return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">' +
+      '<defs>' +
+        '<linearGradient id="stroke" x1="0" y1="0" x2="1" y2="0">' +
+          '<stop offset="0%" stop-color="#a9c8ef"/><stop offset="100%" stop-color="#fff"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="rgba(142,197,255,0.42)"/>' +
+          '<stop offset="100%" stop-color="rgba(142,197,255,0)"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      grids +
+      '<path d="'+area+'" fill="url(#fill)"/>' +
+      '<path class="area-line" d="'+line+'"/>' +
+      marks +
+      '</svg>';
+  }
+
+  // ---------- render ----------
+  function fail(detail){
+    document.getElementById("loading").classList.add("hidden");
+    var c = document.getElementById("content");
+    c.classList.remove("hidden");
+    c.innerHTML =
+      '<div class="msg">' +
+        '<div class="em">⚠️</div>' +
+        '<h2>Weather data could not be loaded</h2>' +
+        '<p>'+esc(detail || "The weather service did not return usable data.")+'</p>' +
+        '<p style="font-size:13px;color:var(--ink-faint)">' + esc(name) + ' · ' + esc(dateStr) + '</p>' +
+      '</div>';
+  }
+
+  function render(data){
+    var daily = data && data.daily;
+    var hourly = data && data.hourly;
+    if(!daily || !hourly ||
+       !Array.isArray(daily.temperature_2m_max) || daily.temperature_2m_max[0]==null ||
+       !Array.isArray(hourly.temperature_2m) || !hourly.temperature_2m.length){
+      return fail("The response did not include temperature data for this date.");
+    }
+
+    var tmax = daily.temperature_2m_max[0];
+    var tmin = daily.temperature_2m_min[0];
+    var code = (daily.weather_code && daily.weather_code[0]!=null) ? daily.weather_code[0] : 0;
+    var meta = wmo(code);
+    var group = meta[1];
+
+    // apply theme
+    var th = THEMES[group] || THEMES.cloud;
+    document.body.style.background =
+      "radial-gradient(1200px 700px at 82% -10%, rgba(255,255,255,0.16), transparent 55%)," +
+      "linear-gradient(150deg, "+th[0]+" 0%, "+th[1]+" 100%)";
+    document.documentElement.style.setProperty("--accent", th[2]);
+
+    // hourly for the requested date (filter defensively by date prefix)
+    var times = hourly.time || [];
+    var hrs=[], tmp=[];
+    for(var i=0;i<times.length;i++){
+      var t = times[i], v = hourly.temperature_2m[i];
+      if(v==null) continue;
+      if(times.length && String(t).indexOf(dateStr)!==0) continue;
+      var h = parseInt(String(t).slice(11,13),10);
+      if(isNaN(h)) h = hrs.length;
+      hrs.push(h); tmp.push(v);
+    }
+    if(!tmp.length){
+      // fall back to whatever hourly values exist
+      for(var j=0;j<hourly.temperature_2m.length;j++){
+        if(hourly.temperature_2m[j]==null) continue;
+        hrs.push(j); tmp.push(hourly.temperature_2m[j]);
+      }
+    }
+    if(!tmp.length) return fail("No hourly temperatures were available for this date.");
+
+    var html =
+      '<div class="top">' +
+        '<div class="loc">' +
+          '<div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>'+
+            (isPast ? 'Historical' : 'Forecast') + '</div>' +
+          '<h1>'+esc(name)+'</h1>' +
+          '<div class="date">'+esc(fmtDate(dateStr))+'</div>' +
+          '<div class="coords">'+lat.toFixed(3)+'°, '+lon.toFixed(3)+'° · UTC</div>' +
+        '</div>' +
+        '<div class="cond">' +
+          '<div class="icon">'+iconSVG(group)+'</div>' +
+          '<div class="label">'+esc(meta[0])+'</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="hero">' +
+        '<div class="big"><span class="num">'+r(tmax)+'</span><span class="deg">°C</span></div>' +
+        '<div class="hilo">' +
+          '<div class="item"><span class="k">High</span><span class="v">'+r(tmax)+'°</span></div>' +
+          '<div class="item"><span class="k">Low</span><span class="v min">'+r(tmin)+'°</span></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="chart-wrap">' +
+        '<div class="chart-head"><span class="t">Hourly temperature</span><span class="u">°C · UTC</span></div>' +
+        buildChart(hrs, tmp) +
+      '</div>';
+
+    document.getElementById("loading").classList.add("hidden");
+    var c = document.getElementById("content");
+    c.innerHTML = html;
+    c.classList.remove("hidden");
+  }
+
+  // ---------- fetch ----------
+  fetch(url, {headers:{Accept:"application/json"}})
+    .then(function(res){
+      if(!res.ok) throw new Error("Server responded with status "+res.status);
+      return res.json();
+    })
+    .then(function(data){
+      if(data && data.error){ throw new Error(data.reason || "API error"); }
+      render(data);
+    })
+    .catch(function(err){
+      fail((err && err.message) ? err.message : "A network error occurred while contacting the weather service.");
+    });
+})();
+</script>
+</body>
+</html>

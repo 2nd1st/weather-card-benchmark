@@ -1,0 +1,115 @@
+# dev-go-requeue2.yaml — go 网关 api 臂定向补跑。
+# unified 中 14 个模型只有 opencode harness 席、无 go api 席;本批补其中 13 个
+# (hy3-preview 为网关侧 400,不可补)。顺序串行(runner 天然并发=1),
+# 单席失败照常记录(model/infra_error, m<N)不阻断整批 —— "允许 api error 但把任务跑完"。
+version: 1
+N: 2
+transport:
+  base_url: https://opencode.ai/zen/go/v1
+  descriptor: opencode-go-gateway
+  proxy: none
+configs:
+  - config_id: deepseek-v4-flash--opencode-go--dev
+    family: deepseek
+    model_id: deepseek-v4-flash
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: deepseek-v4-pro--opencode-go--dev
+    family: deepseek
+    model_id: deepseek-v4-pro
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: glm-5.1--opencode-go--dev
+    family: glm
+    model_id: glm-5.1
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: glm-5.2--opencode-go--dev
+    family: glm
+    model_id: glm-5.2
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: grok-4.5--opencode-go--dev
+    family: grok
+    model_id: grok-4.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k2.6--opencode-go--dev
+    family: kimi
+    model_id: kimi-k2.6
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k2.7-code--opencode-go--dev
+    family: kimi
+    model_id: kimi-k2.7-code
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k3--opencode-go--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: minimax-m2.7--opencode-go--dev
+    family: minimax
+    model_id: minimax-m2.7
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: minimax-m3--opencode-go--dev
+    family: minimax
+    model_id: minimax-m3
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: mimo-v2.5--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: mimo-v2.5-pro--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: qwen3.7-max--opencode-go--dev
+    family: qwen
+    model_id: qwen3.7-max
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }

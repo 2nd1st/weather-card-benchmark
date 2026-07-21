@@ -1,0 +1,4844 @@
+{
+  "dump_format_version": "dom-dump-v1",
+  "visibility_rule": "dom-dump-v1",
+  "captured_at_virtual_ms": 5000,
+  "url": "http://card.local/card.html?lat=52.52&lon=13.405&name=Berlin&date=2026-07-15",
+  "viewport": {
+    "width": [
+      1280,
+      800
+    ],
+    "height": null
+  },
+  "counts": {
+    "nodes": 257,
+    "elements": 144,
+    "text_nodes": 113,
+    "visible_text_nodes": 68
+  },
+  "nodes": [
+    {
+      "preorder": 0,
+      "type": "element",
+      "tag": "html",
+      "parent": null,
+      "child_index": 0,
+      "depth": 0,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 1,
+      "type": "element",
+      "tag": "head",
+      "parent": 0,
+      "child_index": 0,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 2,
+      "type": "text",
+      "parent": 1,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 3,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 4,
+      "type": "text",
+      "parent": 1,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 5,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 6,
+      "type": "text",
+      "parent": 1,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 7,
+      "type": "element",
+      "tag": "title",
+      "parent": 1,
+      "child_index": 5,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 8,
+      "type": "text",
+      "parent": 7,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "Weather",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 9,
+      "type": "text",
+      "parent": 1,
+      "child_index": 6,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 10,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 7,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 11,
+      "type": "text",
+      "parent": 10,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n  :root {\n    --bg0: #0b1220;\n    --bg1: #121a2b;\n    --card: rgba(255, 255, 255, 0.07);\n    --card-border: rgba(255, 255, 255, 0.12);\n    --text: #f4f7fb;\n    --muted: rgba(244, 247, 251, 0.62);\n    --accent: #7dd3fc;\n    --accent-2: #a5b4fc;\n    --warm: #fbbf24;\n    --cool: #67e8f9;\n    --danger: #fca5a5;\n    --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);\n    --radius: 28px;\n  }\n\n  html, body {\n    width: 1280px;\n    height: 800px;\n    overflow: hidden;\n    font-family: \"Segoe UI\", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;\n    color: var(--text);\n    background: var(--bg0);\n  }\n\n  body {\n    position: relative;\n    display: grid;\n    place-items: center;\n  }\n\n  .sky {\n    position: absolute;\n    inset: 0;\n    background:\n      radial-gradient(1200px 600px at 15% 10%, rgba(56, 189, 248, 0.22), transparent 55%),\n      radial-gradient(900px 500px at 85% 20%, rgba(167, 139, 250, 0.18), transparent 50%),\n      radial-gradient(700px 500px at 50% 100%, rgba(251, 191, 36, 0.10), transparent 55%),\n      linear-gradient(160deg, #0a1020 0%, #121a2e 45%, #0d1526 100%);\n    z-index: 0;\n  }\n\n  .sky::after {\n    content: \"\";\n    position: absolute;\n    inset: 0;\n    background-image:\n      radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,0.55), transparent),\n      radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4), transparent),\n      radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.5), transparent),\n      radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.35), transparent),\n      radial-gradient(1px 1px at 50% 15%, rgba(255,255,255,0.45), transparent),\n      radial-gradient(1.5px 1.5px at 20% 50%, rgba(255,255,255,0.3), transparent);\n    opacity: 0.55;\n    pointer-events: none;\n  }\n\n  .card {\n    position: relative;\n    z-index: 1;\n    width: 1080px;\n    height: 680px;\n    border-radius: var(--radius);\n    background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));\n    border: 1px solid var(--card-border);\n    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.12);\n    backdrop-filter: blur(24px);\n    -webkit-backdrop-filter: blur(24px);\n    padding: 40px 48px 36px;\n    display: grid;\n    grid-template-rows: auto 1fr auto;\n    gap: 28px;\n    overflow: hidden;\n  }\n\n  .card::before {\n    content: \"\";\n    position: absolute;\n    top: -120px;\n    right: -80px;\n    width: 360px;\n    height: 360px;\n    border-radius: 50%;\n    background: radial-gradient(circle, rgba(125, 211, 252, 0.18), transparent 70%);\n    pointer-events: none;\n  }\n\n  .header {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-start;\n    gap: 24px;\n  }\n\n  .loc-block {\n    min-width: 0;\n  }\n\n  .loc-name {\n    font-size: 42px;\n    font-weight: 700;\n    letter-spacing: -0.03em;\n    line-height: 1.1;\n    background: linear-gradient(90deg, #fff 0%, #dbeafe 100%);\n    -webkit-background-clip: text;\n    background-clip: text;\n    color: transparent;\n  }\n\n  .loc-meta {\n    margin-top: 10px;\n    display: flex;\n    align-items: center;\n    gap: 14px;\n    color: var(--muted);\n    font-size: 16px;\n    font-weight: 500;\n  }\n\n  .pill {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    padding: 6px 12px;\n    border-radius: 999px;\n    background: rgba(255,255,255,0.08);\n    border: 1px solid rgba(255,255,255,0.1);\n    font-size: 13px;\n    letter-spacing: 0.02em;\n    color: var(--text);\n  }\n\n  .pill .dot {\n    width: 7px;\n    height: 7px;\n    border-radius: 50%;\n    background: var(--accent);\n    box-shadow: 0 0 10px var(--accent);\n  }\n\n  .hero {\n    display: grid;\n    grid-template-columns: 1.15fr 0.85fr;\n    gap: 28px;\n    min-height: 0;\n  }\n\n  .condition-panel {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    gap: 18px;\n    padding: 28px 32px;\n    border-radius: 22px;\n    background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));\n    border: 1px solid rgba(255,255,255,0.1);\n    position: relative;\n    overflow: hidden;\n  }\n\n  .condition-panel::after {\n    content: \"\";\n    position: absolute;\n    inset: auto -20% -40% auto;\n    width: 240px;\n    height: 240px;\n    border-radius: 50%;\n    background: radial-gradient(circle, rgba(165, 180, 252, 0.2), transparent 70%);\n  }\n\n  .condition-row {\n    display: flex;\n    align-items: center;\n    gap: 22px;\n  }\n\n  .weather-icon {\n    width: 108px;\n    height: 108px;\n    border-radius: 28px;\n    display: grid;\n    place-items: center;\n    font-size: 58px;\n    background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));\n    border: 1px solid rgba(255,255,255,0.14);\n    box-shadow: 0 12px 30px rgba(0,0,0,0.2);\n    flex-shrink: 0;\n  }\n\n  .condition-text h2 {\n    font-size: 34px;\n    font-weight: 650;\n    letter-spacing: -0.02em;\n    margin-bottom: 6px;\n  }\n\n  .condition-text p {\n    color: var(--muted);\n    font-size: 16px;\n    font-weight: 500;\n  }\n\n  .temps {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 14px;\n  }\n\n  .temp-box {\n    padding: 16px 18px;\n    border-radius: 16px;\n    background: rgba(0,0,0,0.18);\n    border: 1px solid rgba(255,255,255,0.08);\n  }\n\n  .temp-box .label {\n    font-size: 12px;\n    text-transform: uppercase;\n    letter-spacing: 0.08em;\n    color: var(--muted);\n    margin-bottom: 6px;\n    font-weight: 600;\n  }\n\n  .temp-box .value {\n    font-size: 32px;\n    font-weight: 700;\n    letter-spacing: -0.03em;\n  }\n\n  .temp-box.max .value { color: var(--warm); }\n  .temp-box.min .value { color: var(--cool); }\n\n  .hourly-panel {\n    display: flex;\n    flex-direction: column;\n    min-height: 0;\n    padding: 24px 26px 18px;\n    border-radius: 22px;\n    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));\n    border: 1px solid rgba(255,255,255,0.1);\n  }\n\n  .hourly-panel h3 {\n    font-size: 14px;\n    text-transform: uppercase;\n    letter-spacing: 0.1em;\n    color: var(--muted);\n    font-weight: 650;\n    margin-bottom: 18px;\n  }\n\n  .chart {\n    flex: 1;\n    display: flex;\n    align-items: flex-end;\n    gap: 6px;\n    min-height: 0;\n    padding-bottom: 8px;\n  }\n\n  .bar-col {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: flex-end;\n    height: 100%;\n    gap: 8px;\n    min-width: 0;\n  }\n\n  .bar-val {\n    font-size: 11px;\n    font-weight: 650;\n    color: rgba(255,255,255,0.85);\n    letter-spacing: -0.02em;\n    opacity: 0;\n    transition: opacity 0.2s ease;\n  }\n\n  .bar-col:hover .bar-val,\n  .bar-col.show-label .bar-val {\n    opacity: 1;\n  }\n\n  .bar {\n    width: 100%;\n    max-width: 28px;\n    border-radius: 999px 999px 8px 8px;\n    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);\n    box-shadow: 0 8px 18px rgba(125, 211, 252, 0.18);\n    min-height: 6px;\n    transition: transform 0.2s ease, filter 0.2s ease;\n    position: relative;\n  }\n\n  .bar-col:hover .bar {\n    transform: scaleY(1.04);\n    filter: brightness(1.12);\n  }\n\n  .bar-hour {\n    font-size: 10px;\n    color: var(--muted);\n    font-weight: 600;\n    font-variant-numeric: tabular-nums;\n  }\n\n  .footer {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: var(--muted);\n    font-size: 13px;\n    font-weight: 500;\n    padding-top: 4px;\n  }\n\n  .footer span {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n  }\n\n  .status-ok {\n    width: 8px;\n    height: 8px;\n    border-radius: 50%;\n    background: #34d399;\n    box-shadow: 0 0 10px rgba(52, 211, 153, 0.7);\n  }\n\n  /* Loading / Error */\n  .state {\n    position: relative;\n    z-index: 1;\n    width: 640px;\n    padding: 48px 40px;\n    border-radius: var(--radius);\n    text-align: center;\n    background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));\n    border: 1px solid var(--card-border);\n    box-shadow: var(--shadow);\n    backdrop-filter: blur(24px);\n  }\n\n  .state h1 {\n    font-size: 28px;\n    font-weight: 700;\n    margin-bottom: 12px;\n    letter-spacing: -0.02em;\n  }\n\n  .state p {\n    color: var(--muted);\n    font-size: 16px;\n    line-height: 1.5;\n  }\n\n  .spinner {\n    width: 42px;\n    height: 42px;\n    margin: 0 auto 22px;\n    border-radius: 50%;\n    border: 3px solid rgba(255,255,255,0.12);\n    border-top-color: var(--accent);\n    animation: spin 0.8s linear infinite;\n  }\n\n  @keyframes spin { to { transform: rotate(360deg); } }\n\n  .error-icon {\n    font-size: 42px;\n    margin-bottom: 14px;\n  }\n\n  .state.error h1 { color: var(--danger); }\n\n  .hidden { display: none !important; }\n",
+      "codepoint_length": 8612,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 12,
+      "type": "text",
+      "parent": 1,
+      "child_index": 8,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 13,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 9,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 14,
+      "type": "text",
+      "parent": 13,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "*,*::before,*::after{animation-play-state:paused !important;transition:none !important;caret-color:transparent !important;}",
+      "codepoint_length": 123,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 15,
+      "type": "text",
+      "parent": 0,
+      "child_index": 1,
+      "depth": 1,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 16,
+      "type": "element",
+      "tag": "body",
+      "parent": 0,
+      "child_index": 2,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 17,
+      "type": "text",
+      "parent": 16,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 18,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {
+        "class": "sky"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 19,
+      "type": "text",
+      "parent": 16,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n\n  ",
+      "codepoint_length": 4,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 20,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {
+        "id": "loading",
+        "class": "state hidden"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 21,
+      "type": "text",
+      "parent": 20,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 22,
+      "type": "element",
+      "tag": "div",
+      "parent": 20,
+      "child_index": 1,
+      "depth": 3,
+      "attrs": {
+        "class": "spinner"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 23,
+      "type": "text",
+      "parent": 20,
+      "child_index": 2,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 24,
+      "type": "element",
+      "tag": "h1",
+      "parent": 20,
+      "child_index": 3,
+      "depth": 3,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 28
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 25,
+      "type": "text",
+      "parent": 24,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "Loading weather",
+      "codepoint_length": 15,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 26,
+      "type": "text",
+      "parent": 20,
+      "child_index": 4,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 27,
+      "type": "element",
+      "tag": "p",
+      "parent": 20,
+      "child_index": 5,
+      "depth": 3,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 28,
+      "type": "text",
+      "parent": 27,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "Fetching conditions for your location…",
+      "codepoint_length": 38,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 29,
+      "type": "text",
+      "parent": 20,
+      "child_index": 6,
+      "depth": 3,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 30,
+      "type": "text",
+      "parent": 16,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n\n  ",
+      "codepoint_length": 4,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 31,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 5,
+      "depth": 2,
+      "attrs": {
+        "id": "error",
+        "class": "state error hidden"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 32,
+      "type": "text",
+      "parent": 31,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 33,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 1,
+      "depth": 3,
+      "attrs": {
+        "class": "error-icon"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 42
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 34,
+      "type": "text",
+      "parent": 33,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "⚠",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 35,
+      "type": "text",
+      "parent": 31,
+      "child_index": 2,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 36,
+      "type": "element",
+      "tag": "h1",
+      "parent": 31,
+      "child_index": 3,
+      "depth": 3,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 28
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 37,
+      "type": "text",
+      "parent": 36,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "Weather data unavailable",
+      "codepoint_length": 24,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 38,
+      "type": "text",
+      "parent": 31,
+      "child_index": 4,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 39,
+      "type": "element",
+      "tag": "p",
+      "parent": 31,
+      "child_index": 5,
+      "depth": 3,
+      "attrs": {
+        "id": "error-msg"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 40,
+      "type": "text",
+      "parent": 39,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "The data cannot be loaded. Please check the location and date, then try again.",
+      "codepoint_length": 78,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 41,
+      "type": "text",
+      "parent": 31,
+      "child_index": 6,
+      "depth": 3,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 42,
+      "type": "text",
+      "parent": 16,
+      "child_index": 6,
+      "depth": 2,
+      "text_raw": "\n\n  ",
+      "codepoint_length": 4,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 43,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 7,
+      "depth": 2,
+      "attrs": {
+        "id": "card",
+        "class": "card"
+      },
+      "box": {
+        "x": 100,
+        "y": 60,
+        "width": 1080,
+        "height": 680
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 44,
+      "type": "text",
+      "parent": 43,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 0
+    },
+    {
+      "preorder": 45,
+      "type": "element",
+      "tag": "header",
+      "parent": 43,
+      "child_index": 1,
+      "depth": 3,
+      "attrs": {
+        "class": "header"
+      },
+      "box": {
+        "x": 149,
+        "y": 101,
+        "width": 982,
+        "height": 86.1875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 46,
+      "type": "text",
+      "parent": 45,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 1
+    },
+    {
+      "preorder": 47,
+      "type": "element",
+      "tag": "div",
+      "parent": 45,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "loc-block"
+      },
+      "box": {
+        "x": 149,
+        "y": 101,
+        "width": 327.84375,
+        "height": 86.1875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 48,
+      "type": "text",
+      "parent": 47,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 2
+    },
+    {
+      "preorder": 49,
+      "type": "element",
+      "tag": "div",
+      "parent": 47,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "id": "loc-name",
+        "class": "loc-name"
+      },
+      "box": {
+        "x": 149,
+        "y": 101,
+        "width": 327.84375,
+        "height": 46.1875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 42
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 50,
+      "type": "text",
+      "parent": 49,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Berlin",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 3
+    },
+    {
+      "preorder": 51,
+      "type": "text",
+      "parent": 47,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 4
+    },
+    {
+      "preorder": 52,
+      "type": "element",
+      "tag": "div",
+      "parent": 47,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "loc-meta"
+      },
+      "box": {
+        "x": 149,
+        "y": 157.1875,
+        "width": 327.84375,
+        "height": 30
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 53,
+      "type": "text",
+      "parent": 52,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 5
+    },
+    {
+      "preorder": 54,
+      "type": "element",
+      "tag": "span",
+      "parent": 52,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "pill"
+      },
+      "box": {
+        "x": 149,
+        "y": 157.1875,
+        "width": 208.703125,
+        "height": 30
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 55,
+      "type": "element",
+      "tag": "span",
+      "parent": 54,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "dot"
+      },
+      "box": {
+        "x": 162,
+        "y": 168.6875,
+        "width": 7,
+        "height": 7
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 56,
+      "type": "element",
+      "tag": "span",
+      "parent": 54,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "id": "date-label"
+      },
+      "box": {
+        "x": 177,
+        "y": 164.1875,
+        "width": 167.703125,
+        "height": 16
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 57,
+      "type": "text",
+      "parent": 56,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Wednesday, July 15, 2026",
+      "codepoint_length": 24,
+      "text_visible": true,
+      "visible_text_index": 6
+    },
+    {
+      "preorder": 58,
+      "type": "text",
+      "parent": 52,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 7
+    },
+    {
+      "preorder": 59,
+      "type": "element",
+      "tag": "span",
+      "parent": 52,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "coords"
+      },
+      "box": {
+        "x": 371.703125,
+        "y": 163.1875,
+        "width": 105.140625,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 60,
+      "type": "text",
+      "parent": 59,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "52.52°, 13.40°",
+      "codepoint_length": 14,
+      "text_visible": true,
+      "visible_text_index": 8
+    },
+    {
+      "preorder": 61,
+      "type": "text",
+      "parent": 52,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 9
+    },
+    {
+      "preorder": 62,
+      "type": "text",
+      "parent": 47,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 10
+    },
+    {
+      "preorder": 63,
+      "type": "text",
+      "parent": 45,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 11
+    },
+    {
+      "preorder": 64,
+      "type": "text",
+      "parent": 43,
+      "child_index": 2,
+      "depth": 3,
+      "text_raw": "\n\n    ",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 12
+    },
+    {
+      "preorder": 65,
+      "type": "element",
+      "tag": "section",
+      "parent": 43,
+      "child_index": 3,
+      "depth": 3,
+      "attrs": {
+        "class": "hero"
+      },
+      "box": {
+        "x": 149,
+        "y": 215.1875,
+        "width": 982,
+        "height": 439.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 66,
+      "type": "text",
+      "parent": 65,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 13
+    },
+    {
+      "preorder": 67,
+      "type": "element",
+      "tag": "div",
+      "parent": 65,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "condition-panel"
+      },
+      "box": {
+        "x": 149,
+        "y": 215.1875,
+        "width": 321.203125,
+        "height": 439.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 68,
+      "type": "text",
+      "parent": 67,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 14
+    },
+    {
+      "preorder": 69,
+      "type": "element",
+      "tag": "div",
+      "parent": 67,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "condition-row"
+      },
+      "box": {
+        "x": 182,
+        "y": 318.59375,
+        "width": 255.203125,
+        "height": 122
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 70,
+      "type": "text",
+      "parent": 69,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 15
+    },
+    {
+      "preorder": 71,
+      "type": "element",
+      "tag": "div",
+      "parent": 69,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "id": "weather-icon",
+        "class": "weather-icon"
+      },
+      "box": {
+        "x": 182,
+        "y": 325.59375,
+        "width": 108,
+        "height": 108
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 58
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 72,
+      "type": "text",
+      "parent": 71,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "🌦️",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 16
+    },
+    {
+      "preorder": 73,
+      "type": "text",
+      "parent": 69,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 17
+    },
+    {
+      "preorder": 74,
+      "type": "element",
+      "tag": "div",
+      "parent": 69,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "class": "condition-text"
+      },
+      "box": {
+        "x": 312,
+        "y": 318.59375,
+        "width": 125.203125,
+        "height": 122
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 75,
+      "type": "text",
+      "parent": 74,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 18
+    },
+    {
+      "preorder": 76,
+      "type": "element",
+      "tag": "h2",
+      "parent": 74,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "id": "condition"
+      },
+      "box": {
+        "x": 312,
+        "y": 318.59375,
+        "width": 125.203125,
+        "height": 80
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 34
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 77,
+      "type": "text",
+      "parent": 76,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Light drizzle",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 19
+    },
+    {
+      "preorder": 78,
+      "type": "text",
+      "parent": 74,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 20
+    },
+    {
+      "preorder": 79,
+      "type": "element",
+      "tag": "p",
+      "parent": 74,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {
+        "id": "condition-sub"
+      },
+      "box": {
+        "x": 312,
+        "y": 404.59375,
+        "width": 125.203125,
+        "height": 36
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 80,
+      "type": "text",
+      "parent": 79,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Weather code 51 · 2026-07-15",
+      "codepoint_length": 28,
+      "text_visible": true,
+      "visible_text_index": 21
+    },
+    {
+      "preorder": 81,
+      "type": "text",
+      "parent": 74,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 22
+    },
+    {
+      "preorder": 82,
+      "type": "text",
+      "parent": 69,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 23
+    },
+    {
+      "preorder": 83,
+      "type": "text",
+      "parent": 67,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 24
+    },
+    {
+      "preorder": 84,
+      "type": "element",
+      "tag": "div",
+      "parent": 67,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "temps"
+      },
+      "box": {
+        "x": 182,
+        "y": 458.59375,
+        "width": 255.203125,
+        "height": 93
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 85,
+      "type": "text",
+      "parent": 84,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 25
+    },
+    {
+      "preorder": 86,
+      "type": "element",
+      "tag": "div",
+      "parent": 84,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "temp-box max"
+      },
+      "box": {
+        "x": 182,
+        "y": 458.59375,
+        "width": 120.59375,
+        "height": 93
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 87,
+      "type": "text",
+      "parent": 86,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 26
+    },
+    {
+      "preorder": 88,
+      "type": "element",
+      "tag": "div",
+      "parent": 86,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "label"
+      },
+      "box": {
+        "x": 201,
+        "y": 475.59375,
+        "width": 82.59375,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 89,
+      "type": "text",
+      "parent": 88,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "High",
+      "codepoint_length": 4,
+      "text_visible": true,
+      "visible_text_index": 27
+    },
+    {
+      "preorder": 90,
+      "type": "text",
+      "parent": 86,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 28
+    },
+    {
+      "preorder": 91,
+      "type": "element",
+      "tag": "div",
+      "parent": 86,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {
+        "id": "temp-max",
+        "class": "value"
+      },
+      "box": {
+        "x": 201,
+        "y": 496.59375,
+        "width": 82.59375,
+        "height": 38
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 32
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 92,
+      "type": "text",
+      "parent": 91,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 29
+    },
+    {
+      "preorder": 93,
+      "type": "text",
+      "parent": 86,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 30
+    },
+    {
+      "preorder": 94,
+      "type": "text",
+      "parent": 84,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 31
+    },
+    {
+      "preorder": 95,
+      "type": "element",
+      "tag": "div",
+      "parent": 84,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "class": "temp-box min"
+      },
+      "box": {
+        "x": 316.59375,
+        "y": 458.59375,
+        "width": 120.609375,
+        "height": 93
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 96,
+      "type": "text",
+      "parent": 95,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 32
+    },
+    {
+      "preorder": 97,
+      "type": "element",
+      "tag": "div",
+      "parent": 95,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "label"
+      },
+      "box": {
+        "x": 335.59375,
+        "y": 475.59375,
+        "width": 82.609375,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 98,
+      "type": "text",
+      "parent": 97,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Low",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 33
+    },
+    {
+      "preorder": 99,
+      "type": "text",
+      "parent": 95,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 34
+    },
+    {
+      "preorder": 100,
+      "type": "element",
+      "tag": "div",
+      "parent": 95,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {
+        "id": "temp-min",
+        "class": "value"
+      },
+      "box": {
+        "x": 335.59375,
+        "y": 496.59375,
+        "width": 82.609375,
+        "height": 38
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 32
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 101,
+      "type": "text",
+      "parent": 100,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "16°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 35
+    },
+    {
+      "preorder": 102,
+      "type": "text",
+      "parent": 95,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 36
+    },
+    {
+      "preorder": 103,
+      "type": "text",
+      "parent": 84,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 37
+    },
+    {
+      "preorder": 104,
+      "type": "text",
+      "parent": 67,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 38
+    },
+    {
+      "preorder": 105,
+      "type": "text",
+      "parent": 65,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n\n      ",
+      "codepoint_length": 8,
+      "text_visible": true,
+      "visible_text_index": 39
+    },
+    {
+      "preorder": 106,
+      "type": "element",
+      "tag": "div",
+      "parent": 65,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "hourly-panel"
+      },
+      "box": {
+        "x": 498.203125,
+        "y": 215.1875,
+        "width": 632.796875,
+        "height": 439.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 107,
+      "type": "text",
+      "parent": 106,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 40
+    },
+    {
+      "preorder": 108,
+      "type": "element",
+      "tag": "h3",
+      "parent": 106,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 525.203125,
+        "y": 240.1875,
+        "width": 578.796875,
+        "height": 17
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 14
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 109,
+      "type": "text",
+      "parent": 108,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Hourly temperature",
+      "codepoint_length": 18,
+      "text_visible": true,
+      "visible_text_index": 41
+    },
+    {
+      "preorder": 110,
+      "type": "text",
+      "parent": 106,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 42
+    },
+    {
+      "preorder": 111,
+      "type": "element",
+      "tag": "div",
+      "parent": 106,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "id": "hourly-chart",
+        "class": "chart"
+      },
+      "box": {
+        "x": 525.203125,
+        "y": 275.1875,
+        "width": 578.796875,
+        "height": 360.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 112,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 525.203125,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 113,
+      "type": "element",
+      "tag": "div",
+      "parent": 112,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 525.890625,
+        "y": 485.265625,
+        "width": 16.96875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 114,
+      "type": "text",
+      "parent": 113,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "17°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 43
+    },
+    {
+      "preorder": 115,
+      "type": "element",
+      "tag": "div",
+      "parent": 112,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 525.203125,
+        "y": 506.265625,
+        "width": 18.359375,
+        "height": 101.734375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 116,
+      "type": "element",
+      "tag": "div",
+      "parent": 112,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 527.6875,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 117,
+      "type": "text",
+      "parent": 116,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "00",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 44
+    },
+    {
+      "preorder": 118,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 549.5625,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 119,
+      "type": "element",
+      "tag": "div",
+      "parent": 118,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 550.265625,
+        "y": 502.71875,
+        "width": 16.96875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 120,
+      "type": "text",
+      "parent": 119,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "17°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 121,
+      "type": "element",
+      "tag": "div",
+      "parent": 118,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 549.5625,
+        "y": 523.71875,
+        "width": 18.375,
+        "height": 96.28125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 122,
+      "type": "element",
+      "tag": "div",
+      "parent": 118,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 558.75,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 123,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 2,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 573.9375,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 124,
+      "type": "element",
+      "tag": "div",
+      "parent": 123,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 574.625,
+        "y": 519.109375,
+        "width": 16.96875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 125,
+      "type": "text",
+      "parent": 124,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "17°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 126,
+      "type": "element",
+      "tag": "div",
+      "parent": 123,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 573.9375,
+        "y": 540.109375,
+        "width": 18.359375,
+        "height": 79.890625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 127,
+      "type": "element",
+      "tag": "div",
+      "parent": 123,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 583.109375,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 128,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 598.296875,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 129,
+      "type": "element",
+      "tag": "div",
+      "parent": 128,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 598.5625,
+        "y": 523.5,
+        "width": 17.828125,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 130,
+      "type": "text",
+      "parent": 129,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "16°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 45
+    },
+    {
+      "preorder": 131,
+      "type": "element",
+      "tag": "div",
+      "parent": 128,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 598.296875,
+        "y": 544.5,
+        "width": 18.375,
+        "height": 63.5
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 132,
+      "type": "element",
+      "tag": "div",
+      "parent": 128,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 600.78125,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 133,
+      "type": "text",
+      "parent": 132,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "03",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 46
+    },
+    {
+      "preorder": 134,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 4,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 622.671875,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 135,
+      "type": "element",
+      "tag": "div",
+      "parent": 134,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 622.9375,
+        "y": 535.5,
+        "width": 17.828125,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 136,
+      "type": "text",
+      "parent": 135,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "16°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 137,
+      "type": "element",
+      "tag": "div",
+      "parent": 134,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 622.671875,
+        "y": 556.5,
+        "width": 18.359375,
+        "height": 63.5
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 138,
+      "type": "element",
+      "tag": "div",
+      "parent": 134,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 631.84375,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 139,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 5,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 647.03125,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 140,
+      "type": "element",
+      "tag": "div",
+      "parent": 139,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 647.734375,
+        "y": 513.65625,
+        "width": 16.96875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 141,
+      "type": "text",
+      "parent": 140,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "17°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 142,
+      "type": "element",
+      "tag": "div",
+      "parent": 139,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 647.03125,
+        "y": 534.65625,
+        "width": 18.375,
+        "height": 85.34375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 143,
+      "type": "element",
+      "tag": "div",
+      "parent": 139,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 656.21875,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 144,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 6,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 671.40625,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 145,
+      "type": "element",
+      "tag": "div",
+      "parent": 144,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 671.625,
+        "y": 457.953125,
+        "width": 17.921875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 146,
+      "type": "text",
+      "parent": 145,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "18°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 47
+    },
+    {
+      "preorder": 147,
+      "type": "element",
+      "tag": "div",
+      "parent": 144,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 671.40625,
+        "y": 478.953125,
+        "width": 18.359375,
+        "height": 129.046875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 148,
+      "type": "element",
+      "tag": "div",
+      "parent": 144,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 673.890625,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 149,
+      "type": "text",
+      "parent": 148,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "06",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 48
+    },
+    {
+      "preorder": 150,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 7,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 695.765625,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 151,
+      "type": "element",
+      "tag": "div",
+      "parent": 150,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 696.28125,
+        "y": 409.859375,
+        "width": 17.328125,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 152,
+      "type": "text",
+      "parent": 151,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 153,
+      "type": "element",
+      "tag": "div",
+      "parent": 150,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 695.765625,
+        "y": 430.859375,
+        "width": 18.375,
+        "height": 189.140625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 154,
+      "type": "element",
+      "tag": "div",
+      "parent": 150,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 704.953125,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 155,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 8,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 720.140625,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 156,
+      "type": "element",
+      "tag": "div",
+      "parent": 155,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 719.890625,
+        "y": 360.6875,
+        "width": 18.859375,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 157,
+      "type": "text",
+      "parent": 156,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "22°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 158,
+      "type": "element",
+      "tag": "div",
+      "parent": 155,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 720.140625,
+        "y": 381.6875,
+        "width": 18.359375,
+        "height": 238.3125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 159,
+      "type": "element",
+      "tag": "div",
+      "parent": 155,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 729.3125,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 160,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 9,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 744.5,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 161,
+      "type": "element",
+      "tag": "div",
+      "parent": 160,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 744.140625,
+        "y": 313.1875,
+        "width": 19.109375,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 162,
+      "type": "text",
+      "parent": 161,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "24°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 49
+    },
+    {
+      "preorder": 163,
+      "type": "element",
+      "tag": "div",
+      "parent": 160,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 744.5,
+        "y": 334.1875,
+        "width": 18.375,
+        "height": 273.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 164,
+      "type": "element",
+      "tag": "div",
+      "parent": 160,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 746.984375,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 165,
+      "type": "text",
+      "parent": 164,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "09",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 50
+    },
+    {
+      "preorder": 166,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 10,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 768.875,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 167,
+      "type": "element",
+      "tag": "div",
+      "parent": 166,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 768.53125,
+        "y": 300.59375,
+        "width": 19.0625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 168,
+      "type": "text",
+      "parent": 167,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 169,
+      "type": "element",
+      "tag": "div",
+      "parent": 166,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 768.875,
+        "y": 321.59375,
+        "width": 18.359375,
+        "height": 298.40625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 170,
+      "type": "element",
+      "tag": "div",
+      "parent": 166,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 778.046875,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 171,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 11,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 793.234375,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 172,
+      "type": "element",
+      "tag": "div",
+      "parent": 171,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 792.890625,
+        "y": 286.9375,
+        "width": 19.0625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 173,
+      "type": "text",
+      "parent": 172,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 174,
+      "type": "element",
+      "tag": "div",
+      "parent": 171,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 793.234375,
+        "y": 307.9375,
+        "width": 18.375,
+        "height": 312.0625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 175,
+      "type": "element",
+      "tag": "div",
+      "parent": 171,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 802.421875,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 176,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 12,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 817.609375,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 177,
+      "type": "element",
+      "tag": "div",
+      "parent": 176,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 817.265625,
+        "y": 283.140625,
+        "width": 19.0625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 178,
+      "type": "text",
+      "parent": 177,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 51
+    },
+    {
+      "preorder": 179,
+      "type": "element",
+      "tag": "div",
+      "parent": 176,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 817.609375,
+        "y": 304.140625,
+        "width": 18.359375,
+        "height": 303.859375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 180,
+      "type": "element",
+      "tag": "div",
+      "parent": 176,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 820.09375,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 181,
+      "type": "text",
+      "parent": 180,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "12",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 52
+    },
+    {
+      "preorder": 182,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 13,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 841.96875,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 183,
+      "type": "element",
+      "tag": "div",
+      "parent": 182,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 841.625,
+        "y": 281.46875,
+        "width": 19.0625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 184,
+      "type": "text",
+      "parent": 183,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 185,
+      "type": "element",
+      "tag": "div",
+      "parent": 182,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 841.96875,
+        "y": 302.46875,
+        "width": 18.375,
+        "height": 317.53125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 186,
+      "type": "element",
+      "tag": "div",
+      "parent": 182,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 851.15625,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 187,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 14,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 866.34375,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 188,
+      "type": "element",
+      "tag": "div",
+      "parent": 187,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 866,
+        "y": 295.140625,
+        "width": 19.0625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 189,
+      "type": "text",
+      "parent": 188,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "25°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 190,
+      "type": "element",
+      "tag": "div",
+      "parent": 187,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 866.34375,
+        "y": 316.140625,
+        "width": 18.359375,
+        "height": 303.859375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 191,
+      "type": "element",
+      "tag": "div",
+      "parent": 187,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 875.515625,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 192,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 15,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 890.703125,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 193,
+      "type": "element",
+      "tag": "div",
+      "parent": 192,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 890.34375,
+        "y": 294.0625,
+        "width": 19.109375,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 194,
+      "type": "text",
+      "parent": 193,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "24°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 53
+    },
+    {
+      "preorder": 195,
+      "type": "element",
+      "tag": "div",
+      "parent": 192,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 890.703125,
+        "y": 315.0625,
+        "width": 18.375,
+        "height": 292.9375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 196,
+      "type": "element",
+      "tag": "div",
+      "parent": 192,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 893.1875,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 197,
+      "type": "text",
+      "parent": 196,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "15",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 54
+    },
+    {
+      "preorder": 198,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 16,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 915.078125,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 199,
+      "type": "element",
+      "tag": "div",
+      "parent": 198,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 914.703125,
+        "y": 330.640625,
+        "width": 19.109375,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 200,
+      "type": "text",
+      "parent": 199,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "24°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 201,
+      "type": "element",
+      "tag": "div",
+      "parent": 198,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 915.078125,
+        "y": 351.640625,
+        "width": 18.359375,
+        "height": 268.359375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 202,
+      "type": "element",
+      "tag": "div",
+      "parent": 198,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 924.25,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 203,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 17,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 939.4375,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 204,
+      "type": "element",
+      "tag": "div",
+      "parent": 203,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 939.0625,
+        "y": 347.03125,
+        "width": 19.140625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 205,
+      "type": "text",
+      "parent": 204,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "23°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 206,
+      "type": "element",
+      "tag": "div",
+      "parent": 203,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 939.4375,
+        "y": 368.03125,
+        "width": 18.375,
+        "height": 251.96875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 207,
+      "type": "element",
+      "tag": "div",
+      "parent": 203,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 948.625,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 208,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 18,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 963.8125,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 209,
+      "type": "element",
+      "tag": "div",
+      "parent": 208,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 963.421875,
+        "y": 335.03125,
+        "width": 19.140625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 210,
+      "type": "text",
+      "parent": 209,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "23°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 55
+    },
+    {
+      "preorder": 211,
+      "type": "element",
+      "tag": "div",
+      "parent": 208,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 963.8125,
+        "y": 356.03125,
+        "width": 18.359375,
+        "height": 251.96875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 212,
+      "type": "element",
+      "tag": "div",
+      "parent": 208,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 966.296875,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 213,
+      "type": "text",
+      "parent": 212,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "18",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 56
+    },
+    {
+      "preorder": 214,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 19,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 988.171875,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 215,
+      "type": "element",
+      "tag": "div",
+      "parent": 214,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 987.796875,
+        "y": 355.21875,
+        "width": 19.140625,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 216,
+      "type": "text",
+      "parent": 215,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "23°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 217,
+      "type": "element",
+      "tag": "div",
+      "parent": 214,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 988.171875,
+        "y": 376.21875,
+        "width": 18.375,
+        "height": 243.78125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 218,
+      "type": "element",
+      "tag": "div",
+      "parent": 214,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 997.359375,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 219,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 20,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 1012.546875,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 220,
+      "type": "element",
+      "tag": "div",
+      "parent": 219,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 1013.0625,
+        "y": 390.734375,
+        "width": 17.328125,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 221,
+      "type": "text",
+      "parent": 220,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 222,
+      "type": "element",
+      "tag": "div",
+      "parent": 219,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 1012.546875,
+        "y": 411.734375,
+        "width": 18.359375,
+        "height": 208.265625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 223,
+      "type": "element",
+      "tag": "div",
+      "parent": 219,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 1021.71875,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 224,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 21,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col show-label"
+      },
+      "box": {
+        "x": 1036.90625,
+        "y": 275.1875,
+        "width": 18.375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 225,
+      "type": "element",
+      "tag": "div",
+      "parent": 224,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 1037.421875,
+        "y": 392.390625,
+        "width": 17.328125,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 226,
+      "type": "text",
+      "parent": 225,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 57
+    },
+    {
+      "preorder": 227,
+      "type": "element",
+      "tag": "div",
+      "parent": 224,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 1036.90625,
+        "y": 413.390625,
+        "width": 18.375,
+        "height": 194.609375
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 228,
+      "type": "element",
+      "tag": "div",
+      "parent": 224,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 1039.390625,
+        "y": 616,
+        "width": 13.390625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 229,
+      "type": "text",
+      "parent": 228,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 58
+    },
+    {
+      "preorder": 230,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 22,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 1061.28125,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 231,
+      "type": "element",
+      "tag": "div",
+      "parent": 230,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 1060.859375,
+        "y": 418.046875,
+        "width": 19.21875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 232,
+      "type": "text",
+      "parent": 231,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "20°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 233,
+      "type": "element",
+      "tag": "div",
+      "parent": 230,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 1061.28125,
+        "y": 439.046875,
+        "width": 18.359375,
+        "height": 180.953125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 234,
+      "type": "element",
+      "tag": "div",
+      "parent": 230,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 1070.453125,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 235,
+      "type": "element",
+      "tag": "div",
+      "parent": 111,
+      "child_index": 23,
+      "depth": 6,
+      "attrs": {
+        "class": "bar-col"
+      },
+      "box": {
+        "x": 1085.640625,
+        "y": 275.1875,
+        "width": 18.359375,
+        "height": 352.8125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 236,
+      "type": "element",
+      "tag": "div",
+      "parent": 235,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-val"
+      },
+      "box": {
+        "x": 1085.21875,
+        "y": 434.4375,
+        "width": 19.21875,
+        "height": 13
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 11
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 237,
+      "type": "text",
+      "parent": 236,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "20°",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 238,
+      "type": "element",
+      "tag": "div",
+      "parent": 235,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "bar"
+      },
+      "box": {
+        "x": 1085.640625,
+        "y": 455.4375,
+        "width": 18.359375,
+        "height": 164.5625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 239,
+      "type": "element",
+      "tag": "div",
+      "parent": 235,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {
+        "class": "bar-hour"
+      },
+      "box": {
+        "x": 1094.8125,
+        "y": 628,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 240,
+      "type": "text",
+      "parent": 106,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 59
+    },
+    {
+      "preorder": 241,
+      "type": "text",
+      "parent": 65,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 60
+    },
+    {
+      "preorder": 242,
+      "type": "text",
+      "parent": 43,
+      "child_index": 4,
+      "depth": 3,
+      "text_raw": "\n\n    ",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 61
+    },
+    {
+      "preorder": 243,
+      "type": "element",
+      "tag": "footer",
+      "parent": 43,
+      "child_index": 5,
+      "depth": 3,
+      "attrs": {
+        "class": "footer"
+      },
+      "box": {
+        "x": 149,
+        "y": 683,
+        "width": 982,
+        "height": 20
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 244,
+      "type": "text",
+      "parent": 243,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 62
+    },
+    {
+      "preorder": 245,
+      "type": "element",
+      "tag": "span",
+      "parent": 243,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {},
+      "box": {
+        "x": 149,
+        "y": 687,
+        "width": 158.46875,
+        "height": 16
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 246,
+      "type": "element",
+      "tag": "span",
+      "parent": 245,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "class": "status-ok"
+      },
+      "box": {
+        "x": 149,
+        "y": 691,
+        "width": 8,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 247,
+      "type": "text",
+      "parent": 245,
+      "child_index": 1,
+      "depth": 5,
+      "text_raw": " Open-Meteo · °C · UTC",
+      "codepoint_length": 22,
+      "text_visible": true,
+      "visible_text_index": 63
+    },
+    {
+      "preorder": 248,
+      "type": "text",
+      "parent": 243,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 64
+    },
+    {
+      "preorder": 249,
+      "type": "element",
+      "tag": "span",
+      "parent": 243,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "id": "api-source"
+      },
+      "box": {
+        "x": 1059.984375,
+        "y": 687,
+        "width": 71.015625,
+        "height": 16
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 250,
+      "type": "text",
+      "parent": 249,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Archive API",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 65
+    },
+    {
+      "preorder": 251,
+      "type": "text",
+      "parent": 243,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 66
+    },
+    {
+      "preorder": 252,
+      "type": "text",
+      "parent": 43,
+      "child_index": 6,
+      "depth": 3,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 67
+    },
+    {
+      "preorder": 253,
+      "type": "text",
+      "parent": 16,
+      "child_index": 8,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 254,
+      "type": "element",
+      "tag": "script",
+      "parent": 16,
+      "child_index": 9,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 255,
+      "type": "text",
+      "parent": 254,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n(function () {\n  const WMO = {\n    0:  { label: \"Clear sky\",          icon: \"☀️\" },\n    1:  { label: \"Mainly clear\",       icon: \"🌤️\" },\n    2:  { label: \"Partly cloudy\",      icon: \"⛅\" },\n    3:  { label: \"Overcast\",           icon: \"☁️\" },\n    45: { label: \"Fog\",                icon: \"🌫️\" },\n    48: { label: \"Depositing rime fog\",icon: \"🌫️\" },\n    51: { label: \"Light drizzle\",      icon: \"🌦️\" },\n    53: { label: \"Moderate drizzle\",   icon: \"🌦️\" },\n    55: { label: \"Dense drizzle\",      icon: \"🌧️\" },\n    56: { label: \"Light freezing drizzle\", icon: \"🌧️\" },\n    57: { label: \"Dense freezing drizzle\", icon: \"🌧️\" },\n    61: { label: \"Slight rain\",        icon: \"🌧️\" },\n    63: { label: \"Moderate rain\",      icon: \"🌧️\" },\n    65: { label: \"Heavy rain\",         icon: \"🌧️\" },\n    66: { label: \"Light freezing rain\",icon: \"🌧️\" },\n    67: { label: \"Heavy freezing rain\",icon: \"🌧️\" },\n    71: { label: \"Slight snow\",        icon: \"🌨️\" },\n    73: { label: \"Moderate snow\",      icon: \"❄️\" },\n    75: { label: \"Heavy snow\",         icon: \"❄️\" },\n    77: { label: \"Snow grains\",        icon: \"🌨️\" },\n    80: { label: \"Slight rain showers\",icon: \"🌦️\" },\n    81: { label: \"Moderate rain showers\", icon: \"🌧️\" },\n    82: { label: \"Violent rain showers\",  icon: \"⛈️\" },\n    85: { label: \"Slight snow showers\",icon: \"🌨️\" },\n    86: { label: \"Heavy snow showers\", icon: \"❄️\" },\n    95: { label: \"Thunderstorm\",       icon: \"⛈️\" },\n    96: { label: \"Thunderstorm with slight hail\", icon: \"⛈️\" },\n    99: { label: \"Thunderstorm with heavy hail\",  icon: \"⛈️\" }\n  };\n\n  function pad(n) { return String(n).padStart(2, \"0\"); }\n\n  function todayUTC() {\n    const d = new Date();\n    return d.getUTCFullYear() + \"-\" + pad(d.getUTCMonth() + 1) + \"-\" + pad(d.getUTCDate());\n  }\n\n  function parseParams() {\n    const q = new URLSearchParams(window.location.search);\n    const lat = parseFloat(q.get(\"lat\"));\n    const lon = parseFloat(q.get(\"lon\"));\n    return {\n      lat: Number.isFinite(lat) ? lat : 52.52,\n      lon: Number.isFinite(lon) ? lon : 13.405,\n      name: (q.get(\"name\") || \"Berlin\").trim() || \"Berlin\",\n      date: /^\\d{4}-\\d{2}-\\d{2}$/.test(q.get(\"date\") || \"\") ? q.get(\"date\") : todayUTC()\n    };\n  }\n\n  function formatDisplayDate(iso) {\n    const [y, m, d] = iso.split(\"-\").map(Number);\n    const dt = new Date(Date.UTC(y, m - 1, d));\n    return dt.toLocaleDateString(\"en-US\", {\n      weekday: \"long\",\n      year: \"numeric\",\n      month: \"long\",\n      day: \"numeric\",\n      timeZone: \"UTC\"\n    });\n  }\n\n  function isPastDate(iso) {\n    return iso < todayUTC();\n  }\n\n  function weatherInfo(code) {\n    return WMO[code] || { label: \"Unknown (\" + code + \")\", icon: \"🌡️\" };\n  }\n\n  function showError(msg) {\n    document.getElementById(\"loading\").classList.add(\"hidden\");\n    document.getElementById(\"card\").classList.add(\"hidden\");\n    document.getElementById(\"error\").classList.remove(\"hidden\");\n    if (msg) document.getElementById(\"error-msg\").textContent = msg;\n  }\n\n  function renderHourly(times, temps) {\n    const chart = document.getElementById(\"hourly-chart\");\n    chart.innerHTML = \"\";\n    if (!times || !temps || temps.length === 0) {\n      chart.innerHTML = '<p style=\"color:var(--muted);font-size:14px;\">No hourly data</p>';\n      return;\n    }\n\n    const valid = temps.map(function (t, i) {\n      return { t: t, i: i, time: times[i] };\n    }).filter(function (x) { return x.t != null && !isNaN(x.t); });\n\n    if (valid.length === 0) {\n      chart.innerHTML = '<p style=\"color:var(--muted);font-size:14px;\">No hourly data</p>';\n      return;\n    }\n\n    const minT = Math.min.apply(null, valid.map(function (x) { return x.t; }));\n    const maxT = Math.max.apply(null, valid.map(function (x) { return x.t; }));\n    const range = Math.max(maxT - minT, 1);\n\n    // Show every 3rd hour label for clarity, all bars\n    times.forEach(function (time, i) {\n      const t = temps[i];\n      if (t == null || isNaN(t)) return;\n\n      const col = document.createElement(\"div\");\n      col.className = \"bar-col\";\n      if (i % 3 === 0) col.classList.add(\"show-label\");\n\n      const val = document.createElement(\"div\");\n      val.className = \"bar-val\";\n      val.textContent = Math.round(t) + \"°\";\n\n      const bar = document.createElement(\"div\");\n      bar.className = \"bar\";\n      const pct = 18 + ((t - minT) / range) * 72;\n      bar.style.height = pct + \"%\";\n\n      // Color shift warm/cool by position in range\n      const warmness = (t - minT) / range;\n      const hue = 210 - warmness * 160;\n      bar.style.background = \"linear-gradient(180deg, hsl(\" + hue + \", 85%, 72%) 0%, hsl(\" + (hue + 20) + \", 70%, 58%) 100%)\";\n      bar.style.boxShadow = \"0 8px 18px hsla(\" + hue + \", 80%, 60%, 0.22)\";\n      bar.title = time.slice(11, 16) + \" · \" + t.toFixed(1) + \"°C\";\n\n      const hour = document.createElement(\"div\");\n      hour.className = \"bar-hour\";\n      hour.textContent = i % 3 === 0 ? time.slice(11, 13) : \"\";\n\n      col.appendChild(val);\n      col.appendChild(bar);\n      col.appendChild(hour);\n      chart.appendChild(col);\n    });\n  }\n\n  function render(params, data, sourceLabel) {\n    const daily = data.daily || {};\n    const hourly = data.hourly || {};\n\n    const max = daily.temperature_2m_max && daily.temperature_2m_max[0];\n    const min = daily.temperature_2m_min && daily.temperature_2m_min[0];\n    const code = daily.weather_code && daily.weather_code[0];\n    const info = weatherInfo(code);\n\n    if (max == null || min == null) {\n      showError(\"The data cannot be loaded. Incomplete daily temperature data for this date.\");\n      return;\n    }\n\n    document.getElementById(\"loc-name\").textContent = params.name;\n    document.getElementById(\"date-label\").textContent = formatDisplayDate(params.date);\n    document.getElementById(\"coords\").textContent =\n      params.lat.toFixed(2) + \"°, \" + params.lon.toFixed(2) + \"°\";\n    document.getElementById(\"weather-icon\").textContent = info.icon;\n    document.getElementById(\"condition\").textContent = info.label;\n    document.getElementById(\"condition-sub\").textContent =\n      \"Weather code \" + (code != null ? code : \"—\") + \" · \" + params.date;\n    document.getElementById(\"temp-max\").textContent = Math.round(max) + \"°\";\n    document.getElementById(\"temp-min\").textContent = Math.round(min) + \"°\";\n    document.getElementById(\"api-source\").textContent = sourceLabel;\n\n    renderHourly(hourly.time || [], hourly.temperature_2m || []);\n\n    document.getElementById(\"loading\").classList.add(\"hidden\");\n    document.getElementById(\"error\").classList.add(\"hidden\");\n    document.getElementById(\"card\").classList.remove(\"hidden\");\n  }\n\n  async function load() {\n    const params = parseParams();\n    const past = isPastDate(params.date);\n    const base = past ? \"/api/om/archive\" : \"/api/om/forecast\";\n    const sourceLabel = past ? \"Archive API\" : \"Forecast API\";\n\n    const qs = new URLSearchParams({\n      latitude: String(params.lat),\n      longitude: String(params.lon),\n      daily: \"temperature_2m_max,temperature_2m_min,weather_code\",\n      hourly: \"temperature_2m\",\n      timezone: \"UTC\",\n      temperature_unit: \"celsius\",\n      start_date: params.date,\n      end_date: params.date\n    });\n\n    try {\n      const res = await fetch(base + \"?\" + qs.toString());\n      if (!res.ok) {\n        throw new Error(\"HTTP \" + res.status);\n      }\n      const data = await res.json();\n      if (data.error) {\n        throw new Error(data.reason || data.error || \"API error\");\n      }\n      if (!data.daily || !data.daily.time || data.daily.time.length === 0) {\n        throw new Error(\"No daily data returned for this date.\");\n      }\n      render(params, data, sourceLabel);\n    } catch (err) {\n      showError(\"The data cannot be loaded. \" + (err && err.message ? err.message : \"Please try again.\"));\n    }\n  }\n\n  load();\n})();\n",
+      "codepoint_length": 7785,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 256,
+      "type": "text",
+      "parent": 16,
+      "child_index": 10,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    }
+  ]
+}

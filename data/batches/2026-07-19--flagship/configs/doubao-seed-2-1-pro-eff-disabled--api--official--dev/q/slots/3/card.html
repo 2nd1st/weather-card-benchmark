@@ -1,0 +1,344 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>Weather Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .weather-card {
+            width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            overflow: hidden;
+        }
+
+        .location-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 32px;
+        }
+
+        .location-info h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .date {
+            font-size: 18px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .current-weather {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 16px;
+        }
+
+        .weather-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .temp-display {
+            flex: 1;
+        }
+
+        .weather-condition {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .temp-range {
+            display: flex;
+            gap: 24px;
+        }
+
+        .temp-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+        }
+
+        .temp-high {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .temp-low {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .hourly-section {
+            margin-top: 32px;
+        }
+
+        .hourly-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .hourly-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+
+        .hourly-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .hourly-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        .hourly-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .hourly-item {
+            flex-shrink: 0;
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .hourly-item:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .hour {
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .hourly-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .hourly-temp {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: #dc2626;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .error-message {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #64748b;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-card">
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading weather data...</p>
+        </div>
+
+        <div class="error-state hidden" id="error">
+            <div class="error-icon">⚠️</div>
+            <p class="error-message">Unable to load weather data. Please try again later.</p>
+        </div>
+
+        <div id="content" class="hidden">
+            <div class="location-section">
+                <div class="location-info">
+                    <h1 id="location-name">Berlin</h1>
+                    <p class="date" id="date-display"></p>
+                </div>
+                <svg class="weather-icon" id="main-icon" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="20" fill="#fbbf24"/>
+                    <g stroke="#fbbf24" stroke-width="4" stroke-linecap="round">
+                        <line x1="50" y1="15" x2="50" y2="5"/>
+                        <line x1="50" y1="95" x2="50" y2="85"/>
+                        <line x1="15" y1="50" x2="5" y2="50"/>
+                        <line x1="95" y1="50" x2="85" y2="50"/>
+                        <line x1="25" y1="25" x2="18" y2="18"/>
+                        <line x1="75" y1="25" x2="82" y2="18"/>
+                        <line x1="25" y1="75" x2="18" y2="82"/>
+                        <line x1="75" y1="75" x2="82" y2="82"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="current-weather">
+                <div class="temp-display">
+                    <p class="weather-condition" id="condition">Clear sky</p>
+                    <div class="temp-range">
+                        <div class="temp-item">
+                            <span>↑</span>
+                            <span class="temp-high" id="temp-high">22°C</span>
+                        </div>
+                        <div class="temp-item">
+                            <span>↓</span>
+                            <span class="temp-low" id="temp-low">14°C</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hourly-section">
+                <h2 class="hourly-title">Hourly Forecast</h2>
+                <div class="hourly-scroll" id="hourly-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weatherCodes = {
+            0: { description: "Clear sky", icon: "sunny" },
+            1: { description: "Mainly clear", icon: "partly-cloudy" },
+            2: { description: "Partly cloudy", icon: "partly-cloudy" },
+            3: { description: "Overcast", icon: "cloudy" },
+            45: { description: "Fog", icon: "fog" },
+            48: { description: "Depositing rime fog", icon: "fog" },
+            51: { description: "Light drizzle", icon: "drizzle" },
+            53: { description: "Moderate drizzle", icon: "drizzle" },
+            55: { description: "Dense drizzle", icon: "drizzle" },
+            56: { description: "Light freezing drizzle", icon: "drizzle" },
+            57: { description: "Dense freezing drizzle", icon: "drizzle" },
+            61: { description: "Slight rain", icon: "rain" },
+            63: { description: "Moderate rain", icon: "rain" },
+            65: { description: "Heavy rain", icon: "rain" },
+            66: { description: "Light freezing rain", icon: "rain" },
+            67: { description: "Heavy freezing rain", icon: "rain" },
+            71: { description: "Slight snow", icon: "snow" },
+            73: { description: "Moderate snow", icon: "snow" },
+            75: { description: "Heavy snow", icon: "snow" },
+            77: { description: "Snow grains", icon: "snow" },
+            80: { description: "Slight rain showers", icon: "rain" },
+            81: { description: "Moderate rain showers", icon: "rain" },
+            82: { description: "Violent rain showers", icon: "rain" },
+            85: { description: "Slight snow showers", icon: "snow" },
+            86: { description: "Heavy snow showers", icon: "snow" },
+            95: { description: "Thunderstorm", icon: "thunderstorm" },
+            96: { description: "Thunderstorm with slight hail", icon: "thunderstorm" },
+            99: { description: "Thunderstorm with heavy hail", icon: "thunderstorm" }
+        };
+
+        function getWeatherIcon(type) {
+            switch(type) {
+                case "sunny":
+                    return `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <circle cx="50" cy="50" r="20" fill="#fbbf24"/>
+                        <g stroke="#fbbf24" stroke-width="4" stroke-linecap="round">
+                            <line x1="50" y1="15" x2="50" y2="5"/>
+                            <line x1="50" y1="95" x2="50" y2="85"/>
+                            <line x1="15" y1="50" x2="5" y2="50"/>
+                            <line x1="95" y1="50" x2="85" y2="50"/>
+                            <line x1="25" y1="25" x2="18" y2="18"/>
+                            <line x1="75" y1="25" x2="82" y2="18"/>
+                            <line x1="25" y1="75" x2="18" y2="82"/>
+                            <line x1="75" y1="75" x2="82" y2="82"/>
+                        </g>
+                    </svg>`;
+                case "partly-cloudy":
+                    return `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <circle cx="35" cy="35" r="18" fill="#fbbf24"/>
+                        <g stroke="#fbbf24" stroke-width="3" stroke-linecap="round">
+                            <line x1="35" y1="10" x2="35" y2="2"/>
+                            <line x1="10" y1="35" x2="2" y2="35"/>
+                            <line x1="17" y1="17" x2="11" y2="11"/>
+                            <line x1="53" y1="17" x2="59" y2="11"/>
+                        </g>
+                        <path d="M75 55 Q85 55 85 65 Q85 75 75 75 L35 75 Q25 75 25 65 Q25 55 35 55 Q35 45 45 45 Q60 45 65 55 Q75 55 75 55 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                    </svg>`;
+                case "cloudy":
+                    return `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path d="M75 60 Q85 60 85 70 Q85 80 75 80 L30 80 Q20 80 20 70 Q20 60 30 60 Q30 48 42 48 Q58 48 63 60 Q75 60 75 60 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                        <path d="M65 45 Q75 45 75 55 Q75 65 65 65 L35 65 Q25 65 25 55 Q25 45 35 45 Q35 35 45 35 Q60 35 62 45 Q65 45 65 45 Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+                    </svg>`;
+                case "fog":
+                    return `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path d="M70 45 Q80 45 80 55 Q80 65 70 65 L30 65 Q20 65 20 55 Q20 45 30 45 Q30 35 40 35 Q55 35 58 45 Q70 45 70 45 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                        <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+                            <line x1="20" y1="72" x2="80" y2="72"/>
+                            <line x1="25" y1="82" x2="75" y2="82"/>
+                        </g>
+                    </svg>`;
+                case "drizzle":
+                case "rain":
+                    return `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path d="M70 35 Q80 35 80 45 Q80 55 70 

@@ -1,0 +1,27 @@
+{
+  "N": 4,
+  "auth": {
+    "credential_ref": "WCB_BIGMODEL_KEY",
+    "method": "api-key"
+  },
+  "billing": "metered",
+  "config_id": "glm-5.2-eff-enabled--api--official--dev",
+  "effort": "enabled",
+  "family": "glm",
+  "m": {
+    "min": 3,
+    "q": 2
+  },
+  "model_id": "glm-5.2",
+  "protocol": "api",
+  "served_model": "glm-5.2",
+  "telemetry": {
+    "completion_tokens": 206891,
+    "cost_usd": null,
+    "prompt_tokens": 1571,
+    "total_tokens": 208462,
+    "wall_ms": 2661522
+  },
+  "transport": "bigmodel-openai-compat",
+  "vendor_sanction_ref": null
+}

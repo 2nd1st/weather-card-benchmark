@@ -1,0 +1,43 @@
+/* Gate overlay mobile fixes (W1). Base .gate-overlay / .gate-panel / .gate-*
+   live in app/globals.css (W6). This module only: pushes the panel clear of the
+   fixed 54px header on mobile (the overlay paints beneath the sticky nav — main.
+   site-main creates a z-index:1 stacking context that traps the overlay under
+   the nav — so without a top offset the title hides behind the header), pins the
+   panel inside the viewport with a safe-area gutter, and lifts the skip link +
+   meta one contrast step. Selectors anchored on :global(.gate-overlay) get 0,2,0
+   specificity, beating the base 0,1,0 gate rules regardless of source order. */
+
+/* base hook so styles.panel is always exported; mobile overrides live below. */
+.panel {
+  min-width: 0;
+}
+
+.skip {
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border-bottom: 1px dotted var(--line-strong);
+}
+.skip:hover {
+  color: var(--ink);
+}
+
+/* one step brighter than the base ink-faint meta so fixture labels stay legible */
+.meta {
+  color: var(--ink-dim);
+}
+.meta b {
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  :global(.gate-overlay) .panel {
+    /* clear the 54px sticky header (+ a safe-area top gutter); keep the side
+       gutter tight so nothing clips at 320–390px; reserve bottom safe-area. */
+    margin-top: calc(58px + env(safe-area-inset-top, 0px));
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 58px - 14px);
+    padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}

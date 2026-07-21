@@ -1,0 +1,82 @@
+# dev-official-kimi.yaml — 月之暗面 Moonshot 官方 API(N=4 正式规格,metered)。
+#
+# 端点:api.moonshot.ai(国际)。实测 api.moonshot.cn 对同一 key 返回
+# Invalid Authentication,故只用 .ai。
+#
+# 目的:kimi-k3 是 2026-07-16 才发的旗舰,此前我们只有 opencode-go / opencode-cli
+# 两条二手臂、合计 4 个 valid,样本明显偏薄。官方直连补厚它。
+#
+# 档位探针(2026-07-20,单样本,看 reasoning_content 与 token 梯度):
+#   kimi-k3        : thinking.disabled 真关闭(reasoning_content=False,141 tok);
+#                    reasoning_effort low=238 / high=427 → 有真实梯度。两轴都登记。
+#   kimi-k2.7-code : thinking.disabled → HTTP 400 拒绝;reasoning_effort
+#                    high=314 / low=315 → 几乎相同,判定为静默忽略。
+#                    故 NOT 展开 effort,只留默认一席。
+#   kimi-k2.6      : thinking.disabled 真关闭(149 tok);reasoning_effort
+#                    high=482 / low=546 反向 → 无效。只用 thinking 轴。
+# 原则同 gemini/gpt:只登记实测生效的档,不写"接受但无行为"的假档位。
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.moonshot.ai/v1
+  descriptor: moonshot-official-api
+  proxy: none
+
+configs:
+  # ---- kimi-k3(旗舰,两轴都有效)----
+  - config_id: kimi-k3-eff-disabled--api--official--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: disabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }
+
+  - config_id: kimi-k3-eff-low--api--official--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }
+
+  - config_id: kimi-k3-eff-high--api--official--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }
+
+  # ---- kimi-k2.7-code(effort 轴无效,单席)----
+  - config_id: kimi-k2.7-code--api--official--dev
+    family: kimi
+    model_id: kimi-k2.7-code
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }
+
+  # ---- kimi-k2.6(只有 thinking 轴有效)----
+  - config_id: kimi-k2.6-eff-enabled--api--official--dev
+    family: kimi
+    model_id: kimi-k2.6
+    effort: enabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }
+
+  - config_id: kimi-k2.6-eff-disabled--api--official--dev
+    family: kimi
+    model_id: kimi-k2.6
+    effort: disabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_KIMI_KEY }

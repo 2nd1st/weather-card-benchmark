@@ -1,0 +1,400 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 3,
+  "occurrences": [
+    {
+      "id": {
+        "node_preorder": 51,
+        "start": 2,
+        "end": 7
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 57,
+        "start": 2,
+        "end": 7
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    }
+  ],
+  "arbitration": {
+    "considered": [
+      {
+        "node_preorder": 51,
+        "start": 2,
+        "length": 5,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 57,
+        "start": 2,
+        "length": 5,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      }
+    ]
+  },
+  "salience": {
+    "f_max": 15.2,
+    "candidates": [
+      {
+        "occurrence_id": {
+          "node_preorder": 51,
+          "start": 2,
+          "end": 7
+        },
+        "font_size": 15.2,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 57,
+          "start": 2,
+          "end": 7
+        },
+        "font_size": 15.2,
+        "salience_ratio": 0.0,
+        "in_E": true
+      }
+    ],
+    "E": [
+      {
+        "node_preorder": 51,
+        "start": 2,
+        "end": 7
+      },
+      {
+        "node_preorder": 57,
+        "start": 2,
+        "end": 7
+      }
+    ]
+  },
+  "max_min_binding": {
+    "branch": "no-label",
+    "distances": [],
+    "max": {
+      "label_id": null,
+      "temp_id": {
+        "node_preorder": 51,
+        "start": 2,
+        "end": 7
+      },
+      "canonical_id": {
+        "node_preorder": 51,
+        "start": 2,
+        "end": 7
+      },
+      "value": "25.3",
+      "display_decimals": 1
+    },
+    "min": {
+      "label_id": null,
+      "temp_id": {
+        "node_preorder": 57,
+        "start": 2,
+        "end": 7
+      },
+      "canonical_id": {
+        "node_preorder": 57,
+        "start": 2,
+        "end": 7
+      },
+      "value": "16",
+      "display_decimals": 1
+    },
+    "canonical_published": true,
+    "decision_path": [
+      {
+        "code": "branch-no-label",
+        "detail": null
+      },
+      {
+        "code": "no-label-numeric-bound",
+        "detail": "max=(51, 2, 7) min=(57, 2, 7)"
+      },
+      {
+        "code": "canonical-published",
+        "detail": "true"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "proceed",
+    "has_label": false,
+    "candidates": [],
+    "label_parse": [],
+    "bindings": [],
+    "signature": [],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "proceed"
+      },
+      {
+        "code": "hourly-branch",
+        "detail": "no-label"
+      },
+      {
+        "code": "no-label-not-24",
+        "detail": "0"
+      },
+      {
+        "code": "hourly-structural-conflict",
+        "detail": "no-label-not-24"
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "name-substring-hit",
+          "detail": "node=25"
+        }
+      ]
+    },
+    "date": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "date-hit",
+          "detail": "2026-07-15"
+        }
+      ]
+    },
+    "condition": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "condition-wmo-hit",
+          "detail": "node=46"
+        }
+      ]
+    },
+    "max": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-no-label",
+          "detail": null
+        },
+        {
+          "code": "no-label-numeric-bound",
+          "detail": "max=(51, 2, 7) min=(57, 2, 7)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "min": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-no-label",
+          "detail": null
+        },
+        {
+          "code": "no-label-numeric-bound",
+          "detail": "max=(51, 2, 7) min=(57, 2, 7)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "ambiguous",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "proceed"
+        },
+        {
+          "code": "hourly-branch",
+          "detail": "no-label"
+        },
+        {
+          "code": "no-label-not-24",
+          "detail": "0"
+        },
+        {
+          "code": "hourly-structural-conflict",
+          "detail": "no-label-not-24"
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 19,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 21,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 23,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 25,
+      "text_coord_base": 0,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 26,
+      "text_coord_base": 6,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 28,
+      "text_coord_base": 6,
+      "codepoint_length": 24
+    },
+    {
+      "node_preorder": 29,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 30,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 32,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 44,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 46,
+      "text_coord_base": 30,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 47,
+      "text_coord_base": 43,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 49,
+      "text_coord_base": 43,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 51,
+      "text_coord_base": 43,
+      "codepoint_length": 7
+    },
+    {
+      "node_preorder": 52,
+      "text_coord_base": 50,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 54,
+      "text_coord_base": 50,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 55,
+      "text_coord_base": 51,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 57,
+      "text_coord_base": 51,
+      "codepoint_length": 7
+    },
+    {
+      "node_preorder": 58,
+      "text_coord_base": 58,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 59,
+      "text_coord_base": 58,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 60,
+      "text_coord_base": 58,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 61,
+      "text_coord_base": 58,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 63,
+      "text_coord_base": 58,
+      "codepoint_length": 4
+    },
+    {
+      "node_preorder": 65,
+      "text_coord_base": 62,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 66,
+      "text_coord_base": 64,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 68,
+      "text_coord_base": 64,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 70,
+      "text_coord_base": 64,
+      "codepoint_length": 18
+    },
+    {
+      "node_preorder": 71,
+      "text_coord_base": 82,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 74,
+      "text_coord_base": 82,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 75,
+      "text_coord_base": 82,
+      "codepoint_length": 0
+    }
+  ]
+}

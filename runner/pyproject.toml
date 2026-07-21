@@ -1,0 +1,30 @@
+[project]
+name = "weather-card-benchmark-runner"
+version = "0.0.0"
+description = "Deterministic sampling / render / L1-L3 similarity runner for the weather-card benchmark."
+requires-python = ">=3.11"
+authors = [{ name = "2nd1st" }]
+dependencies = [
+    "requests",
+    "playwright",
+    "pytest",
+    "pyyaml",
+    "jsonschema",
+    "rfc8785",  # RFC 8785 JCS canonicalization (manifest_hash); available on PyPI
+    "numpy",  # Generator(PCG64(seed_assign)) for the Ω_c assignment draw (scheme §1.2)
+    "scipy",  # scipy.fft.dctn(type=2, norm="ortho") for v-phash (appendix A, scipy 钉版)
+    "pillow",  # image decode / LANCZOS resize for visual channels (appendix A imaging)
+    "scikit-image",  # skimage.metrics.structural_similarity for v-ssim (appendix A, 钉版)
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# Runner is executed in-place (python -m runner...), not installed as a wheel.
+py-modules = []

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/harness-plan.schema.json",
+  "title": "harness-plan.json — planned coverage for the harness/api arms outside production-matrix (REDESIGN-SPEC-v3 §2.4, §9)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "arms"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated": { "type": "string" },
+    "note_en": { "type": "string" },
+    "note_zh": { "type": "string" },
+    "arms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["arm", "arm_group", "family", "models"],
+        "properties": {
+          "arm": { "type": "string", "minLength": 1 },
+          "arm_group": { "enum": ["api", "harness"] },
+          "family": { "type": "string", "minLength": 1 },
+          "harness_en": { "type": "string" },
+          "harness_zh": { "type": "string" },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["model_id", "efforts"],
+              "properties": {
+                "model_id": { "type": "string", "minLength": 1 },
+                "efforts": {
+                  "type": "array",
+                  "description": "effort tokens; null = the no-effort (default) tier.",
+                  "items": { "type": ["string", "number", "null"] }
+                },
+                "n": { "type": "integer", "minimum": 1, "description": "planned slots per variant (default 4)." },
+                "awaiting_en": { "type": "string" },
+                "awaiting_zh": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

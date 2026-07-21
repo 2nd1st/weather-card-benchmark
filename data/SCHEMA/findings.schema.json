@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/findings.schema.json",
+  "title": "findings.json — descriptive observation cards (REDESIGN-SPEC-v3 §4 /findings, §9)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "findings"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated": { "type": "string" },
+    "note_en": { "type": "string" },
+    "note_zh": { "type": "string" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title_en", "title_zh", "body_en", "body_zh"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title_en": { "type": "string", "minLength": 1 },
+          "title_zh": { "type": "string", "minLength": 1 },
+          "body_en": { "type": "string", "minLength": 1 },
+          "body_zh": { "type": "string", "minLength": 1 },
+          "figures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["value"],
+              "properties": {
+                "label_en": { "type": "string" },
+                "label_zh": { "type": "string" },
+                "value": { "type": ["string", "number"] }
+              }
+            }
+          },
+          "refs": {
+            "type": "array",
+            "description": "batch ids the finding cites.",
+            "items": { "type": "string" }
+          },
+          "caveat_en": { "type": "string" },
+          "caveat_zh": { "type": "string" }
+        }
+      }
+    }
+  }
+}

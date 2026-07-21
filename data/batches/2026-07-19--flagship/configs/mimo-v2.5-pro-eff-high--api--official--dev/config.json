@@ -1,0 +1,27 @@
+{
+  "N": 4,
+  "auth": {
+    "credential_ref": "WCB_MIMO_KEY",
+    "method": "api-key"
+  },
+  "billing": "metered",
+  "config_id": "mimo-v2.5-pro-eff-high--api--official--dev",
+  "effort": "high",
+  "family": "mimo",
+  "m": {
+    "min": 4,
+    "q": 4
+  },
+  "model_id": "mimo-v2.5-pro",
+  "protocol": "api",
+  "served_model": "mimo-v2.5-pro",
+  "telemetry": {
+    "completion_tokens": 32576,
+    "cost_usd": null,
+    "prompt_tokens": 4496,
+    "total_tokens": 37072,
+    "wall_ms": 493094
+  },
+  "transport": "xiaomi-mimo-official-api",
+  "vendor_sanction_ref": null
+}

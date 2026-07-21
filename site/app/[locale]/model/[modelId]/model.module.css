@@ -1,0 +1,85 @@
+/* /model/[modelId] — one model across efforts × arms. Data-dense, so the
+   restrained hairline/ink register (mockup-a); no glow. */
+
+.page { padding-block: clamp(20px, 4vw, 40px); }
+
+.crumb { font: 12px var(--font-mono); color: var(--ink-dim); margin-block-end: 14px; }
+.crumb a { color: var(--ink); }
+.crumb a:hover { color: var(--acc); }
+
+.title { font: 600 clamp(22px, 3vw, 32px)/1.1 var(--font-mono); letter-spacing: -.02em; }
+.title .fam { color: var(--ink-dim); font-weight: 400; font-size: .44em; letter-spacing: .08em; text-transform: uppercase; display: block; margin-block-end: 8px; }
+.sub { color: var(--ink-dim); font-size: 13px; max-width: 74ch; margin-block-start: 10px; }
+
+.sec { margin-block-start: clamp(32px, 5vw, 52px); }
+.secH { font-size: clamp(15px, 1.8vw, 18px); font-weight: 500; letter-spacing: -.01em; margin-block-end: 4px; }
+.secSub { color: var(--ink-dim); font-size: 12px; max-width: 70ch; margin-block-end: 18px; }
+
+.stripWrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-elev); }
+.strip { border-collapse: collapse; width: 100%; }
+.strip th, .strip td { border: 1px solid var(--line); padding: 0; vertical-align: top; }
+.colHead {
+  font: 10px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint);
+  padding: 10px 12px; text-align: center; white-space: nowrap; background: var(--panel);
+}
+.rowHead {
+  font: 11px var(--font-mono); color: var(--ink-dim); padding: 12px 14px; white-space: nowrap;
+  background: var(--panel); position: sticky; left: 0; z-index: 1; min-width: 96px;
+}
+.corner { background: var(--panel); }
+
+.cell { display: block; padding: 10px; min-width: 150px; transition: background .15s; }
+.cell:hover { background: var(--panel); }
+.cellEmpty { display: grid; place-items: center; min-width: 120px; min-height: 90px; color: var(--ink-faint); font: 12px var(--font-mono); }
+
+.thumb {
+  /* native 1280×800 shot aspect — cover in a 4:3 box side-crops every card */
+  position: relative; aspect-ratio: 1280/800; border-radius: 8px; overflow: hidden;
+  background: radial-gradient(85% 75% at 50% 22%, rgba(55, 214, 228, .08), transparent 72%), var(--bg);
+  border: 1px solid var(--line); margin-block-end: 8px;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumbEmpty { display: grid; place-items: center; width: 100%; height: 100%; font: 10px var(--font-mono); color: var(--ink-faint); text-align: center; padding: 8px; }
+
+.cellMeta { display: flex; flex-direction: column; gap: 4px; }
+.cellFig { font: 12.5px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.cellFig span { color: var(--ink-dim); font-size: 11px; }
+.cellSub { font: 10.5px var(--font-mono); color: var(--ink-faint); }
+
+/* thumbnail open-run affordance (audit §11) */
+.openCue {
+  position: absolute; inset-inline: 0; bottom: 0; padding: 6px 8px;
+  font: 10px var(--font-mono); letter-spacing: .06em; color: var(--acc); text-align: center;
+  background: linear-gradient(rgba(11, 14, 20, 0), rgba(11, 14, 20, .82));
+  opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s;
+}
+.cell:hover .thumb { border-color: rgba(55, 214, 228, .5); }
+.cell:hover .openCue, .cell:focus-visible .openCue { opacity: 1; transform: none; }
+.failChip {
+  align-self: flex-start; font: 10px var(--font-mono); color: var(--bad);
+  border: 1px solid rgba(240, 100, 122, .4); border-radius: 999px; padding: 2px 8px;
+}
+
+/* mini-chart */
+.chartCard { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-elev); padding: clamp(14px, 2vw, 22px); }
+.chartHead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-block-end: 14px; }
+.chartToggle { display: inline-flex; gap: 6px; }
+.tbtn { font: 11px var(--font-mono); color: var(--ink-dim); border: 1px solid var(--line-strong); border-radius: 7px; padding: 5px 12px; background: transparent; cursor: pointer; transition: color .15s, border-color .15s; }
+.tbtn:hover { color: var(--ink); }
+.tbtn.on { border-color: var(--acc); color: var(--acc); background: rgba(55, 214, 228, .08); }
+
+/* single-series arm chip (folded out of the wasted legend row, audit §11) */
+.armChip { display: inline-flex; align-items: center; gap: 7px; margin-block-start: 10px; font: 11.5px var(--font-mono); color: var(--ink-dim); }
+.armChip i { width: 14px; height: 2px; display: inline-block; border-radius: 1px; }
+
+/* growth callout (audit §9): the shareable "14.7× low → max" takeaway */
+.growth { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-block: 4px 16px; }
+.growthMult { font: 700 clamp(28px, 4vw, 40px)/1 var(--font-mono); letter-spacing: -.02em; color: var(--acc); font-variant-numeric: tabular-nums; }
+.growthLabel { font: 12px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim); }
+
+.chartSvg { width: 100%; height: auto; display: block; overflow: visible; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-block-start: 12px; font: 11.5px var(--font-mono); color: var(--ink); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 2px; display: inline-block; border-radius: 1px; }
+.chartNote { font: 12px var(--font-mono); color: var(--ink-faint); margin-block-start: 10px; }
+.attrRow { margin-block-start: 14px; }

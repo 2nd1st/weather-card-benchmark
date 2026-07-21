@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/fidelity-trace.schema.json",
+  "title": "fidelity-trace.json",
+  "description": "Per-VALID-slot fidelity decision TRACE, the load-bearing '全部落盘' audit artifact scheme §3/§8 mandate ('候选、显著度、绑定决策、判定路径全部落盘'; max/min '决策路径落盘'; hourly '判定路径落盘'). RULED (DECISIONS-M0 §7): this is a SEPARATE per-slot artifact at data/batches/<batch>/configs/<config_id>/slots/<k>/fidelity-trace.json — NOT inline in meta.json (meta.json keeps only the terminal verdict + scalar reason; the trace is deep-audit data). Present only for state=valid slots (the only ones with a fidelity verdict). Records: the candidate OCCURRENCE set (ID = (node preorder, start, end) + pattern_id, per-namespace, with same-span merge + category summary and label voiding), the leftmost-longest overlap arbitration log, the salience set E with f_max and per-candidate (f_max−f)/f_max, the max/min binding branch + distance 二元组 (DOM-edge count via LCA, |text-coordinate diff|) + assignment + canonical publication, the hourly pre-triage / label-parse / max-cardinality injective binding + fixed-length signature, and the decision path leading to every field verdict. JUDGMENT CALL (flagged): scheme fixes the fidelity SEMANTICS byte-exactly but not the trace JSON shape; the layout is this contract's design (DECISIONS-M0 §7). schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. IDs and distances are integers (occurrence-ID components are guaranteed < 2^31−1, scheme §3 sentinel claim). Displayed temperature values are canonical decimal STRINGS (mirrors meta.json, preserves ROUND_HALF_UP precision). Font sizes / salience ratios are JSON numbers; if this trace enters a verify rehash the runner fixes one canonical serialization (CONTRACT-NOTES §8). occurrence order = ID (node preorder,start,end) lexicographic. DOM preorder = pre-order traversal, siblings by child index.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["extractor_version", "slot_index", "occurrences", "arbitration", "salience", "max_min_binding", "hourly_binding", "field_paths"],
+  "properties": {
+    "extractor_version": {"type": "string", "minLength": 1, "description": "extractor_version that produced this trace; frozen into lock (scheme §11). MUST equal meta.json.fidelity.extractor_version for the same slot."},
+    "slot_index": {"type": "integer", "minimum": 0, "description": "Slot number k; matches the slots/<k>/ directory and meta.json.slot_index. Only valid slots have a trace."},
+    "text_model": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "OPTIONAL: the normalized visible-text-node model used to compute text coordinates (DOM preorder, cumulative normalized-codepoint length, NO inter-node separator; scheme §3 文本坐标). Included when full distance auditability is retained; omit to keep the trace light.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["node_preorder", "text_coord_base", "codepoint_length"],
+        "properties": {
+          "node_preorder": {"type": "integer", "minimum": 0, "description": "DOM preorder index of the visible text node."},
+          "text_coord_base": {"type": "integer", "minimum": 0, "description": "Cumulative normalized-codepoint length before this node (its start text coordinate)."},
+          "codepoint_length": {"type": "integer", "minimum": 0, "description": "Normalized-codepoint length of this node's text."}
+        }
+      }
+    },
+    "occurrences": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "Candidate occurrences after same-(node,start,end)-span merge + leftmost-longest arbitration (scheme §3). Ordered by ID (node preorder, start, end) lexicographic. Per-namespace pools; one text node may yield several occurrences.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "pattern_id", "namespace", "merged_categories", "voided", "voided_reason"],
+        "properties": {
+          "id": {"$ref": "#/$defs/occId"},
+          "pattern_id": {"type": "string", "minLength": 1, "description": "Version-locked matcher pattern id that produced the hit (scheme §3, patterns versioned individually)."},
+          "namespace": {"type": "string", "enum": ["temperature", "max-label", "min-label", "hourly-label", "name", "date", "condition", "other"], "description": "Occurrence pool (scheme §3 分池 by namespace)."},
+          "merged_categories": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}, "description": "Category summary of all raw hits sharing this (node,start,end) span (scheme §3 '同 span 合并汇总类别'). A label occurrence whose summary contains BOTH max and min is voided."},
+          "voided": {"type": "boolean", "description": "true iff a label occurrence was voided because its merged same-span category summary contained both max and min (scheme §3). Voided labels drop out of the effective label set."},
+          "voided_reason": {"type": ["string", "null"], "description": "Versioned reason (e.g. 'span-has-both-max-and-min'), or null."}
+        }
+      }
+    },
+    "arbitration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["considered"],
+      "description": "Leftmost-longest overlap arbitration log (scheme §3): raw hits sorted by (start asc, length desc, pattern_id lexicographic), greedily keeping each hit not overlapping an already-selected one.",
+      "properties": {
+        "considered": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Each raw hit considered in sort order, with the greedy selection outcome.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["node_preorder", "start", "length", "pattern_id", "selected"],
+            "properties": {
+              "node_preorder": {"type": "integer", "minimum": 0},
+              "start": {"type": "integer", "minimum": 0, "description": "Node-internal Unicode codepoint offset (JS side must NOT use UTF-16 code-unit indexing)."},
+              "length": {"type": "integer", "minimum": 0, "description": "Codepoint length; end = start + length."},
+              "pattern_id": {"type": "string", "minLength": 1},
+              "selected": {"type": "boolean", "description": "true if kept (did not overlap an already-selected hit)."}
+            }
+          }
+        }
+      }
+    },
+    "salience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["f_max", "candidates", "E"],
+      "description": "Temperature-candidate salience (scheme §3). f_max = max computed font-size (px) over all temperature-candidate occurrences' parent elements; null when there is no temperature candidate (E=∅). Same-salience band: (f_max−f)/f_max < 0.10.",
+      "properties": {
+        "f_max": {"type": ["number", "null"], "exclusiveMinimum": 0, "description": "Max parent computed font-size (px) over temperature candidates; null when no candidate."},
+        "candidates": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Every temperature-candidate occurrence with its parent font-size and salience ratio.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["occurrence_id", "font_size", "salience_ratio", "in_E"],
+            "properties": {
+              "occurrence_id": {"$ref": "#/$defs/occId"},
+              "font_size": {"type": "number", "exclusiveMinimum": 0, "description": "Parent element computed font-size in px."},
+              "salience_ratio": {"type": "number", "minimum": 0, "description": "(f_max − f)/f_max. In E iff < 0.10."},
+              "in_E": {"type": "boolean", "description": "Member of the same-salience set E (salience_ratio < 0.10)."}
+            }
+          }
+        },
+        "E": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/occId"}, "description": "The same-salience temperature-candidate set E (occurrence IDs), scheme §3."}
+      }
+    },
+    "max_min_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "distances", "max", "min", "canonical_published", "decision_path"],
+      "description": "Global one-to-one max/min binding (scheme §3, all v12 branches). Distances are the §3 二元组 (DOM-edge count via LCA, |text-coordinate diff|), compared lexicographically (first component then second).",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "enum": ["E-empty", "double-label", "single-label", "no-label"],
+          "description": "E-empty → both not-found (no-temperature-candidate), no canonical, no further branch (|E|=0). double-label = both effective label classes present. single-label = exactly one class. no-label = none (scheme §3)."
+        },
+        "distances": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "The candidate label→temperature distance 二元组 entries evaluated during binding. label_id null on the pure-numeric (no-label) side.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label_id", "temp_id", "dom_edges", "text_coord_diff"],
+            "properties": {
+              "label_id": {"oneOf": [{"$ref": "#/$defs/occId"}, {"type": "null"}], "description": "Label occurrence, or null on a numeric-rule side."},
+              "temp_id": {"$ref": "#/$defs/occId"},
+              "dom_edges": {"type": "integer", "minimum": 0, "description": "First distance component: DOM edge count from label parent to temperature parent via their LCA."},
+              "text_coord_diff": {"type": "integer", "minimum": 0, "description": "Second component: |text-coordinate(label) − text-coordinate(temperature)| in normalized codepoints."}
+            }
+          }
+        },
+        "max": {"$ref": "#/$defs/tempBinding", "description": "Daily-max binding outcome."},
+        "min": {"$ref": "#/$defs/tempBinding", "description": "Daily-min binding outcome."},
+        "canonical_published": {"type": "boolean", "description": "true iff BOTH canonical occurrences produced with distinct IDs AND both max/min terminal states non-ambiguous (scheme §3 canonical publish condition). The scheme's explicit 'not-found 不发布' is covered by the first clause (not-found ⇒ no canonical occurrence produced ⇒ 'both produced' already fails). Gates hourly deduction."},
+        "decision_path": {"$ref": "#/$defs/decisionPath", "description": "Ordered reason steps leading to the max/min verdicts (scheme §3 决策路径落盘)."}
+      }
+    },
+    "hourly_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pretriage", "has_label", "candidates", "label_parse", "bindings", "signature", "decision_path"],
+      "description": "Hourly binding (scheme §3): pre-triage, then labeled max-cardinality injective binding or the no-label exactly-24 alignment. hourly_temperature_candidates = all temperature-candidate occurrences − the 2 canonical occurrences.",
+      "properties": {
+        "pretriage": {
+          "type": "string",
+          "enum": ["proceed", "canonical-incomplete-ambiguous", "no-candidate-not-found"],
+          "description": "proceed = both canonical published, continue. canonical-incomplete-ambiguous = temperature candidates exist but the two daily canonical occurrences not both published → whole field ambiguous. no-candidate-not-found = no temperature candidate → not-found (scheme §3 预分流)."
+        },
+        "has_label": {"type": ["boolean", "null"], "description": "true = labeled branch (max-cardinality injective binding). false = no-label branch (exactly 24 → aligned, else ambiguous). null when pre-triage stopped before this decision."},
+        "candidates": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/occId"}, "description": "hourly_temperature_candidates (temperature occurrences minus the 2 canonical), occurrence IDs."},
+        "label_parse": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Hourly-label occurrences and their parsed UTC hour (0–23) via the versioned template table; parsed_hour null when unparseable.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["occurrence_id", "parsed_hour"],
+            "properties": {
+              "occurrence_id": {"$ref": "#/$defs/occId"},
+              "parsed_hour": {"type": ["integer", "null"], "minimum": 0, "maximum": 23}
+            }
+          }
+        },
+        "bindings": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "The chosen max-cardinality injective binding (labeled branch) or the ordered no-label alignment: each bound (label/hour → temperature) with its distance 二元组 components (labeled branch only; 0 for no-label).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label_id", "temp_id", "hour", "dom_edges", "text_coord_diff"],
+            "properties": {
+              "label_id": {"oneOf": [{"$ref": "#/$defs/occId"}, {"type": "null"}], "description": "Bound hourly-label occurrence; null on the no-label branch."},
+              "temp_id": {"$ref": "#/$defs/occId"},
+              "hour": {"type": "integer", "minimum": 0, "maximum": 23, "description": "Bound UTC hour."},
+              "dom_edges": {"type": "integer", "minimum": 0, "description": "Distance 二元组 first component (labeled branch; 0 on no-label)."},
+              "text_coord_diff": {"type": "integer", "minimum": 0, "description": "Distance 二元组 second component (labeled branch; 0 on no-label)."}
+            }
+          }
+        },
+        "signature": {
+          "type": "array",
+          "description": "Assignment signature = the T_id sequence of the fixed-length per-label vector (scheme §3 v12): bound element → the bound temperature occurrence ID; unbound label → the sentinel (2^31−1, 2^31−1, 2^31−1). Ordered by full label-occurrence order.",
+          "items": {"$ref": "#/$defs/occIdOrSentinel"}
+        },
+        "decision_path": {"$ref": "#/$defs/decisionPath", "description": "Ordered reason steps for the hourly field verdict (scheme §3 判定路径落盘)."}
+      }
+    },
+    "field_paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "date", "condition", "max", "min", "hourly"],
+      "description": "Terminal verdict state + decision path for each fidelity field. States mirror meta.json (name is 2-state {match,not-found}; the rest are 4-state {match,mismatch,ambiguous,not-found}; hourly here is the FIELD-state aggregation, not the point states).",
+      "properties": {
+        "name": {"$ref": "#/$defs/namePath"},
+        "date": {"$ref": "#/$defs/fieldPath"},
+        "condition": {"$ref": "#/$defs/fieldPath"},
+        "max": {"$ref": "#/$defs/fieldPath"},
+        "min": {"$ref": "#/$defs/fieldPath"},
+        "hourly": {"$ref": "#/$defs/fieldPath"}
+      }
+    }
+  },
+  "$defs": {
+    "occId": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_preorder", "start", "end"],
+      "description": "Occurrence ID = (node preorder, start, end); each component a non-negative integer < 2^31−1 (scheme §3 sentinel guarantee). Occurrence order = this triple lexicographic.",
+      "properties": {
+        "node_preorder": {"type": "integer", "minimum": 0, "maximum": 2147483646},
+        "start": {"type": "integer", "minimum": 0, "maximum": 2147483646, "description": "Node-internal codepoint start offset."},
+        "end": {"type": "integer", "minimum": 0, "maximum": 2147483646, "description": "Node-internal codepoint end offset."}
+      }
+    },
+    "occIdOrSentinel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_preorder", "start", "end"],
+      "description": "An occurrence ID or the hourly-signature sentinel (2147483647,2147483647,2147483647) for an unbound label slot.",
+      "properties": {
+        "node_preorder": {"type": "integer", "minimum": 0, "maximum": 2147483647},
+        "start": {"type": "integer", "minimum": 0, "maximum": 2147483647},
+        "end": {"type": "integer", "minimum": 0, "maximum": 2147483647}
+      }
+    },
+    "tempBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label_id", "temp_id", "canonical_id", "value", "display_decimals"],
+      "description": "One side (max or min) of the binding result. label_id/temp_id/canonical_id null when not bound; value = the canonical occurrence's displayed decimal string (nullable).",
+      "properties": {
+        "label_id": {"oneOf": [{"$ref": "#/$defs/occId"}, {"type": "null"}]},
+        "temp_id": {"oneOf": [{"$ref": "#/$defs/occId"}, {"type": "null"}]},
+        "canonical_id": {"oneOf": [{"$ref": "#/$defs/occId"}, {"type": "null"}], "description": "Canonical occurrence (same value, smallest occurrence order); null when not published."},
+        "value": {"type": ["string", "null"], "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Displayed value as a canonical decimal string, or null."},
+        "display_decimals": {"type": ["integer", "null"], "minimum": 0, "description": "Displayed decimal places d for ROUND_HALF_UP quantize (scheme §3), or null."}
+      }
+    },
+    "decisionPath": {
+      "type": "array",
+      "description": "Ordered decision-path steps (scheme §3 全部落盘). Each step is a versioned code + optional detail.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1, "description": "Versioned decision/reason code."},
+          "detail": {"type": ["string", "null"], "description": "Optional human/audit detail, or null."}
+        }
+      }
+    },
+    "fieldPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "decision_path"],
+      "description": "4-state field verdict + its decision path.",
+      "properties": {
+        "state": {"type": "string", "enum": ["match", "mismatch", "ambiguous", "not-found"]},
+        "decision_path": {"$ref": "#/$defs/decisionPath"}
+      }
+    },
+    "namePath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "decision_path"],
+      "description": "name field verdict — 2-state only {match,not-found} (scheme §3 '无 mismatch 态').",
+      "properties": {
+        "state": {"type": "string", "enum": ["match", "not-found"]},
+        "decision_path": {"$ref": "#/$defs/decisionPath"}
+      }
+    }
+  }
+}

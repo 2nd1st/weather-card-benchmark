@@ -1,0 +1,63 @@
+# dev-go-extra.yaml — go 订阅剩余 6 模型(api 臂)。
+version: 1
+N: 2
+
+transport:
+  base_url: https://opencode.ai/zen/go/v1
+  descriptor: opencode-go-gateway
+  proxy: none
+
+configs:
+  - config_id: glm-5--opencode-go--dev
+    family: glm
+    model_id: glm-5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: kimi-k2.5--opencode-go--dev
+    family: kimi
+    model_id: kimi-k2.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: mimo-v2-omni--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2-omni
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: mimo-v2-pro--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2-pro
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: minimax-m2.5--opencode-go--dev
+    family: minimax
+    model_id: minimax-m2.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: qwen3.5-plus--opencode-go--dev
+    family: qwen
+    model_id: qwen3.5-plus
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }

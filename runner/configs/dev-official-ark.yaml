@@ -1,0 +1,28 @@
+# dev-official-ark.yaml — 火山方舟官方 API(豆包 seed-2.1-pro,N=4,metered)。
+# 探针 2026-07-19:thinking:{type:disabled} 接受,PONG 正常。
+version: 1
+N: 4
+
+transport:
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  descriptor: volcano-ark-official-api
+  proxy: none
+
+configs:
+  - config_id: doubao-seed-2-1-pro-eff-disabled--api--official--dev
+    family: doubao
+    model_id: doubao-seed-2-1-pro-260628
+    effort: disabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_ARK_KEY }
+
+  - config_id: doubao-seed-2-1-pro-eff-enabled--api--official--dev
+    family: doubao
+    model_id: doubao-seed-2-1-pro-260628
+    effort: enabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_ARK_KEY }

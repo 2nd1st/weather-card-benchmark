@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800">
+<title>Weather Card</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #0b1d36 0%, #1a3a5c 45%, #2d5a87 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f0f4f8;
+  }
+  .card {
+    width: 960px;
+    min-height: 620px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 28px;
+    padding: 44px 52px 40px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .location {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .date-label {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+  .condition-block {
+    text-align: right;
+  }
+  .condition {
+    font-size: 22px;
+    font-weight: 500;
+    opacity: 0.95;
+  }
+  .temps {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 36px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .temp-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .temp-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    font-weight: 500;
+  }
+  .temp-value {
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .temp-value span {
+    font-size: 28px;
+    opacity: 0.6;
+    font-weight: 400;
+  }
+  .hourly-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .hourly {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px 8px;
+    flex: 1;
+  }
+  .hour-cell {
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 12px 6px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .hour-time {
+    font-size: 12px;
+    opacity: 0.55;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .hour-temp {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .status {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    opacity: 0.85;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .status.error {
+    color: #ffb4b4;
+  }
+</style>
+</head>
+<body>
+<div class="card" id="app">
+  <div class="status">Loading weather data…</div>
+</div>
+<script>
+(function () {
+  var WMO = {
+    0: "Clear sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Depositing rime fog",
+    51: "Light drizzle",
+    53: "Moderate drizzle",
+    55: "Dense drizzle",
+    56: "Light freezing drizzle",
+    57: "Dense freezing drizzle",
+    61: "Slight rain",
+    63: "Moderate rain",
+    65: "Heavy rain",
+    66: "Light freezing rain",
+    67: "Heavy freezing rain",
+    71: "Slight snow fall",
+    73: "Moderate snow fall",
+    75: "Heavy snow fall",
+    77: "Snow grains",
+    80: "Slight rain showers",
+    81: "Moderate rain showers",
+    82: "Violent rain showers",
+    85: "Slight snow showers",
+    86: "Heavy snow showers",
+    95: "Thunderstorm",
+    96: "Thunderstorm with slight hail",
+    99: "Thunderstorm with heavy hail"
+  };
+
+  function qs(key, fallback) {
+    var v = new URLSearchParams(window.location.search).get(key);
+    return v === null || v === "" ? fallback : v;
+  }
+
+  function todayUTC() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function fmtDate(iso) {
+    var p = iso.split("-");
+    var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    return days[d.getUTCDay()] + ", " + months[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
+  }
+
+  function fmtHour(iso) {
+    var h = parseInt(iso.slice(11, 13), 10);
+    var suffix = h >= 12 ? "PM" : "AM";
+    var h12 = h % 12;
+    if (h12 === 0) h12 = 12;
+    return h12 + " " + suffix;
+  }
+
+  function showError(msg) {
+    document.getElementById("app").innerHTML =
+      '<div class="status error">' + msg + "</div>";
+  }
+
+  function render(name, date, data) {
+    var daily = data.daily;
+    if (!daily || !daily.time || !daily.time.length) {
+      showError("Weather data could not be loaded.");
+      return;
+    }
+    var maxT = daily.temperature_2m_max[0];
+    var minT = daily.temperature_2m_min[0];
+    var code = daily.weather_code[0];
+    var condition = WMO[code] !== undefined ? WMO[code] : "Unknown (code " + code + ")";
+
+    var hours = data.hourly && data.hourly.time ? data.hourly.time : [];
+    var temps = data.hourly && data.hourly.temperature_2m ? data.hourly.temperature_2m : [];
+
+    var hourHtml = "";
+    for (var i = 0; i < hours.length; i++) {
+      var t = temps[i];
+      var tStr = typeof t === "number" ? Math.round(t) + "°" : "—";
+      hourHtml +=
+        '<div class="hour-cell">' +
+        '<div class="hour-time">' + fmtHour(hours[i]) + "</div>" +
+        '<div class="hour-temp">' + tStr + "</div>" +
+        "</div>";
+    }
+
+    document.getElementById("app").innerHTML =
+      '<div class="header">' +
+        '<div>' +
+          '<div class="location">' + escapeHtml(name) + "</div>" +
+          '<div class="date-label">' + fmtDate(date) + "</div>" +
+        "</div>" +
+        '<div class="condition-block">' +
+          '<div class="condition">' + condition + "</div>" +
+        "</div>" +
+      "</div>" +
+      '<div class="temps">' +
+        '<div class="temp-item">' +
+          '<div class="temp-label">High</div>' +
+          '<div class="temp-value">' + (typeof maxT === "number" ? Math.round(maxT) : "—") + "<span>°C</span></div>" +
+        "</div>" +
+        '<div class="temp-item">' +
+          '<div class="temp-label">Low</div>' +
+          '<div class="temp-value">' + (typeof minT === "number" ? Math.round(minT) : "—") + "<span>°C</span></div>" +
+        "</div>" +
+      "</div>" +
+      '<div class="hourly-title">Hourly temperature</div>' +
+      '<div class="hourly">' + (hourHtml || '<div class="status">No hourly data</div>') + "</div>";
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var lat = qs("lat", "52.52");
+  var lon = qs("lon", "13.405");
+  var name = qs("name", "Berlin");
+  var date = qs("date", todayUTC());
+
+  var today = todayUTC();
+  var apiBase = date < today ? "/api/om/archive" : "/api/om/forecast";
+
+  var url =
+    apiBase +
+    "?latitude=" + encodeURIComponent(lat) +
+    "&longitude=" + encodeURIComponent(lon) +
+    "&daily=temperature_2m_max,temperature_2m_min,weather_code" +
+    "&hourly=temperature_2m" +
+    "&timezone=UTC" +
+    "&temperature_unit=celsius" +
+    "&start_date=" + encodeURIComponent(date) +
+    "&end_date=" + encodeURIComponent(date);
+
+  fetch(url)
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (data.error) throw new Error(data.reason || "API error");
+      render(name, date, data);
+    })
+    .catch(function () {
+      showError("Weather data could not be loaded.");
+    });
+})();
+</script>
+</body>
+</html>

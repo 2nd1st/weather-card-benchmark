@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Contribute",
+    "description": "Run the coverage cells you picked with your own API key, or run locally and open a pull request. Keys are held in memory only."
+  },
+  "title": "Contribute a run",
+  "subtitle": "Fill a coverage gap: run the cells you picked with your own key, or clone the runner and open a PR.",
+  "empty": {
+    "title": "No cells selected",
+    "message": "Pick missing or attempted cells on Progress first, then come back here to run them.",
+    "action": "Select cells on Progress"
+  },
+  "steps": {
+    "title": "How contribution works",
+    "pick": "Pick the cells to fill on Progress.",
+    "estimate": "Get a live call count and cost estimate.",
+    "run": "Run them with your own API key.",
+    "cost": "Typical cost runs from a few cents to a few dollars per cell — it depends on the model and effort tier."
+  },
+  "tray": {
+    "title": "Selected cells",
+    "remove": "remove cell"
+  },
+  "estimate": {
+    "calls": "calls",
+    "usd": "est. cost",
+    "unknown": "unpriced",
+    "disclaimer": "Calls = N slots × 2 variants per cell. Cost is a planning range from observed data, not a quote."
+  },
+  "form": {
+    "title": "Run with your key",
+    "provider": "provider",
+    "apiKey": "API key",
+    "contact": "contact",
+    "note": "note",
+    "optional": "(optional)",
+    "submit": "queue run",
+    "submitting": "queuing…"
+  },
+  "honesty": {
+    "title": "How your key is handled",
+    "memory": "Your key stays in memory only — never written to disk, never logged.",
+    "scope": "It is used solely for the runs you selected, then discarded when the job finishes.",
+    "opensource": "The runner is open source — you can read exactly what it does with the key.",
+    "review": "Community runs land quarantined: visible in the gallery with an unreviewed badge, kept out of the arena until a maintainer reviews them.",
+    "zerotrust": "Zero-trust alternative: run the batch locally and open a pull request — no key ever leaves your machine."
+  },
+  "result": {
+    "queued": "Run queued (job {jobId}). Track it on Progress once it lands."
+  },
+  "errors": {
+    "beta": "The hosted pipeline is in beta and not accepting keys yet — run locally and open a PR instead (below).",
+    "queueFull": "The run queue is full right now. Try again in a few minutes.",
+    "cellCap": "Too many cells — a single job takes at most 12. Remove a few and retry.",
+    "noCells": "No cells to run — pick some on Progress first.",
+    "noKey": "An API key is required to queue a hosted run.",
+    "badCells": "Some selected cells are no longer runnable (already landed). Refresh Progress.",
+    "badRequest": "The request was rejected. Check the fields and try again.",
+    "network": "Network error reaching the server. Try again."
+  },
+  "beta": {
+    "title": "Hosted pipeline is in beta",
+    "body": "We are not accepting API keys through the site yet. The zero-trust path is ready today: clone the open-source runner, set your key as an environment variable, run the batch locally, and open a pull request with the landed data. Your key never leaves your machine.",
+    "pr": "Every community run lands on a review branch — a maintainer merges it.",
+    "methodology": "read the contribute method →"
+  }
+}

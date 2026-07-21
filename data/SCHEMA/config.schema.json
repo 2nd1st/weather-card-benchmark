@@ -1,0 +1,223 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://weathercard.secondfirst.ai/schema/config.schema.json",
+ "title": "Per-config config.json",
+ "description": "One record per config, at data/batches/<batch>/configs/<config_id>/config.json. Captures the config's identity on the family x model x effort x protocol axes plus billing/auth/transport provenance and its aggregate telemetry + m/N. JUDGMENT CALL (flagged): scheme v12 does not enumerate the JSON shape of config.json (it is named in IMPLEMENTATION-BRIEF §4); field set below is drawn from BRIEF §4 + MODEL-MATRIX axes and the exact object shapes (telemetry, auth) are this contract's design — flagged where invented. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+ "$comment": "schema_version: 1.1.0. Bumped 1.0.0→1.1.0 (M2, DECISIONS-M0 M1 ruling): `m` changed from a single integer to a PER-VARIANT object {\"min\":int,\"q\":int} because scheme §1.1 defines N/m at config×variant granularity and §5 similarity eligibility (cross needs both-side m≥2) is judged per variant. The file-level schema_version lives here (structured $comment) so the lock-population loop (DATA-LAYOUT §4) reads one uniform source across all eleven schema files. cost_usd is a canonical decimal string; tokens/wall_ms are JSON integers.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "config_id",
+  "family",
+  "model_id",
+  "effort",
+  "protocol",
+  "billing",
+  "auth",
+  "transport",
+  "served_model",
+  "vendor_sanction_ref",
+  "telemetry",
+  "m",
+  "N"
+ ],
+ "properties": {
+  "config_id": {
+   "type": "string",
+   "minLength": 1,
+   "description": "Canonical config identifier; MUST equal the <config_id> directory name and appear in manifest.config_ids. Ordering authority is the manifest's persisted array (NFC UTF-8 byte order)."
+  },
+  "family": {
+   "type": "string",
+   "minLength": 1,
+   "description": "Model family (e.g. gpt / claude / grok / deepseek). Grouping axis for presentation (DESIGN §4.4)."
+  },
+  "model_id": {
+   "type": "string",
+   "minLength": 1,
+   "description": "Requested model id as sent to the vendor (the intended model, before served-model verification)."
+  },
+  "effort": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "Vendor-specific effort/thinking parameter as configured (per-vendor mapping table, BRIEF R3). null when the model exposes no effort axis. Kept as an opaque string because the axis is non-isomorphic across vendors — do NOT enum it."
+  },
+  "protocol": {
+   "type": "string",
+   "enum": [
+    "api",
+    "agent",
+    "cli",
+    "app"
+   ],
+   "description": "Delivery protocol arm (scheme §1 / BRIEF §4). agent/cli carry known system-prompt confounds recorded but not corrected (scheme §10). 'app' = an app-only manual tier (e.g. ChatGPT app codex @ultra, fresh session, exact prompts) — added 2026-07-18 for the codex-app arm."
+  },
+  "billing": {
+   "type": "string",
+   "enum": [
+    "metered",
+    "plan"
+   ],
+   "description": "metered = pay-per-token; plan = subscription/plan billing (requires vendor_sanction_ref)."
+  },
+  "auth": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "method",
+    "credential_ref"
+   ],
+   "description": "Auth provenance. NEVER contains a secret — only a reference. Secrets live in env/secret, never in repo (BRIEF §6). JUDGMENT CALL (flagged): object shape is this contract's design.",
+   "properties": {
+    "method": {
+     "type": "string",
+     "enum": [
+      "api-key",
+      "oauth",
+      "session-cookie",
+      "cli-login",
+      "other",
+      "oauth-login"
+     ],
+     "description": "Auth mechanism class."
+    },
+    "credential_ref": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Opaque handle/name of the credential source (e.g. env var name or secret path). Not the secret value."
+    }
+   }
+  },
+  "transport": {
+   "type": "string",
+   "minLength": 1,
+   "description": "Transport/endpoint arm descriptor (e.g. 'vendor-native-api', 'harness', 'official-bare-endpoint', 'cli'). US arms use ZERO proxy (BRIEF R3)."
+  },
+  "served_model": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "The model id the vendor reports as actually serving the request (verified per arm, BRIEF R3/R8). null if the vendor exposes no served-model signal. A mismatch vs model_id is a recorded confound, not a silent correction."
+  },
+  "vendor_sanction_ref": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "For billing=plan configs: a citation/URL to the vendor endorsement that plan usage is sanctioned for this purpose (BRIEF §4 'vendor sanction'). MUST be non-null when billing=plan; MUST be null when billing=metered (enforced by the conditional below)."
+  },
+  "telemetry": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "prompt_tokens",
+    "completion_tokens",
+    "total_tokens",
+    "wall_ms",
+    "cost_usd"
+   ],
+   "description": "Aggregate telemetry summary across this config's slots (tokens / elapsed / cost, BRIEF §4). JUDGMENT CALL (flagged): scheme does not enumerate telemetry fields; this closed shape is the contract's design. Any value may be null when the vendor does not report it.",
+   "properties": {
+    "prompt_tokens": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 0,
+     "description": "Summed input tokens across valid+billed slots."
+    },
+    "completion_tokens": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 0,
+     "description": "Summed output tokens."
+    },
+    "total_tokens": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 0,
+     "description": "Summed total tokens; may differ from prompt+completion if vendor bills otherwise."
+    },
+    "wall_ms": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 0,
+     "description": "Summed wall-clock request duration in milliseconds."
+    },
+    "cost_usd": {
+     "type": [
+      "string",
+      "null"
+     ],
+     "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$",
+     "description": "Cost estimate as a canonical decimal string (same grammar as manifest coordinates), or null. String to avoid float drift."
+    }
+   }
+  },
+  "m": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "min",
+    "q"
+   ],
+   "description": "PER-VARIANT count(valid) for this config in this batch (scheme §1.1; §5 similarity eligibility is judged per variant — DECISIONS-M0 M1 ruling). Each value ≤ N. Drives the per-variant m/N badge and the cross m_a≥2 ∧ m_b≥2 eligibility gate.",
+   "properties": {
+    "min": {
+     "type": "integer",
+     "minimum": 0,
+     "description": "count(valid) for the P-min variant (≤ N)."
+    },
+    "q": {
+     "type": "integer",
+     "minimum": 0,
+     "description": "count(valid) for the P-q variant (≤ N)."
+    }
+   }
+  },
+  "N": {
+   "type": "integer",
+   "enum": [
+    3,
+    4,
+    5
+   ],
+   "description": "Slots issued for this config (batch-uniform, must equal manifest.N)."
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "billing": {
+      "const": "plan"
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "vendor_sanction_ref": {
+      "type": "string",
+      "minLength": 1
+     }
+    }
+   },
+   "else": {
+    "properties": {
+     "vendor_sanction_ref": {
+      "type": "null"
+     }
+    }
+   }
+  }
+ ]
+}

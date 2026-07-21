@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/patch.schema.json",
+  "title": "patch.json — slot-level honest fix note (REDESIGN-SPEC-v3 §2.3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "category",
+    "reason_en",
+    "reason_zh",
+    "patched_by",
+    "ts",
+    "diff_summary",
+    "diff_file",
+    "patched_html_file"
+  ],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "category": {
+      "description": "Closed enum — a patch may only make a card RENDER, never improve content/design (§2.3 invariant 4).",
+      "enum": ["render-fix", "asset-path", "truncation-repair"]
+    },
+    "reason_en": { "type": "string", "minLength": 1 },
+    "reason_zh": { "type": "string", "minLength": 1 },
+    "patched_by": { "type": "string", "minLength": 1 },
+    "ts": { "type": "string", "format": "date-time" },
+    "diff_summary": { "type": "string", "minLength": 1, "description": "one-line what changed" },
+    "diff_file": { "type": "string", "minLength": 1, "description": "unified diff file beside card.html, e.g. patch.diff" },
+    "patched_html_file": { "type": "string", "minLength": 1, "description": "repaired rendering, e.g. card.patched.html" }
+  }
+}

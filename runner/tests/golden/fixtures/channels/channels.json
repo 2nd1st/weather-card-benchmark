@@ -1,0 +1,125 @@
+{
+  "_doc": "Per-channel cross-implementation anchor (scheme §4). Each entry pins one devset card pair and the EXACT S value (full float repr via json round-trip). The test rebuilds artifacts from the referenced devset cards, runs channel.compute, and asserts S is bit-identical. Visual channels read shot.png (frozen original); DOM channels read dom.json; code channels read card.html. | 2026-07-20: v-phash & v-dhash re-blessed after the Pillow float-LANCZOS imaging fix (F-mode downscale returned NaN/1e35, collapsing v-phash to all-zero hashes); grayscale now resizes via uint8 convert(\"L\") like the sibling channels. Other 15 unchanged.",
+  "corpus": "data/batches-dev/devset-42/cards",
+  "channels": [
+    {
+      "channel": "v-phash",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.46875,
+      "degenerate": "no-shot"
+    },
+    {
+      "channel": "v-dhash",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.50390625,
+      "degenerate": "no-shot"
+    },
+    {
+      "channel": "v-color",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.5074350751068513,
+      "degenerate": "no-shot"
+    },
+    {
+      "channel": "v-palette",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.0014353410438170827,
+      "degenerate": "no-shot"
+    },
+    {
+      "channel": "v-layout",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.7679524218985623,
+      "degenerate": "black-image"
+    },
+    {
+      "channel": "v-edge",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.7170343142830944,
+      "degenerate": "black-image"
+    },
+    {
+      "channel": "v-ssim",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.6726146493961805,
+      "degenerate": "no-shot"
+    },
+    {
+      "channel": "c-shingle",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.10113718848294218,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "c-winnow",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.10168134507606084,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "c-feature",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.3932038834951456,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "c-ast-js",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.8797580537813023,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "c-css-prop",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.791110199957418,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "c-ncd",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.09676858929812371,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "d-geom",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.8131649309593764,
+      "degenerate": "empty-dom"
+    },
+    {
+      "channel": "d-text",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.0,
+      "degenerate": "empty-dom"
+    },
+    {
+      "channel": "d-pqgram",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.3380281690140845,
+      "degenerate": "empty-dom"
+    },
+    {
+      "channel": "d-tagpath",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.14893617021276595,
+      "degenerate": "empty-dom"
+    }
+  ]
+}

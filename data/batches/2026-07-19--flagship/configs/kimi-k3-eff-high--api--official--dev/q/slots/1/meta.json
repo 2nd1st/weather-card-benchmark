@@ -1,0 +1,248 @@
+{
+  "fidelity": {
+    "condition": {
+      "reason": null,
+      "state": "match"
+    },
+    "date": {
+      "reason": null,
+      "state": "match"
+    },
+    "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+    "hourly": {
+      "coverage": "8/24",
+      "points": [
+        {
+          "hour": 0,
+          "state": "match"
+        },
+        {
+          "hour": 1,
+          "state": "not-shown"
+        },
+        {
+          "hour": 2,
+          "state": "not-shown"
+        },
+        {
+          "hour": 3,
+          "state": "match"
+        },
+        {
+          "hour": 4,
+          "state": "not-shown"
+        },
+        {
+          "hour": 5,
+          "state": "not-shown"
+        },
+        {
+          "hour": 6,
+          "state": "match"
+        },
+        {
+          "hour": 7,
+          "state": "not-shown"
+        },
+        {
+          "hour": 8,
+          "state": "not-shown"
+        },
+        {
+          "hour": 9,
+          "state": "match"
+        },
+        {
+          "hour": 10,
+          "state": "not-shown"
+        },
+        {
+          "hour": 11,
+          "state": "not-shown"
+        },
+        {
+          "hour": 12,
+          "state": "match"
+        },
+        {
+          "hour": 13,
+          "state": "not-shown"
+        },
+        {
+          "hour": 14,
+          "state": "not-shown"
+        },
+        {
+          "hour": 15,
+          "state": "match"
+        },
+        {
+          "hour": 16,
+          "state": "not-shown"
+        },
+        {
+          "hour": 17,
+          "state": "not-shown"
+        },
+        {
+          "hour": 18,
+          "state": "match"
+        },
+        {
+          "hour": 19,
+          "state": "not-shown"
+        },
+        {
+          "hour": 20,
+          "state": "not-shown"
+        },
+        {
+          "hour": 21,
+          "state": "match"
+        },
+        {
+          "hour": 22,
+          "state": "not-shown"
+        },
+        {
+          "hour": 23,
+          "state": "not-shown"
+        }
+      ],
+      "points_match": 8,
+      "points_mismatch": 0,
+      "points_not_shown": 16,
+      "reason": null,
+      "state": "match"
+    },
+    "max": {
+      "display_decimals": 0,
+      "reason": null,
+      "state": "match",
+      "value": "25"
+    },
+    "min": {
+      "display_decimals": 0,
+      "reason": null,
+      "state": "match",
+      "value": "16"
+    },
+    "name": {
+      "reason": null,
+      "state": "match"
+    },
+    "request_side": {
+      "status": "match",
+      "violations": []
+    }
+  },
+  "flags": [],
+  "l1": {
+    "bytes": {
+      "css": 5544,
+      "html": 1895,
+      "js": 9632,
+      "total": 17071
+    },
+    "palette_top8": [
+      {
+        "bin_index": 50,
+        "lab": {
+          "L": 37.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.73076171875
+      },
+      {
+        "bin_index": 14,
+        "lab": {
+          "L": 12.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.2421875
+      },
+      {
+        "bin_index": 86,
+        "lab": {
+          "L": 62.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.01630859375
+      },
+      {
+        "bin_index": 51,
+        "lab": {
+          "L": 37.5,
+          "a": -18.333333333333343,
+          "b": 18.333333333333314
+        },
+        "weight": 0.0080078125
+      },
+      {
+        "bin_index": 87,
+        "lab": {
+          "L": 62.5,
+          "a": -18.333333333333343,
+          "b": 18.333333333333314
+        },
+        "weight": 0.001171875
+      },
+      {
+        "bin_index": 122,
+        "lab": {
+          "L": 87.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.00087890625
+      },
+      {
+        "bin_index": 94,
+        "lab": {
+          "L": 62.5,
+          "a": 18.333333333333314,
+          "b": 55.0
+        },
+        "weight": 0.00029296875
+      },
+      {
+        "bin_index": 57,
+        "lab": {
+          "L": 37.5,
+          "a": 18.333333333333314,
+          "b": 18.333333333333314
+        },
+        "weight": 0.0001953125
+      }
+    ],
+    "structure": {
+      "css_rules": 47,
+      "dom_depth": 8,
+      "dom_nodes": 44,
+      "js_bytes_present": true
+    },
+    "visual": {
+      "brightness": 68.7643396484375,
+      "colorfulness": 24.541763315868003,
+      "contrast": 18.180895777033157,
+      "frame_change": {
+        "max": 0.0433779296875,
+        "median": 0.043173828125
+      },
+      "whitespace_ratio": 0.61044921875
+    }
+  },
+  "slot_index": 1,
+  "state": "valid",
+  "telemetry": {
+    "completion_tokens": 5667,
+    "cost_usd": null,
+    "prompt_tokens": 391,
+    "request_id": null,
+    "total_tokens": 6058,
+    "wall_ms": 141278
+  }
+}

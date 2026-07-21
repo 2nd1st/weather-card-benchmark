@@ -1,0 +1,170 @@
+# dev-opencode-cli.yaml — opencode CLI harness,go 订阅 16 模型(默认档)。
+# 隔离 XDG home(0 用户配置,实证);provider 指第一方 go 端点(CLI zen 计费线不认 go 订阅)。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: opencode-cli-isolated-xdg-go-subscription
+  proxy: none
+
+configs:
+  - config_id: minimax-m3--cli--opencode--dev
+    family: minimax
+    model_id: minimax-m3
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: minimax-m2.7--cli--opencode--dev
+    family: minimax
+    model_id: minimax-m2.7
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: kimi-k3--cli--opencode--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: kimi-k2.7-code--cli--opencode--dev
+    family: kimi
+    model_id: kimi-k2.7-code
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: kimi-k2.6--cli--opencode--dev
+    family: kimi
+    model_id: kimi-k2.6
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: glm-5.2--cli--opencode--dev
+    family: glm
+    model_id: glm-5.2
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: glm-5.1--cli--opencode--dev
+    family: glm
+    model_id: glm-5.1
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: deepseek-v4-pro--cli--opencode--dev
+    family: deepseek
+    model_id: deepseek-v4-pro
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: deepseek-v4-flash--cli--opencode--dev
+    family: deepseek
+    model_id: deepseek-v4-flash
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: hy3-preview--cli--opencode--dev
+    family: hunyuan
+    model_id: hy3-preview
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: qwen3.7-max--cli--opencode--dev
+    family: qwen
+    model_id: qwen3.7-max
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: qwen3.7-plus--cli--opencode--dev
+    family: qwen
+    model_id: qwen3.7-plus
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: qwen3.6-plus--cli--opencode--dev
+    family: qwen
+    model_id: qwen3.6-plus
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: mimo-v2.5-pro--cli--opencode--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: mimo-v2.5--cli--opencode--dev
+    family: mimo
+    model_id: mimo-v2.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }
+
+  - config_id: grok-4.5--cli--opencode--dev
+    family: grok
+    model_id: grok-4.5
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: opencode
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_OPENCODE_KEY }

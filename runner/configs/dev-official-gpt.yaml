@@ -1,0 +1,339 @@
+# dev-official-gpt.yaml — OpenAI 官方 API 全量(/responses)。N=4 正式规格。
+# 档位表 = 行为实证(逐档探测,2026-07-18):minimal 全系 400;max 仅 5.6 系;5.2-codex 无 none。
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.openai.com/v1
+  descriptor: openai-official-api
+  proxy: none
+  background: true   # /responses background+poll(官方 SSE 长 reasoning 断流实证)
+
+configs:
+  - config_id: gpt-5.6-sol-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-sol-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-sol-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-sol-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-sol-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-sol-eff-max--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: max
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-terra-eff-max--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: max
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.6-luna-eff-max--api--official--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: max
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.5-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.5-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.5-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.5-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.5-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.4
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-mini-eff-none--api--official--dev
+    family: gpt
+    model_id: gpt-5.4-mini
+    effort: none
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-mini-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.4-mini
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-mini-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.4-mini
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.4-mini-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.4-mini
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  # gpt-5.4-mini-eff-xhigh DROPPED 2026-07-20: model runs away at xhigh — 128k completion
+  # tokens / ~27min, still no card (6/8 model-failed, 2/8 infra). Metered: do NOT re-run
+  # (already charged). 0 valid → removed from the measured set. Same runaway on codex-oauth arm.
+
+  - config_id: gpt-5.2-codex-eff-low--api--official--dev
+    family: gpt
+    model_id: gpt-5.2-codex
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.2-codex-eff-medium--api--official--dev
+    family: gpt
+    model_id: gpt-5.2-codex
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.2-codex-eff-high--api--official--dev
+    family: gpt
+    model_id: gpt-5.2-codex
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }
+
+  - config_id: gpt-5.2-codex-eff-xhigh--api--official--dev
+    family: gpt
+    model_id: gpt-5.2-codex
+    effort: xhigh
+    effort_param: reasoning.effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_OPENAI_OFFICIAL_KEY }

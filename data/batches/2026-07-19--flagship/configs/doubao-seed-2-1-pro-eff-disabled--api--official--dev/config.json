@@ -1,0 +1,27 @@
+{
+  "N": 4,
+  "auth": {
+    "credential_ref": "WCB_ARK_KEY",
+    "method": "api-key"
+  },
+  "billing": "metered",
+  "config_id": "doubao-seed-2-1-pro-eff-disabled--api--official--dev",
+  "effort": "disabled",
+  "family": "doubao",
+  "m": {
+    "min": 4,
+    "q": 2
+  },
+  "model_id": "doubao-seed-2-1-pro-260628",
+  "protocol": "api",
+  "served_model": "doubao-seed-2-1-pro-260628",
+  "telemetry": {
+    "completion_tokens": 18021,
+    "cost_usd": null,
+    "prompt_tokens": 2250,
+    "total_tokens": 20271,
+    "wall_ms": 302013
+  },
+  "transport": "volcano-ark-official-api",
+  "vendor_sanction_ref": null
+}

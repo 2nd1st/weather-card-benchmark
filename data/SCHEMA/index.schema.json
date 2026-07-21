@@ -1,0 +1,88 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://weathercard.secondfirst.ai/schema/index.schema.json",
+ "title": "data/index.json",
+ "description": "The batch index — the ONLY file in data/ that is appended/modified after a batch is written (batches themselves are append-only, immutable, hash-anchored; DESIGN §2.2, BRIEF §4). Site build reads this to enumerate batches. JUDGMENT CALL (flagged): scheme/design name index.json but do not enumerate its fields; the shape below is this contract's design. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+ "$comment": "schema_version: 1.1.0. This is the FILE-level schema_version (structured $comment), the uniform source the lock-population loop (DATA-LAYOUT §4) reads across all eleven schema files. Distinct from the schema_version DATA property below, which index.json INSTANCES carry to declare which index schema they conform to; the two should agree.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema_version",
+  "batches"
+ ],
+ "properties": {
+  "schema_version": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+   "description": "SemVer of the index schema this file conforms to."
+  },
+  "batches": {
+   "type": "array",
+   "uniqueItems": true,
+   "description": "One entry per batch, append-only. Presentation default order is by id (which begins with the date), never a ranking (DESIGN §4.4).",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "event",
+     "date",
+     "manifest_hash",
+     "n_configs",
+     "variants",
+     "created_at"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Batch id = date + event slug, e.g. '2026-08-01--gpt-6-launch' (DESIGN §2.2). Matches data/batches/<id>/ directory."
+     },
+     "event": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human event slug that motivated the batch (event-driven runs, DESIGN §6)."
+     },
+     "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "format": "date",
+      "description": "Batch date (UTC)."
+     },
+     "manifest_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase-hex manifest_hash of this batch (scheme §1.2). The immutability anchor — appears in the lock and is user-verifiable (DESIGN §3.2 methodology)."
+     },
+     "n_configs": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of configs in this batch (len(manifest.config_ids))."
+     },
+     "variants": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+       "type": "string",
+       "enum": [
+        "P-min",
+        "P-q"
+       ]
+      },
+      "description": "Prompt variants present in this batch (scheme §9)."
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 UTC timestamp the batch was indexed. Presentational only — NOT part of any verify hash (scheme §0: non-deterministic observations excluded from verify hashes)."
+     },
+     "merged_into": {
+      "type": "string",
+      "description": "OPTIONAL (schema 1.1.0): id of the batch this batch's configs were physically merged into (dev-batch workflow only). Site enumeration hides merged batches from the switcher; the data stays on disk append-only. Absent for live/unmerged batches."
+     }
+    }
+   }
+  }
+ }
+}

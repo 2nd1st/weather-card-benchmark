@@ -1,0 +1,205 @@
+# production-matrix.yaml — 正式模型/endpoint 清单(唯一真源)
+#
+# 结构:endpoints(端点集中定义,改 URL 只动这里)→ models(每模型一条,
+# efforts 列出全部档位 —— runner 按「model × effort × 变体」展开成 configs)。
+# key 一律走 env var 名(credential_ref),真值在 runner/.env.production。
+# 缺 key 的模型 runner 跳过并警告,不报错 —— 增量上线友好。
+# enabled: false = 手动关闭(即使有 key 也不跑)。
+#
+# 依据:2026-07-16 市场实查;时效警告见各条 notes。
+# ⚠️ 本清单是快照,会过期(实例:Kimi K3 在 sweep 当天 GA,清单险些漏掉)。
+# 【跑批前 preflight(M3 落地为脚本)】:对每个已填 key 的 endpoint 拉 /models,
+# 与本清单 diff —— 新模型上市 / 在列模型消失 / id 变更,逐条人工确认后才开跑;
+# 同时过一遍时效清单。
+# 效度铁律:US 零 proxy;OpenRouter 必须 provider-pin + 禁 fallback;
+# 同家族固定一个渠道跑完整批,manifest 记 endpoint region。
+
+version: 2
+N: 4                      # 正式批 slot 数
+
+endpoints:
+  # ============ 国际(全官方直连,零 proxy)============
+  openai:
+    base_url: https://api.openai.com/v1
+    style: openai-responses          # /responses(reasoning.effort)
+    credential_ref: WCB_OPENAI_KEY
+  anthropic:
+    base_url: https://api.anthropic.com/v1
+    style: anthropic-messages        # output_config.effort;thinking 永远开
+    credential_ref: WCB_ANTHROPIC_KEY
+  gemini:
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    style: openai-chat               # Gemini 的 OpenAI 兼容层;thinking_level
+    credential_ref: WCB_GEMINI_KEY
+  xai:
+    base_url: https://api.x.ai/v1
+    style: openai-chat
+    credential_ref: WCB_XAI_KEY
+  mistral:
+    base_url: https://api.mistral.ai/v1
+    style: openai-chat               # reasoning_effort
+    credential_ref: WCB_MISTRAL_KEY
+  openrouter:                        # 长尾聚合(MAI/Ring/KAT/对照组)
+    base_url: https://openrouter.ai/api/v1
+    style: openai-chat
+    credential_ref: WCB_OPENROUTER_KEY
+    notes: "铁律:provider:{order:[官方],allow_fallbacks:false} + 记录实际 provider"
+  inception:
+    base_url: https://api.inceptionlabs.ai/v1
+    style: openai-chat
+    credential_ref: WCB_INCEPTION_KEY
+
+  # ============ 中国(官方第一方,intl 优先)============
+  deepseek:
+    base_url: https://api.deepseek.com
+    style: openai-chat               # 另有 /anthropic 双协议
+    credential_ref: WCB_DEEPSEEK_KEY
+    notes: "无 snapshot id(滚动 alias)——批次窗口内跑完+记录版本公告"
+  dashscope:
+    base_url: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+    style: openai-chat               # 唯一 dated-snapshot 双轨
+    credential_ref: WCB_DASHSCOPE_KEY
+  moonshot:
+    base_url: https://api.moonshot.ai/v1
+    style: openai-chat
+    credential_ref: WCB_MOONSHOT_KEY
+  zai:
+    base_url: https://api.z.ai/api/paas/v4
+    style: openai-chat
+    credential_ref: WCB_ZAI_KEY
+  minimax:
+    base_url: https://api.minimax.io/v1
+    style: openai-chat
+    credential_ref: WCB_MINIMAX_KEY
+  stepfun:
+    base_url: https://api.stepfun.com/v1
+    style: openai-chat
+    credential_ref: WCB_STEPFUN_KEY
+    notes: "⚠️ 国际业务持续性风险最高——key 办好尽早跑"
+  volcano-ark:
+    base_url: https://ark.cn-beijing.volces.com/api/v3
+    style: openai-chat               # CN 站;intl 备选 BytePlus ModelArk
+    credential_ref: WCB_ARK_KEY
+  tokenhub:
+    base_url: https://tokenhub.tencentmaas.com/v1
+    style: openai-chat               # intl 变体 tokenhub-intl.tencentmaas.com/v1
+    credential_ref: WCB_TENCENT_KEY
+  qianfan:
+    base_url: https://qianfan.baidubce.com/v2
+    style: openai-chat
+    credential_ref: WCB_QIANFAN_KEY
+  mimo:
+    base_url: https://api.xiaomimimo.com/v1
+    style: openai-chat
+    credential_ref: WCB_MIMO_KEY
+  longcat:
+    base_url: https://api.longcat.chat/openai/v1   # TODO: 办 key 时以 console 显示的 base 为准
+    style: openai-chat
+    credential_ref: WCB_LONGCAT_KEY
+  xfyun:
+    base_url: https://spark-api-open.xf-yun.com/x2  # 特殊:模型名 spark-x + 专用路径,集成时复核
+    style: openai-chat
+    credential_ref: WCB_XFYUN_KEY
+  intern:
+    base_url: https://chat.intern-ai.org.cn/api/v1
+    style: openai-chat
+    credential_ref: WCB_INTERN_KEY
+
+models:
+  # ================= 国际 =================
+  - { model_id: gpt-5.6-sol,   family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh, max], enabled: true,
+      notes: "档表=官方API行为实证2026-07-18:minimal 400 全系不存在(codex/sub2 的 minimal 是通道映射);max 官方200存在(plan 通道 502=通道天花板,非档位不存在)" }
+  - { model_id: gpt-5.6-terra, family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh, max], enabled: true }
+  - { model_id: gpt-5.6-luna,  family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh, max], enabled: true }
+  - { model_id: gpt-5.5,       family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh], enabled: true,
+      notes: "API 正规可及(2026-07-16 核实);默认 medium" }
+  - { model_id: gpt-5.4,       family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh], enabled: true, notes: "上代主线,官方在列(2026-07-18 /models 实查);档表行为实证" }
+  - { model_id: gpt-5.4-mini,  family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [none, low, medium, high, xhigh], enabled: true, notes: "档表行为实证;codex 通道 xhigh mid-stream-death(api 侧正常)" }
+  - { model_id: gpt-5.2-codex, family: gpt,    endpoint: openai, effort_param: reasoning.effort,
+      efforts: [low, medium, high, xhigh], enabled: true, notes: "coding 专项;none 400 实证无" }
+
+  - { model_id: claude-fable-5,  family: claude, endpoint: anthropic, effort_param: output_config.effort,
+      efforts: [low, medium, high, xhigh, max], enabled: true,
+      notes: "需 30 天留存 org;无采样参数;单请求可达多分钟" }
+  - { model_id: claude-opus-4-8, family: claude, endpoint: anthropic, effort_param: output_config.effort,
+      efforts: [low, medium, high, xhigh, max], enabled: true }
+  - { model_id: claude-sonnet-5, family: claude, endpoint: anthropic, effort_param: output_config.effort,
+      efforts: [low, medium, high, xhigh, max], enabled: true, notes: "intro 价至 08-31" }
+  - { model_id: claude-haiku-4-5, family: claude, endpoint: anthropic, effort_param: budget_tokens,
+      efforts: [off, 8192, 32768], enabled: true,
+      notes: "旧式 budget_tokens——离散点钉法同 Qwen(runner 适配)" }
+
+  - { model_id: gemini-3.1-pro,  family: gemini, endpoint: gemini, effort_param: thinking_level,
+      efforts: [low, high], enabled: true, notes: "GA id 有歧义(-preview?)——办 key 时核" }
+  - { model_id: gemini-3.5-flash, family: gemini, endpoint: gemini, effort_param: thinking_level,
+      efforts: [minimal, low, medium, high], enabled: true, notes: "默认已降为 medium" }
+
+  - { model_id: grok-4.5, family: grok, endpoint: xai, effort_param: reasoning_effort,
+      efforts: [default, low, medium, high], enabled: true, notes: "行为实证2026-07-18:reasoning_effort low/med/high 均 200" }
+  - { model_id: grok-4.3, family: grok, endpoint: xai, effort_param: reasoning_effort,
+      efforts: [default, low, medium, high], enabled: true, notes: "官方无 -high/-low 变体id(那是sub2网关命名);effort 走参数" }
+
+  - { model_id: mistral-medium-2604, family: mistral, endpoint: mistral, effort_param: reasoning_effort,
+      efforts: [low, medium, high], enabled: true, notes: "档位办 key 时核" }
+  - { model_id: mai-thinking-1, family: mai, endpoint: openrouter, effort_param: null,
+      efforts: [default], enabled: true, notes: "OpenRouter slug microsoft/mai-thinking-1;provider-pin" }
+
+  # ================= 中国(每家 SOTA;DeepSeek/Moonshot 双席)=================
+  - { model_id: deepseek-v4-pro,   family: deepseek, endpoint: deepseek, effort_param: reasoning_effort,
+      efforts: [high, max], enabled: true, notes: "勿用旧 alias deepseek-chat/reasoner(07-24 弃用)" }
+  - { model_id: deepseek-v4-flash, family: deepseek, endpoint: deepseek, effort_param: reasoning_effort,
+      efforts: [high, max], enabled: true }
+  - { model_id: qwen3.7-max,  family: qwen, endpoint: dashscope, effort_param: thinking_budget,
+      efforts: [off, 16384, 49152], enabled: true,
+      notes: "连续 budget 钉离散点(off/中/高,数值可调);snapshot qwen3.7-max-2026-05-20" }
+  - { model_id: kimi-k3,        family: kimi, endpoint: moonshot, effort_param: thinking,
+      efforts: [off, on], enabled: true,
+      notes: "2026-07-16 GA(sweep 当天!),$3/$15,1M ctx,2.8T 开源;Moonshot SOTA 席位;thinking 档位办 key 时核;充值促销至 08-11" }
+  - { model_id: kimi-k2.7-code, family: kimi, endpoint: moonshot, effort_param: thinking,
+      efforts: [on], enabled: true, notes: "coding 专项席位;thinking 常开不可关" }
+  - { model_id: kimi-k2.6,      family: kimi, endpoint: moonshot, effort_param: thinking,
+      efforts: [off, on], enabled: false, notes: "上代旗舰,被 K3 取代(每家 SOTA 规则)——留档禁用" }
+  - { model_id: glm-5.2,     family: glm,     endpoint: zai,     effort_param: reasoning_effort,
+      efforts: [high, max], enabled: true }
+  - { model_id: MiniMax-M3,  family: minimax, endpoint: minimax, effort_param: thinking,
+      efforts: [off, on], enabled: true }
+  - { model_id: step-3.7-flash, family: step, endpoint: stepfun, effort_param: reasoning_effort,
+      efforts: [low, medium, high], enabled: true, notes: "⚠️ 尽早跑" }
+  - { model_id: doubao-seed-2-1-pro-260628, family: doubao, endpoint: volcano-ark, effort_param: thinking_type,
+      efforts: [disabled, enabled], enabled: true, notes: "2.1 上参数形态未直接验证,探针必测" }
+  - { model_id: hy3,         family: hunyuan, endpoint: tokenhub, effort_param: reasoning_effort,
+      efforts: [no_think, low, high], enabled: true }
+  - { model_id: ernie-5.1,   family: ernie,   endpoint: qianfan, effort_param: null,
+      efforts: [default], enabled: true, notes: "无 thinking 参数;大陆机房延迟记录即可" }
+  - { model_id: mimo-v2.5-pro, family: mimo,  endpoint: mimo,    effort_param: reasoning_effort,
+      efforts: [none, low, medium, high], enabled: true,
+      notes: "档表行为实证 2026-07-19:reasoning_effort 枚举 none/low/medium/high(非法值 400 报出);默认带 reasoning_content" }
+  - { model_id: LongCat-2.0, family: longcat, endpoint: longcat, effort_param: null,
+      efforts: [default], enabled: true }
+  - { model_id: inclusionai/ring-2.6-1t, family: ring, endpoint: openrouter, effort_param: reasoning_effort,
+      efforts: [high, xhigh], enabled: true, notes: "provider-pin ZenMux/官方" }
+  - { model_id: kwaipilot/kat-coder-pro-v2.5, family: kat, endpoint: openrouter, effort_param: null,
+      efforts: [default], enabled: true, notes: "官方 StreamLake 万擎申请到 key 后可改直连" }
+  - { model_id: spark-x,     family: spark,   endpoint: xfyun,   effort_param: thinking.type,
+      efforts: [disabled, auto, enabled], enabled: true }
+  - { model_id: intern-s1-pro, family: intern, endpoint: intern, effort_param: enable_thinking,
+      efforts: [off, on], enabled: true }
+
+  # ================= Tier C 对照组 =================
+  - { model_id: mercury-2, family: mercury, endpoint: inception, effort_param: null,
+      efforts: [default], enabled: true, notes: "diffusion LLM 对照;注册送 10M tokens" }
+  - { model_id: google/gemma-4-31b-it,          family: gemma,    endpoint: openrouter, effort_param: null, efforts: [default], enabled: true }
+  - { model_id: meta-llama/llama-4-maverick,    family: llama,    endpoint: openrouter, effort_param: null, efforts: [default], enabled: true }
+  - { model_id: nvidia/nemotron-3-ultra-550b-a55b, family: nemotron, endpoint: openrouter, effort_param: null, efforts: [default], enabled: true }
+  - { model_id: allenai/olmo-3.1-32b-think,     family: olmo,     endpoint: openrouter, effort_param: null, efforts: [default], enabled: true }
+  - { model_id: amazon/nova-2-lite-v1,          family: nova,     endpoint: openrouter, effort_param: null, efforts: [default], enabled: true }
+
+  # ================= 可选加席(第一批跳过)=================
+  - { model_id: openpangu-2.0-flash, family: pangu, endpoint: null, effort_param: null,
+      efforts: [default], enabled: false, notes: "华为云 MaaS api.modelarts-maas.com/openai/v1;话题性加席" }

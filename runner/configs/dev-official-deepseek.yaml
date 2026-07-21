@@ -1,0 +1,47 @@
+# dev-official-deepseek.yaml — DeepSeek 官方 API(N=4 正式规格,metered)。
+# 探针 2026-07-19:reasoning_effort high/max 接受;reasoning_content 双字段返回。
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.deepseek.com
+  descriptor: deepseek-official-api
+  proxy: none
+
+configs:
+  - config_id: deepseek-v4-pro-eff-high--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-pro
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-pro-eff-max--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-pro
+    effort: max
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-eff-high--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-eff-max--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash
+    effort: max
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+

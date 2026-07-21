@@ -1,0 +1,3381 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 0,
+  "occurrences": [
+    {
+      "id": {
+        "node_preorder": 42,
+        "start": 2,
+        "end": 6
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 45,
+        "start": 2,
+        "end": 6
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 60,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 66,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 72,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 78,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 84,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 90,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 96,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 102,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 108,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 114,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 120,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 126,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 132,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 138,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 144,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 150,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 156,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 162,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 168,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 174,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 180,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 186,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 192,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 198,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 204,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 210,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 216,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 222,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 228,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 234,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 240,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 246,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 252,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 258,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 264,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 270,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 276,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 282,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 288,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 294,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 300,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 306,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 312,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 318,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 324,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 330,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 336,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 342,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    }
+  ],
+  "arbitration": {
+    "considered": [
+      {
+        "node_preorder": 42,
+        "start": 2,
+        "length": 4,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 45,
+        "start": 2,
+        "length": 4,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 60,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 66,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 72,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 78,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 84,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 90,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 96,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 102,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 108,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 114,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 120,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 126,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 132,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 138,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 144,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 150,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 156,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 162,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 168,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 174,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 180,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 186,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 192,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 198,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 204,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 210,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 216,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 222,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 228,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 234,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 240,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 246,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 252,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 258,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 264,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 270,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 276,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 282,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 288,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 294,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 300,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 306,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 312,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 318,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 324,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 330,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 336,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 342,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      }
+    ]
+  },
+  "salience": {
+    "f_max": 20.0,
+    "candidates": [
+      {
+        "occurrence_id": {
+          "node_preorder": 42,
+          "start": 2,
+          "end": 6
+        },
+        "font_size": 20.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 45,
+          "start": 2,
+          "end": 6
+        },
+        "font_size": 20.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 66,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 78,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 90,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 102,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 114,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 126,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 138,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 150,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 162,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 174,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 186,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 198,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 210,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 222,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 234,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 246,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 258,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 270,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 282,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 294,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 306,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 318,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 330,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 342,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 18.0,
+        "salience_ratio": 0.1,
+        "in_E": false
+      }
+    ],
+    "E": [
+      {
+        "node_preorder": 42,
+        "start": 2,
+        "end": 6
+      },
+      {
+        "node_preorder": 45,
+        "start": 2,
+        "end": 6
+      }
+    ]
+  },
+  "max_min_binding": {
+    "branch": "no-label",
+    "distances": [],
+    "max": {
+      "label_id": null,
+      "temp_id": {
+        "node_preorder": 42,
+        "start": 2,
+        "end": 6
+      },
+      "canonical_id": {
+        "node_preorder": 42,
+        "start": 2,
+        "end": 6
+      },
+      "value": "25",
+      "display_decimals": 0
+    },
+    "min": {
+      "label_id": null,
+      "temp_id": {
+        "node_preorder": 45,
+        "start": 2,
+        "end": 6
+      },
+      "canonical_id": {
+        "node_preorder": 45,
+        "start": 2,
+        "end": 6
+      },
+      "value": "16",
+      "display_decimals": 0
+    },
+    "canonical_published": true,
+    "decision_path": [
+      {
+        "code": "branch-no-label",
+        "detail": null
+      },
+      {
+        "code": "no-label-numeric-bound",
+        "detail": "max=(42, 2, 6) min=(45, 2, 6)"
+      },
+      {
+        "code": "canonical-published",
+        "detail": "true"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "proceed",
+    "has_label": true,
+    "candidates": [
+      {
+        "node_preorder": 66,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 78,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 90,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 102,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 114,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 126,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 138,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 150,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 162,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 174,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 186,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 198,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 210,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 222,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 234,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 246,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 258,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 270,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 282,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 294,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 306,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 318,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 330,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 342,
+        "start": 0,
+        "end": 3
+      }
+    ],
+    "label_parse": [
+      {
+        "occurrence_id": {
+          "node_preorder": 60,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 0
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 72,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 1
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 84,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 2
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 96,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 3
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 108,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 4
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 120,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 5
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 132,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 6
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 144,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 7
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 156,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 8
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 168,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 9
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 180,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 10
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 192,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 11
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 204,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 12
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 216,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 13
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 228,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 14
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 240,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 15
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 252,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 16
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 264,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 17
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 276,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 18
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 288,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 19
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 300,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 20
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 312,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 21
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 324,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 22
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 336,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 23
+      }
+    ],
+    "bindings": [
+      {
+        "label_id": {
+          "node_preorder": 60,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 66,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 0,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 72,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 78,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 1,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 84,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 90,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 2,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 96,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 102,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 3,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 108,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 114,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 4,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 120,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 126,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 5,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 132,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 138,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 6,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 144,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 150,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 7,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 156,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 162,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 8,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 168,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 174,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 9,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 180,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 186,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 10,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 192,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 198,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 11,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 204,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 210,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 12,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 216,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 222,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 13,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 228,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 234,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 14,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 240,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 246,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 15,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 252,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 258,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 16,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 264,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 270,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 17,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 276,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 282,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 18,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 288,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 294,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 19,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 300,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 306,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 20,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 312,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 318,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 21,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 324,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 330,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 22,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 336,
+          "start": 0,
+          "end": 5
+        },
+        "temp_id": {
+          "node_preorder": 342,
+          "start": 0,
+          "end": 3
+        },
+        "hour": 23,
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      }
+    ],
+    "signature": [
+      {
+        "node_preorder": 66,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 78,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 90,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 102,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 114,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 126,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 138,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 150,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 162,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 174,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 186,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 198,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 210,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 222,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 234,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 246,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 258,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 270,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 282,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 294,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 306,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 318,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 330,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 342,
+        "start": 0,
+        "end": 3
+      }
+    ],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "proceed"
+      },
+      {
+        "code": "hourly-branch",
+        "detail": "labeled"
+      },
+      {
+        "code": "hourly-aggregate",
+        "detail": "M=24 X=0 NS=0"
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "name-substring-hit",
+          "detail": "node=23"
+        }
+      ]
+    },
+    "date": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "date-hit",
+          "detail": "2026-07-15"
+        }
+      ]
+    },
+    "condition": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "condition-wmo-hit",
+          "detail": "node=37"
+        }
+      ]
+    },
+    "max": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-no-label",
+          "detail": null
+        },
+        {
+          "code": "no-label-numeric-bound",
+          "detail": "max=(42, 2, 6) min=(45, 2, 6)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "min": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-no-label",
+          "detail": null
+        },
+        {
+          "code": "no-label-numeric-bound",
+          "detail": "max=(42, 2, 6) min=(45, 2, 6)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "proceed"
+        },
+        {
+          "code": "hourly-branch",
+          "detail": "labeled"
+        },
+        {
+          "code": "hourly-aggregate",
+          "detail": "M=24 X=0 NS=0"
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 19,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 21,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 23,
+      "text_coord_base": 0,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 24,
+      "text_coord_base": 6,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 26,
+      "text_coord_base": 6,
+      "codepoint_length": 24
+    },
+    {
+      "node_preorder": 27,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 28,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 30,
+      "text_coord_base": 30,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 32,
+      "text_coord_base": 30,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 33,
+      "text_coord_base": 32,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 35,
+      "text_coord_base": 32,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 37,
+      "text_coord_base": 32,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 38,
+      "text_coord_base": 45,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 40,
+      "text_coord_base": 45,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 42,
+      "text_coord_base": 45,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 43,
+      "text_coord_base": 51,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 45,
+      "text_coord_base": 51,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 46,
+      "text_coord_base": 57,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 47,
+      "text_coord_base": 57,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 48,
+      "text_coord_base": 57,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 49,
+      "text_coord_base": 57,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 51,
+      "text_coord_base": 57,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 53,
+      "text_coord_base": 57,
+      "codepoint_length": 19
+    },
+    {
+      "node_preorder": 54,
+      "text_coord_base": 76,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 56,
+      "text_coord_base": 76,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 58,
+      "text_coord_base": 76,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 60,
+      "text_coord_base": 76,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 61,
+      "text_coord_base": 81,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 63,
+      "text_coord_base": 81,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 64,
+      "text_coord_base": 83,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 66,
+      "text_coord_base": 83,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 67,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 68,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 70,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 72,
+      "text_coord_base": 86,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 73,
+      "text_coord_base": 91,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 75,
+      "text_coord_base": 91,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 76,
+      "text_coord_base": 93,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 78,
+      "text_coord_base": 93,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 79,
+      "text_coord_base": 96,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 80,
+      "text_coord_base": 96,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 82,
+      "text_coord_base": 96,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 84,
+      "text_coord_base": 96,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 85,
+      "text_coord_base": 101,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 87,
+      "text_coord_base": 101,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 88,
+      "text_coord_base": 103,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 90,
+      "text_coord_base": 103,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 91,
+      "text_coord_base": 106,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 92,
+      "text_coord_base": 106,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 94,
+      "text_coord_base": 106,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 96,
+      "text_coord_base": 106,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 97,
+      "text_coord_base": 111,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 99,
+      "text_coord_base": 111,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 100,
+      "text_coord_base": 113,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 102,
+      "text_coord_base": 113,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 103,
+      "text_coord_base": 116,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 104,
+      "text_coord_base": 116,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 106,
+      "text_coord_base": 116,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 108,
+      "text_coord_base": 116,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 109,
+      "text_coord_base": 121,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 111,
+      "text_coord_base": 121,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 112,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 114,
+      "text_coord_base": 123,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 115,
+      "text_coord_base": 126,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 116,
+      "text_coord_base": 126,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 118,
+      "text_coord_base": 126,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 120,
+      "text_coord_base": 126,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 121,
+      "text_coord_base": 131,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 123,
+      "text_coord_base": 131,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 124,
+      "text_coord_base": 133,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 126,
+      "text_coord_base": 133,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 127,
+      "text_coord_base": 136,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 128,
+      "text_coord_base": 136,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 130,
+      "text_coord_base": 136,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 132,
+      "text_coord_base": 136,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 133,
+      "text_coord_base": 141,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 135,
+      "text_coord_base": 141,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 136,
+      "text_coord_base": 143,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 138,
+      "text_coord_base": 143,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 139,
+      "text_coord_base": 146,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 140,
+      "text_coord_base": 146,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 142,
+      "text_coord_base": 146,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 144,
+      "text_coord_base": 146,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 145,
+      "text_coord_base": 151,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 147,
+      "text_coord_base": 151,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 148,
+      "text_coord_base": 153,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 150,
+      "text_coord_base": 153,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 151,
+      "text_coord_base": 156,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 152,
+      "text_coord_base": 156,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 154,
+      "text_coord_base": 156,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 156,
+      "text_coord_base": 156,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 157,
+      "text_coord_base": 161,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 159,
+      "text_coord_base": 161,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 160,
+      "text_coord_base": 163,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 162,
+      "text_coord_base": 163,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 163,
+      "text_coord_base": 166,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 164,
+      "text_coord_base": 166,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 166,
+      "text_coord_base": 166,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 168,
+      "text_coord_base": 166,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 169,
+      "text_coord_base": 171,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 171,
+      "text_coord_base": 171,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 172,
+      "text_coord_base": 173,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 174,
+      "text_coord_base": 173,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 175,
+      "text_coord_base": 176,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 176,
+      "text_coord_base": 176,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 178,
+      "text_coord_base": 176,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 180,
+      "text_coord_base": 176,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 181,
+      "text_coord_base": 181,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 183,
+      "text_coord_base": 181,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 184,
+      "text_coord_base": 183,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 186,
+      "text_coord_base": 183,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 187,
+      "text_coord_base": 186,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 188,
+      "text_coord_base": 186,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 190,
+      "text_coord_base": 186,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 192,
+      "text_coord_base": 186,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 193,
+      "text_coord_base": 191,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 195,
+      "text_coord_base": 191,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 196,
+      "text_coord_base": 193,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 198,
+      "text_coord_base": 193,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 199,
+      "text_coord_base": 196,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 200,
+      "text_coord_base": 196,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 202,
+      "text_coord_base": 196,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 204,
+      "text_coord_base": 196,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 205,
+      "text_coord_base": 201,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 207,
+      "text_coord_base": 201,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 208,
+      "text_coord_base": 203,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 210,
+      "text_coord_base": 203,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 211,
+      "text_coord_base": 206,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 212,
+      "text_coord_base": 206,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 214,
+      "text_coord_base": 206,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 216,
+      "text_coord_base": 206,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 217,
+      "text_coord_base": 211,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 219,
+      "text_coord_base": 211,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 220,
+      "text_coord_base": 213,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 222,
+      "text_coord_base": 213,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 223,
+      "text_coord_base": 216,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 224,
+      "text_coord_base": 216,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 226,
+      "text_coord_base": 216,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 228,
+      "text_coord_base": 216,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 229,
+      "text_coord_base": 221,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 231,
+      "text_coord_base": 221,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 232,
+      "text_coord_base": 223,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 234,
+      "text_coord_base": 223,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 235,
+      "text_coord_base": 226,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 236,
+      "text_coord_base": 226,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 238,
+      "text_coord_base": 226,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 240,
+      "text_coord_base": 226,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 241,
+      "text_coord_base": 231,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 243,
+      "text_coord_base": 231,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 244,
+      "text_coord_base": 233,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 246,
+      "text_coord_base": 233,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 247,
+      "text_coord_base": 236,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 248,
+      "text_coord_base": 236,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 250,
+      "text_coord_base": 236,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 252,
+      "text_coord_base": 236,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 253,
+      "text_coord_base": 241,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 255,
+      "text_coord_base": 241,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 256,
+      "text_coord_base": 243,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 258,
+      "text_coord_base": 243,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 259,
+      "text_coord_base": 246,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 260,
+      "text_coord_base": 246,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 262,
+      "text_coord_base": 246,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 264,
+      "text_coord_base": 246,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 265,
+      "text_coord_base": 251,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 267,
+      "text_coord_base": 251,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 268,
+      "text_coord_base": 253,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 270,
+      "text_coord_base": 253,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 271,
+      "text_coord_base": 256,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 272,
+      "text_coord_base": 256,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 274,
+      "text_coord_base": 256,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 276,
+      "text_coord_base": 256,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 277,
+      "text_coord_base": 261,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 279,
+      "text_coord_base": 261,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 280,
+      "text_coord_base": 263,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 282,
+      "text_coord_base": 263,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 283,
+      "text_coord_base": 266,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 284,
+      "text_coord_base": 266,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 286,
+      "text_coord_base": 266,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 288,
+      "text_coord_base": 266,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 289,
+      "text_coord_base": 271,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 291,
+      "text_coord_base": 271,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 292,
+      "text_coord_base": 273,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 294,
+      "text_coord_base": 273,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 295,
+      "text_coord_base": 276,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 296,
+      "text_coord_base": 276,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 298,
+      "text_coord_base": 276,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 300,
+      "text_coord_base": 276,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 301,
+      "text_coord_base": 281,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 303,
+      "text_coord_base": 281,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 304,
+      "text_coord_base": 283,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 306,
+      "text_coord_base": 283,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 307,
+      "text_coord_base": 286,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 308,
+      "text_coord_base": 286,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 310,
+      "text_coord_base": 286,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 312,
+      "text_coord_base": 286,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 313,
+      "text_coord_base": 291,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 315,
+      "text_coord_base": 291,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 316,
+      "text_coord_base": 293,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 318,
+      "text_coord_base": 293,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 319,
+      "text_coord_base": 296,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 320,
+      "text_coord_base": 296,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 322,
+      "text_coord_base": 296,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 324,
+      "text_coord_base": 296,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 325,
+      "text_coord_base": 301,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 327,
+      "text_coord_base": 301,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 328,
+      "text_coord_base": 303,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 330,
+      "text_coord_base": 303,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 331,
+      "text_coord_base": 306,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 332,
+      "text_coord_base": 306,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 334,
+      "text_coord_base": 306,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 336,
+      "text_coord_base": 306,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 337,
+      "text_coord_base": 311,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 339,
+      "text_coord_base": 311,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 340,
+      "text_coord_base": 313,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 342,
+      "text_coord_base": 313,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 343,
+      "text_coord_base": 316,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 344,
+      "text_coord_base": 316,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 345,
+      "text_coord_base": 316,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 346,
+      "text_coord_base": 316,
+      "codepoint_length": 0
+    }
+  ]
+}

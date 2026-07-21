@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>golden render anchor</title>
+<style>
+  html,body{margin:0;padding:0;background:#0b1021;color:#eef2ff;
+    font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:none;}
+  .card{width:1280px;height:800px;box-sizing:border-box;padding:96px;
+    display:flex;flex-direction:column;justify-content:center;gap:24px;}
+  .city{font-size:56px;font-weight:700;letter-spacing:.5px;}
+  .temp{font-size:180px;font-weight:800;line-height:1;}
+  .hilo{font-size:40px;opacity:.85;}
+  .cond{font-size:44px;opacity:.9;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="city">Berlin</div>
+    <div class="temp">28&deg;</div>
+    <div class="hilo">High 28&deg; &nbsp; Low 18&deg;</div>
+    <div class="cond">Overcast</div>
+  </div>
+  <script>
+    // Fire exactly one same-origin /api/om/forecast GET so the harness ready
+    // state machine (§2.1 step 1) observes a FINISHED target request (this exact
+    // query resolves 200 from the frozen trial api-cache; %2C-encoded commas are
+    // preserved so the reconstructed upstream URL hits the cache key). The card
+    // is fully static — the response is not consumed and does not drive layout —
+    // so the frozen main screenshot stays deterministic (no animation).
+    fetch('/api/om/forecast?latitude=52.52&longitude=13.405'
+        + '&start_date=2026-07-16&end_date=2026-07-16&timezone=auto'
+        + '&daily=temperature_2m_max%2Ctemperature_2m_min%2Cweathercode'
+        + '%2Cwindspeed_10m_max&hourly=temperature_2m%2Cweathercode'
+        + '&current_weather=true')
+      .then(function (r) { return r.text(); })  // drain body → request finishes
+      .catch(function () {});
+  </script>
+</body>
+</html>

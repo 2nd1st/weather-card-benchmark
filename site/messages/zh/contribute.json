@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "贡献",
+    "description": "用你自己的 API key 把选中的覆盖格子跑出来,或者本地跑完开一个 pull request。key 只在内存里,绝不落盘。"
+  },
+  "title": "贡献一次跑批",
+  "subtitle": "补一个覆盖缺口:用自己的 key 把选中的格子跑出来,或克隆 runner 开一个 PR。",
+  "empty": {
+    "title": "还没选任何格子",
+    "message": "先到「进度」页点选「缺失」或「跑过但空」的格子,再回到这里把它们跑出来。",
+    "action": "去「进度」页选格子"
+  },
+  "steps": {
+    "title": "贡献流程",
+    "pick": "在「进度」页挑选要补的格子。",
+    "estimate": "获得实时的调用数与成本预估。",
+    "run": "用你自己的 API key 把它们跑出来。",
+    "cost": "每格成本大致从几美分到几美元不等——取决于模型与 effort 档位。"
+  },
+  "tray": {
+    "title": "已选格子",
+    "remove": "移除格子"
+  },
+  "estimate": {
+    "calls": "调用次数",
+    "usd": "预估成本",
+    "unknown": "无定价",
+    "disclaimer": "调用次数 = 每格 N 槽位 × 2 变体。成本是基于实测数据的预算区间,并非报价。"
+  },
+  "form": {
+    "title": "用你的 key 跑",
+    "provider": "provider",
+    "apiKey": "API key",
+    "contact": "联系方式",
+    "note": "备注",
+    "optional": "(选填)",
+    "submit": "加入队列",
+    "submitting": "排队中…"
+  },
+  "honesty": {
+    "title": "你的 key 如何被处理",
+    "memory": "你的 key 只在内存里 —— 绝不写盘,绝不记日志。",
+    "scope": "它只用于你选中的这些跑批,任务结束即丢弃。",
+    "opensource": "runner 是开源的 —— 它对 key 做了什么,你能一行行读到。",
+    "review": "社区跑批落地即隔离:在画廊里带「未审核」标记可见,但在维护者审核前不进竞技场。",
+    "zerotrust": "零信任替代方案:本地跑完这批,再开一个 pull request —— key 从头到尾不出你的机器。"
+  },
+  "result": {
+    "queued": "已加入队列(任务 {jobId})。落地后可在「进度」页追踪。"
+  },
+  "errors": {
+    "beta": "托管流水线还在 beta,暂不接收 key —— 请改用本地跑 + 开 PR(见下)。",
+    "queueFull": "队列现在满了,几分钟后再试。",
+    "cellCap": "格子太多 —— 单个任务最多 12 格。删掉几个再试。",
+    "noCells": "没有可跑的格子 —— 先到「进度」页选一些。",
+    "noKey": "托管跑批需要一个 API key。",
+    "badCells": "部分选中的格子已不可跑(已落地)。刷新一下「进度」页。",
+    "badRequest": "请求被拒绝。检查一下各字段再试。",
+    "network": "连接服务器出错,请重试。"
+  },
+  "beta": {
+    "title": "托管流水线还在 beta",
+    "body": "我们暂时还不通过站点接收 API key。零信任路径今天就能走:克隆开源 runner,把 key 设成环境变量,本地把这批跑完,再带着落地数据开一个 pull request。你的 key 从头到尾不出你的机器。",
+    "pr": "每一次社区跑批都落在 review 分支上 —— 由维护者合并。",
+    "methodology": "阅读贡献方法 →"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "title": "竞技场",
+    "description": "盲测两两投票——两张匿名天气卡片，数据完全相同。选出你更喜欢的那张，选完才揭示身份。清晰标注的社区 UI 偏好。"
+  },
+  "title": "竞技场——盲选两张卡片，看你的偏好",
+  "sub": "两个匿名配置，相同变体，完全相同的快照数据。做出选择;身份只在选完之后揭示。下方的排行是社区 UI 偏好——大家更愿意看的是哪张卡片。",
+  "angle": {
+    "label": "维度",
+    "overall": "总体",
+    "visual": "视觉",
+    "clarity": "清晰度"
+  },
+  "metaVariant": "变体",
+  "metaCity": "城市",
+  "metaFixture": "数据快照",
+  "metaIdentical": "两张卡片用的数据完全一致",
+  "tally": "你已经选了 {n} 次",
+  "attributionExtra": "盲选两张 · 相同快照",
+  "pair": {
+    "cardA": "卡片 A",
+    "cardB": "卡片 B",
+    "identityHidden": "身份隐藏",
+    "preferA": "选 A",
+    "preferB": "选 B",
+    "tie": "平局",
+    "tieSub": "都还不错",
+    "bothBad": "都不行",
+    "bothBadSub": "都不合格",
+    "revealTitle": "已记录——身份揭晓",
+    "yourPick": "你的选择",
+    "tooFast": "先看清两张卡片，再做选择。",
+    "voteError": "出了点问题——换下一对试试。",
+    "loading": "加载中",
+    "noOutput": "无渲染输出"
+  },
+  "reveal": {
+    "next": "下一对",
+    "share": "分享这一对",
+    "compare": "在 compare 中打开"
+  },
+  "share": {
+    "permalinkLabel": "对局链接",
+    "copy": "复制链接",
+    "copied": "已复制",
+    "x": "发到 X",
+    "text": "同一道题，每个模型——你能选出同一张吗？ {url}"
+  },
+  "unavailableTitle": "竞技场需要 qualified 配对",
+  "unavailableMsg": "池子里还没有 qualified 卡片。等 qualified 批次落地后，盲选配对就会出现在这里。这期间可以先逛逛 gallery。",
+  "leaderboard": {
+    "title": "社区偏好 · 当前维度",
+    "framing": "社区 UI 偏好——大家更愿意看的是哪张卡片，而不是对模型能力的衡量。",
+    "gameability": "无需登录、以 localStorage 作身份的网页投票——极易被刷;请当作社区信号，而非度量结果。",
+    "csv": "导出投票 CSV ↓",
+    "insufficientGroup": "票数不足",
+    "insufficientSummary": "{n} 个配置票数未达阈值",
+    "insufficientShow": "展开",
+    "insufficientHide": "收起",
+    "orderPref": "按偏好",
+    "orderNeutral": "中性排序",
+    "variantPqTip": "P-q——最小 prompt 再加一句:“特别注意视觉设计质量。”",
+    "variantPminTip": "P-min——中性的最小 prompt:只要求必填字段，不含任何设计指引。",
+    "empty": "这个维度还没有投票",
+    "emptyMsg": "在上方盲选几次——票数足够后，偏好排行就会出现。",
+    "colVoters": "{n} 位投票者",
+    "attributionExtra": "社区 UI 偏好 · n={n}"
+  },
+  "matchup": {
+    "metaTitle": "分享的对局",
+    "metaDescription": "有人分享给你一场盲测天气卡片对局。同一道题，数据相同——选出你更喜欢的那张。",
+    "title": "有人分享给你一场对局",
+    "sub": "有人分享了这一对盲测卡片。同一道题，数据相同。选出你更喜欢的那张——选完之后才揭示身份。",
+    "toArena": "进入竞技场",
+    "compare": "在 compare 中打开",
+    "shareAgain": "再次分享",
+    "copy": "复制链接",
+    "copied": "已复制",
+    "x": "发到 X",
+    "shareText": "同一道题，每个模型——你能选出同一张吗？ {url}",
+    "attributionExtra": "分享的盲测对局",
+    "expiredTitle": "这个对局链接不可用",
+    "expiredMsg": "找不到这场分享的对局——可能已经过期。去竞技场看看新的盲选配对吧。"
+  }
+}

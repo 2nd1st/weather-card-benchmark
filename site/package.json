@@ -1,0 +1,48 @@
+{
+  "name": "weather-card-benchmark-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/copy-assets.mjs && node scripts/build-og-mosaic.mjs && node scripts/gates/run-gates.mjs",
+    "predev": "node scripts/copy-assets.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "gates": "node scripts/gates/run-gates.mjs",
+    "gate:schema": "node scripts/gates/schema-validate.mjs",
+    "og:mosaic": "node scripts/build-og-mosaic.mjs",
+    "render-check": "node scripts/render-check.mjs",
+    "fixture:registry": "npx tsx scripts/registry-fixture.ts",
+    "selftest:arena": "node scripts/arena-selftest.mjs",
+    "cache-api": "node cache-api/server.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "d3-scale": "^4.0.2",
+    "js-yaml": "^5.2.1",
+    "next": "15.5.20",
+    "next-intl": "^4.13.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/d3-scale": "^4.0.8",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "marked": "^15.0.6",
+    "playwright": "^1.61.1",
+    "shiki": "^1.29.1",
+    "typescript": "^5.7.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
+  }
+}

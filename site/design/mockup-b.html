@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>weather-card-benchmark — mockup B (exhibit glow)</title>
+<style>
+  :root {
+    --bg:#0B0E14; --bg-elev:#11151F; --panel:#151B29; --panel-2:#1B2334;
+    --line:#232C41; --line-strong:#31405F;
+    --ink:#E8ECF4; --ink-dim:#93A0B8; --ink-faint:#5C6883;
+    --acc:#37D6E4; --acc-2:#7C8CF8; --good:#3BD97F; --warn:#F5B454; --bad:#F0647A;
+    --font-sans:-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+    --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --radius:10px; --radius-lg:14px; --gap:14px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--ink);
+    font:14px/1.65 var(--font-sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  /* ---- atmosphere: fixed depth field (variant B) ---- */
+  .atmo {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(1000px 640px at 12% -8%, rgba(55,214,228,.075), transparent 62%),
+      radial-gradient(1100px 720px at 96% 14%, rgba(124,140,248,.065), transparent 62%),
+      radial-gradient(900px 640px at 50% 118%, rgba(124,140,248,.05), transparent 60%);
+  }
+  .atmo::after {
+    content:""; position:absolute; inset:0;
+    background-image:radial-gradient(rgba(147,160,184,.05) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.7), transparent 70%);
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.7), transparent 70%);
+  }
+  main { position:relative; z-index:1; }
+  .wrap { max-width:1288px; margin-inline:auto; padding-inline:clamp(16px, 4vw, 44px); }
+
+  a { color:inherit; text-decoration:none; }
+  .mono { font-family:var(--font-mono); }
+
+  /* ---- gradient hairline ---- */
+  .hl {
+    height:1px; border:0; width:100%;
+    background:linear-gradient(90deg, transparent, rgba(55,214,228,.42) 28%, rgba(124,140,248,.42) 72%, transparent);
+  }
+  .specnote {
+    font:10px/1 var(--font-mono); color:var(--ink-faint);
+    letter-spacing:.22em; text-transform:uppercase;
+    display:flex; align-items:center; gap:12px;
+    padding:34px 0 18px;
+  }
+  .specnote::after { content:""; flex:1; height:1px; background:linear-gradient(90deg, var(--line), transparent); }
+
+  /* ---- nav ---- */
+  .site-nav {
+    position:sticky; inset-block-start:0; z-index:5;
+    background:rgba(11,14,20,.82); backdrop-filter:blur(12px);
+    border-block-end:1px solid var(--line);
+  }
+  .site-nav .wrap { display:flex; align-items:center; gap:22px; height:54px; }
+  .brand { display:flex; align-items:center; gap:10px; font:600 13px var(--font-mono); letter-spacing:.02em; white-space:nowrap; }
+  .brand-dot {
+    width:10px; height:10px; border-radius:50%;
+    background:linear-gradient(135deg, var(--acc), var(--acc-2));
+    box-shadow:0 0 12px rgba(55,214,228,.55);
+  }
+  .nav-links { display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; flex:1; }
+  .nav-links::-webkit-scrollbar { display:none; }
+  .nav-links a {
+    font:12px var(--font-mono); color:var(--ink-dim);
+    padding:6px 10px; border-radius:8px; white-space:nowrap;
+  }
+  .nav-links a:hover { color:var(--ink); background:var(--panel); }
+  .nav-links a.on { color:var(--acc); background:rgba(55,214,228,.07); }
+  .nav-side { display:flex; gap:8px; align-items:center; }
+  .loc {
+    font:11px var(--font-mono); color:var(--ink-dim);
+    border:1px solid var(--line); border-radius:999px; padding:4px 10px;
+  }
+  .loc b { color:var(--ink); font-weight:600; }
+
+  /* ---- badges ---- */
+  .b {
+    display:inline-flex; align-items:center; gap:5px;
+    font:10.5px/1 var(--font-mono); letter-spacing:.03em;
+    padding:4px 8px; border-radius:999px;
+    border:1px solid var(--line-strong); color:var(--ink-dim);
+    white-space:nowrap;
+  }
+  .b-grade-q   { border-color:rgba(55,214,228,.55);  color:var(--acc); }
+  .b-grade-dev { border-color:rgba(245,180,84,.55);  color:var(--warn); }
+  .b-grade-com { border-color:rgba(124,140,248,.62); color:var(--acc-2); }
+  .b-patched   { background:var(--warn); border-color:var(--warn); color:#171006; font-weight:700; }
+  .b-effort    { background:var(--panel-2); border-color:var(--line); color:var(--ink-dim); }
+
+  /* ---- buttons ---- */
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font:12.5px var(--font-mono); color:var(--ink);
+    background:var(--panel-2); border:1px solid var(--line-strong);
+    border-radius:var(--radius); padding:9px 16px; cursor:pointer;
+    transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  .btn:hover { border-color:var(--acc); box-shadow:0 0 18px rgba(55,214,228,.12); }
+  .btn:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .btn-hero {
+    background:linear-gradient(120deg, rgba(55,214,228,.16), rgba(124,140,248,.16)) , var(--panel-2);
+    border:1px solid rgba(55,214,228,.5); color:var(--acc);
+    font-weight:600; padding:11px 22px;
+  }
+  .btn-hero:hover { box-shadow:0 0 28px rgba(55,214,228,.22); }
+  .btn-ghost { background:transparent; border-color:var(--line); color:var(--ink-dim); }
+
+  /* ---- hero ---- */
+  .hero { padding:clamp(48px, 8vw, 96px) 0 34px; position:relative; }
+  .kicker {
+    font:11px var(--font-mono); letter-spacing:.3em; text-transform:uppercase;
+    color:var(--acc); margin-block-end:20px; display:flex; gap:12px; align-items:center;
+  }
+  .kicker::before { content:""; width:34px; height:1px; background:linear-gradient(90deg, var(--acc), transparent); }
+  h1.hero-title {
+    font-size:clamp(2.5rem, 6.2vw, 4.7rem);
+    line-height:1.04; letter-spacing:-.025em; font-weight:700;
+    max-width:15ch;
+  }
+  h1.hero-title .dim { color:var(--ink-faint); font-weight:600; }
+  h1.hero-title .glow {
+    background:linear-gradient(115deg, var(--acc) 10%, var(--acc-2) 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub { margin-block-start:22px; color:var(--ink-dim); max-width:62ch; font-size:15px; }
+  .hero-sub em { font-style:normal; color:var(--ink); }
+  .hero-cta { display:flex; gap:12px; margin-block-start:30px; flex-wrap:wrap; }
+
+  /* ---- stats strip ---- */
+  .stats {
+    margin-block-start:52px;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden;
+  }
+  .stat { background:var(--bg-elev); padding:20px 22px; position:relative; }
+  .stat::before {
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(70% 60% at 50% 0%, rgba(55,214,228,.05), transparent 70%);
+    pointer-events:none;
+  }
+  .stat:nth-child(even)::before { background:radial-gradient(70% 60% at 50% 0%, rgba(124,140,248,.05), transparent 70%); }
+  .stat .n {
+    font:600 clamp(24px, 2.6vw, 34px)/1.1 var(--font-mono); letter-spacing:-.02em;
+    background:linear-gradient(120deg, var(--ink) 30%, var(--acc) 130%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat:nth-child(even) .n { background:linear-gradient(120deg, var(--ink) 30%, var(--acc-2) 130%); -webkit-background-clip:text; background-clip:text; }
+  .stat .l { font:10.5px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); margin-block-start:6px; }
+
+  /* ---- panels / exhibits ---- */
+  .panelbox {
+    background:linear-gradient(var(--panel), var(--panel)) padding-box,
+      linear-gradient(155deg, rgba(55,214,228,.4), rgba(49,64,95,.5) 42%, rgba(124,140,248,.4)) border-box;
+    border:1px solid transparent; border-radius:var(--radius-lg);
+  }
+  .exhibit { position:relative; }
+  .exhibit .halo {
+    position:absolute; inset:-36px; z-index:-1; pointer-events:none;
+    background:radial-gradient(55% 55% at 50% 45%, var(--halo, rgba(55,214,228,.11)), transparent 72%);
+  }
+  .exhibit.violet { --halo:rgba(124,140,248,.12); }
+
+  /* ---- gate panel ---- */
+  .gate { margin:56px auto 8px; max-width:1020px; padding:clamp(18px, 3vw, 34px); position:relative; }
+  .gate-head { display:flex; flex-wrap:wrap; gap:14px; align-items:baseline; justify-content:space-between; margin-block-end:6px; }
+  .gate-head h2 { font-size:20px; letter-spacing:-.01em; }
+  .gate-progress { display:flex; align-items:center; gap:10px; font:11px var(--font-mono); color:var(--ink-dim); }
+  .pdot { width:9px; height:9px; border-radius:50%; border:1px solid var(--line-strong); }
+  .pdot.done { background:var(--acc); border-color:var(--acc); box-shadow:0 0 8px rgba(55,214,228,.6); }
+  .gate-sub { color:var(--ink-dim); font-size:13px; max-width:70ch; margin-block-end:20px; }
+  .gate-meta {
+    display:flex; flex-wrap:wrap; gap:8px 18px; font:11px var(--font-mono); color:var(--ink-faint);
+    margin-block-end:16px;
+  }
+  .gate-meta b { color:var(--ink-dim); font-weight:500; }
+
+  .pair { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; }
+  .blindframe { padding:12px; }
+  .blind-tag {
+    display:flex; justify-content:space-between; align-items:center;
+    font:11px var(--font-mono); color:var(--ink-faint); padding:2px 4px 10px;
+  }
+  .blind-tag .who { color:var(--ink-dim); letter-spacing:.18em; text-transform:uppercase; }
+
+  .choices { display:flex; gap:10px; margin-block-start:18px; flex-wrap:wrap; }
+  .choice {
+    flex:1 1 130px; text-align:center; padding:13px 10px;
+    font:600 12.5px var(--font-mono); letter-spacing:.04em;
+    background:var(--panel-2); border:1px solid var(--line-strong); border-radius:var(--radius);
+    cursor:pointer; color:var(--ink); transition:border-color .15s, box-shadow .15s;
+  }
+  .choice:hover { border-color:var(--acc); box-shadow:0 0 20px rgba(55,214,228,.14); }
+  .choice small { display:block; font-weight:400; color:var(--ink-faint); letter-spacing:0; margin-block-start:3px; }
+  .choice.alt:hover { border-color:var(--acc-2); box-shadow:0 0 20px rgba(124,140,248,.16); }
+  .choice.mute { flex:0 1 110px; color:var(--ink-dim); background:transparent; border-color:var(--line); }
+  .gate-hatch { text-align:center; margin-block-start:16px; }
+  .gate-hatch a { font:11px var(--font-mono); color:var(--ink-faint); border-block-end:1px dotted var(--line-strong); }
+  .gate-hatch a:hover { color:var(--ink-dim); }
+
+  /* ---- weather card mockups ---- */
+  .wx {
+    border-radius:12px; padding:18px; color:#fff; width:100%;
+    display:flex; flex-direction:column; gap:12px;
+    font-family:var(--font-sans); min-height:190px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .wx .r1 { display:flex; justify-content:space-between; align-items:baseline; font-size:12px; opacity:.92; }
+  .wx .r1 .city { font-weight:600; letter-spacing:.02em; }
+  .wx .big { display:flex; align-items:center; gap:14px; }
+  .wx .temp { font-size:46px; font-weight:200; line-height:1; letter-spacing:-.03em; }
+  .wx .cond { font-size:12px; opacity:.85; }
+  .wx .glyph { font-size:26px; line-height:1; }
+  .wx .hours { display:flex; justify-content:space-between; gap:4px; margin-block-start:auto; }
+  .wx .h { display:flex; flex-direction:column; align-items:center; gap:3px; font-size:9.5px; opacity:.85; }
+  .wx .h .hg { font-size:13px; }
+  .wx .meta { display:flex; gap:14px; font-size:10px; opacity:.6; }
+  .wx-sm { min-height:150px; padding:14px; gap:8px; }
+  .wx-sm .temp { font-size:34px; }
+  .wx-sm .glyph { font-size:20px; }
+  .wx-lg { min-height:250px; }
+  .wx-lg .temp { font-size:60px; }
+
+  .wx-dusk   { background:linear-gradient(160deg,#2b1d5e,#71306b 55%,#b95f49); }
+  .wx-night  { background:
+      radial-gradient(1.5px 1.5px at 78% 18%, rgba(255,255,255,.8), transparent 60%),
+      radial-gradient(1px 1px at 30% 30%, rgba(255,255,255,.6), transparent 60%),
+      radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,.5), transparent 60%),
+      linear-gradient(180deg,#0a1230,#14264f); }
+  .wx-mint   { background:linear-gradient(160deg,#0d3b37,#1e8a72); }
+  .wx-amber  { background:linear-gradient(160deg,#6d4110,#cf8c2f); }
+  .wx-aurora { background:linear-gradient(200deg,#03202e,#0b4c4f 55%,#3b2a68); }
+  .wx-sunset { background:linear-gradient(165deg,#3c1f5e,#93395c 55%,#d3823f); }
+  .wx-storm  { background:linear-gradient(180deg,#232a36,#3c4557); }
+  .wx-slate  { background:#1a222d; }
+  .wx-glass  { background:rgba(20,26,40,.85); box-shadow:inset 0 0 0 1px rgba(124,140,248,.28); }
+  .wx-paper  { background:#eef1f5; color:#1d2430; box-shadow:inset 0 0 0 1px rgba(0,0,0,.05); }
+  .wx-paper .meta { opacity:.5; }
+  .wx-minimal { background:#10151d; align-items:center; justify-content:center; text-align:center; }
+  .wx-minimal .temp { font-size:52px; }
+  .wx-broken {
+    background:#fdfdfb; color:#111; font-family:Georgia, "Times New Roman", serif;
+    justify-content:flex-start; gap:6px; box-shadow:inset 0 0 0 1px rgba(240,100,122,.5);
+  }
+  .wx-broken .errline { font-family:var(--font-mono); font-size:10px; color:#b3261e; word-break:break-all; }
+  .wx-broken .rawline { font-size:11px; color:#333; }
+
+  /* ---- gallery ---- */
+  .toolbar {
+    display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+    padding:14px; border:1px solid var(--line); border-radius:var(--radius-lg);
+    background:rgba(17,21,31,.7); backdrop-filter:blur(8px);
+    margin-block-end:18px;
+  }
+  .search {
+    display:flex; align-items:center; gap:8px;
+    background:var(--bg); border:1px solid var(--line-strong); border-radius:var(--radius);
+    padding:7px 12px; min-width:200px; flex:1 1 200px; max-width:300px;
+  }
+  .search input {
+    background:none; border:0; outline:0; color:var(--ink);
+    font:12px var(--font-mono); width:100%;
+  }
+  .search input::placeholder { color:var(--ink-faint); }
+  .fgroup { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .fgroup .gl { font:10px var(--font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin-inline-end:2px; }
+  .chip {
+    font:11px var(--font-mono); color:var(--ink-dim);
+    border:1px solid var(--line); border-radius:999px; padding:5px 11px;
+    cursor:pointer; transition:all .15s; background:transparent;
+  }
+  .chip:hover { border-color:var(--line-strong); color:var(--ink); }
+  .chip.on { border-color:rgba(55,214,228,.6); color:var(--acc); background:rgba(55,214,228,.07); }
+  .chip.on2 { border-color:rgba(124,140,248,.65); color:var(--acc-2); background:rgba(124,140,248,.08); }
+  .tools-side { display:flex; gap:8px; align-items:center; margin-inline-start:auto; flex-wrap:wrap; }
+  .switch { display:inline-flex; align-items:center; gap:7px; font:11px var(--font-mono); color:var(--ink-dim); cursor:pointer; }
+  .sw { width:28px; height:16px; border-radius:999px; background:var(--panel-2); border:1px solid var(--line-strong); position:relative; }
+  .sw::after { content:""; position:absolute; inset-block-start:2px; inset-inline-start:3px; width:10px; height:10px; border-radius:50%; background:var(--ink-faint); }
+  .switch.on .sw { background:rgba(55,214,228,.2); border-color:var(--acc); }
+  .switch.on .sw::after { inset-inline-start:13px; background:var(--acc); box-shadow:0 0 8px rgba(55,214,228,.7); }
+  .resultline { font:11px var(--font-mono); color:var(--ink-faint); margin-block-end:14px; display:flex; gap:14px; flex-wrap:wrap; }
+  .resultline b { color:var(--ink-dim); font-weight:500; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:var(--gap); }
+  .tile {
+    position:relative; background:var(--panel);
+    border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:10px; display:flex; flex-direction:column; gap:10px;
+    transition:border-color .2s, box-shadow .2s, transform .2s;
+    cursor:pointer;
+  }
+  .tile:hover {
+    border-color:var(--line-strong);
+    box-shadow:0 0 24px rgba(55,214,228,.08), 0 16px 34px rgba(0,0,0,.45);
+    transform:translateY(-2px);
+  }
+  .tile:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .thumb {
+    border-radius:var(--radius); padding:14px;
+    background:radial-gradient(85% 75% at 50% 22%, rgba(55,214,228,.09), transparent 72%), var(--bg-elev);
+    display:grid; place-items:center; position:relative;
+  }
+  .tile:nth-child(3n) .thumb { background:radial-gradient(85% 75% at 50% 22%, rgba(124,140,248,.1), transparent 72%), var(--bg-elev); }
+  .tile:nth-child(3n+2):hover { box-shadow:0 0 24px rgba(124,140,248,.09), 0 16px 34px rgba(0,0,0,.45); }
+  .thumb .wx { max-width:236px; }
+  .tlabel { display:flex; flex-direction:column; gap:7px; padding:0 4px 4px; }
+  .tname { font:600 12.5px var(--font-mono); letter-spacing:-.01em; display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; }
+  .tname .eff { color:var(--ink-faint); font-weight:400; }
+  .trow { display:flex; gap:5px; flex-wrap:wrap; }
+  .tcounts { font:10.5px var(--font-mono); color:var(--ink-faint); display:flex; gap:12px; }
+  .tcounts .ok { color:var(--good); }
+  .tcounts .part { color:var(--warn); }
+  .tile-live {
+    position:absolute; inset-block-start:16px; inset-inline-end:16px;
+    font:9px var(--font-mono); letter-spacing:.12em; color:var(--acc);
+    background:rgba(11,14,20,.75); border:1px solid rgba(55,214,228,.4);
+    padding:3px 7px; border-radius:999px; backdrop-filter:blur(4px);
+  }
+
+  /* ---- arena ---- */
+  .arena-head { display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; margin-block-end:8px; }
+  .seg { display:inline-flex; border:1px solid var(--line-strong); border-radius:var(--radius); overflow:hidden; }
+  .seg button {
+    font:11.5px var(--font-mono); color:var(--ink-dim); background:transparent;
+    border:0; padding:8px 15px; cursor:pointer;
+  }
+  .seg button + button { border-inline-start:1px solid var(--line); }
+  .seg button.on { background:rgba(55,214,228,.1); color:var(--acc); }
+  .seg.violet button.on { background:rgba(124,140,248,.12); color:var(--acc-2); }
+  .tally { font:11px var(--font-mono); color:var(--ink-faint); }
+  .tally b { color:var(--acc); font-weight:600; }
+
+  .reveal { margin-block-start:18px; padding:18px; }
+  .reveal-head { display:flex; align-items:center; gap:10px; font:600 13px var(--font-mono); margin-block-end:14px; }
+  .reveal-head .spark { color:var(--acc); }
+  .reveal-rows { display:flex; flex-direction:column; gap:8px; }
+  .rrow {
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:11px 14px; border-radius:var(--radius);
+    background:var(--bg-elev); border:1px solid var(--line);
+  }
+  .rrow.picked {
+    border-color:rgba(55,214,228,.5);
+    background:linear-gradient(90deg, rgba(55,214,228,.08), var(--bg-elev) 55%);
+    box-shadow:0 0 18px rgba(55,214,228,.07);
+  }
+  .rrow .slot-letter { font:700 12px var(--font-mono); color:var(--ink-faint); width:18px; }
+  .rrow.picked .slot-letter { color:var(--acc); }
+  .rrow .rname { font:600 12.5px var(--font-mono); }
+  .rrow .youpick { margin-inline-start:auto; font:10px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--acc); }
+  .reveal-actions { display:flex; gap:10px; margin-block-start:16px; flex-wrap:wrap; align-items:center; }
+
+  .prefstrip { margin-block-start:26px; padding:18px; }
+  .prefstrip h3 { font-size:13px; font-family:var(--font-mono); letter-spacing:.02em; margin-block-end:2px; }
+  .pref-cap { font:11px var(--font-mono); color:var(--ink-faint); margin-block-end:16px; }
+  .prow { display:grid; grid-template-columns:minmax(130px, 220px) 1fr 70px; gap:12px; align-items:center; padding:7px 0; }
+  .prow .pl { font:11px var(--font-mono); color:var(--ink-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .ptrack { position:relative; height:14px; }
+  .ptrack::before { content:""; position:absolute; inset-inline:0; inset-block-start:6.5px; height:1px; background:var(--line); }
+  .ptrack::after { content:""; position:absolute; inset-inline-start:50%; inset-block-start:2px; width:1px; height:10px; background:var(--line-strong); }
+  .pdot2 {
+    position:absolute; inset-block-start:3px; width:8px; height:8px; border-radius:50%;
+    background:linear-gradient(135deg, var(--acc), var(--acc-2));
+    box-shadow:0 0 10px rgba(55,214,228,.5); transform:translateX(-50%);
+  }
+  .pdot2.hollow { background:transparent; border:1px solid var(--acc-2); box-shadow:none; }
+  .prow .pn { font:10.5px var(--font-mono); color:var(--ink-faint); text-align:end; }
+  .pref-foot { display:flex; gap:16px; margin-block-start:12px; font:10.5px var(--font-mono); color:var(--ink-faint); flex-wrap:wrap; }
+  .pref-foot a { color:var(--ink-dim); border-block-end:1px dotted var(--line-strong); }
+
+  /* ---- card detail ---- */
+  .crumb { font:11px var(--font-mono); color:var(--ink-faint); margin-block-end:14px; }
+  .crumb a { color:var(--ink-dim); }
+  .crumb a:hover { color:var(--acc); }
+  .det-head { display:flex; flex-wrap:wrap; gap:22px; justify-content:space-between; align-items:flex-start; }
+  .det-title h2 { font-size:clamp(22px, 3vw, 30px); letter-spacing:-.02em; font-family:var(--font-mono); font-weight:600; }
+  .det-title h2 .eff { color:var(--ink-faint); font-weight:400; }
+  .det-badges { display:flex; gap:6px; margin-block-start:10px; flex-wrap:wrap; }
+  .prov {
+    margin-block-start:16px; padding:13px 16px; border-radius:var(--radius);
+    background:var(--bg-elev); border:1px solid var(--line);
+    font:11px/1.9 var(--font-mono); color:var(--ink-dim);
+  }
+  .prov .k { color:var(--ink-faint); display:inline-block; min-width:86px; }
+  .prov .v { color:var(--ink); }
+  .det-controls { display:flex; flex-direction:column; gap:10px; min-width:min(300px, 100%); }
+  .ctl-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .ctl-row .gl { font:10px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); width:56px; }
+  .sel {
+    font:11.5px var(--font-mono); color:var(--ink);
+    background:var(--panel-2); border:1px solid var(--line-strong);
+    border-radius:8px; padding:6px 10px; cursor:pointer;
+  }
+  .patchnote {
+    display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap;
+    margin-block-start:18px; padding:12px 16px;
+    border-radius:var(--radius); border:1px solid rgba(245,180,84,.4);
+    background:rgba(245,180,84,.06); font-size:12px; color:var(--ink-dim);
+  }
+  .patchnote b { color:var(--warn); font-family:var(--font-mono); font-size:11px; }
+  .slotchips { display:flex; gap:8px; margin-block-start:18px; flex-wrap:wrap; }
+  .schip {
+    font:10.5px var(--font-mono); padding:5px 10px; border-radius:8px;
+    border:1px solid var(--line); color:var(--ink-dim); display:inline-flex; gap:6px; align-items:center;
+  }
+  .schip i { width:6px; height:6px; border-radius:50%; display:inline-block; }
+  .schip.ok i { background:var(--good); box-shadow:0 0 6px rgba(59,217,127,.6); }
+  .schip.pat i { background:var(--warn); box-shadow:0 0 6px rgba(245,180,84,.6); }
+  .schip.bad i { background:var(--bad); }
+  .schip.on { border-color:var(--acc); color:var(--acc); }
+  .det-stage { margin-block-start:26px; display:grid; grid-template-columns:minmax(0, 1.6fr) minmax(240px, 1fr); gap:22px; }
+  .stage-frame { padding:16px; }
+  .neigh h4 { font:600 11px var(--font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin-block-end:12px; }
+  .nrow {
+    display:flex; justify-content:space-between; gap:10px; align-items:center;
+    padding:9px 12px; border-radius:8px; border:1px solid var(--line);
+    background:var(--bg-elev); margin-block-end:7px; font:11px var(--font-mono);
+  }
+  .nrow .nl { color:var(--ink-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .nrow .nv { color:var(--acc); }
+  .nrow.far .nv { color:var(--acc-2); }
+
+  /* ---- footer ---- */
+  footer { margin-block-start:70px; border-block-start:1px solid var(--line); padding:30px 0 46px; }
+  .foot-in { display:flex; flex-wrap:wrap; gap:14px 30px; justify-content:space-between; font:11px var(--font-mono); color:var(--ink-faint); }
+  .foot-in a { color:var(--ink-dim); }
+  .foot-in a:hover { color:var(--acc); }
+
+  h2.sec { font-size:clamp(19px, 2.4vw, 24px); letter-spacing:-.015em; margin-block-end:6px; }
+  .sec-sub { color:var(--ink-dim); font-size:13px; margin-block-end:20px; max-width:74ch; }
+
+  @media (max-width: 760px) {
+    .det-stage { grid-template-columns:1fr; }
+    .prow { grid-template-columns:minmax(90px, 130px) 1fr 56px; }
+    .tools-side { margin-inline-start:0; }
+  }
+</style>
+</head>
+<body>
+<div class="atmo" aria-hidden="true"></div>
+<main>
+
+  <!-- ══════════ nav ══════════ -->
+  <nav class="site-nav">
+    <div class="wrap">
+      <a class="brand" href="#"><span class="brand-dot"></span>weather-card-benchmark</a>
+      <div class="nav-links">
+        <a class="on" href="#s1">home</a><a href="#s2">gallery</a><a href="#s3">arena</a>
+        <a href="#">compare</a><a href="#">matrix</a><a href="#">coverage</a>
+        <a href="#">findings</a><a href="#">methodology</a>
+      </div>
+      <div class="nav-side">
+        <span class="loc"><b>EN</b> · 中文</span>
+        <span class="loc" title="source">gh</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ §1 landing hero + stats + gate ══════════ -->
+  <section id="s1" class="wrap">
+    <div class="specnote">mockup §1 · landing — hero / stats strip / arena-gate state</div>
+
+    <div class="hero">
+      <div class="kicker">open benchmark · deterministic data · community preference</div>
+      <h1 class="hero-title">One prompt.<br>Every model.<br><span class="glow">Raw data,</span> <span class="dim">no judgment.</span></h1>
+      <p class="hero-sub">Every model gets the same ask: <em>build a weather card</em>. We publish every raw output,
+        measure pairwise similarity deterministically, and expose <em>community preference</em> from blind
+        pairwise choices — clearly attributed, never our verdict. Similarity is not quality.</p>
+      <div class="hero-cta">
+        <button class="btn btn-hero">Enter the arena →</button>
+        <button class="btn btn-ghost">Read the methodology</button>
+      </div>
+
+      <div class="stats" role="list" aria-label="live figures">
+        <div class="stat" role="listitem"><div class="n">47</div><div class="l">models</div></div>
+        <div class="stat" role="listitem"><div class="n">231</div><div class="l">configs</div></div>
+        <div class="stat" role="listitem"><div class="n">1,624</div><div class="l">valid cards</div></div>
+        <div class="stat" role="listitem"><div class="n">12,408</div><div class="l">community votes</div></div>
+      </div>
+    </div>
+
+    <!-- gate state: first visit, vote 1 of 3 -->
+    <div class="gate panelbox exhibit">
+      <div class="halo"></div>
+      <div class="gate-head">
+        <h2>Three blind choices unlock the gallery</h2>
+        <div class="gate-progress">
+          choice 1 / 3
+          <span class="pdot done"></span><span class="pdot"></span><span class="pdot"></span>
+        </div>
+      </div>
+      <p class="gate-sub">Two anonymous cards, identical live data. Pick the one you prefer — identities
+        reveal after each choice. Your picks become open community-preference data.</p>
+      <div class="gate-meta">
+        <span>angle <b>overall</b></span><span>variant <b>P-q</b></span>
+        <span>city <b>Lyon</b></span><span>fixture <b>2026-07-14 09:00Z</b></span>
+      </div>
+
+      <div class="pair">
+        <div class="blindframe panelbox">
+          <div class="blind-tag"><span class="who">card A</span><span>identity hidden</span></div>
+          <div class="wx wx-dusk">
+            <div class="r1"><span class="city">Lyon</span><span>Thu 18:00</span></div>
+            <div class="big"><span class="temp">24°</span><span class="glyph">⛅</span></div>
+            <div class="cond">Partly cloudy · feels like 26°</div>
+            <div class="hours">
+              <span class="h"><span>19h</span><span class="hg">⛅</span><span>23°</span></span>
+              <span class="h"><span>20h</span><span class="hg">☁️</span><span>21°</span></span>
+              <span class="h"><span>21h</span><span class="hg">☁️</span><span>20°</span></span>
+              <span class="h"><span>22h</span><span class="hg">🌙</span><span>18°</span></span>
+              <span class="h"><span>23h</span><span class="hg">🌙</span><span>17°</span></span>
+            </div>
+            <div class="meta"><span>humidity 54%</span><span>wind 12 km/h</span><span>UV 3</span></div>
+          </div>
+        </div>
+        <div class="blindframe panelbox">
+          <div class="blind-tag"><span class="who">card B</span><span>identity hidden</span></div>
+          <div class="wx wx-glass">
+            <div class="r1"><span class="city">LYON, FR</span><span>18:00</span></div>
+            <div class="big"><span class="temp">24.3°</span></div>
+            <div class="cond">Partly cloudy — high 26° / low 15°</div>
+            <div class="hours">
+              <span class="h"><span>19</span><span class="hg">◐</span><span>23</span></span>
+              <span class="h"><span>20</span><span class="hg">●</span><span>21</span></span>
+              <span class="h"><span>21</span><span class="hg">●</span><span>20</span></span>
+              <span class="h"><span>22</span><span class="hg">☾</span><span>18</span></span>
+              <span class="h"><span>23</span><span class="hg">☾</span><span>17</span></span>
+            </div>
+            <div class="meta"><span>RH 54%</span><span>W 12km/h NNE</span><span>1013 hPa</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="choices">
+        <button class="choice">Prefer A</button>
+        <button class="choice alt">Prefer B</button>
+        <button class="choice mute">Tie<small>equally fine</small></button>
+        <button class="choice mute">Both bad<small>neither works</small></button>
+      </div>
+      <div class="gate-hatch"><a href="#">browse without voting</a></div>
+    </div>
+  </section>
+
+  <!-- ══════════ §2 gallery ══════════ -->
+  <section id="s2" class="wrap">
+    <div class="specnote">mockup §2 · gallery — filter bar / tiles / badges</div>
+    <h2 class="sec">Gallery — every config, one grid</h2>
+    <p class="sec-sub">All 231 configs from every provenance batch, unified and filterable. Thumbnails are frozen
+      shots; flip the live toggle to re-render any card against fixture or live data.</p>
+
+    <div class="toolbar">
+      <label class="search">⌕<input placeholder="search model id…" value="" aria-label="search model id"></label>
+      <div class="fgroup"><span class="gl">family</span>
+        <button class="chip on">gpt</button><button class="chip on">claude</button><button class="chip">grok</button>
+        <button class="chip">gemini</button><button class="chip">qwen</button><button class="chip">kimi</button>
+        <button class="chip">deepseek</button><button class="chip">glm</button>
+      </div>
+      <div class="fgroup"><span class="gl">arm</span>
+        <button class="chip">api</button><button class="chip on2">CC</button><button class="chip">codex</button>
+        <button class="chip">grok-cli</button><button class="chip">go</button><button class="chip">opencode</button>
+      </div>
+      <div class="fgroup"><span class="gl">effort</span>
+        <button class="chip">low</button><button class="chip">med</button><button class="chip on">high</button><button class="chip">xhigh</button>
+      </div>
+      <div class="fgroup"><span class="gl">grade</span>
+        <button class="chip on">qualified</button><button class="chip">dev</button><button class="chip">community</button>
+      </div>
+      <div class="tools-side">
+        <span class="switch on"><span class="sw"></span>valid only</span>
+        <span class="switch"><span class="sw"></span>patched</span>
+        <span class="switch on"><span class="sw"></span>live</span>
+        <span class="chip" title="density">▦ compact</span>
+      </div>
+    </div>
+    <div class="resultline">
+      <span>showing <b>12</b> of <b>231</b> configs</span>
+      <span>state in URL — <b>shareable</b></span>
+      <span>dev channel hidden · <b>show dev-channel</b> (unreviewed transport, read the note)</span>
+    </div>
+
+    <div class="grid">
+      <!-- 1 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb"><span class="tile-live">live</span>
+          <div class="wx wx-sm wx-dusk">
+            <div class="r1"><span class="city">Lyon</span><span>18:00</span></div>
+            <div class="big"><span class="temp">24°</span><span class="glyph">⛅</span></div>
+            <div class="hours">
+              <span class="h"><span>19h</span><span class="hg">⛅</span><span>23°</span></span>
+              <span class="h"><span>20h</span><span class="hg">☁️</span><span>21°</span></span>
+              <span class="h"><span>21h</span><span class="hg">☁️</span><span>20°</span></span>
+              <span class="h"><span>22h</span><span class="hg">🌙</span><span>18°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">gpt-5.2 <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-night">
+            <div class="r1"><span class="city">Reykjavík</span><span>23:40</span></div>
+            <div class="big"><span class="temp">9°</span><span class="glyph">☾</span></div>
+            <div class="hours">
+              <span class="h"><span>00</span><span class="hg">☾</span><span>8°</span></span>
+              <span class="h"><span>01</span><span class="hg">☾</span><span>8°</span></span>
+              <span class="h"><span>02</span><span class="hg">🌧</span><span>7°</span></span>
+              <span class="h"><span>03</span><span class="hg">🌧</span><span>7°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">claude-fable-5 <span class="eff">@ xhigh</span></div>
+          <div class="trow"><span class="b">CC</span><span class="b b-grade-q">qualified</span><span class="b b-effort">xhigh</span><span class="b b-patched">patched</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="part">3/4</span></span></div>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-mint">
+            <div class="r1"><span class="city">Singapore</span><span>14:00</span></div>
+            <div class="big"><span class="temp">31°</span><span class="glyph">🌦</span></div>
+            <div class="hours">
+              <span class="h"><span>15h</span><span class="hg">🌧</span><span>30°</span></span>
+              <span class="h"><span>16h</span><span class="hg">🌧</span><span>29°</span></span>
+              <span class="h"><span>17h</span><span class="hg">⛅</span><span>29°</span></span>
+              <span class="h"><span>18h</span><span class="hg">⛅</span><span>28°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">grok-4.5 <span class="eff">@ med</span></div>
+          <div class="trow"><span class="b">grok-cli</span><span class="b b-grade-q">qualified</span><span class="b b-effort">med</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-amber">
+            <div class="r1"><span class="city">Cairo</span><span>12:00</span></div>
+            <div class="big"><span class="temp">38°</span><span class="glyph">☀️</span></div>
+            <div class="hours">
+              <span class="h"><span>13h</span><span class="hg">☀️</span><span>39°</span></span>
+              <span class="h"><span>14h</span><span class="hg">☀️</span><span>39°</span></span>
+              <span class="h"><span>15h</span><span class="hg">☀️</span><span>38°</span></span>
+              <span class="h"><span>16h</span><span class="hg">🌤</span><span>36°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">qwen3-max <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="part">2/4</span></span></div>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-glass">
+            <div class="r1"><span class="city">OSLO</span><span>16:00</span></div>
+            <div class="big"><span class="temp">11.2°</span></div>
+            <div class="hours">
+              <span class="h"><span>17</span><span class="hg">●</span><span>10</span></span>
+              <span class="h"><span>18</span><span class="hg">●</span><span>10</span></span>
+              <span class="h"><span>19</span><span class="hg">◐</span><span>9</span></span>
+              <span class="h"><span>20</span><span class="hg">☾</span><span>8</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">kimi-k3 <span class="eff">@ med</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-com">community</span><span class="b b-effort">med</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-slate">
+            <div class="r1"><span class="city">Berlin</span><span>Thu</span></div>
+            <div class="big"><span class="temp">17°</span><span class="glyph">🌦</span></div>
+            <div class="cond" style="font-size:11px">Light rain until 20:00</div>
+            <div class="meta"><span>H 19°</span><span>L 12°</span><span>rain 68%</span></div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">gpt-5.2-codex <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">codex</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 7 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb"><span class="tile-live">live</span>
+          <div class="wx wx-sm wx-aurora">
+            <div class="r1"><span class="city">Tromsø</span><span>02:10</span></div>
+            <div class="big"><span class="temp">4°</span><span class="glyph">❆</span></div>
+            <div class="hours">
+              <span class="h"><span>03</span><span class="hg">❆</span><span>3°</span></span>
+              <span class="h"><span>04</span><span class="hg">❆</span><span>3°</span></span>
+              <span class="h"><span>05</span><span class="hg">☁️</span><span>4°</span></span>
+              <span class="h"><span>06</span><span class="hg">☁️</span><span>5°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">claude-opus-4.6 <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 8 broken -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-broken">
+            <div class="rawline">Weather for undefined</div>
+            <div class="errline">Uncaught TypeError: data.hourly is undefined at renderCard (card.html:214)</div>
+            <div class="rawline">NaN° — —</div>
+            <div class="rawline" style="opacity:.5">[object Object]</div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">deepseek-v4 <span class="eff">@ low</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-dev">dev</span><span class="b b-effort">low</span></div>
+          <div class="tcounts"><span>P-min <span class="part">1/4</span></span><span>P-q <span style="color:var(--bad)">0/4</span></span></div>
+        </div>
+      </div>
+      <!-- 9 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-sunset">
+            <div class="r1"><span class="city">Lisbon</span><span>20:45</span></div>
+            <div class="big"><span class="temp">22°</span><span class="glyph">🌇</span></div>
+            <div class="hours">
+              <span class="h"><span>21h</span><span class="hg">🌙</span><span>20°</span></span>
+              <span class="h"><span>22h</span><span class="hg">🌙</span><span>19°</span></span>
+              <span class="h"><span>23h</span><span class="hg">🌙</span><span>18°</span></span>
+              <span class="h"><span>00h</span><span class="hg">🌙</span><span>17°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">glm-5 <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">opencode</span><span class="b b-grade-com">community</span><span class="b b-effort">high</span><span class="b b-patched">patched</span></div>
+          <div class="tcounts"><span>P-min <span class="part">3/4</span></span><span>P-q <span class="part">3/4</span></span></div>
+        </div>
+      </div>
+      <!-- 10 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-paper">
+            <div class="r1"><span class="city">Kyoto</span><span>09:00</span></div>
+            <div class="big"><span class="temp">26°</span><span class="glyph">🌤</span></div>
+            <div class="hours">
+              <span class="h"><span>10h</span><span class="hg">☀️</span><span>28°</span></span>
+              <span class="h"><span>11h</span><span class="hg">☀️</span><span>29°</span></span>
+              <span class="h"><span>12h</span><span class="hg">🌤</span><span>30°</span></span>
+              <span class="h"><span>13h</span><span class="hg">🌤</span><span>30°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">gemini-3.1-pro <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="ok">4/4</span></span></div>
+        </div>
+      </div>
+      <!-- 11 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-storm">
+            <div class="r1"><span class="city">Wellington</span><span>07:30</span></div>
+            <div class="big"><span class="temp">13°</span><span class="glyph">🌩</span></div>
+            <div class="hours">
+              <span class="h"><span>08</span><span class="hg">🌩</span><span>12°</span></span>
+              <span class="h"><span>09</span><span class="hg">🌧</span><span>12°</span></span>
+              <span class="h"><span>10</span><span class="hg">🌧</span><span>13°</span></span>
+              <span class="h"><span>11</span><span class="hg">☁️</span><span>14°</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">grok-4.5 <span class="eff">@ high</span></div>
+          <div class="trow"><span class="b">go</span><span class="b b-grade-q">qualified</span><span class="b b-effort">high</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="part">3/4</span></span></div>
+        </div>
+      </div>
+      <!-- 12 -->
+      <div class="tile" tabindex="0">
+        <div class="thumb">
+          <div class="wx wx-sm wx-minimal">
+            <div class="big"><span class="temp">19°</span></div>
+            <div class="cond" style="font-size:11px; opacity:.7">Marseille · clear</div>
+          </div>
+        </div>
+        <div class="tlabel">
+          <div class="tname">mistral-large-3 <span class="eff">@ med</span></div>
+          <div class="trow"><span class="b">api</span><span class="b b-grade-dev">dev</span><span class="b b-effort">med</span></div>
+          <div class="tcounts"><span>P-min <span class="ok">4/4</span></span><span>P-q <span class="part">2/4</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ §3 arena ══════════ -->
+  <section id="s3" class="wrap">
+    <div class="specnote">mockup §3 · arena — blind pair / choice / post-vote reveal</div>
+    <h2 class="sec">Arena — blind pairs, your preference</h2>
+    <p class="sec-sub">Two anonymous configs, same variant, identical fixture data. Cast a choice; identity is
+      revealed only after. Aggregates below are community preference — not our verdict.</p>
+
+    <div class="arena-head">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="seg"><button class="on">pair</button><button>quad</button></div>
+        <div class="seg violet"><button class="on">overall</button><button>visual</button><button>clarity</button><button>fidelity</button></div>
+      </div>
+      <div class="tally">you've cast <b>24</b> choices</div>
+    </div>
+    <div class="gate-meta" style="margin-block-end:14px;">
+      <span>variant <b>P-q</b></span><span>city <b>Reykjavík</b></span>
+      <span>fixture <b>2026-07-14 09:00Z</b></span><span>both cards get <b>identical data</b></span>
+    </div>
+
+    <div class="pair">
+      <div class="blindframe panelbox exhibit"><div class="halo"></div>
+        <div class="blind-tag"><span class="who">card A</span><span>identity hidden</span></div>
+        <div class="wx wx-lg wx-storm">
+          <div class="r1"><span class="city">Reykjavík</span><span>Mon 09:00</span></div>
+          <div class="big"><span class="temp">7°</span><span class="glyph">🌧</span></div>
+          <div class="cond">Steady rain · feels like 4° · high 9° / low 5°</div>
+          <div class="hours">
+            <span class="h"><span>10h</span><span class="hg">🌧</span><span>7°</span></span>
+            <span class="h"><span>11h</span><span class="hg">🌧</span><span>8°</span></span>
+            <span class="h"><span>12h</span><span class="hg">🌦</span><span>8°</span></span>
+            <span class="h"><span>13h</span><span class="hg">⛅</span><span>9°</span></span>
+            <span class="h"><span>14h</span><span class="hg">⛅</span><span>9°</span></span>
+            <span class="h"><span>15h</span><span class="hg">☁️</span><span>8°</span></span>
+          </div>
+          <div class="meta"><span>humidity 88%</span><span>wind 31 km/h W</span><span>995 hPa</span></div>
+        </div>
+      </div>
+      <div class="blindframe panelbox exhibit violet"><div class="halo"></div>
+        <div class="blind-tag"><span class="who">card B</span><span>identity hidden</span></div>
+        <div class="wx wx-lg wx-aurora">
+          <div class="r1"><span class="city">REYKJAVÍK · IS</span><span>09:00 GMT</span></div>
+          <div class="big"><span class="temp">7.1°</span><span class="glyph">🌧</span></div>
+          <div class="cond">Rain easing by noon — bring a shell layer</div>
+          <div class="hours">
+            <span class="h"><span>10</span><span class="hg">🌧</span><span>7</span></span>
+            <span class="h"><span>11</span><span class="hg">🌧</span><span>8</span></span>
+            <span class="h"><span>12</span><span class="hg">🌦</span><span>8</span></span>
+            <span class="h"><span>13</span><span class="hg">⛅</span><span>9</span></span>
+            <span class="h"><span>14</span><span class="hg">⛅</span><span>9</span></span>
+            <span class="h"><span>15</span><span class="hg">☁️</span><span>8</span></span>
+          </div>
+          <div class="meta"><span>precip 4.2 mm</span><span>gusts 47 km/h</span><span>dew 5°</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="choices">
+      <button class="choice">Prefer A</button>
+      <button class="choice alt">Prefer B</button>
+      <button class="choice mute">Tie<small>equally fine</small></button>
+      <button class="choice mute">Both bad<small>neither works</small></button>
+    </div>
+
+    <!-- post-vote reveal state -->
+    <div class="reveal panelbox exhibit"><div class="halo"></div>
+      <div class="reveal-head"><span class="spark">✦</span> Choice recorded — identities revealed</div>
+      <div class="reveal-rows">
+        <div class="rrow">
+          <span class="slot-letter">A</span>
+          <span class="rname">qwen3-max <span style="color:var(--ink-faint); font-weight:400;">@ high</span></span>
+          <span class="b">api</span><span class="b b-grade-q">qualified</span>
+        </div>
+        <div class="rrow picked">
+          <span class="slot-letter">B</span>
+          <span class="rname">claude-opus-4.6 <span style="color:var(--ink-faint); font-weight:400;">@ high</span></span>
+          <span class="b">api</span><span class="b b-grade-q">qualified</span>
+          <span class="youpick">your pick</span>
+        </div>
+      </div>
+      <div class="reveal-actions">
+        <button class="btn btn-hero">next pair →</button>
+        <button class="btn btn-ghost">open both in compare</button>
+        <span class="tally" style="margin-inline-start:auto;">this pairing has <b>41</b> community choices</span>
+      </div>
+    </div>
+
+    <!-- community preference strip -->
+    <div class="prefstrip panelbox">
+      <h3>Community preference · angle: overall</h3>
+      <div class="pref-cap">strength-of-preference (Bradley–Terry) with pick-rate position · hollow = fewer than 10 choices</div>
+      <div class="prow"><span class="pl">claude-opus-4.6 @ high · api</span><div class="ptrack"><span class="pdot2" style="inset-inline-start:72%"></span></div><span class="pn">n=214</span></div>
+      <div class="prow"><span class="pl">gpt-5.2 @ high · api</span><div class="ptrack"><span class="pdot2" style="inset-inline-start:66%"></span></div><span class="pn">n=198</span></div>
+      <div class="prow"><span class="pl">gemini-3.1-pro @ high · api</span><div class="ptrack"><span class="pdot2" style="inset-inline-start:58%"></span></div><span class="pn">n=176</span></div>
+      <div class="prow"><span class="pl">grok-4.5 @ med · grok-cli</span><div class="ptrack"><span class="pdot2" style="inset-inline-start:47%"></span></div><span class="pn">n=121</span></div>
+      <div class="prow"><span class="pl">glm-5 @ high · opencode</span><div class="ptrack"><span class="pdot2 hollow" style="inset-inline-start:41%"></span></div><span class="pn">n=7</span></div>
+      <div class="pref-foot">
+        <span>community preference, not our verdict</span>
+        <a href="#">export votes CSV ↓</a>
+        <span>12,408 choices · 4 angles</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ §4 card detail header ══════════ -->
+  <section id="s4" class="wrap">
+    <div class="specnote">mockup §4 · card detail — header region</div>
+
+    <div class="crumb"><a href="#s2">gallery</a> / claude-fable-5--xhigh--cc</div>
+    <div class="det-head">
+      <div class="det-title">
+        <h2>claude-fable-5 <span class="eff">@ xhigh</span> · CC</h2>
+        <div class="det-badges">
+          <span class="b">CC</span><span class="b b-grade-q">qualified</span>
+          <span class="b b-effort">xhigh</span><span class="b b-patched">patched</span>
+        </div>
+        <div class="prov">
+          <div><span class="k">config</span><span class="v">claude-fable-5--xhigh--cc</span></div>
+          <div><span class="k">batches</span><span class="v">20260716--cc-sweep-02</span> <span style="color:var(--ink-faint)">(+1 earlier)</span></div>
+          <div><span class="k">transport</span><span class="v">cli-oauth</span> · <span class="k" style="min-width:0">endpoint</span> <span class="v">api.anthropic.com</span></div>
+          <div><span class="k">captured</span><span class="v">2026-07-16 22:41 UTC</span> · 8 calls · N=4 × 2 variants</div>
+        </div>
+      </div>
+      <div class="det-controls">
+        <div class="ctl-row"><span class="gl">variant</span>
+          <div class="seg"><button>P-min</button><button class="on">P-q</button></div>
+        </div>
+        <div class="ctl-row"><span class="gl">render</span>
+          <div class="seg violet"><button>original</button><button class="on">patched</button></div>
+          <button class="btn btn-ghost" style="padding:7px 11px;">↻</button>
+        </div>
+        <div class="ctl-row"><span class="gl">live</span>
+          <select class="sel" aria-label="city"><option>Reykjavík</option><option>Lyon</option><option>Singapore</option></select>
+          <select class="sel" aria-label="delay"><option>fixture 07-14</option><option>live now</option><option>+6 h</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="patchnote">
+      <b>patched · minor</b>
+      <span>Unclosed template literal in the hourly loop stopped the render; closed it, nothing else changed.
+        The original output is preserved and viewable above. — maintainer, 2026-07-17</span>
+    </div>
+
+    <div class="slotchips">
+      <span class="schip ok on"><i></i>slot 0 · valid</span>
+      <span class="schip ok"><i></i>slot 1 · valid</span>
+      <span class="schip pat"><i></i>slot 2 · patched</span>
+      <span class="schip bad"><i></i>slot 3 · no output</span>
+    </div>
+
+    <div class="det-stage">
+      <div class="stage-frame panelbox exhibit"><div class="halo"></div>
+        <div class="blind-tag"><span class="who">slot 0 · P-q · sandboxed iframe</span><span>allow-scripts · srcdoc</span></div>
+        <div class="wx wx-lg wx-night">
+          <div class="r1"><span class="city">Reykjavík</span><span>Mon 09:00</span></div>
+          <div class="big"><span class="temp">7°</span><span class="glyph">🌧</span></div>
+          <div class="cond">Steady rain, easing after midday · feels like 4°</div>
+          <div class="hours">
+            <span class="h"><span>10h</span><span class="hg">🌧</span><span>7°</span></span>
+            <span class="h"><span>11h</span><span class="hg">🌧</span><span>8°</span></span>
+            <span class="h"><span>12h</span><span class="hg">🌦</span><span>8°</span></span>
+            <span class="h"><span>13h</span><span class="hg">⛅</span><span>9°</span></span>
+            <span class="h"><span>14h</span><span class="hg">⛅</span><span>9°</span></span>
+            <span class="h"><span>15h</span><span class="hg">☁️</span><span>8°</span></span>
+          </div>
+          <div class="meta"><span>humidity 88%</span><span>wind 31 km/h W</span><span>sunset 22:04</span></div>
+        </div>
+      </div>
+      <div class="neigh">
+        <h4>similarity neighbors · P-q</h4>
+        <div class="nrow"><span class="nl">claude-opus-4.6 @ high · api</span><span class="nv">0.91</span></div>
+        <div class="nrow"><span class="nl">gpt-5.2 @ high · api</span><span class="nv">0.84</span></div>
+        <div class="nrow"><span class="nl">gemini-3.1-pro @ high · api</span><span class="nv">0.79</span></div>
+        <div class="nrow far"><span class="nl">mistral-large-3 @ med · api</span><span class="nv">0.31</span></div>
+        <div class="nrow far"><span class="nl">deepseek-v4 @ low · api</span><span class="nv">0.24</span></div>
+        <div class="pref-cap" style="margin-block-start:10px;">similarity is not quality — it measures convergence, nothing else.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot-in">
+      <span>weather-card-benchmark · open data, open runner</span>
+      <span>similarity is not quality · community preference is community data, clearly attributed</span>
+      <span><a href="#">methodology</a> · <a href="#">provenance</a> · <a href="#">contribute</a> · <a href="#">gh</a></span>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

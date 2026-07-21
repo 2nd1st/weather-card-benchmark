@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "{model} — model — weather-card-benchmark",
+    "description": "同一 model 跨 effort 与 arm 的全貌:{model} 的 effort strip、输出体量与 effort 响应曲线。similarity 不等于质量;社区投票只是一种 UI 偏好。"
+  },
+  "notFound": {
+    "title": "找不到该 model",
+    "message": "registry 里没有用到这个 model id。"
+  },
+  "empty": {
+    "title": "该 model 没有 config",
+    "message": "这个 model 目前磁盘上还没有任何运行。"
+  },
+  "breadcrumb": { "gallery": "gallery" },
+  "eyebrow": "{family} · {arms} 个 arm · {efforts} 档 effort",
+  "heading": "effort strip",
+  "sub": "同一 model 跨每个 effort 与 arm。每个格子是一次运行 —— 点开看完整卡片。failure 芯片标记没有 valid slot 的运行。",
+  "strip": {
+    "arm": "arm",
+    "effort": "effort",
+    "noConfig": "—",
+    "failure": "无 valid slot",
+    "tokens": "{n} tok",
+    "tokensUnit": "tokens",
+    "bytes": "{n} B",
+    "openRun": "打开运行 ↗",
+    "validCount": "{valid}/{total} valid",
+    "validAll": "{total} 次运行 · 全部 valid",
+    "validSome": "{total} 次中 {valid} 次 valid"
+  },
+  "chart": {
+    "heading": "effort → 输出体量",
+    "caption": "各 arm 在每档 effort 上的 output completion tokens。反映 effort 上升时各 model 的花费 —— 不是质量轴。",
+    "tokens": "output tokens",
+    "bytes": "html bytes",
+    "toggle": "指标",
+    "growth": "{lo} → {hi} 输出",
+    "ariaGrowth": "从最低到最高 effort,输出增长 {mult}×",
+    "noData": "有体量数据的运行太少,画不出曲线。",
+    "effortAxis": "effort"
+  },
+  "links": { "gallery": "← gallery", "openCard": "打开卡片 ↗" }
+}

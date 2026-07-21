@@ -1,0 +1,65 @@
+{
+  "_doc": "Golden manifest anchor (scheme §1.2 / §11). manifest_hash and the per-config seed_assign/rank are recomputed from manifest.json by the test and asserted byte/int-exact. assignment_table is a RUNTIME artifact (outside the manifest).",
+  "manifest_hash": "e7a415057a6fd2899b95948e90a28fb42570490fea263821db224db21c93da2b",
+  "N": 5,
+  "config_ids_persisted": [
+    "gpt-5.6-sol--api--raw--dev",
+    "grok-4.5--api--raw--dev"
+  ],
+  "omega_values": [
+    3,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    28
+  ],
+  "seed_assign": {
+    "gpt-5.6-sol--api--raw--dev": 14114892599366178883,
+    "grok-4.5--api--raw--dev": 10918471094060411442
+  },
+  "assignment_table": [
+    {
+      "config_id": "gpt-5.6-sol--api--raw--dev",
+      "seed_assign": 14114892599366178883,
+      "omega_size": 20,
+      "rank": 11,
+      "omega_value": 18,
+      "bits": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "config_id": "grok-4.5--api--raw--dev",
+      "seed_assign": 10918471094060411442,
+      "omega_size": 20,
+      "rank": 19,
+      "omega_value": 28,
+      "bits": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Card</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: #eaf2f8;
+  }
+
+  .card {
+    width: 640px;
+    max-width: 92vw;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 36px 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .location {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .date {
+    font-size: 16px;
+    color: #9fc3d8;
+    font-weight: 500;
+  }
+
+  .condition {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0 6px;
+    font-size: 20px;
+    color: #cfe8f5;
+  }
+
+  .condition .icon {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .temps {
+    display: flex;
+    gap: 28px;
+    margin: 18px 0 28px;
+  }
+
+  .temp-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .temp-box .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #8fb6c9;
+    margin-bottom: 6px;
+  }
+
+  .temp-box .value {
+    font-size: 40px;
+    font-weight: 700;
+  }
+
+  .temp-box.max .value { color: #ffb37a; }
+  .temp-box.min .value { color: #7ac8ff; }
+
+  .hourly-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #8fb6c9;
+    margin-bottom: 12px;
+  }
+
+  .hourly {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 130px;
+    padding-bottom: 22px;
+    position: relative;
+  }
+
+  .hour {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
+  }
+
+  .hour .bar {
+    width: 100%;
+    max-width: 18px;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(to top, #3a7bd5, #00d2ff);
+    transition: height 0.3s ease;
+    position: relative;
+  }
+
+  .hour .bar .temp-label {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #cfe8f5;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .hour:hover .bar .temp-label { opacity: 1; }
+
+  .hour .hour-label {
+    position: absolute;
+    bottom: -20px;
+    font-size: 10px;
+    color: #7fa5b8;
+  }
+
+  .message {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 20px;
+    color: #cfe8f5;
+  }
+
+  .message .sub {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #8fb6c9;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #7ac8ff;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="message">
+      <div class="spinner"></div>
+      Loading weather data…
+    </div>
+  </div>
+
+<script>
+(function () {
+  var card = document.getElementById("card");
+
+  // --- Parse query parameters ---
+  var params = new URLSearchParams(window.location.search);
+  var lat = parseFloat(params.get("lat"));
+  var lon = parseFloat(params.get("lon"));
+  var name = params.get("name") || "Berlin";
+  var dateParam = params.get("date");
+
+  if (isNaN(lat)) lat = 52.52;
+  if (isNaN(lon)) lon = 13.405;
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  var todayUTC = (function () {
+    var d = new Date();
+    return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+  })();
+
+  var date = /^\d{4}-\d{2}-\d{2}$/.test(dateParam || "") ? dateParam : todayUTC;
+
+  // --- Weather code mapping (WMO) ---
+  var WMO = {
+    0:  ["Clear sky", "☀️"],
+    1:  ["Mainly clear", "🌤️"],
+    2:  ["Partly cloudy", "⛅"],
+    3:  ["Overcast", "☁️"],
+    45: ["Fog", "🌫️"],
+    48: ["Depositing rime fog", "🌫️"],
+    51: ["Light drizzle", "🌦️"],
+    53: ["Moderate drizzle", "🌦️"],
+    55: ["Dense drizzle", "🌧️"],
+    56: ["Light freezing drizzle", "🌧️"],
+    57: ["Dense freezing drizzle", "🌧️"],
+    61: ["Slight rain", "🌦️"],
+    63: ["Moderate rain", "🌧️"],
+    65: ["Heavy rain", "🌧️"],
+    66: ["Light freezing rain", "🌧️"],
+    67: ["Heavy freezing rain", "🌧️"],
+    71: ["Slight snow fall", "🌨️"],
+    73: ["Moderate snow fall", "🌨️"],
+    75: ["Heavy snow fall", "❄️"],
+    77: ["Snow grains", "❄️"],
+    80: ["Slight rain showers", "🌦️"],
+    81: ["Moderate rain showers", "🌧️"],
+    82: ["Violent rain showers", "⛈️"],
+    85: ["Slight snow showers", "🌨️"],
+    86: ["Heavy snow showers", "❄️"],
+    95: ["Thunderstorm", "⛈️"],
+    96: ["Thunderstorm with slight hail", "⛈️"],
+    99: ["Thunderstorm with heavy hail", "⛈️"]
+  };
+
+  function describe(code) {
+    return WMO[code] || ["Unknown conditions", "❓"];
+  }
+
+  function showError(detail) {
+    card.innerHTML =
+      '<div class="message">⚠️ Weather data could not be loaded.' +
+      '<span class="sub">' + (detail || "Please check the location and date, then try again.") + "</span></div>";
+  }
+
+  function formatDate(iso) {
+    var d = new Date(iso + "T00:00:00Z");
+    return d.toLocaleDateString("en-GB", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC"
+    });
+  }
+
+  function render(data) {
+    var daily = data.daily;
+    var hourly = data.hourly;
+
+    if (!daily || !hourly || !daily.time || daily.time.length === 0) {
+      showError("The API returned no data for this date.");
+      return;
+    }
+
+    var tMax = daily.temperature_2m_max[0];
+    var tMin = daily.temperature_2m_min[0];
+    var code = daily.weather_code[0];
+
+    if (tMax == null || tMin == null || code == null) {
+      showError("The API returned incomplete data for this date.");
+      return;
+    }
+
+    var cond = describe(code);
+
+    // Collect hourly temps for the requested date
+    var hours = [];
+    for (var i = 0; i < hourly.time.length; i++) {
+      if (hourly.time[i].slice(0, 10) === date && hourly.temperature_2m[i] != null) {
+        hours.push({
+          hour: parseInt(hourly.time[i].slice(11, 13), 10),
+          temp: hourly.temperature_2m[i]
+        });
+      }
+    }
+
+    var hourlyHtml = "";
+    if (hours.length > 0) {
+      var temps = hours.map(function (h) { return h.temp; });
+      var lo = Math.min.apply(null, temps);
+      var hi = Math.max.apply(null, temps);
+      var range = (hi - lo) || 1;
+
+      hourlyHtml = '<div class="hourly-title">Hourly Temperatures</div><div class="hourly">';
+      hours.forEach(function (h) {
+        var pct = 12 + ((h.temp - lo) / range) * 88; // min bar height 12%
+        var showHour = h.hour % 3 === 0;
+        hourlyHtml +=
+          '<div class="hour">' +
+            '<div class="bar" style="height:' + pct.toFixed(1) + '%">' +
+              '<span class="temp-label">' + h.temp.toFixed(1) + "°C</span>" +
+            "</div>" +
+            (showHour ? '<span class="hour-label">' + pad(h.hour) + ":00</span>" : "") +
+          "</div>";
+      });
+      hourlyHtml += "</div>";
+    } else {
+      hourlyHtml = '<div class="hourly-title">Hourly Temperatures</div>' +
+        '<div class="message" style="padding:20px;">No hourly data available for this date.</div>';
+    }
+
+    card.innerHTML =
+      '<div class="header">' +
+        '<div class="location">' + escapeHtml(name) + "</div>" +
+        '<div class="date">' + formatDate(date) + "</div>" +
+      "</div>" +
+      '<div class="condition"><span class="icon">' + cond[1] + "</span><span>" + cond[0] + "</span></div>" +
+      '<div class="temps">' +
+        '<div class="temp-box max"><div class="label">Max</div><div class="value">' + tMax.toFixed(1) + "°C</div></div>" +
+        '<div class="temp-box min"><div class="label">Min</div><div class="value">' + tMin.toFixed(1) + "°C</div></div>" +
+      "</div>" +
+      hourlyHtml;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // --- Choose endpoint: archive for past dates, forecast for today/future ---
+  var endpoint = date < todayUTC ? "/api/om/archive" : "/api/om/forecast";
+
+  var qs = new URLSearchParams({
+    latitude: lat,
+    longitude: lon,
+    daily: "temperature_2m_max,temperature_2m_min,weather_code",
+    hourly: "temperature_2m",
+    timezone: "UTC",
+    temperature_unit: "celsius",
+    start_date: date,
+    end_date: date
+  });
+
+  fetch(endpoint + "?" + qs.toString())
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (data && data.error) {
+        showError(typeof data.reason === "string" ? data.reason : "The API reported an error.");
+        return;
+      }
+      render(data);
+    })
+    .catch(function (err) {
+      showError("Request failed: " + err.message);
+    });
+})();
+</script>
+</body>
+</html>

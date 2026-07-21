@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800">
+<title>Weather Card</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e8f1f5;
+  }
+  .card {
+    width: 920px;
+    min-height: 560px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 28px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+    padding: 40px 48px 36px;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .location {
+    font-size: 36px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .date {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+  .condition-badge {
+    text-align: right;
+  }
+  .condition-icon {
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .condition-text {
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  .temps {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 36px;
+  }
+  .temp-block {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 20px 32px;
+    min-width: 160px;
+  }
+  .temp-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    margin-bottom: 8px;
+  }
+  .temp-value {
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .temp-value span {
+    font-size: 22px;
+    opacity: 0.6;
+    font-weight: 400;
+  }
+  .hourly-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .hourly-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    margin-bottom: 14px;
+  }
+  .hourly-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    flex: 1;
+    align-items: stretch;
+  }
+  .hour-item {
+    flex: 0 0 68px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 14px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 110px;
+  }
+  .hour-time {
+    font-size: 12px;
+    opacity: 0.55;
+  }
+  .hour-temp {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    gap: 12px;
+  }
+  .error-icon { font-size: 48px; opacity: 0.5; }
+  .error-msg { font-size: 20px; opacity: 0.85; }
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: 18px;
+    opacity: 0.7;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="loading" id="loading">Loading weather data…</div>
+  <div class="error hidden" id="error">
+    <div class="error-icon">⚠</div>
+    <div class="error-msg">Weather data could not be loaded.</div>
+  </div>
+  <div class="hidden" id="content">
+    <div class="header">
+      <div>
+        <div class="location" id="location"></div>
+        <div class="date" id="date"></div>
+      </div>
+      <div class="condition-badge">
+        <div class="condition-icon" id="condition-icon"></div>
+        <div class="condition-text" id="condition-text"></div>
+      </div>
+    </div>
+    <div class="temps">
+      <div class="temp-block">
+        <div class="temp-label">Maximum</div>
+        <div class="temp-value" id="temp-max"></div>
+      </div>
+      <div class="temp-block">
+        <div class="temp-label">Minimum</div>
+        <div class="temp-value" id="temp-min"></div>
+      </div>
+    </div>
+    <div class="hourly-section">
+      <div class="hourly-title">Hourly Temperature</div>
+      <div class="hourly-scroll" id="hourly"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  const WMO = {
+    0:  { text: "Clear sky", icon: "☀" },
+    1:  { text: "Mainly clear", icon: "🌤" },
+    2:  { text: "Partly cloudy", icon: "⛅" },
+    3:  { text: "Overcast", icon: "☁" },
+    45: { text: "Fog", icon: "🌫" },
+    48: { text: "Depositing rime fog", icon: "🌫" },
+    51: { text: "Light drizzle", icon: "🌦" },
+    53: { text: "Moderate drizzle", icon: "🌦" },
+    55: { text: "Dense drizzle", icon: "🌧" },
+    56: { text: "Light freezing drizzle", icon: "🌧" },
+    57: { text: "Dense freezing drizzle", icon: "🌧" },
+    61: { text: "Slight rain", icon: "🌧" },
+    63: { text: "Moderate rain", icon: "🌧" },
+    65: { text: "Heavy rain", icon: "🌧" },
+    66: { text: "Light freezing rain", icon: "🌧" },
+    67: { text: "Heavy freezing rain", icon: "🌧" },
+    71: { text: "Slight snow", icon: "🌨" },
+    73: { text: "Moderate snow", icon: "🌨" },
+    75: { text: "Heavy snow", icon: "❄" },
+    77: { text: "Snow grains", icon: "❄" },
+    80: { text: "Slight rain showers", icon: "🌦" },
+    81: { text: "Moderate rain showers", icon: "🌧" },
+    82: { text: "Violent rain showers", icon: "🌧" },
+    85: { text: "Slight snow showers", icon: "🌨" },
+    86: { text: "Heavy snow showers", icon: "❄" },
+    95: { text: "Thunderstorm", icon: "⛈" },
+    96: { text: "Thunderstorm with slight hail", icon: "⛈" },
+    99: { text: "Thunderstorm with heavy hail", icon: "⛈" }
+  };
+
+  function weatherInfo(code) {
+    return WMO[code] || { text: "Unknown (" + code + ")", icon: "❔" };
+  }
+
+  function todayUTC() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function parseParams() {
+    const q = new URLSearchParams(window.location.search);
+    return {
+      lat: q.get("lat") || "52.52",
+      lon: q.get("lon") || "13.405",
+      name: q.get("name") || "Berlin",
+      date: q.get("date") || todayUTC()
+    };
+  }
+
+  function formatDisplayDate(iso) {
+    const d = new Date(iso + "T00:00:00Z");
+    return d.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC"
+    });
+  }
+
+  function showError() {
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.add("hidden");
+    document.getElementById("error").classList.remove("hidden");
+  }
+
+  function render(params, data) {
+    const daily = data.daily;
+    const hourly = data.hourly;
+    if (!daily || !hourly || !daily.time || !daily.time.length) {
+      showError();
+      return;
+    }
+
+    const max = daily.temperature_2m_max[0];
+    const min = daily.temperature_2m_min[0];
+    const code = daily.weather_code[0];
+    const info = weatherInfo(code);
+
+    document.getElementById("location").textContent = params.name;
+    document.getElementById("date").textContent = formatDisplayDate(params.date);
+    document.getElementById("temp-max").innerHTML = (max != null ? max.toFixed(1) : "—") + "<span>°C</span>";
+    document.getElementById("temp-min").innerHTML = (min != null ? min.toFixed(1) : "—") + "<span>°C</span>";
+    document.getElementById("condition-icon").textContent = info.icon;
+    document.getElementById("condition-text").textContent = info.text;
+
+    const container = document.getElementById("hourly");
+    container.innerHTML = "";
+    const times = hourly.time || [];
+    const temps = hourly.temperature_2m || [];
+    for (let i = 0; i < times.length; i++) {
+      const t = times[i];
+      if (!t.startsWith(params.date)) continue;
+      const hour = t.slice(11, 16);
+      const temp = temps[i];
+      const el = document.createElement("div");
+      el.className = "hour-item";
+      el.innerHTML =
+        '<div class="hour-time">' + hour + '</div>' +
+        '<div class="hour-temp">' + (temp != null ? temp.toFixed(1) + "°" : "—") + '</div>';
+      container.appendChild(el);
+    }
+
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("error").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+  }
+
+  async function main() {
+    const params = parseParams();
+    const today = todayUTC();
+    const base = params.date < today ? "/api/om/archive" : "/api/om/forecast";
+    const qs = new URLSearchParams({
+      latitude: params.lat,
+      longitude: params.lon,
+      daily: "temperature_2m_max,temperature_2m_min,weather_code",
+      hourly: "temperature_2m",
+      timezone: "UTC",
+      temperature_unit: "celsius",
+      start_date: params.date,
+      end_date: params.date
+    });
+
+    try {
+      const res = await fetch(base + "?" + qs.toString());
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      if (data.error) throw new Error(data.reason || "API error");
+      render(params, data);
+    } catch (e) {
+      showError();
+    }
+  }
+
+  main();
+})();
+</script>
+</body>
+</html>

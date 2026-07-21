@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800">
+<title>Weather Card</title>
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 1100px;
+  min-height: 620px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 32px;
+  padding: 56px 64px;
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #f0f0f5;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.location-block h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.location-block .date {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.3px;
+}
+
+.condition-block {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.condition-icon {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.condition-label {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.temp-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+}
+
+.temp-max {
+  font-size: 96px;
+  font-weight: 200;
+  letter-spacing: -4px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.temp-max span {
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: 0;
+  vertical-align: super;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.temp-min {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.temp-min span {
+  font-size: 16px;
+  vertical-align: super;
+}
+
+.hourly-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hourly-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hourly-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 200px;
+  padding: 0 4px;
+}
+
+.hour-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 8px;
+}
+
+.hour-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.hour-bar {
+  width: 60%;
+  max-width: 28px;
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(180deg, rgba(129, 180, 255, 0.9) 0%, rgba(99, 132, 255, 0.5) 100%);
+  transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  min-height: 4px;
+}
+
+.hour-temp {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+}
+
+.hour-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+  text-align: center;
+}
+
+.error-state .error-icon {
+  font-size: 48px;
+  opacity: 0.6;
+}
+
+.error-state .error-msg {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(129, 180, 255, 0.9);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="loading" class="loading-state">
+    <div class="spinner"></div>
+  </div>
+  <div id="error" class="error-state hidden">
+    <div class="error-icon">&#9888;</div>
+    <div class="error-msg" id="error-msg">Unable to load weather data.</div>
+  </div>
+  <div id="content" class="hidden" style="display:none;flex-direction:column;gap:40px;flex:1;">
+    <div class="header">
+      <div class="location-block">
+        <h1 id="loc-name"></h1>
+        <div class="date" id="loc-date"></div>
+      </div>
+      <div class="condition-block">
+        <div class="condition-icon" id="cond-icon"></div>
+        <div class="condition-label" id="cond-label"></div>
+      </div>
+    </div>
+    <div class="temp-summary">
+      <div class="temp-max" id="temp-max"></div>
+      <div class="temp-min" id="temp-min"></div>
+    </div>
+    <div class="hourly-section">
+      <div class="hourly-title">Hourly Temperature</div>
+      <div class="hourly-chart" id="hourly-chart"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var lat = params.get('lat') || '52.52';
+  var lon = params.get('lon') || '13.405';
+  var name = params.get('name') || 'Berlin';
+
+  var dateStr = params.get('date');
+  if (!dateStr) {
+    var now = new Date();
+    var y = now.getUTCFullYear();
+    var m = String(now.getUTCMonth() + 1).padStart(2, '0');
+    var d = String(now.getUTCDate()).padStart(2, '0');
+    dateStr = y + '-' + m + '-' + d;
+  }
+
+  var todayUTC = (function () {
+    var n = new Date();
+    return n.getUTCFullYear() + '-' + String(n.getUTCMonth() + 1).padStart(2, '0') + '-' + String(n.getUTCDate()).padStart(2, '0');
+  })();
+
+  var isPast = dateStr < todayUTC;
+  var endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  var url = endpoint +
+    '?latitude=' + encodeURIComponent(lat) +
+    '&longitude=' + encodeURIComponent(lon) +
+    '&daily=temperature_2m_max,temperature_2m_min,weather_code' +
+    '&hourly=temperature_2m' +
+    '&timezone=UTC' +
+    '&temperature_unit=celsius' +
+    '&start_date=' + encodeURIComponent(dateStr) +
+    '&end_date=' + encodeURIComponent(dateStr);
+
+  var WMO_CODES = {
+    0: ['Clear sky', '\u2600\uFE0F'],
+    1: ['Mainly clear', '\uD83C\uDF24\uFE0F'],
+    2: ['Partly cloudy', '\u26C5'],
+    3: ['Overcast', '\u2601\uFE0F'],
+    45: ['Fog', '\uD83C\uDF2B\uFE0F'],
+    48: ['Depositing rime fog', '\uD83C\uDF2B\uFE0F'],
+    51: ['Light drizzle', '\uD83C\uDF26\uFE0F'],
+    53: ['Moderate drizzle', '\uD83C\uDF26\uFE0F'],
+    55: ['Dense drizzle', '\uD83C\uDF27\uFE0F'],
+    56: ['Light freezing drizzle', '\uD83C\uDF28\uFE0F'],
+    57: ['Dense freezing drizzle', '\uD83C\uDF28\uFE0F'],
+    61: ['Slight rain', '\uD83C\uDF26\uFE0F'],
+    63: ['Moderate rain', '\uD83C\uDF27\uFE0F'],
+    65: ['Heavy rain', '\uD83C\uDF27\uFE0F'],
+    66: ['Light freezing rain', '\uD83C\uDF28\uFE0F'],
+    67: ['Heavy freezing rain', '\uD83C\uDF28\uFE0F'],
+    71: ['Slight snowfall', '\uD83C\uDF28\uFE0F'],
+    73: ['Moderate snowfall', '\uD83C\uDF28\uFE0F'],
+    75: ['Heavy snowfall', '\u2744\uFE0F'],
+    77: ['Snow grains', '\u2744\uFE0F'],
+    80: ['Slight rain showers', '\uD83C\uDF26\uFE0F'],
+    81: ['Moderate rain showers', '\uD83C\uDF27\uFE0F'],
+    82: ['Violent rain showers', '\u26C8\uFE0F'],
+    85: ['Slight snow showers', '\uD83C\uDF28\uFE0F'],
+    86: ['Heavy snow showers', '\u2744\uFE0F'],
+    95: ['Thunderstorm', '\u26C8\uFE0F'],
+    96: ['Thunderstorm with slight hail', '\u26C8\uFE0F'],
+    99: ['Thunderstorm with heavy hail', '\u26C8\uFE0F']
+  };
+
+  function showError(msg) {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('content').classList.add('hidden');
+    document.getElementById('content').style.display = 'none';
+    document.getElementById('error').classList.remove('hidden');
+    document.getElementById('error-msg').textContent = msg;
+  }
+
+  function formatDate(ds) {
+    var parts = ds.split('-');
+    var dt = new Date(Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return days[dt.getUTCDay()] + ', ' + months[dt.getUTCMonth()] + ' ' + dt.getUTCDate() + ', ' + dt.getUTCFullYear();
+  }
+
+  function render(data) {
+    document.getElementById('loading').classList.add('hidden');
+
+    var daily = data.daily;
+    var hourly = data.hourly;
+
+    if (!daily || !daily.temperature_2m_max || !daily.temperature_2m_min || !daily.weather_code) {
+      showError('The weather service returned incomplete data for this date.');
+      return;
+    }
+
+    var tMax = daily.temperature_2m_max[0];
+    var tMin = daily.temperature_2m_min[0];
+    var code = daily.weather_code[0];
+
+    var cond = WMO_CODES[code] || ['Unknown', '\uD83C\uDF21\uFE0F'];
+
+    document.getElementById('loc-name').textContent = name;
+    document.getElementById('loc-date').textContent = formatDate(dateStr);
+    document.getElementById('cond-icon').textContent = cond[1];
+    document.getElementById('cond-label').textContent = cond[0];
+    document.getElementById('temp-max').innerHTML = Math.round(tMax) + '<span>\u00B0C</span>';
+    document.getElementById('temp-min').innerHTML = '\u2193 ' + Math.round(tMin) + '<span>\u00B0C</span>';
+
+    var temps = hourly.temperature_2m || [];
+    var chart = document.getElementById('hourly-chart');
+    chart.innerHTML = '';
+
+    var minT = Math.min.apply(null, temps);
+    var maxT = Math.max.apply(null, temps);
+    var range = maxT - minT || 1;
+
+    for (var i = 0; i < temps.length; i++) {
+      var col = document.createElement('div');
+      col.className = 'hour-col';
+
+      var tempLabel = document.createElement('div');
+      tempLabel.className = 'hour-temp';
+      tempLabel.textContent = Math.round(temps[i]) + '\u00B0';
+
+      var barWrap = document.createElement('div');
+      barWrap.className = 'hour-bar-wrap';
+
+      var bar = document.createElement('div');
+      bar.className = 'hour-bar';
+      var pct = ((temps[i] - minT) / range) * 80 + 10;
+      bar.style.height = '0%';
+      barWrap.appendChild(bar);
+
+      var label = document.createElement('div');
+      label.className = 'hour-label';
+      label.textContent = String(i).padStart(2, '0');
+
+      col.appendChild(tempLabel);
+      col.appendChild(barWrap);
+      col.appendChild(label);
+      chart.appendChild(col);
+
+      (function (b, p) {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            b.style.height = p + '%';
+          });
+        });
+      })(bar, pct);
+    }
+
+    var contentEl = document.getElementById('content');
+    contentEl.classList.remove('hidden');
+    contentEl.style.display = 'flex';
+  }
+
+  fetch(url)
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(render)
+    .catch(function (err) {
+      showError('Unable to load weather data. The service may be unavailable or the requested date/location is out of range. (' + err.message + ')');
+    });
+})();
+</script>
+</body>
+</html>

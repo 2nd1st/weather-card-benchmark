@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, height=800">
+    <title>Weather Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            width: 1280px;
+            height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 40px;
+        }
+
+        .weather-card {
+            width: 1200px;
+            height: 720px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 32px;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error-state {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            text-align: center;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+
+        .error-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .error-message {
+            font-size: 18px;
+            color: #6b7280;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .location-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .location-name {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .date-display {
+            font-size: 20px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .current-weather {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .weather-icon {
+            font-size: 88px;
+            line-height: 1;
+        }
+
+        .current-temp {
+            font-size: 64px;
+            font-weight: 300;
+            color: #1f2937;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .current-temp sup {
+            font-size: 28px;
+            font-weight: 500;
+            margin-top: 8px;
+            margin-left: 4px;
+        }
+
+        .weather-condition {
+            font-size: 24px;
+            color: #4b5563;
+            font-weight: 500;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .temp-range {
+            display: flex;
+            gap: 24px;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+
+        .temp-range-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            color: #6b7280;
+        }
+
+        .temp-range-item.high {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .temp-range-item.low {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+            margin: 32px 0;
+        }
+
+        .hourly-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hourly-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+
+        .hourly-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .hourly-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .hourly-scroll::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+
+        .hourly-scroll::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .hourly-item {
+            min-width: 92px;
+            height: 180px;
+            background: #f9fafb;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 12px;
+            transition: all 0.2s ease;
+        }
+
+        .hourly-item:hover {
+            background: #f3f4f6;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .hour-time {
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .hour-icon {
+            font-size: 32px;
+        }
+
+        .hour-temp {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .loading {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border: 5px solid #e5e7eb;
+            border-top-color: #4facfe;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 20px;
+            color: #6b7280;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-card" id="app">
+        <div class="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading weather data...</div>
+        </div>
+    </div>
+
+    <script>
+        const weatherCodes = {
+            0: { description: "Clear sky", icon: "☀️" },
+            1: { description: "Mainly clear", icon: "🌤️" },
+            2: { description: "Partly cloudy", icon: "⛅" },
+            3: { description: "Overcast", icon: "☁️" },
+            45: { description: "Fog", icon: "🌫️" },
+            48: { description: "Depositing rime fog", icon: "🌫️" },
+            51: { description: "Light drizzle", icon: "🌦️" },
+            53: { description: "Moderate drizzle", icon: "🌦️" },
+            55: { description: "Dense drizzle", icon: "🌧️" },
+            56: { description: "Light freezing drizzle", icon: "🌨️" },
+            57: { description: "Dense freezing drizzle", icon: "🌨️" },
+            61: { description: "Slight rain", icon: "🌧️" },
+            63: { description: "Moderate rain", icon: "🌧️" },
+            65: { description: "Heavy rain", icon: "🌧️" },
+            66: { description: "Light freezing rain", icon: "🌨️" },
+            67: { description: "Heavy freezing rain", icon: "🌨️" },
+            71: { description: "Slight snow", icon: "🌨️" },
+            73: { description: "Moderate snow", icon: "❄️" },
+            75: { description: "Heavy snow", icon: "❄️" },
+            77: { description: "Snow grains", icon: "❄️" },
+            80: { description: "Slight rain showers", icon: "🌦️" },
+            81: { description: "Moderate rain showers", icon: "🌧️" },
+            82: { description: "Violent rain showers", icon: "⛈️" },
+            85: { description: "Slight snow showers", icon: "🌨️" },
+            86: { description: "Heavy snow showers", icon: "❄️" },
+            95: { description: "Thunderstorm", icon: "⛈️" },
+            96: { description: "Thunderstorm with slight hail", icon: "⛈️" },
+            99: { description: "Thunderstorm with heavy hail", icon: "⛈️" }
+        };
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const today = new Date().toISOString().split('T')[0];
+            return {
+                lat: parseFloat(params.get('lat')) || 52.52,
+                lon: parseFloat(params.get('lon')) || 13.405,
+                name: params.get('name') || 'Berlin',
+                date: params.get('date') || today
+            };
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00Z');
+            return date.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC'
+            });
+        }
+
+        function isPastDate(dateStr) {
+            const today = new Date().toISOString().split('T')[0];
+            return dateStr < today;
+        }
+
+        function getHourFromTime(timeStr) {
+            return new Date(timeStr).getUTCHours();
+        }
+
+        function getHourIcon(hour, weatherCode) {
+            const baseIcon = weatherCodes[weatherCode]?.icon || '🌡️';
+            if (hour < 6 || hour >= 20) {
+                if (weatherCode === 0 || weatherCode === 1) return '🌙';
+            }
+            return baseIcon;
+        }
+
+        function getCurrentHourIndex(hourlyTimes, dateStr) {
+            const now = new Date();
+            const currentDate = now.toISOString().split('T')[0];
+            if (currentDate !== dateStr) return 0;
+            const currentHour = now.getUTCHours();
+            const targetTime = `${dateStr}T${currentHour.toString().padStart(2, '0')}:00`;
+            return hourlyTimes.findIndex(t => t === targetTime);
+        }
+
+        async function fetchWeather(params) {
+            const isArchive = isPastDate(params.date);
+            const endpoint = isArchive ? '/api/om/archive' : '/api/om/forecast';
+            const queryParams = new URLSearchParams({
+                latitude: params.lat,
+                longitude: params.lon,
+                daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+                hourly: 'temperature_2m',
+                timezone: 'UTC',
+                temperature_unit: 'celsius',
+                start_date: params.date,
+                end_date: params.date
+            });
+
+            const response = await fetch(`${endpoint}?${queryParams}`);
+            if (!response.ok) throw new Error('Failed to fetch weather data');
+            return response.json();
+        }
+
+        function renderError(message) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <div class="error-title">Unable to load weather data</div>
+                    <div class="error-message">${message}</div>
+                </div>
+            `;
+        }
+
+        function renderWeather(data, params) {
+            const app = document.getElementById('app');
+            const daily = data.daily;
+            const hourly = data.hourly;
+            
+            const maxTemp = Math.round(daily.temperature_2m_max[0]);
+            const minTemp = Math.round(daily.temperature_2m_min[0]);
+            const weatherCode = daily.weather_code[0];
+            const weatherInfo = weatherCodes[weatherCode] || { description: 'Unknown', icon: '🌡️' };
+            
+            const avgTemp = Math.round(hourly.temperature_2m.reduce((a, b) => a + b, 0) / hourly.temperature_2m.length);
+            
+            const currentHourIndex = getCurrentHourIndex(hourly.time, params.date);
+            const displayTemp = Math.round(hourly.temperature_2m[currentHourIndex]);
+
+            const hourlyItems = hourly.time.map((time, index) => {
+                const hour = getHourFromTime(time);
+                const temp = Math.round(hourly.temperature_2m[index]);
+                const icon = getHourIcon(hour, weatherCode);
+                const isCurrent = index === currentHourIndex;
+                return `
+                    <div class="hourly-item" style="${isCurrent ? 'background: #eff6ff; border: 2px solid #3b82f6;' : ''}">
+                        <div class="hour-time">${isCurrent ? 'Now' : `${hour.toString().padStart(2, '0')}:00`}</div>
+                        <div class="hour-icon">${icon}</div>
+                        <div class="hour-temp">${temp}°</div>
+                    </div>
+                `;
+            }).join('');
+
+            app.innerHTML = `
+                <div class="header">
+                    <div class="location-section">
+                        <div class="location-name">📍 ${params.name}</div>
+                        <div class="date-display">${formatDate(params.date)}</div>
+                    </div>
+                    <div class="current-weather-section">
+                        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 16px;">
+                            <div class="current-weather">
+                                <div class="weather-icon">${weatherInfo.icon}</div>
+                                <div class="current-temp">${displayTemp}<sup>°C</sup></div>
+                            </div>
+                        </div>
+                        <div class="weather-condition">${weatherInfo.description}</div>
+                        <div class="temp-range">
+                            <div class="temp-range-item high">
+                                <span>↑</span>
+                                <span>${maxTemp}°C</span>
+                            </div>
+                            <div class="temp-range-item low">
+                                <span>↓</span>
+                                <span>${minTemp}°C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="hourly-container">
+                    <div class="hourly-title">Hourly Forecast</div>
+                    <div class="hourly-scroll" id="hourlyScroll">
+                        ${hourlyItems}
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                const scrollContainer = document.getElementById('hourlyScroll');
+                const currentItem = scrollContainer.children[currentHourIndex];
+                if (currentItem) {
+                    currentItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }, 100);
+        }
+
+        async function init() {
+            try {
+                const params = getQueryParams();
+                const data = await fetchWeather(params);
+                renderWeather(data, params);
+            } catch (error) {
+                renderError(error.message || 'Please try again later.');
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Findings — weather-card-benchmark",
+    "description": "Observations from building the dataset: descriptive measurements, each linked to the raw data that produced it. Single prompt family, small N — signals, not conclusions."
+  },
+  "title": "Findings",
+  "lead": "Observations from building the dataset — descriptive measurements, each linked to the raw data that produced it.",
+  "updated": "updated {date}",
+  "count": "{n, plural, one {# observation} other {# observations}}",
+  "labels": {
+    "figures": "figures",
+    "caveat": "caveat",
+    "sources": "sources",
+    "browse": "view cards in the gallery",
+    "browseFamily": "view {family} cards"
+  },
+  "empty": {
+    "title": "no published observations yet",
+    "message": "Findings land here as the dataset grows — each one a measurement with a link to the raw run behind it. Nothing has been published yet.",
+    "action": "explore the gallery"
+  }
+}

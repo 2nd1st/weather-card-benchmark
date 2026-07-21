@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800">
+<title>Weather Card</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 800px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #e0e0e0;
+    overflow: hidden;
+  }
+  .card {
+    width: 900px; min-height: 520px;
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    padding: 48px 56px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
+  .location { font-size: 36px; font-weight: 700; color: #fff; }
+  .date { font-size: 18px; color: rgba(255,255,255,0.55); margin-top: 6px; }
+  .temp-block { text-align: right; }
+  .temp-high { font-size: 56px; font-weight: 700; color: #fff; line-height: 1; }
+  .temp-low { font-size: 22px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .condition { font-size: 20px; color: rgba(255,255,255,0.75); margin-top: 8px; }
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 28px 0; }
+  .hourly-title { font-size: 15px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
+  .hourly-grid { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+  .hourly-item {
+    flex: 1; min-width: 0; text-align: center;
+    padding: 12px 4px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+  .hourly-item:hover { background: rgba(255,255,255,0.1); }
+  .hourly-item .h-time { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .hourly-item .h-temp { font-size: 16px; font-weight: 600; color: #fff; }
+  .hourly-item .h-bar { margin: 8px auto 0; width: 4px; border-radius: 2px; background: rgba(255,255,255,0.15); }
+  .error-msg { text-align: center; font-size: 22px; color: #e74c3c; padding: 60px 0; }
+  .loading { text-align: center; font-size: 20px; color: rgba(255,255,255,0.5); padding: 60px 0; }
+  .temp-unit { font-size: 28px; font-weight: 400; vertical-align: super; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="loading">Loading weather data…</div>
+</div>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const lat = params.get('lat') || '52.52';
+  const lon = params.get('lon') || '13.405';
+  const name = params.get('name') || 'Berlin';
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const date = params.get('date') || todayStr;
+
+  const weatherCodes = {
+    0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+    45:'Fog',48:'Rime fog',
+    51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',
+    56:'Freezing drizzle',57:'Dense freezing drizzle',
+    61:'Slight rain',63:'Moderate rain',65:'Heavy rain',
+    66:'Freezing rain',67:'Heavy freezing rain',
+    71:'Slight snow',73:'Moderate snow',75:'Heavy snow',
+    77:'Snow grains',
+    80:'Slight showers',81:'Moderate showers',82:'Violent showers',
+    85:'Slight snow showers',86:'Heavy snow showers',
+    95:'Thunderstorm',96:'Thunderstorm w/ hail',99:'Thunderstorm w/ heavy hail'
+  };
+
+  const isPast = date < todayStr;
+  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+  const url = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${date}&end_date=${date}`;
+
+  const card = document.getElementById('card');
+
+  fetch(url)
+    .then(r => { if (!r.ok) throw new Error('API error'); return r.json(); })
+    .then(data => {
+      if (!data.daily || !data.hourly) throw new Error('Invalid data');
+      const maxT = data.daily.temperature_2m_max[0];
+      const minT = data.daily.temperature_2m_min[0];
+      const code = data.daily.weather_code[0];
+      const condition = weatherCodes[code] || `Code ${code}`;
+      const hours = data.hourly.temperature_2m;
+      const dateObj = new Date(date + 'T00:00:00Z');
+      const dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+      const allTemps = hours.filter(t => t !== undefined);
+      const tMin = Math.min(...allTemps);
+      const tMax = Math.max(...allTemps);
+      const range = tMax - tMin || 1;
+
+      let hourlyHTML = '';
+      for (let i = 0; i < 24; i++) {
+        const t = hours[i];
+        if (t === undefined || t === null) continue;
+        const barH = Math.round(8 + ((t - tMin) / range) * 40);
+        const timeLabel = String(i).padStart(2, '0') + ':00';
+        hourlyHTML += `<div class="hourly-item"><div class="h-time">${timeLabel}</div><div class="h-temp">${Math.round(t * 10) / 10}°</div><div class="h-bar" style="height:${barH}px"></div></div>`;
+      }
+
+      card.innerHTML = `
+        <div class="header">
+          <div>
+            <div class="location">${escapeHtml(name)}</div>
+            <div class="date">${dateStr}</div>
+            <div class="condition">${condition}</div>
+          </div>
+          <div class="temp-block">
+            <div class="temp-high">${Math.round(maxT*10)/10}<span class="temp-unit">°C</span></div>
+            <div class="temp-low">Low ${Math.round(minT*10)/10}°C</div>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="hourly-title">Hourly Temperatures</div>
+        <div class="hourly-grid">${hourlyHTML}</div>`;
+    })
+    .catch(() => {
+      card.innerHTML = '<div class="error-msg">⚠ Unable to load weather data.<br><span style="font-size:16px;color:rgba(255,255,255,0.4)">Please check your connection or try again later.</span></div>';
+    });
+
+  function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+})();
+</script>
+</body>
+</html>

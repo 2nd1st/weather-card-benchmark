@@ -1,0 +1,86 @@
+# dev-codex-oauth-extra.yaml — codex-oauth 臂新档补席。
+# 依据当日 gpt 档表文档重验:官方 5.6 系支持 max(5.5/5.4 无);codex CLI 另有
+# ultra 档(models.json 广告 sol/terra;CLI 层映射 ultra→API max + proactive 模式);
+# none 官方 5.4+ 存在但 codex models.json 未广告 —— none 三席为行为探测性质,
+# 若 CLI/服务端拒绝,错误消息即档表证据,照常记录不阻断。plan 计费零成本。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: codex-cli-oauth-chatgpt
+  proxy: none
+
+configs:
+  - config_id: gpt-5.6-sol-eff-max--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: max
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-max--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: max
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-max--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: max
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-ultra--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: ultra
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-ultra--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: ultra
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-sol-eff-none--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: none
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-terra-eff-none--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: none
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.6-luna-eff-none--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: none
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+

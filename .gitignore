@@ -1,0 +1,49 @@
+# --- secrets: NEVER commit real keys ---
+runner/.env
+
+# --- python ---
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# --- node ---
+node_modules/
+
+# --- dev-only benchmark output (public batches live in data/batches/) ---
+# Ignore all dev batch output, but keep the directory itself via .gitkeep.
+data/batches-dev/*
+!data/batches-dev/.gitkeep
+
+# --- playwright browser caches ---
+# playwright installs browsers under ~/.cache/ms-playwright by default; if a
+# repo-local cache dir is ever used, ignore it here too.
+ms-playwright/
+**/.cache/ms-playwright/
+
+# --- cache-api runtime store (regenerable) ---
+# site/cache-api seeds records/ from each batch's frozen weather-snapshot.json and
+# url-cache/ from the trial api-cache on startup; on-miss live fetches also persist
+# here. It is regenerable dev/runtime state, not a committed artifact.
+data/weather-db/
+
+# --- scratchpad: keep reproducer scripts, ignore transient data dumps ---
+# Generators (gen_golden.py, gen_render.py, build_*_matrix.py) are referenced by
+# committed docs (GOLDEN-README) and ship; data outputs are dev artifacts, ignored.
+scratchpad/*.json
+
+# --- os cruft ---
+.DS_Store
+
+# --- claude code harness runtime state ---
+.claude/scheduled_tasks.lock
+runner/.env.production
+runner/_codex_home/
+runner/_codex_home_oauth/
+runner/_grok_home/
+runner/_opencode_home/
+
+# runtime harness home (kiro) — 87M, like _codex_home
+runner/_kiro_home/
+# build output — copy-assets mirrors trial prompts
+site/public/prompts/

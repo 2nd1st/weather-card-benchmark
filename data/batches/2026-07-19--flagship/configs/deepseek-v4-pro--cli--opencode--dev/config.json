@@ -1,0 +1,27 @@
+{
+  "N": 2,
+  "auth": {
+    "credential_ref": "WCB_OPENCODE_KEY",
+    "method": "oauth-login"
+  },
+  "billing": "plan",
+  "config_id": "deepseek-v4-pro--cli--opencode--dev",
+  "effort": null,
+  "family": "deepseek",
+  "m": {
+    "min": 2,
+    "q": 2
+  },
+  "model_id": "deepseek-v4-pro",
+  "protocol": "cli",
+  "served_model": "deepseek-v4-pro",
+  "telemetry": {
+    "completion_tokens": null,
+    "cost_usd": null,
+    "prompt_tokens": null,
+    "total_tokens": null,
+    "wall_ms": 321467
+  },
+  "transport": "opencode-cli-isolated-xdg-go-subscription",
+  "vendor_sanction_ref": null
+}

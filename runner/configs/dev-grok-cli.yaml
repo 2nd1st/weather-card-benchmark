@@ -1,0 +1,37 @@
+# dev-grok-cli.yaml — grok CLI harness 全 effort(grok-4.5,oauth 直登)。DEV。
+# plan×harness 官方:官方 binary + 隔离 fake $HOME(0 user skills/instructions,已验证)。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: grok-cli-oauth-isolated-home
+  proxy: none
+
+configs:
+  - config_id: grok-4.5-eff-low--cli--grok--dev
+    family: grok
+    model_id: grok-4.5
+    effort: low
+    effort_param: cli---reasoning-effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: grok-4.5-eff-medium--cli--grok--dev
+    family: grok
+    model_id: grok-4.5
+    effort: medium
+    effort_param: cli---reasoning-effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: grok-4.5-eff-high--cli--grok--dev
+    family: grok
+    model_id: grok-4.5
+    effort: high
+    effort_param: cli---reasoning-effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

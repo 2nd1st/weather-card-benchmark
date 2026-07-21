@@ -1,0 +1,27 @@
+{
+ "batch_id": "2026-07-19--unified",
+ "channels": [
+  "v-phash",
+  "v-dhash",
+  "v-color",
+  "v-palette",
+  "v-layout",
+  "v-edge",
+  "v-ssim",
+  "c-shingle",
+  "c-winnow",
+  "c-feature",
+  "c-ast-js",
+  "c-css-prop",
+  "c-ncd",
+  "d-geom",
+  "d-text",
+  "d-pqgram",
+  "d-tagpath"
+ ],
+ "config_a": "minimax-m3--opencode-go--dev",
+ "config_b": "minimax-m3--opencode-go--dev",
+ "kind": "self",
+ "pairs": [],
+ "variant": "P-q"
+}

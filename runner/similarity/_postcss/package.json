@@ -1,0 +1,10 @@
+{
+  "name": "c-css-prop-postcss",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned postcss declaration extractor for similarity channel c-css-prop (v12 appendix A).",
+  "type": "module",
+  "dependencies": {
+    "postcss": "8.5.19"
+  }
+}

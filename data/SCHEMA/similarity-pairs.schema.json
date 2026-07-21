@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/similarity-pairs.schema.json",
+  "title": "similarity/pairs/<a>--<b>--<variant>.json",
+  "description": "Per-batch slot-pair DETAIL for one UNORDERED config-pair, lazy-loaded by /pair (DESIGN §5). For each slot-pair it carries the per-channel S value across all 17 channels (15 formal + the 2 permanent DIAGNOSTIC channels c-ncd / d-tagpath, which are DISPLAYED but never enter greedy pruning / statistics / hypothesis families, scheme §4). This is the run-level raw material that similarity/summary.json aggregates (median/IQR/n_eff) — i.e. matrices.json-equivalent content — so it ENTERS the §8 verify rehash: the runner MUST fix ONE canonical float serialization for every S value (CONTRACT-NOTES §8, recommend the manifest decimal-string grammar). RULED (DECISIONS-M0 §8): each unordered config-pair is materialized EXACTLY ONCE ((a,b)=(b,a) not duplicated; the matrix page renders the symmetric expansion). config_a precedes config_b in the manifest's persisted config order for cross pairs, and config_a==config_b for self pairs. JUDGMENT CALL (flagged): scheme fixes the per-channel S SEMANTICS byte-exactly (§4, appendix A) but not the pair-file JSON shape; the layout below is this contract's design. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. Determinism caveat (FLAGGED): S values are typed as JSON numbers here for readability, but this file feeds a verify rehash — the runner MUST serialize every number with a single fixed canonical form (CONTRACT-NOTES §8). uniqueItems on pairs is whole-object only; (slot_a,slot_b) composite uniqueness is runner-enforced. Sharding (one file per pair vs grouped) is a runner choice (DATA-LAYOUT §1).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "variant", "config_a", "config_b", "kind", "channels", "pairs"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1, "description": "Owning batch id."},
+    "variant": {"type": "string", "enum": ["P-min", "P-q"], "description": "Prompt variant this pair detail is computed over (scheme §9). Each variant has its own pair files."},
+    "config_a": {"type": "string", "minLength": 1, "description": "First config of the unordered pair. For cross pairs (kind=cross) config_a PRECEDES config_b in the manifest's persisted config_ids order (§4). For self pairs config_a == config_b."},
+    "config_b": {"type": "string", "minLength": 1, "description": "Second config of the unordered pair; == config_a for self."},
+    "kind": {"type": "string", "enum": ["self", "cross"], "description": "self = same config, slot pair set {(i,j)|i<j} = C(m,2); cross = distinct configs, A×B full cartesian, materialized once (scheme §5, DECISIONS-M0 §8)."},
+    "channels": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 17,
+      "maxItems": 17,
+      "description": "All 17 L2 channel names (scheme §4), the exact key set of every pair's s object. Includes the 2 permanent diagnostics c-ncd / d-tagpath.",
+      "items": {"$ref": "#/$defs/channelName"}
+    },
+    "pairs": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "One entry per slot-pair. Self: (slot_a, slot_b) with slot_a < slot_b over config's valid slots. Cross: every valid slot_a of config_a × every valid slot_b of config_b. Pairs are computed ONLY between valid slots (scheme §1.1/§5). (slot_a,slot_b) composite-key uniqueness is runner-enforced.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slot_a", "slot_b", "s"],
+        "properties": {
+          "slot_a": {"type": "integer", "minimum": 0, "description": "Valid slot_index in config_a."},
+          "slot_b": {"type": "integer", "minimum": 0, "description": "Valid slot_index in config_b. For self pairs slot_a < slot_b."},
+          "s": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
+              "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
+              "d-geom", "d-text", "d-pqgram", "d-tagpath"
+            ],
+            "description": "Per-channel S for this slot-pair. Every one of the 17 channels present; S in [0,1] by construction, or null when either side is a zero-vector / empty set / empty bag (scheme §4 'S=null'; double-empty is also null). c-ncd and d-tagpath values are DIAGNOSTIC (displayed, excluded from pruning/stats/hypotheses).",
+            "properties": {
+              "v-phash": {"$ref": "#/$defs/sValue"},
+              "v-dhash": {"$ref": "#/$defs/sValue"},
+              "v-color": {"$ref": "#/$defs/sValue"},
+              "v-palette": {"$ref": "#/$defs/sValue"},
+              "v-layout": {"$ref": "#/$defs/sValue"},
+              "v-edge": {"$ref": "#/$defs/sValue"},
+              "v-ssim": {"$ref": "#/$defs/sValue"},
+              "c-shingle": {"$ref": "#/$defs/sValue"},
+              "c-winnow": {"$ref": "#/$defs/sValue"},
+              "c-feature": {"$ref": "#/$defs/sValue"},
+              "c-ast-js": {"$ref": "#/$defs/sValue"},
+              "c-css-prop": {"$ref": "#/$defs/sValue"},
+              "c-ncd": {"$ref": "#/$defs/sValue", "description": "Diagnostic channel. sim = 1 − clamp(NCD_sym,0,1) (appendix A). The unclamped NCD_sym is stored in diagnostics.c_ncd_ncd_sym."},
+              "d-geom": {"$ref": "#/$defs/sValue"},
+              "d-text": {"$ref": "#/$defs/sValue"},
+              "d-pqgram": {"$ref": "#/$defs/sValue"},
+              "d-tagpath": {"$ref": "#/$defs/sValue", "description": "Diagnostic channel (root→leaf tag path set Jaccard)."}
+            }
+          },
+          "diagnostics": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Optional per-pair diagnostic companions the scheme requires stored alongside the mapped value (appendix A): the UNCLAMPED c-ncd NCD_sym ('未 clamp 并存') and the RAW v-ssim scalar ('raw 仅作诊断字段'). Present only when the corresponding channel S is non-null; never used in statistics.",
+            "properties": {
+              "c_ncd_ncd_sym": {"type": ["number", "null"], "description": "Unclamped symmetric NCD; MAY fall below 0 or exceed 1 (real compressors violate the normal-compressor axioms, so NCD_sym ∈ roughly [−ε, 1+ε]) — the diagnostic exists precisely to preserve this pre-clamp value ('未 clamp 并存', appendix A c-ncd), so it is intentionally unbounded on BOTH sides. The mapped c-ncd S = 1 − clamp(this,0,1)."},
+              "v_ssim_raw": {"type": ["number", "null"], "minimum": -1, "maximum": 1, "description": "Raw structural_similarity scalar in [-1,1]; the mapped v-ssim S = clip((raw+1)/2,0,1)."}
+            }
+          }
+        },
+        "allOf": [
+          {
+            "$comment": "appendix A c-ncd '未 clamp 并存': when the mapped c-ncd S is non-null the unclamped NCD_sym diagnostic MUST coexist.",
+            "if": {"properties": {"s": {"required": ["c-ncd"], "properties": {"c-ncd": {"type": "number"}}}}},
+            "then": {"required": ["diagnostics"], "properties": {"diagnostics": {"required": ["c_ncd_ncd_sym"]}}}
+          },
+          {
+            "$comment": "appendix A v-ssim 'raw 仅作诊断字段': when the mapped v-ssim S is non-null the raw scalar diagnostic MUST coexist.",
+            "if": {"properties": {"s": {"required": ["v-ssim"], "properties": {"v-ssim": {"type": "number"}}}}},
+            "then": {"required": ["diagnostics"], "properties": {"diagnostics": {"required": ["v_ssim_raw"]}}}
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "channelName": {
+      "type": "string",
+      "enum": [
+        "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
+        "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
+        "d-geom", "d-text", "d-pqgram", "d-tagpath"
+      ]
+    },
+    "sValue": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Similarity S in [0,1], or null (zero-vector / empty set / empty bag on either side; scheme §4). Determinism: runner fixes one canonical float serialization (CONTRACT-NOTES §8)."
+    }
+  }
+}

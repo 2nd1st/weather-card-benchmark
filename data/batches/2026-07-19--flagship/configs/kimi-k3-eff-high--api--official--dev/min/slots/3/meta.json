@@ -1,0 +1,248 @@
+{
+  "fidelity": {
+    "condition": {
+      "reason": null,
+      "state": "match"
+    },
+    "date": {
+      "reason": null,
+      "state": "match"
+    },
+    "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+    "hourly": {
+      "coverage": "24/24",
+      "points": [
+        {
+          "hour": 0,
+          "state": "match"
+        },
+        {
+          "hour": 1,
+          "state": "match"
+        },
+        {
+          "hour": 2,
+          "state": "match"
+        },
+        {
+          "hour": 3,
+          "state": "match"
+        },
+        {
+          "hour": 4,
+          "state": "match"
+        },
+        {
+          "hour": 5,
+          "state": "match"
+        },
+        {
+          "hour": 6,
+          "state": "match"
+        },
+        {
+          "hour": 7,
+          "state": "match"
+        },
+        {
+          "hour": 8,
+          "state": "match"
+        },
+        {
+          "hour": 9,
+          "state": "match"
+        },
+        {
+          "hour": 10,
+          "state": "match"
+        },
+        {
+          "hour": 11,
+          "state": "match"
+        },
+        {
+          "hour": 12,
+          "state": "match"
+        },
+        {
+          "hour": 13,
+          "state": "match"
+        },
+        {
+          "hour": 14,
+          "state": "match"
+        },
+        {
+          "hour": 15,
+          "state": "match"
+        },
+        {
+          "hour": 16,
+          "state": "match"
+        },
+        {
+          "hour": 17,
+          "state": "match"
+        },
+        {
+          "hour": 18,
+          "state": "match"
+        },
+        {
+          "hour": 19,
+          "state": "match"
+        },
+        {
+          "hour": 20,
+          "state": "match"
+        },
+        {
+          "hour": 21,
+          "state": "match"
+        },
+        {
+          "hour": 22,
+          "state": "match"
+        },
+        {
+          "hour": 23,
+          "state": "match"
+        }
+      ],
+      "points_match": 24,
+      "points_mismatch": 0,
+      "points_not_shown": 0,
+      "reason": null,
+      "state": "match"
+    },
+    "max": {
+      "display_decimals": 0,
+      "reason": null,
+      "state": "match",
+      "value": "25"
+    },
+    "min": {
+      "display_decimals": 0,
+      "reason": null,
+      "state": "match",
+      "value": "16"
+    },
+    "name": {
+      "reason": null,
+      "state": "match"
+    },
+    "request_side": {
+      "status": "match",
+      "violations": []
+    }
+  },
+  "flags": [],
+  "l1": {
+    "bytes": {
+      "css": 4692,
+      "html": 1557,
+      "js": 4404,
+      "total": 10653
+    },
+    "palette_top8": [
+      {
+        "bin_index": 20,
+        "lab": {
+          "L": 12.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.5390625
+      },
+      {
+        "bin_index": 56,
+        "lab": {
+          "L": 37.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.3248046875
+      },
+      {
+        "bin_index": 50,
+        "lab": {
+          "L": 37.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.08720703125
+      },
+      {
+        "bin_index": 92,
+        "lab": {
+          "L": 62.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.02666015625
+      },
+      {
+        "bin_index": 86,
+        "lab": {
+          "L": 62.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.0083984375
+      },
+      {
+        "bin_index": 14,
+        "lab": {
+          "L": 12.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.00703125
+      },
+      {
+        "bin_index": 122,
+        "lab": {
+          "L": 87.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 0.00263671875
+      },
+      {
+        "bin_index": 93,
+        "lab": {
+          "L": 62.5,
+          "a": 18.333333333333314,
+          "b": 18.333333333333314
+        },
+        "weight": 0.001953125
+      }
+    ],
+    "structure": {
+      "css_rules": 42,
+      "dom_depth": 10,
+      "dom_nodes": 40,
+      "js_bytes_present": true
+    },
+    "visual": {
+      "brightness": 59.507134472656254,
+      "colorfulness": 20.916987157099975,
+      "contrast": 28.90035044538386,
+      "frame_change": {
+        "max": 0.0,
+        "median": 0.0
+      },
+      "whitespace_ratio": 0.4763671875
+    }
+  },
+  "slot_index": 3,
+  "state": "valid",
+  "telemetry": {
+    "completion_tokens": 4408,
+    "cost_usd": null,
+    "prompt_tokens": 383,
+    "request_id": null,
+    "total_tokens": 4791,
+    "wall_ms": 119547
+  }
+}

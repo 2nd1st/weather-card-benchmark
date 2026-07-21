@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "进度",
+    "description": "覆盖看板:各臂、各 effort 上「计划了什么」对照「跑出来了什么」,并如实标出中国模型的缺口。"
+  },
+  "title": "覆盖度 —— 计划 vs 落地",
+  "intro": "每一个「模型 × effort × 臂」都对照真实落地数据。批次是增量上线的 —— 这块板子如实画出「已有什么、还缺什么」。",
+  "asOf": "数据截至",
+  "summary": {
+    "aria": "覆盖度概览",
+    "landedCaption": "已落地 · 占计划 {planned} 席的 {pct}%",
+    "validSlots": "已采集 {n} 个有效槽位"
+  },
+  "totals": {
+    "aria": "覆盖度总计",
+    "planned": "计划",
+    "landed": "已落地",
+    "partial": "部分",
+    "gap": "缺口",
+    "paused": "暂停",
+    "validSlots": "有效槽位"
+  },
+  "china": {
+    "headline": "中国模型:官方 API 还有 {apiMissing} 个席位没跑,{zeroFamilies} 个家族目前零数据。",
+    "body": "这是我们最想补上的缺口。这里每一个数字都由计划表对照真实落地数据算出,绝不是手写的 —— 点开下面任意一个缺口格子,就能自己出 key 把它跑出来。",
+    "families": "计划内家族",
+    "apiSeats": "官方 api 空席",
+    "zeroData": "零数据家族",
+    "landed": "已有数据格"
+  },
+  "status": {
+    "landed": "已落地",
+    "partial": "部分",
+    "attempted": "跑过但空",
+    "missing": "缺失",
+    "paused": "暂停"
+  },
+  "statusDef": {
+    "landed": "每个变体都有 ≥1 个有效槽位",
+    "partial": "有有效槽位,但不是每个变体都有",
+    "attempted": "config 已存在,但零有效槽位",
+    "missing": "还没有 config",
+    "paused": "计划内,但在 matrix 里被关掉"
+  },
+  "filter": {
+    "show": "显示",
+    "all": "全部",
+    "gaps": "仅缺口",
+    "landedOnly": "仅已落地",
+    "searchPlaceholder": "搜索模型…",
+    "searchAria": "按模型 id 搜索",
+    "clearSearch": "清空搜索",
+    "noMatch": "没有模型匹配当前视图。",
+    "models": "{n} 个模型"
+  },
+  "empty": {
+    "title": "尚未加载覆盖计划",
+    "message": "production matrix 和 harness plan 的种子文件都不存在,暂时没有可绘制的内容。"
+  },
+  "cost": {
+    "title": "成本参考",
+    "subtitle": "构建本数据集时实测的每次调用美元区间。一个 config = N 个有效槽位 × 2 个提示变体。",
+    "family": "家族",
+    "arm": "臂",
+    "range": "每次调用 USD",
+    "basis": "依据",
+    "note": "备注",
+    "free": "订阅制 / 零成本",
+    "disclaimer": "实测区间 —— 随 effort 档位差异极大,仅作预算参考,并非报价。"
+  },
+  "tray": {
+    "count": "已选 {n} 格",
+    "calls": "约 {calls} 次调用",
+    "clear": "清空",
+    "go": "估算并贡献 →",
+    "hint": "点击任意「缺失」或「跑过但空」的格子,即可加入一个贡献批次。"
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/probes.schema.json",
+  "title": "probes.json",
+  "description": "Per-batch L4 behavioral-probe + network-whitelist results (scheme §6). Records, per config: contract-IN probes (three-valued pass/indeterminate/fail — error-state language-independent verdict + parameter-correctness URL serial assertion), network-whitelist violations (the exactly-one initial document URL + same-origin GET /api/om/forecast /api/om/archive policy; ws/wss blocked; service worker + browser cache disabled; data:/blob: legal; everything else = violation+blocked), contract-OUT neutral observations (observed/not-observed/n-a, NOT in the pass rate), plus the effort-parameter-reached-API probe (MODEL-MATRIX §3 warning: the configured effort/thinking parameter may silently NOT reach the vendor API) and served_model verification. JUDGMENT CALL (flagged): scheme §6 fixes the probe SEMANTICS and the three verdict vocabularies but not the JSON shape; the object layout below is this contract's design. probes.json is OBSERVATIONAL (screenshots, timings, some non-deterministic) and is EXCLUDED from every verify rehash (scheme §0). schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. Vocabularies are LAW (scheme §6): contract-in verdict = {pass,indeterminate,fail}; contract-out observation = {observed,not-observed,n-a}. effort_reached_api and served_model verdicts are this contract's design (flagged). No decimal-string discipline needed: probes.json never enters a verify hash.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "network_whitelist", "configs"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1, "description": "Owning batch id."},
+    "network_whitelist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initial_document_url", "allowed_api_endpoints", "policy"],
+      "description": "The frozen network policy applied during shoot (scheme §6 网络管控). Declarative record of the allowlist; per-config outcomes are under configs[].network.",
+      "properties": {
+        "initial_document_url": {"type": "string", "minLength": 1, "description": "The exactly-one whitelisted harness initial document URL (scheme §6: '恰好一次 harness 初始文档 URL')."},
+        "allowed_api_endpoints": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "string", "enum": ["/api/om/forecast", "/api/om/archive"]},
+          "description": "The two same-origin GET endpoints allowed (exact path match), scheme §6."
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ws_wss", "service_worker", "browser_cache", "data_blob", "other_requests", "redirect_check"],
+          "description": "Fixed policy switches (scheme §6). Constant across the batch; recorded for auditability.",
+          "properties": {
+            "ws_wss": {"type": "string", "enum": ["blocked"], "description": "ws/wss explicitly intercepted."},
+            "service_worker": {"type": "string", "enum": ["disabled"]},
+            "browser_cache": {"type": "string", "enum": ["disabled"]},
+            "data_blob": {"type": "string", "enum": ["allowed"], "description": "data:/blob: are legal."},
+            "other_requests": {"type": "string", "enum": ["violation-blocked"], "description": "Every other request (incl. same-origin static assets) is a violation and blocked."},
+            "redirect_check": {"type": "string", "enum": ["per-hop"], "description": "Redirects validated hop-by-hop."}
+          }
+        }
+      }
+    },
+    "configs": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "description": "One probe record per config (persisted manifest config_ids order; use sites never re-sort).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["config_id", "contract_in", "network", "contract_out", "effort_reached_api", "served_model"],
+        "properties": {
+          "config_id": {"type": "string", "minLength": 1, "description": "Config id; in manifest.config_ids."},
+          "contract_in": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["error_state", "param_correctness"],
+            "description": "Contract-IN probes; verdicts feed the pass rate (scheme §6).",
+            "properties": {
+              "error_state": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["verdict", "screenshot_ref", "note"],
+                "description": "Error-injection behavior, language-independent three-valued (scheme §6): pass = non-blank ∧ NO canary data shown ∧ error-vocab hit; indeterminate = non-blank ∧ no canary ∧ error-vocab MISS (screenshot attached); fail = blank OR fabricated data presented.",
+                "properties": {
+                  "verdict": {"$ref": "#/$defs/contractInVerdict"},
+                  "screenshot_ref": {"type": ["string", "null"], "description": "Path to the attached screenshot (required evidence for indeterminate per scheme §6); null when not applicable."},
+                  "note": {"type": ["string", "null"], "description": "Versioned reason/observation note, or null."}
+                },
+                "allOf": [
+                  {
+                    "$comment": "scheme §6: indeterminate = non-blank ∧ no canary ∧ error-vocab MISS (附截图). The screenshot is MANDATORY evidence, so screenshot_ref must be a non-null string when verdict=indeterminate.",
+                    "if": {"required": ["verdict"], "properties": {"verdict": {"const": "indeterminate"}}},
+                    "then": {"properties": {"screenshot_ref": {"type": "string", "minLength": 1}}}
+                  }
+                ]
+              },
+              "param_correctness": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["verdict", "url_assertions", "note"],
+                "description": "Parameter-correctness = URL serial assertion (scheme §6). If the request-side extraction is ambiguous/not-found → indeterminate.",
+                "properties": {
+                  "verdict": {"$ref": "#/$defs/contractInVerdict"},
+                  "url_assertions": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "description": "Per-key assertion over the contract query (endpoint, lat/lon ±0.01, start/end_date, daily/hourly field sets, timezone=UTC, temperature_unit=celsius).",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["key", "expected", "actual", "ok"],
+                      "properties": {
+                        "key": {"type": "string", "minLength": 1},
+                        "expected": {"type": ["string", "null"]},
+                        "actual": {"type": ["string", "null"]},
+                        "ok": {"type": "boolean"}
+                      }
+                    }
+                  },
+                  "note": {"type": ["string", "null"]}
+                }
+              }
+            }
+          },
+          "network": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["violations"],
+            "description": "Network-whitelist outcome for this config's renders. Any off-allowlist request (incl. same-origin static assets, ws/wss, non-exact API paths, disallowed redirect hops) is a violation and was blocked; presence of any violation also raises the 'network-violation' slot flag (scheme §6, §7).",
+            "properties": {
+              "violations": {
+                "type": "array",
+                "uniqueItems": true,
+                "description": "Blocked off-allowlist requests. Empty = clean.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["url", "method", "kind", "reason", "action"],
+                  "properties": {
+                    "url": {"type": "string", "minLength": 1, "description": "Requested URL (or ws/wss/data target)."},
+                    "method": {"type": ["string", "null"], "description": "HTTP method if applicable, else null (e.g. ws/wss)."},
+                    "kind": {"type": "string", "enum": ["off-origin", "same-origin-static", "non-exact-api-path", "non-get-api", "ws-wss", "service-worker", "disallowed-redirect-hop", "other"], "description": "Violation class."},
+                    "reason": {"type": ["string", "null"], "description": "Versioned reason detail, or null."},
+                    "action": {"type": "string", "enum": ["blocked"], "description": "Always blocked (scheme §6)."}
+                  }
+                }
+              }
+            }
+          },
+          "contract_out": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["loading_intermediate", "in_page_race", "console_errors", "no_js_fallback"],
+            "description": "Contract-OUT neutral observations (scheme §6). observed/not-observed/n-a; NEVER enter the pass rate.",
+            "properties": {
+              "loading_intermediate": {"$ref": "#/$defs/contractOutObs", "description": "Loading intermediate state (?delay=3000, t=1s frame)."},
+              "in_page_race": {"$ref": "#/$defs/contractOutObs", "description": "In-page race — only run when a switch control is detected (else n-a)."},
+              "console_errors": {"$ref": "#/$defs/contractOutObs", "description": "Console errors observed during render."},
+              "no_js_fallback": {"$ref": "#/$defs/contractOutObs", "description": "No-JS fallback behavior."}
+            }
+          },
+          "effort_reached_api": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["verdict", "requested_effort", "observed_effort", "note"],
+            "description": "Effort-parameter-reached-API probe (MODEL-MATRIX §3 WARNING): verifies the configured effort/thinking parameter was actually transmitted to and accepted by the vendor API, rather than silently dropped by an SDK/proxy/gateway. JUDGMENT CALL (flagged): shape is this contract's design.",
+            "properties": {
+              "verdict": {
+                "type": "string",
+                "enum": ["reached", "not-reached", "indeterminate", "n-a"],
+                "description": "reached = effort provably present in the on-wire request / echoed by the API; not-reached = provably absent; indeterminate = no observable signal either way; n-a = config.effort is null (model has no effort axis)."
+              },
+              "requested_effort": {"type": ["string", "null"], "description": "The effort value config.json set (opaque per-vendor string), or null."},
+              "observed_effort": {"type": ["string", "null"], "description": "Effort value observed on the wire / in the API echo, or null when unobservable."},
+              "note": {"type": ["string", "null"], "description": "Versioned reason/evidence note, or null."}
+            }
+          },
+          "served_model": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["verdict", "requested_model", "served_model", "note"],
+            "description": "Served-model verification (BRIEF R3/R8): the model id the vendor reports as actually serving vs the requested model_id. A mismatch is a RECORDED confound, never silently corrected (scheme §10). Mirrors config.json.served_model; here as the probe evidence.",
+            "properties": {
+              "verdict": {
+                "type": "string",
+                "enum": ["match", "mismatch", "unknown"],
+                "description": "match = served == requested; mismatch = differs (recorded confound); unknown = vendor exposes no served-model signal."
+              },
+              "requested_model": {"type": "string", "minLength": 1, "description": "config.json.model_id."},
+              "served_model": {"type": ["string", "null"], "description": "Vendor-reported served model id, or null when no signal."},
+              "note": {"type": ["string", "null"]}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "contractInVerdict": {
+      "type": "string",
+      "enum": ["pass", "indeterminate", "fail"],
+      "description": "Contract-IN three-valued verdict (scheme §6). Feeds the pass rate."
+    },
+    "contractOutObs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation", "note"],
+      "description": "Contract-OUT neutral observation (scheme §6): observed / not-observed / n-a. Never in the pass rate.",
+      "properties": {
+        "observation": {"type": "string", "enum": ["observed", "not-observed", "n-a"]},
+        "note": {"type": ["string", "null"], "description": "Optional evidence/screenshot ref or reason, or null."}
+      }
+    }
+  }
+}

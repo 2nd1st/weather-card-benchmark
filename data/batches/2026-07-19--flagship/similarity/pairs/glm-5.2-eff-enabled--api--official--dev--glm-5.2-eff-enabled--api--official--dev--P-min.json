@@ -1,0 +1,109 @@
+{
+ "batch_id": "2026-07-19--unified",
+ "channels": [
+  "v-phash",
+  "v-dhash",
+  "v-color",
+  "v-palette",
+  "v-layout",
+  "v-edge",
+  "v-ssim",
+  "c-shingle",
+  "c-winnow",
+  "c-feature",
+  "c-ast-js",
+  "c-css-prop",
+  "c-ncd",
+  "d-geom",
+  "d-text",
+  "d-pqgram",
+  "d-tagpath"
+ ],
+ "config_a": "glm-5.2-eff-enabled--api--official--dev",
+ "config_b": "glm-5.2-eff-enabled--api--official--dev",
+ "kind": "self",
+ "pairs": [
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.7202510917030567,
+    "v_ssim_raw": 0.6648508422614197
+   },
+   "s": {
+    "c-ast-js": 0.9675917901787011,
+    "c-css-prop": 0.9423150607086699,
+    "c-feature": 0.42857142857142855,
+    "c-ncd": 0.2797489082969433,
+    "c-shingle": 0.31073281215752174,
+    "c-winnow": 0.3294367693942614,
+    "d-geom": 0.9122256376293094,
+    "d-pqgram": 0.45048543689320386,
+    "d-tagpath": 0.125,
+    "d-text": 0.0,
+    "v-color": 0.9992681472107603,
+    "v-dhash": 0.5546875,
+    "v-edge": 0.8941191895089624,
+    "v-layout": 0.9054610226704054,
+    "v-palette": 0.9931205677508674,
+    "v-phash": 0.59375,
+    "v-ssim": 0.8324254211307098
+   },
+   "slot_a": 0,
+   "slot_b": 2
+  },
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.7762666666666667,
+    "v_ssim_raw": 0.4627294609861159
+   },
+   "s": {
+    "c-ast-js": 0.9781809492265354,
+    "c-css-prop": 0.8762210955946829,
+    "c-feature": 0.47101449275362317,
+    "c-ncd": 0.22373333333333334,
+    "c-shingle": 0.2704120898341846,
+    "c-winnow": 0.2564632885211996,
+    "d-geom": 0.8404314122969332,
+    "d-pqgram": 0.496513249651325,
+    "d-tagpath": 0.12121212121212122,
+    "d-text": 0.0,
+    "v-color": 0.9998741829896781,
+    "v-dhash": 0.4921875,
+    "v-edge": 0.812749854516766,
+    "v-layout": 0.7066020395335387,
+    "v-palette": 0.007382951525151553,
+    "v-phash": 0.5,
+    "v-ssim": 0.731364730493058
+   },
+   "slot_a": 0,
+   "slot_b": 3
+  },
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.7725333333333333,
+    "v_ssim_raw": 0.5066132329459615
+   },
+   "s": {
+    "c-ast-js": 0.9718249305449113,
+    "c-css-prop": 0.8531619318158,
+    "c-feature": 0.38323353293413176,
+    "c-ncd": 0.2274666666666667,
+    "c-shingle": 0.2561815970814755,
+    "c-winnow": 0.24880838894184937,
+    "d-geom": 0.9169117746221928,
+    "d-pqgram": 0.4694533762057878,
+    "d-tagpath": 0.13157894736842105,
+    "d-text": 0.0,
+    "v-color": 0.9988953968434009,
+    "v-dhash": 0.5625,
+    "v-edge": 0.7616675727311283,
+    "v-layout": 0.729998671897082,
+    "v-palette": 0.05507835640719648,
+    "v-phash": 0.53125,
+    "v-ssim": 0.7533066164729807
+   },
+   "slot_a": 2,
+   "slot_b": 3
+  }
+ ],
+ "variant": "P-min"
+}

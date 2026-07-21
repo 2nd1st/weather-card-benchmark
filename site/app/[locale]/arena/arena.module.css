@@ -1,0 +1,464 @@
+/* B1 arena/gate/landing surfaces. Global base classes (btn, seg, choice, pair,
+   blindframe, panelbox, exhibit, halo, gate-*) come from app/globals.css (A2).
+   This module scopes only the pieces A2 did not ship: the blind pair viewport,
+   the post-vote reveal, the community-preference leaderboard track, the mobile
+   sticky vote bar, the unlock/share moments, and the featured strip.
+   Violet (--acc-2) is used only for community/vote elements (spec §5). */
+
+/* ---------------- blind pair stage ---------------- */
+.stage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  justify-content: center;
+}
+.stageCard {
+  position: relative;
+  width: 100%;
+  /* scale with the pane column — a fixed 560 cap made the first screen read
+     tiny on large displays */
+  max-width: min(700px, 100%);
+  margin-inline: auto;
+  padding: 12px;
+}
+.viewport {
+  position: relative;
+  width: 100%;
+  /* measured render viewport: cards + shots are all 1280×800 (runner VIEWPORT).
+     The live ScaledExhibit fills this box edge-to-edge; the static shot below
+     shares the same aspect so both modes look identical in shape. */
+  aspect-ratio: 1280 / 800;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+}
+.viewport iframe {
+  /* geometry (1280×800 + scale transform) comes from ScaledExhibit inline styles. */
+  border: 0;
+  background: transparent;
+}
+/* mobile gate static shot (spec §4.0): the recorded 1280×800 shot at the same
+   aspect as the live frame, non-interactive. */
+.shotImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(147, 160, 184, 0.06) 50%, transparent 80%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
+.tapload {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  font: 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  background: radial-gradient(70% 60% at 50% 42%, rgba(55, 214, 228, 0.06), transparent 72%), var(--bg-elev);
+}
+.tapload:hover { color: var(--ink-dim); }
+.frameError {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  text-align: center;
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* "identity hidden" promoted to a compact lock badge (brief C2) — stronger
+   contrast than the base blind-tag ink-faint, so blindness reads as the point. */
+.lockBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(124, 140, 248, 0.08);
+  font: 10px var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.lockGlyph {
+  width: 10px;
+  height: 10px;
+  color: var(--acc-2);
+  flex: none;
+}
+
+/* render-failed / no-output chip (brief C1): a live frame that loaded but never
+   painted — kept unobtrusive so a blank card never reads as site breakage. */
+.noOutput {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0 auto 10px;
+  width: max-content;
+  max-width: calc(100% - 20px);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(11, 14, 20, 0.82);
+  backdrop-filter: blur(4px);
+  font: 10px var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ---------------- notices ---------------- */
+.notice {
+  margin-top: 12px;
+  font: 11px var(--font-mono);
+  color: var(--warn);
+  text-align: center;
+}
+.dwellHint {
+  margin-top: 12px;
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+/* ---------------- reveal ---------------- */
+.reveal { margin-top: 18px; padding: 18px; }
+.revealHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 13px var(--font-mono);
+  margin-bottom: 14px;
+}
+.revealHead .spark { color: var(--acc); }
+.revealRows { display: flex; flex-direction: column; gap: 8px; }
+.rrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 11px 14px;
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+}
+.rrow.picked {
+  border-color: rgba(55, 214, 228, 0.5);
+  background: linear-gradient(90deg, rgba(55, 214, 228, 0.08), var(--bg-elev) 55%);
+  box-shadow: 0 0 18px rgba(55, 214, 228, 0.07);
+}
+/* frozen card thumbnail beside each revealed identity (brief D): the pick keeps
+   a face. Non-interactive (pointer-events:none); shot img or mini content-fit. */
+.rthumb {
+  position: relative;
+  width: 116px;
+  aspect-ratio: 16 / 10;
+  flex: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.rrow.picked .rthumb { border-color: rgba(55, 214, 228, 0.45); }
+.rthumbImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+.slotLetter { font: 700 12px var(--font-mono); color: var(--ink-faint); width: 18px; flex: none; }
+.rrow.picked .slotLetter { color: var(--acc); }
+.rname { font: 600 12.5px var(--font-mono); }
+.rname .eff { color: var(--ink-faint); font-weight: 400; }
+.youpick {
+  margin-inline-start: auto;
+  font: 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+.revealActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.revealCount { font: 11px var(--font-mono); color: var(--ink-faint); }
+.revealCount b { color: var(--acc); font-weight: 600; }
+
+/* ---------------- share sheet ---------------- */
+.shareSheet {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.shareUrlRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.shareUrl {
+  flex: 1 1 240px;
+  min-width: 0;
+  font: 11.5px var(--font-mono);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------- arena head ---------------- */
+.arenaHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.arenaHeadControls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.tally { font: 11px var(--font-mono); color: var(--ink-faint); }
+.tally b { color: var(--acc); font-weight: 600; }
+
+/* ---------------- community preference leaderboard ---------------- */
+.board { margin-top: 26px; padding: 18px; }
+.boardHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.boardHead h3 { font: 600 13px var(--font-mono); letter-spacing: 0.02em; color: var(--ink); }
+/* one contrast step up from the base ink-faint so the section reads as active
+   information, not a disabled panel (brief E). */
+.boardFraming { font: 11px var(--font-mono); color: var(--ink-dim); margin-bottom: 4px; line-height: 1.7; }
+.boardGameability { font: 10.5px var(--font-mono); color: var(--ink-dim); margin-bottom: 16px; line-height: 1.7; }
+.orderToggle { display: inline-flex; }
+/* keep every segment label on one line so the control never reads as broken
+   (arena audit P1); on narrow screens the two groups stack instead of cramming. */
+.orderToggle button { white-space: nowrap; }
+@media (max-width: 700px) {
+  .boardHead { align-items: stretch; }
+  .orderToggle { flex-wrap: wrap; gap: 8px; }
+}
+
+.prow {
+  display: grid;
+  grid-template-columns: minmax(140px, 260px) 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+.prow:first-of-type { border-top: 0; }
+.pl {
+  font: 11.5px var(--font-mono);
+  color: var(--ink-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pl .eff { color: var(--ink-faint); }
+.pl .arm { color: var(--ink-faint); }
+
+/* prefRate track on a fixed [0,1] axis with a Wilson CI interval */
+.track { position: relative; height: 16px; }
+.track::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 7.5px;
+  height: 1px;
+  background: var(--line);
+}
+.track::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 3px;
+  width: 1px;
+  height: 10px;
+  background: var(--line-strong);
+}
+.ci {
+  position: absolute;
+  top: 6.5px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(124, 140, 248, 0.35), rgba(55, 214, 228, 0.35));
+}
+.dot {
+  position: absolute;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--acc), var(--acc-2));
+  box-shadow: 0 0 10px rgba(55, 214, 228, 0.5);
+  transform: translateX(-50%);
+}
+.pnums {
+  font: 10.5px var(--font-mono);
+  color: var(--ink-dim);
+  text-align: end;
+  white-space: nowrap;
+}
+.pnums b { color: var(--ink); font-weight: 600; }
+
+/* insufficient-votes group collapsed behind a one-line summary toggle (brief E) */
+.insufficientBlock {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.insufficientToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: start;
+  font: 11px var(--font-mono);
+  color: var(--ink-dim);
+  padding: 4px 0;
+  cursor: pointer;
+}
+.insufficientToggle:hover { color: var(--ink); }
+.insufficientAction {
+  margin-inline-start: auto;
+  color: var(--acc-2);
+  border-bottom: 1px dotted rgba(124, 140, 248, 0.5);
+}
+.insufficientBlock .prow:first-of-type { border-top: 1px solid var(--line); margin-top: 8px; }
+.prowGrey { opacity: 0.6; }
+.prowGrey .pl { color: var(--ink-faint); }
+.greyNum { font: 10.5px var(--font-mono); color: var(--ink-faint); text-align: end; }
+
+.boardFoot {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font: 10.5px var(--font-mono);
+  color: var(--ink-faint);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.boardFoot a { color: var(--ink-dim); border-bottom: 1px dotted var(--line-strong); }
+.boardFoot a:hover { color: var(--acc); }
+
+/* ---------------- unlock moment (gate) ---------------- */
+.unlock { display: flex; flex-direction: column; gap: 14px; }
+.unlockHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 16px var(--font-sans);
+  letter-spacing: -0.01em;
+}
+.unlockHead .spark { color: var(--acc); font-size: 18px; }
+.unlockBody { color: var(--ink-dim); font-size: 13px; max-width: 60ch; line-height: 1.7; }
+.unlockActions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+
+/* ---------------- featured strip (landing) ---------------- */
+.featuredScroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: var(--gap);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 6px;
+}
+@media (min-width: 900px) {
+  .featuredScroll { grid-template-columns: repeat(6, 1fr); grid-auto-flow: row; }
+}
+.featuredScroll > * { min-width: 0; }
+
+/* ---------------- vote controls ---------------- */
+/* desktop: four equal-width controls in one row (brief C3). The container no
+   longer borrows global `.choices` (which sized Tie/Both-bad as second-class
+   flex items) — it owns an equal 4-up grid, so every control is the same width
+   AND height; the `.choice` button skin still comes from globals.css. */
+.choicesInline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+  align-items: stretch;
+}
+
+/* ---------------- mobile: stack + sticky 2×2 vote bar ---------------- */
+.stickyBar { display: none; }
+@media (max-width: 700px) {
+  .stage {
+    grid-template-columns: 1fr;
+    /* reserve a little room below the cards so the sticky bar reads as a
+       contained action row, not a lid over Card B (brief A). */
+    padding-bottom: 8px;
+  }
+  .stageCard { max-width: none; }
+  /* .viewport keeps the 1280/800 measured aspect on mobile too, so the scaled
+     live frame and the static shot stay identical in shape at ≤700px. */
+
+  /* the inline choice row is replaced by a sticky bottom bar on mobile — a
+     contained 2×2 grid (brief A): "Both bad" is no longer clipped and the bar
+     never runs past the viewport gutter. */
+  .choicesInline { display: none; }
+  .stickyBar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+    margin: 16px 0 0;
+    background: rgba(11, 14, 20, 0.94);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .stickyBar button {
+    padding: 13px 8px;
+    font: 600 12.5px var(--font-mono);
+    color: var(--ink);
+    background: var(--panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+  }
+  .stickyBar button:disabled { opacity: 0.45; }
+  .stickyBar button.alt { border-color: rgba(124, 140, 248, 0.55); color: var(--acc-2); }
+  .stickyBar button.mute { color: var(--ink-dim); background: transparent; }
+  /* no-winner verdicts keep their hues on the mobile sticky bar too */
+  .stickyBar button.tie { border-color: rgba(59, 217, 127, 0.55); color: var(--good); background: transparent; }
+  .stickyBar button.reject { border-color: rgba(240, 100, 122, 0.55); color: var(--bad); background: transparent; }
+
+  /* reveal thumbnails shrink so identity rows stay comfortable on narrow screens */
+  .rthumb { width: 88px; }
+}

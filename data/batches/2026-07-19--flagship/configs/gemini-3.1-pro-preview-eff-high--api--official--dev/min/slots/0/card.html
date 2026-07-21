@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>Weather Card</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            height: 800px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loading, #error {
+            font-size: 2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        #error {
+            display: none;
+            color: #ff7675;
+            background: rgba(255, 118, 117, 0.1);
+            padding: 20px 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 118, 117, 0.3);
+        }
+
+        .card {
+            width: 1000px;
+            height: 650px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 50px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            font-weight: 600;
+            text-transform: capitalize;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .date {
+            font-size: 1.5em;
+            color: #b2bec3;
+            font-weight: 400;
+        }
+
+        .main-weather {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-grow: 1;
+        }
+
+        .condition {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .condition .emoji {
+            font-size: 5em;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+        }
+
+        .condition .text {
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .temps {
+            display: flex;
+            gap: 50px;
+        }
+
+        .temp-item {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            border-radius: 20px;
+            min-width: 120px;
+        }
+
+        .temp-item .label {
+            font-size: 1.1em;
+            color: #b2bec3;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .temp-item .value {
+            font-size: 3.5em;
+            font-weight: 700;
+        }
+
+        .temp-item .value.max { color: #ff7675; }
+        .temp-item .value.min { color: #74b9ff; }
+
+        .hourly-section {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .hourly-title {
+            font-size: 1.2em;
+            color: #b2bec3;
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hourly-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.3) rgba(0,0,0,0.1);
+        }
+
+        .hourly-scroll::-webkit-scrollbar { height: 8px; }
+        .hourly-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        .hourly-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        .hourly-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+
+        .hour-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 80px;
+            padding: 15px 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .hour-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hour-card .time {
+            font-size: 1.1em;
+            color: #dfe6e9;
+        }
+
+        .hour-card .temp {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading">Loading weather data...</div>
+    <div id="error">Unable to load weather data. Please check your connection and parameters.</div>
+
+    <div class="card" id="weather-card">
+        <div class="header">
+            <h1 id="loc-name"></h1>
+            <div class="date" id="loc-date"></div>
+        </div>
+
+        <div class="main-weather">
+            <div class="condition">
+                <span class="emoji" id="cond-emoji"></span>
+                <span class="text" id="cond-text"></span>
+            </div>
+            <div class="temps">
+                <div class="temp-item">
+                    <div class="label">Min</div>
+                    <div class="value min" id="temp-min"></div>
+                </div>
+                <div class="temp-item">
+                    <div class="label">Max</div>
+                    <div class="value max" id="temp-max"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hourly-section">
+            <div class="hourly-title">Hourly Temperatures</div>
+            <div class="hourly-scroll" id="hourly-container"></div>
+        </div>
+    </div>
+
+    <script>
+        function getWeatherDescription(code) {
+            const map = {
+                0: {t: 'Clear sky', e: '☀️'},
+                1: {t: 'Mainly clear', e: '🌤️'},
+                2: {t: 'Partly cloudy', e: '⛅'},
+                3: {t: 'Overcast', e: '☁️'},
+                45: {t: 'Fog', e: '🌫️'},
+                48: {t: 'Depositing rime fog', e: '🌫️'},
+                51: {t: 'Light drizzle', e: '🌧️'},
+                53: {t: 'Moderate drizzle', e: '🌧️'},
+                55: {t: 'Dense drizzle', e: '🌧️'},
+                56: {t: 'Light freezing drizzle', e: '🌧️❄️'},
+                57: {t: 'Dense freezing drizzle', e: '🌧️❄️'},
+                61: {t: 'Slight rain', e: '🌦️'},
+                63: {t: 'Moderate rain', e: '🌧️'},
+                65: {t: 'Heavy rain', e: '🌧️'},
+                66: {t: 'Light freezing rain', e: '🌧️❄️'},
+                67: {t: 'Heavy freezing rain', e: '🌧️❄️'},
+                71: {t: 'Slight snow fall', e: '🌨️'},
+                73: {t: 'Moderate snow fall', e: '❄️'},
+                75: {t: 'Heavy snow fall', e: '❄️'},
+                77: {t: 'Snow grains', e: '❄️'},
+                80: {t: 'Slight rain showers', e: '🌦️'},
+                81: {t: 'Moderate rain showers', e: '🌧️'},
+                82: {t: 'Violent rain showers', e: '⛈️'},
+                85: {t: 'Slight snow showers', e: '🌨️'},
+                86: {t: 'Heavy snow showers', e: '❄️'},
+                95: {t: 'Thunderstorm', e: '🌩️'},
+                96: {t: 'Thunderstorm (slight hail)', e: '⛈️'},
+                99: {t: 'Thunderstorm (heavy hail)', e: '⛈️'}
+            };
+            return map[code] || {t: 'Unknown', e: '❓'};
+        }
+
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('weather-card').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+
+        async function init() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const lat = urlParams.get('lat') || '52.52';
+                const lon = urlParams.get('lon') || '13.405';
+                const name = urlParams.get('name') || 'Berlin';
+                let reqDate = urlParams.get('date');
+
+                const now = new Date();
+                const yyyy = now.getUTCFullYear();
+                const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+                const dd = String(now.getUTCDate()).padStart(2, '0');
+                const todayUTC = `${yyyy}-${mm}-${dd}`;
+
+                if (!reqDate) {
+                    reqDate = todayUTC;
+                }
+
+                const endpoint = reqDate < todayUTC ? '/api/om/archive' : '/api/om/forecast';
+
+                const apiUrl = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${reqDate}&end_date=${reqDate}`;
+
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                if (!data.daily || !data.daily.time || data.daily.time.length === 0) {
+                    throw new Error('Missing daily data');
+                }
+
+                const maxT = data.daily.temperature_2m_max[0];
+                const minT = data.daily.temperature_2m_min[0];
+                const wmoCode = data.daily.weather_code[0];
+
+                const weather = getWeatherDescription(wmoCode);
+
+                document.getElementById('loc-name').textContent = name;
+                document.getElementById('loc-date').textContent = reqDate;
+                
+                document.getElementById('cond-emoji').textContent = weather.e;
+                document.getElementById('cond-text').textContent = weather.t;
+                
+                document.getElementById('temp-max').textContent = maxT !== null ? `${maxT.toFixed(1)}°C` : '--';
+                document.getElementById('temp-min').textContent = minT !== null ? `${minT.toFixed(1)}°C` : '--';
+
+                const hourlyContainer = document.getElementById('hourly-container');
+                hourlyContainer.innerHTML = '';
+
+                if (data.hourly && data.hourly.time && data.hourly.temperature_2m) {
+                    for (let i = 0; i < data.hourly.time.length; i++) {
+                        const timeStr = data.hourly.time[i];
+                        const tempVal = data.hourly.temperature_2m[i];
+                        
+                        const hhmm = timeStr.substring(11, 16);
+                        
+                        const hourCard = document.createElement('div');
+                        hourCard.className = 'hour-card';
+                        
+                        const timeDiv = document.createElement('div');
+                        timeDiv.className = 'time';
+                        timeDiv.textContent = hhmm;
+                        
+                        const tempDiv = document.createElement('div');
+                        tempDiv.className = 'temp';
+                        tempDiv.textContent = tempVal !== null ? `${tempVal.toFixed(1)}°` : '--';
+                        
+                        hourCard.appendChild(timeDiv);
+                        hourCard.appendChild(tempDiv);
+                        
+                        hourlyContainer.appendChild(hourCard);
+                    }
+                }
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('weather-card').style.display = 'flex';
+
+            } catch (err) {
+                console.error(err);
+                showError();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

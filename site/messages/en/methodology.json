@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "Methodology — weather-card-benchmark",
+    "description": "How the site measures similarity, how votes are counted, the patch policy, provenance of every measurement session, and the zero-trust contribution path."
+  },
+  "title": "Methodology",
+  "lead": "One prompt, every model, the same weather fixture. Here is exactly how the numbers are produced, how community votes are counted, and what a patch is and is not.",
+  "onThisPage": "On this page",
+  "prompt": {
+    "title": "The task",
+    "intro": "Every card on this site was produced from exactly this text — no system prompt, no follow-up, no retry with hints. Both variants are handed to every model identically.",
+    "heading": "prompt (verbatim)",
+    "download": "download",
+    "note": "P-min is the bare task; P-q adds a short quality clause. Each manifest pins the sha256 of the bytes below."
+  },
+  "declarations": [
+    "Similarity metrics are measurements, not quality scores. The channels below quantify how alike two cards are — we don't convert that into a judgment of which model is better.",
+    "Community vote standings are a UI preference — which cards people prefer to look at. Vote counts are visible; they are not a model-capability benchmark.",
+    "Everything is deterministic and reproducible. Every batch is anchored to a manifest_hash you can recompute; the measured pixels are the exact pixels the algorithms read."
+  ],
+  "measure": {
+    "title": "How similarity is measured",
+    "body": "Each model draws a single-file HTML weather card from the same prompt against a frozen weather snapshot, rendered in a pinned Chromium at a fixed viewport and frozen virtual clock. Similarity is computed only between valid outputs, per pair, per channel — there is no composite score. The pipeline runs in four layers:",
+    "layers": [
+      {
+        "k": "L1",
+        "t": "single-card descriptors",
+        "d": "Per-card scalars: byte and DOM/CSS/JS structure, visual measures (colorfulness, brightness, contrast, whitespace, frame-change), and a fixed-grid Lab palette. Plus a versioned data-fidelity check against the snapshot."
+      },
+      {
+        "k": "L2",
+        "t": "similarity channels",
+        "d": "Visual (phash/dhash/color/palette/layout/edge/ssim), code (shingle/winnow/feature/ast-js/css-prop), and DOM (geom/text/pqgram) channels — each a distinct, frozen definition. No composite is computed or shown; a null pair stays null."
+      },
+      {
+        "k": "L3",
+        "t": "statistics",
+        "d": "Descriptive only, N is small (3–5 slots). Means and IQRs over valid pairs, self-consistency, LORO sensitivity, and one randomization paired test for prompt-variant sensitivity. Intervals are descriptive, not inferential."
+      },
+      {
+        "k": "L4",
+        "t": "behavior probes",
+        "d": "Contract-level pass/indeterminate/fail on network discipline and error handling, plus out-of-contract observed/not-observed notes (loading states, console errors, no-JS fallback)."
+      }
+    ],
+    "reproNote": "Each batch freezes both prompt hashes, the weather-snapshot hash, the city/date set, the render environment, and the pipeline commit into a manifest whose SHA-256 is the manifest_hash. Recompute it to verify — reproducibility is the point."
+  },
+  "patch": {
+    "title": "Patch policy",
+    "intro": "A broken model card may be hand-fixed so it renders, with an honest, visible note; the original is always preserved and served by default. Four invariants hold, without exception:",
+    "invariants": [
+      "A patch NEVER changes slot state, validCount, or any coverage status. A broken slot stays broken in every count; the patch only adds a viewable repaired rendering.",
+      "All metrics — similarity, fidelity, shot.webp, telemetry — derive from the ORIGINAL output. The card page states: \"metrics refer to the original output\".",
+      "Arena and every voting / preference surface serve ONLY the original card.html. Vote rows carry patched_served (always 0; an audit column).",
+      "The category enum is closed; the hard rule is \"a patch may only make the card render, never improve its content or design\". The stored unified diff makes this auditable."
+    ],
+    "listTitle": "Patches applied",
+    "listIntro": "Every patch in the data root is listed here — config, category, and a link to the exact original→patched diff — so the whole layer is auditable on one page.",
+    "empty": "No patches have been applied. Every card is served exactly as the model produced it.",
+    "cols": {
+      "config": "config",
+      "variant": "slot",
+      "category": "category",
+      "reason": "reason",
+      "diff": "diff"
+    }
+  },
+  "voting": {
+    "title": "How votes are counted",
+    "framing": "Community UI preference — which cards people prefer to look at; not a capability measure.",
+    "rules": [
+      "Bradley–Terry (a simple iterative MM fit) runs over pair votes only, per angle × variant.",
+      "A tie counts one half to each side.",
+      "both_bad is excluded from Bradley–Terry (otherwise it becomes a suppression lever) and reported separately as each config's bothBadRate — itself honest community data.",
+      "Gate votes (source=gate — the coerced unlock votes) are excluded from the default aggregation as the lowest-quality rows; they remain in the CSV export, labeled. Arena and share votes count.",
+      "prefRate carries a Wilson confidence interval; maxSingleVoterShare is shown for concentration transparency (anti-brigade sunlight).",
+      "A config is marked insufficient when it has fewer than 20 votes or fewer than 8 distinct voters — such rows carry no numbers and no position on any axis."
+    ],
+    "gameability": "Unauthenticated, localStorage-identity web votes — trivially gameable; treat as community signal, not measurement.",
+    "blind": "Votes are cast blind: identities never reach the browser before a vote is recorded (opaque single-use tokens, original HTML only, qualified-grade cards only).",
+    "exportLabel": "download the full votes CSV"
+  },
+  "contribute": {
+    "title": "Contributing runs — the zero-trust path",
+    "intro": "You can help fill coverage gaps by supplying an API key for the exact cells you pick. The key handling rules, verbatim:",
+    "rules": [
+      "Your API key stays in memory only — never persisted, never logged.",
+      "It is used solely for the runs you selected, then discarded.",
+      "The runner is open source; you can read exactly what it does.",
+      "Zero-trust alternative: run the batch locally and open a pull request — no key ever leaves your machine."
+    ],
+    "review": "A contributed run lands in the gallery immediately with an \"unreviewed community\" badge, and never enters the arena voting pool until a maintainer reviews it. Contributed output is committed to a community/<jobId> branch and never pushed to the default branch without human review.",
+    "linkLabel": "open the contribute page"
+  },
+  "provenance": {
+    "title": "Provenance — measurement sessions",
+    "intro": "Each batch is one frozen, append-only run against one fixture. Batches are provenance now, not a way to browse the gallery. Similarity numbers are only comparable within a single session — same fixture, same snapshot.",
+    "cols": {
+      "session": "session",
+      "date": "date",
+      "configs": "configs",
+      "variants": "variants",
+      "hash": "manifest_hash"
+    },
+    "summary": "{n, plural, one {# measurement session} other {# measurement sessions}}, newest first.",
+    "viewAll": "View all {n} sessions",
+    "viewLess": "Show fewer",
+    "copy": "copy",
+    "copied": "copied",
+    "empty": "No measurement sessions recorded in index.json."
+  },
+  "scheme": {
+    "title": "Full comparison scheme",
+    "note": "The frozen technical reference — the deterministic similarity scheme exactly as authored during the trial. The site's presentation follows the positioning above.",
+    "summary": "Expand the full comparison scheme",
+    "missing": "The full technical scheme is not bundled in this deployment; the summary above and the layer descriptions are the authoritative site-side account."
+  },
+  "i18n": {
+    "title": "A note on language",
+    "body": "This site ships in English and 简体中文. Model ids, effort tokens, arm names, grade labels, channel names, and config slugs stay in English on both — they are instrument labels, not prose, and CJK on them would break the mono-instrument read. Everything else is authored per language rather than machine-translated, and numbers are formatted for the active locale."
+  }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280,height=800">
+<title>Weather Card</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    width:1280px;height:800px;
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;overflow:hidden;
+  }
+  .card{
+    width:1060px;
+    min-height:520px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:28px;
+    padding:48px 56px;
+    display:flex;flex-direction:column;gap:32px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+  .location-name{font-size:32px;font-weight:700;letter-spacing:-.5px}
+  .date-label{font-size:18px;color:rgba(255,255,255,0.6);margin-top:4px}
+  .condition-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,0.12);
+    border-radius:40px;padding:10px 22px;
+    font-size:17px;font-weight:500;
+  }
+  .weather-icon{font-size:28px;line-height:1}
+  .temp-section{display:flex;align-items:flex-end;gap:48px;flex-wrap:wrap}
+  .temp-block{display:flex;flex-direction:column;align-items:center}
+  .temp-label{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.5);margin-bottom:6px}
+  .temp-value{font-size:56px;font-weight:700;line-height:1}
+  .temp-value .unit{font-size:24px;font-weight:400;vertical-align:super;color:rgba(255,255,255,0.5)}
+  .divider{width:1px;height:64px;background:rgba(255,255,255,0.15);align-self:center}
+  .hourly-section{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
+  .hourly-title{font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.5)}
+  .hourly-chart{
+    flex:1;min-height:140px;
+    display:flex;align-items:flex-end;gap:4px;
+    padding:8px 0;
+    position:relative;
+  }
+  .bar-group{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+    min-width:0;
+  }
+  .bar-temp{
+    font-size:11px;color:rgba(255,255,255,0.7);white-space:nowrap;
+    writing-mode:horizontal-tb;
+  }
+  .bar{
+    width:100%;border-radius:6px 6px 2px 2px;
+    background:linear-gradient(180deg,rgba(99,179,237,0.9),rgba(56,130,199,0.7));
+    transition:height .4s ease;
+    min-height:4px;
+  }
+  .bar-hour{
+    font-size:10px;color:rgba(255,255,255,0.4);
+  }
+  .error-msg{
+    font-size:20px;text-align:center;
+    color:rgba(255,255,255,0.7);
+    padding:120px 0;
+  }
+  .loading{
+    font-size:20px;text-align:center;
+    color:rgba(255,255,255,0.5);
+    padding:120px 0;
+    animation:pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+</style>
+</head>
+<body>
+<div class="card" id="app">
+  <div class="loading" id="loading">Loading weather data…</div>
+</div>
+<script>
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const lat=parseFloat(params.get('lat'))||52.52;
+  const lon=parseFloat(params.get('lon'))||13.405;
+  const name=params.get('name')||'Berlin';
+  const today=new Date().toISOString().slice(0,10);
+  const date=params.get('date')||today;
+
+  const card=document.getElementById('app');
+
+  function weatherInfo(code){
+    const map={
+      0:['☀️','Clear sky'],1:['🌤️','Mainly clear'],2:['⛅','Partly cloudy'],
+      3:['☁️','Overcast'],45:['🌫️','Foggy'],48:['🌫️','Rime fog'],
+      51:['🌦️','Light drizzle'],53:['🌦️','Moderate drizzle'],55:['🌧️','Dense drizzle'],
+      56:['🌧️','Light freezing drizzle'],57:['🌧️','Heavy freezing drizzle'],
+      61:['🌧️','Slight rain'],63:['🌧️','Moderate rain'],65:['🌧️','Heavy rain'],
+      66:['🌧️','Light freezing rain'],67:['🌧️','Heavy freezing rain'],
+      71:['🌨️','Slight snowfall'],73:['🌨️','Moderate snowfall'],75:['❄️','Heavy snowfall'],
+      77:['🌨️','Snow grains'],
+      80:['🌦️','Slight rain showers'],81:['🌧️','Moderate rain showers'],82:['🌧️','Violent rain showers'],
+      85:['🌨️','Slight snow showers'],86:['❄️','Heavy snow showers'],
+      95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm with hail'],99:['⛈️','Heavy thunderstorm with hail']
+    };
+    return map[code]||['❓','Unknown'];
+  }
+
+  const apiUrl=date<today?'/api/om/archive':'/api/om/forecast';
+  const qs=`?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${date}&end_date=${date}`;
+
+  fetch(apiUrl+qs)
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+    .then(data=>{
+      if(!data.daily||!data.hourly)throw new Error('Invalid data');
+      const maxT=data.daily.temperature_2m_max[0];
+      const minT=data.daily.temperature_2m_min[0];
+      const code=data.daily.weather_code[0];
+      const [icon,condition]=weatherInfo(code);
+      const hours=data.hourly.temperature_2m;
+      const temps=hours.slice(0,24);
+      const tMin=Math.min(...temps),tMax=Math.max(...temps);
+      const range=tMax-tMin||1;
+
+      const d=new Date(date+'T00:00:00Z');
+      const dateStr=d.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+
+      let hourlyHTML='';
+      for(let h=0;h<24;h++){
+        const t=temps[h];
+        const pct=((t-tMin)/range)*80+20;
+        hourlyHTML+=`<div class="bar-group">
+          <span class="bar-temp">${Math.round(t)}°</span>
+          <div class="bar" style="height:${pct}%"></div>
+          <span class="bar-hour">${String(h).padStart(2,'0')}</span>
+        </div>`;
+      }
+
+      card.innerHTML=`
+        <div class="header">
+          <div>
+            <div class="location-name">${name}</div>
+            <div class="date-label">${dateStr}</div>
+          </div>
+          <div class="condition-badge"><span class="weather-icon">${icon}</span>${condition}</div>
+        </div>
+        <div class="temp-section">
+          <div class="temp-block">
+            <span class="temp-label">High</span>
+            <span class="temp-value">${Math.round(maxT)}<span class="unit">°C</span></span>
+          </div>
+          <div class="divider"></div>
+          <div class="temp-block">
+            <span class="temp-label">Low</span>
+            <span class="temp-value">${Math.round(minT)}<span class="unit">°C</span></span>
+          </div>
+        </div>
+        <div class="hourly-section">
+          <div class="hourly-title">Hourly Temperatures</div>
+          <div class="hourly-chart">${hourlyHTML}</div>
+        </div>`;
+    })
+    .catch(()=>{
+      card.innerHTML='<div class="error-msg">⚠️ Unable to load weather data. Please check your parameters or try again later.</div>';
+    });
+})();
+</script>
+</body>
+</html>

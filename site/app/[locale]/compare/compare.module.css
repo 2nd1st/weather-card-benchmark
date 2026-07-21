@@ -1,0 +1,375 @@
+/* Compare page (spec §4 /compare, owner B3). Scoped styles so app/globals.css
+   (A2-owned) stays untouched. Reuses global exhibit classes where they exist
+   (.panelbox, .cardframe, .btn, .seg, .chip, .b-*, .emptystate, .attribution)
+   and only adds the compare-specific layout here. Visual base = mockup-b glow;
+   control row borrows mockup-a's restrained .sel/.gl register. */
+
+/* Align horizontal gutters with the shared page grid (globals .wrap): same
+   max-width (--wrap) and same padding-inline clamp as the nav + footer, so the
+   content column no longer drifts left of the masthead. Vertical padding is
+   compare-specific. */
+.page {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: clamp(24px, 4vw, 44px) clamp(16px, 4vw, 44px) 80px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 22px;
+}
+.head h1 {
+  font: 600 clamp(22px, 3vw, 30px) / 1.1 var(--font-mono);
+  letter-spacing: -0.02em;
+}
+.head p {
+  color: var(--ink-dim);
+  font-size: 13px;
+  max-width: 66ch;
+  margin-top: 6px;
+}
+.headActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ---- shared control row ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.gl {
+  font: 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.sel {
+  font: 12px var(--font-mono);
+  color: var(--ink);
+  background: var(--panel-2);
+  /* softer hairline than the segmented control — fewer box-on-box outlines in
+     the toolbar; the active-state cue lives on the .seg, not on every input. */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  max-width: 180px;
+}
+.sel:hover {
+  border-color: var(--line-strong);
+}
+.sel:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 1px;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* one-line, always-visible gloss on the P-min / P-q shorthand (also mirrored as
+   a hover title on the segment) — a first-time visitor should not have to guess
+   what the benchmark mode means. */
+.variantHint {
+  margin: -8px 0 20px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  max-width: 82ch;
+}
+
+/* ---- panes stage ---- */
+.stage {
+  position: relative;
+}
+.panes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+/* One compact chrome row — name · chips … slot-cycle · open · close — instead
+   of the old three stacked rows. Roughly halves the header height so the
+   exhibit (the hero) gets the vertical space back; wraps gracefully in narrow
+   4-up columns. */
+.paneHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.paneName {
+  font: 600 14px var(--font-mono);
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 90px;
+}
+.paneName .fam {
+  color: var(--ink-dim);
+  margin-right: 6px;
+}
+.paneChips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 0 1 auto;
+}
+.paneCtl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  margin-left: auto;
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+}
+.paneCtl a {
+  color: var(--ink-dim);
+  border-bottom: 1px dotted var(--line-strong);
+  white-space: nowrap;
+}
+.paneCtl a:hover {
+  color: var(--acc);
+}
+.paneClose {
+  flex: none;
+  font: 13px var(--font-mono);
+  color: var(--ink-faint);
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+}
+.paneClose:hover {
+  color: var(--ink);
+  background: var(--panel-2);
+}
+.slotcycle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink-dim);
+}
+.slotcycle button {
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  width: 22px;
+  height: 20px;
+  line-height: 1;
+}
+.slotcycle button:hover {
+  color: var(--acc);
+  border-color: var(--acc);
+}
+.slotcycle span {
+  color: var(--ink-dim);
+}
+
+.frameWrap {
+  position: relative;
+}
+
+/* per-pane loading state — a neutral shimmer + label held OVER the frame until
+   its document has (re)loaded. No stale city-specific poster underneath: this
+   guarantees a pane can never paint a previous city behind the live one. */
+.frameLoading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.frameLoadLabel {
+  position: relative;
+  z-index: 1;
+  font: 10px var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* tombstone: a pick with no valid slot in the chosen variant */
+.tomb {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 16px;
+  min-height: 180px;
+  justify-content: center;
+}
+.tombTitle {
+  font: 600 12px var(--font-mono);
+  color: var(--warn);
+}
+.tombMsg {
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+.schips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.schip {
+  font: 10.5px var(--font-mono);
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.schip i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--bad);
+}
+.schip.ok i {
+  background: var(--good);
+  box-shadow: 0 0 6px rgba(59, 217, 127, 0.6);
+}
+
+.attrRow {
+  margin-top: 16px;
+}
+
+/* ---- picker modal list ---- */
+.pickSearch {
+  width: 100%;
+  font: 12px var(--font-mono);
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+}
+.pickSearch:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 1px;
+}
+.pickFull {
+  font: 11px var(--font-mono);
+  color: var(--warn);
+  margin-bottom: 10px;
+}
+.pickList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 52vh;
+  overflow: auto;
+}
+.pickRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+.pickRow:hover:not(:disabled) {
+  border-color: var(--line-strong);
+}
+.pickRow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pickRow.on {
+  border-color: rgba(55, 214, 228, 0.5);
+  background: linear-gradient(90deg, rgba(55, 214, 228, 0.08), var(--bg-elev) 55%);
+}
+.pickMain {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.pickName {
+  font: 600 12px var(--font-mono);
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pickName .fam {
+  color: var(--ink-faint);
+  margin-right: 6px;
+}
+.pickBadges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex: none;
+}
+.pickState {
+  font: 10px var(--font-mono);
+  color: var(--acc);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex: none;
+}
+.pickEmpty {
+  padding: 20px 4px;
+  text-align: center;
+  font: 12px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* ---- mobile: cap at 2-up, extra picks become a swipeable row (spec §4) ---- */
+@media (max-width: 767px) {
+  .panes {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+  .pane {
+    flex: 0 0 47%;
+    min-width: 47%;
+    scroll-snap-align: start;
+  }
+  .sel {
+    max-width: 130px;
+  }
+}

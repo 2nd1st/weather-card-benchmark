@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <style>
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: rgba(255, 255, 255, 0.5);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.2) inset;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* State Messages */
+        .status-message {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .status-message p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .status-message svg {
+            width: 48px;
+            height: 48px;
+            color: #ef4444;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+        }
+
+        .location-name {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .date-string {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Main Weather Info */
+        .main-weather {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .weather-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .condition {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .temps {
+            display: flex;
+            gap: 16px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .temps .max {
+            color: var(--text-main);
+        }
+
+        /* Hourly Scroll */
+        .hourly-section {
+            background: rgba(248, 250, 252, 0.7);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .hourly-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 8px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        
+        .hourly-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .hourly-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 64px;
+            padding: 12px 8px;
+            border-radius: 16px;
+            transition: background 0.2s ease;
+        }
+
+        .hourly-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .hourly-item .time {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .hourly-item .temp {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading" class="status-message">
+            <div class="spinner"></div>
+            <p>Fetching weather data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="status-message hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p id="error-message">Data could not be loaded.</p>
+        </div>
+
+        <!-- Weather Card -->
+        <div id="weather-card" class="card hidden">
+            <header>
+                <h1 id="ui-name" class="location-name"></h1>
+                <div id="ui-date" class="date-string"></div>
+            </header>
+
+            <div class="main-weather">
+                <div id="ui-icon" class="icon-container"></div>
+                <div class="weather-details">
+                    <div id="ui-condition" class="condition"></div>
+                    <div class="temps">
+                        <span class="max">H: <span id="ui-temp-max"></span>°C</span>
+                        <span class="min">L: <span id="ui-temp-min"></span>°C</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hourly-section">
+                <div id="ui-hourly" class="hourly-scroll">
+                    <!-- Hourly items injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ICONS = {
+            'sun': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+            'cloud-sun': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="M20 12h2"></path><path d="m19.07 4.93-1.41 1.41"></path><path d="M15.94 14A5 5 0 0 0 7 12a5 5 0 0 0-4.5 7.5"></path><path d="M11 20h8.5a3.5 3.5 0 0 0 .5-6.96"></path></svg>`,
+            'cloud': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>`,
+            'cloud-fog': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M16 17H4"></path><path d="M12 21H4"></path></svg>`,
+            'cloud-rain': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M16 14v6"></path><path d="M8 14v6"></path><path d="M12 16v6"></path></svg>`,
+            'snowflake': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line><path d="m20 16-4-4 4-4"></path><path d="m4 8 4 4-4 4"></path><path d="m16 4-4 4-4-4"></path><path d="m8 20 4-4 4 4"></path></svg>`,
+            'cloud-lightning': `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path><polyline points="13 11 9 17 15 17 11 23"></polyline></svg>`
+        };
+
+        const WEATHER_CODES = {
+            0: { label: 'Clear sky', icon: 'sun', color: '#f59e0b' },
+            1: { label: 'Mainly clear', icon: 'cloud-sun', color: '#f59e0b' },
+            2: { label: 'Partly cloudy', icon: 'cloud-sun', color: '#64748b' },
+            3: { label: 'Overcast', icon: 'cloud', color: '#64748b' },
+            45: { label: 'Fog', icon: 'cloud-fog', color: '#94a3b8' },
+            48: { label: 'Rime fog', icon: 'cloud-fog', color: '#94a3b8' },
+            51: { label: 'Light drizzle', icon: 'cloud-rain', color: '#3b82f6' },
+            53: { label: 'Moderate drizzle', icon: 'cloud-rain', color: '#3b82f6' },
+            55: { label: 'Dense drizzle', icon: 'cloud-rain', color: '#3b82f6' },
+            61: { label: 'Slight rain', icon: 'cloud-rain', color: '#3b82f6' },
+            63: { label: 'Moderate rain', icon: 'cloud-rain', color: '#3b82f6' },
+            65: { label: 'Heavy rain', icon: 'cloud-rain', color: '#3b82f6' },
+            71: { label: 'Slight snow', icon: 'snowflake', color: '#0ea5e9' },
+            73: { label: 'Moderate snow', icon: 'snowflake', color: '#0ea5e9' },
+            75: { label: 'Heavy snow', icon: 'snowflake', color: '#0ea5e9' },
+            77: { label: 'Snow grains', icon: 'snowflake', color: '#0ea5e9' },
+            80: { label: 'Slight rain showers', icon: 'cloud-rain', color: '#3b82f6' },
+            81: { label: 'Moderate rain showers', icon: 'cloud-rain', color: '#3b82f6' },
+            82: { label: 'Violent rain showers', icon: 'cloud-rain', color: '#3b82f6' },
+            85: { label: 'Slight snow showers', icon: 'snowflake', color: '#0ea5e9' },
+            86: { label: 'Heavy snow showers', icon: 'snowflake', color: '#0ea5e9' },
+            95: { label: 'Thunderstorm', icon: 'cloud-lightning', color: '#8b5cf6' },
+            96: { label: 'Thunderstorm & slight hail', icon: 'cloud-lightning', color: '#8b5cf6' },
+            99: { label: 'Thunderstorm & heavy hail', icon: 'cloud-lightning', color: '#8b5cf6' }
+        };
+
+        function showError(msg) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('weather-card').classList.add('hidden');
+            document.getElementById('error').classList.remove('hidden');
+            if (msg) document.getElementById('error-message').textContent = msg;
+        }
+
+        async function init() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const lat = params.get('lat') || '52.52';
+                const lon = params.get('lon') || '13.405';
+                const name = params.get('name') || 'Berlin';
+                
+                let date = params.get('date');
+                if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                    date = new Date().toISOString().split('T')[0];
+                }
+
+                const today = new Date().toISOString().split('T')[0];
+                const endpoint = (date < today) ? '/api/om/archive' : '/api/om/forecast';
+
+                const url = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${date}&end_date=${date}`;
+
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('API Error');
+                
+                const data = await response.json();
+
+                if (!data.daily || !data.daily.time || data.daily.time.length === 0) {
+                    throw new Error('No data available for this date.');
+                }
+
+                // Setup Date String
+                const d = new Date(date);
+                const dateStr = d.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+                
+                document.getElementById('ui-name').textContent = decodeURIComponent(name);
+                document.getElementById('ui-date').textContent = dateStr;
+
+                // Setup Daily Summary
+                const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
+                const minTemp = Math.round(data.daily.temperature_2m_min[0]);
+                const code = data.daily.weather_code[0];
+                
+                const wInfo = WEATHER_CODES[code] || { label: 'Unknown', icon: 'cloud', color: '#64748b' };
+                
+                document.getElementById('ui-temp-max').textContent = maxTemp;
+                document.getElementById('ui-temp-min').textContent = minTemp;
+                document.getElementById('ui-condition').textContent = wInfo.label;
+                
+                const iconEl = document.getElementById('ui-icon');
+                iconEl.innerHTML = ICONS[wInfo.icon];
+                iconEl.style.color = wInfo.color;
+                iconEl.style.filter = `drop-shadow(0 10px 15px ${wInfo.color}40)`;
+
+                // Setup Hourly
+                const hourlyContainer = document.getElementById('ui-hourly');
+                hourlyContainer.innerHTML = '';
+                
+                for (let i = 0; i < data.hourly.time.length; i++) {
+                    const timeString = data.hourly.time[i]; 
+                    const temp = Math.round(data.hourly.temperature_2m[i]);
+                    
+                    const hourDate = new Date(timeString + "Z");
+                    let hr = hourDate.getUTCHours();
+                    const ampm = hr >= 12 ? 'PM' : 'AM';
+                    hr = hr % 12;
+                    if (hr === 0) hr = 12;
+
+                    const item = document.createElement('div');
+                    item.className = 'hourly-item';
+                    item.innerHTML = `
+                        <span class="time">${hr} ${ampm}</span>
+                        <span class="temp">${temp}°</span>
+                    `;
+                    hourlyContainer.appendChild(item);
+                }
+
+                // Show Card
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('weather-card').classList.remove('hidden');
+
+            } catch (err) {
+                console.error(err);
+                showError(err.message === 'API Error' ? 'Could not connect to weather service.' : err.message);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

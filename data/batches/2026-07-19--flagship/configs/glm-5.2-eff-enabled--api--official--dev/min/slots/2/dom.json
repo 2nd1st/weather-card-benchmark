@@ -1,0 +1,3346 @@
+{
+  "dump_format_version": "dom-dump-v1",
+  "visibility_rule": "dom-dump-v1",
+  "captured_at_virtual_ms": 5000,
+  "url": "http://card.local/card.html?lat=52.52&lon=13.405&name=Berlin&date=2026-07-15",
+  "viewport": {
+    "width": [
+      1280,
+      800
+    ],
+    "height": null
+  },
+  "counts": {
+    "nodes": 195,
+    "elements": 91,
+    "text_nodes": 104,
+    "visible_text_nodes": 75
+  },
+  "nodes": [
+    {
+      "preorder": 0,
+      "type": "element",
+      "tag": "html",
+      "parent": null,
+      "child_index": 0,
+      "depth": 0,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 1,
+      "type": "element",
+      "tag": "head",
+      "parent": 0,
+      "child_index": 0,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 2,
+      "type": "text",
+      "parent": 1,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 3,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 4,
+      "type": "text",
+      "parent": 1,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 5,
+      "type": "element",
+      "tag": "title",
+      "parent": 1,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 6,
+      "type": "text",
+      "parent": 5,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "Weather",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 7,
+      "type": "text",
+      "parent": 1,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 8,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 5,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 9,
+      "type": "text",
+      "parent": 8,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n  :root {\n    --bg: #0a0b0e;\n    --card: #15171c;\n    --card-2: #1a1d24;\n    --border: rgba(255, 255, 255, 0.07);\n    --fg: #f0eee8;\n    --muted: #9a9aa3;\n    --dim: #5a5a64;\n    --accent: #f5a623;\n    --accent-glow: rgba(245, 166, 35, 0.20);\n    --cool: #6ba6e8;\n  }\n\n  html, body {\n    width: 100%;\n    height: 100%;\n    background: var(--bg);\n    color: var(--fg);\n    font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;\n    overflow: hidden;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n\n  body {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background:\n      radial-gradient(ellipse 900px 700px at 18% 22%, rgba(245, 166, 35, 0.05), transparent 65%),\n      radial-gradient(ellipse 700px 900px at 82% 78%, rgba(107, 166, 232, 0.04), transparent 65%),\n      var(--bg);\n  }\n\n  .card {\n    width: 1120px;\n    height: 720px;\n    background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);\n    border: 1px solid var(--border);\n    border-radius: 28px;\n    padding: 52px 64px;\n    display: grid;\n    grid-template-rows: auto 1fr auto;\n    gap: 28px;\n    position: relative;\n    overflow: hidden;\n    box-shadow:\n      0 50px 100px rgba(0, 0, 0, 0.55),\n      0 0 0 1px rgba(255, 255, 255, 0.02),\n      inset 0 1px 0 rgba(255, 255, 255, 0.05);\n  }\n\n  .card::before {\n    content: '';\n    position: absolute;\n    top: -260px;\n    right: -220px;\n    width: 620px;\n    height: 620px;\n    border-radius: 50%;\n    background: radial-gradient(circle, var(--accent-glow), transparent 70%);\n    pointer-events: none;\n    transition: background 0.8s ease;\n    animation: glowPulse 9s ease-in-out infinite;\n  }\n\n  .card::after {\n    content: '';\n    position: absolute;\n    bottom: -220px;\n    left: -180px;\n    width: 460px;\n    height: 460px;\n    border-radius: 50%;\n    background: radial-gradient(circle, rgba(107, 166, 232, 0.07), transparent 70%);\n    pointer-events: none;\n  }\n\n  @keyframes glowPulse {\n    0%, 100% { opacity: 1; transform: scale(1); }\n    50% { opacity: 0.75; transform: scale(1.06); }\n  }\n\n  /* Header */\n  .header {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-end;\n    position: relative;\n    z-index: 2;\n    padding-bottom: 24px;\n    border-bottom: 1px solid var(--border);\n  }\n\n  .label {\n    font-size: 10px;\n    letter-spacing: 0.32em;\n    color: var(--dim);\n    text-transform: uppercase;\n    margin-bottom: 12px;\n    font-weight: 500;\n  }\n\n  .location-block .name {\n    font-size: 52px;\n    font-weight: 200;\n    letter-spacing: -0.02em;\n    line-height: 1;\n    color: var(--fg);\n  }\n\n  .date-block { text-align: right; }\n\n  .date-block .date {\n    font-size: 22px;\n    font-weight: 300;\n    color: var(--muted);\n    letter-spacing: 0.02em;\n  }\n\n  /* Hero */\n  .hero {\n    display: flex;\n    align-items: center;\n    gap: 48px;\n    position: relative;\n    z-index: 2;\n  }\n\n  .weather-icon {\n    width: 132px;\n    height: 132px;\n    flex-shrink: 0;\n    color: var(--accent);\n    animation: iconFloat 7s ease-in-out infinite;\n    transition: color 0.6s ease;\n  }\n\n  .weather-icon svg {\n    width: 100%;\n    height: 100%;\n    filter: drop-shadow(0 0 28px var(--accent-glow));\n  }\n\n  @keyframes iconFloat {\n    0%, 100% { transform: translateY(0); }\n    50% { transform: translateY(-7px); }\n  }\n\n  .hero-text { flex: 1; }\n\n  .condition {\n    font-size: 26px;\n    font-weight: 300;\n    color: var(--fg);\n    margin-bottom: 6px;\n    letter-spacing: -0.01em;\n  }\n\n  .condition-meta {\n    font-size: 12px;\n    color: var(--muted);\n    letter-spacing: 0.04em;\n    margin-bottom: 22px;\n  }\n\n  .temp-display {\n    display: flex;\n    align-items: baseline;\n    gap: 40px;\n  }\n\n  .temp-high {\n    font-size: 88px;\n    font-weight: 100;\n    line-height: 0.9;\n    letter-spacing: -0.045em;\n    color: var(--fg);\n  }\n\n  .temp-high .unit {\n    font-size: 30px;\n    vertical-align: super;\n    color: var(--muted);\n    margin-left: 6px;\n    font-weight: 300;\n  }\n\n  .temp-low {\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    padding-left: 28px;\n    border-left: 1px solid var(--border);\n  }\n\n  .temp-low .low-label {\n    font-size: 10px;\n    letter-spacing: 0.32em;\n    color: var(--dim);\n    text-transform: uppercase;\n    font-weight: 500;\n  }\n\n  .temp-low .low-value {\n    font-size: 32px;\n    font-weight: 300;\n    color: var(--cool);\n    letter-spacing: -0.02em;\n  }\n\n  /* Chart */\n  .chart-section {\n    position: relative;\n    z-index: 2;\n  }\n\n  .chart-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 14px;\n  }\n\n  .chart-title {\n    font-size: 10px;\n    letter-spacing: 0.32em;\n    color: var(--dim);\n    text-transform: uppercase;\n    font-weight: 500;\n  }\n\n  .chart-stats {\n    display: flex;\n    gap: 28px;\n    font-size: 12px;\n    color: var(--muted);\n  }\n\n  .chart-stats strong {\n    color: var(--fg);\n    font-weight: 400;\n    margin-left: 6px;\n  }\n\n  .chart-container {\n    height: 188px;\n    position: relative;\n  }\n\n  .chart-container svg {\n    width: 100%;\n    height: 100%;\n    overflow: visible;\n    display: block;\n  }\n\n  .tooltip {\n    position: absolute;\n    pointer-events: none;\n    background: rgba(15, 16, 20, 0.92);\n    border: 1px solid var(--border);\n    border-radius: 10px;\n    padding: 8px 12px;\n    font-size: 12px;\n    color: var(--fg);\n    transform: translate(-50%, -130%);\n    transition: opacity 0.15s;\n    white-space: nowrap;\n    -webkit-backdrop-filter: blur(10px);\n    backdrop-filter: blur(10px);\n    z-index: 10;\n  }\n\n  .tooltip .t-time {\n    color: var(--muted);\n    font-size: 10px;\n    letter-spacing: 0.18em;\n    margin-bottom: 3px;\n    text-transform: uppercase;\n  }\n\n  .tooltip .t-temp {\n    font-size: 15px;\n    font-weight: 400;\n  }\n\n  /* States */\n  .hidden { display: none !important; }\n\n  .state {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    text-align: center;\n    gap: 22px;\n    padding: 40px;\n    position: relative;\n    z-index: 2;\n  }\n\n  .state-icon {\n    width: 60px;\n    height: 60px;\n    color: var(--accent);\n    opacity: 0.75;\n  }\n\n  .state-title {\n    font-size: 24px;\n    font-weight: 300;\n    letter-spacing: -0.01em;\n  }\n\n  .state-message {\n    font-size: 13px;\n    color: var(--muted);\n    max-width: 400px;\n    line-height: 1.6;\n  }\n\n  .loading-dots { display: flex; gap: 8px; }\n\n  .loading-dots span {\n    width: 8px;\n    height: 8px;\n    border-radius: 50%;\n    background: var(--accent);\n    animation: dotPulse 1.4s infinite ease-in-out;\n  }\n\n  .loading-dots span:nth-child(2) { animation-delay: 0.18s; }\n  .loading-dots span:nth-child(3) { animation-delay: 0.36s; }\n\n  @keyframes dotPulse {\n    0%, 80%, 100% { opacity: 0.2; transform: scale(0.7); }\n    40% { opacity: 1; transform: scale(1.1); }\n  }\n\n  /* Entrance */\n  .fade-in { animation: fadeIn 0.7s ease-out both; }\n\n  @keyframes fadeIn {\n    from { opacity: 0; transform: translateY(10px); }\n    to { opacity: 1; transform: translateY(0); }\n  }\n\n  .delay-1 { animation-delay: 0.08s; }\n  .delay-2 { animation-delay: 0.16s; }\n  .delay-3 { animation-delay: 0.24s; }\n",
+      "codepoint_length": 7302,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 10,
+      "type": "text",
+      "parent": 1,
+      "child_index": 6,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 11,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 7,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 12,
+      "type": "text",
+      "parent": 11,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "*,*::before,*::after{animation-play-state:paused !important;transition:none !important;caret-color:transparent !important;}",
+      "codepoint_length": 123,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 13,
+      "type": "text",
+      "parent": 0,
+      "child_index": 1,
+      "depth": 1,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 14,
+      "type": "element",
+      "tag": "body",
+      "parent": 0,
+      "child_index": 2,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 15,
+      "type": "text",
+      "parent": 14,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 16,
+      "type": "element",
+      "tag": "div",
+      "parent": 14,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {
+        "id": "card",
+        "class": "card"
+      },
+      "box": {
+        "x": 80,
+        "y": 40,
+        "width": 1120,
+        "height": 720
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 17,
+      "type": "text",
+      "parent": 16,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 0
+    },
+    {
+      "preorder": 18,
+      "type": "text",
+      "parent": 16,
+      "child_index": 1,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 1
+    },
+    {
+      "preorder": 19,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 2,
+      "depth": 3,
+      "attrs": {
+        "id": "loading",
+        "class": "state hidden"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 20,
+      "type": "text",
+      "parent": 19,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 21,
+      "type": "element",
+      "tag": "div",
+      "parent": 19,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "loading-dots"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 22,
+      "type": "element",
+      "tag": "span",
+      "parent": 21,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0.2,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 23,
+      "type": "element",
+      "tag": "span",
+      "parent": 21,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 24,
+      "type": "element",
+      "tag": "span",
+      "parent": 21,
+      "child_index": 2,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 25,
+      "type": "text",
+      "parent": 19,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 26,
+      "type": "element",
+      "tag": "div",
+      "parent": 19,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "state-message"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 27,
+      "type": "text",
+      "parent": 26,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Fetching weather data…",
+      "codepoint_length": 22,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 28,
+      "type": "text",
+      "parent": 19,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 29,
+      "type": "text",
+      "parent": 16,
+      "child_index": 3,
+      "depth": 3,
+      "text_raw": "\n\n    ",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 2
+    },
+    {
+      "preorder": 30,
+      "type": "text",
+      "parent": 16,
+      "child_index": 4,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 3
+    },
+    {
+      "preorder": 31,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 5,
+      "depth": 3,
+      "attrs": {
+        "id": "error",
+        "class": "state hidden"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 32,
+      "type": "text",
+      "parent": 31,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 33,
+      "type": "element",
+      "tag": "svg",
+      "parent": 31,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "state-icon"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 0.75,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 34,
+      "type": "text",
+      "parent": 33,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 35,
+      "type": "element",
+      "tag": "path",
+      "parent": 33,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 36,
+      "type": "text",
+      "parent": 33,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 37,
+      "type": "element",
+      "tag": "line",
+      "parent": 33,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 38,
+      "type": "text",
+      "parent": 33,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 39,
+      "type": "element",
+      "tag": "circle",
+      "parent": 33,
+      "child_index": 5,
+      "depth": 5,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 40,
+      "type": "text",
+      "parent": 33,
+      "child_index": 6,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 41,
+      "type": "text",
+      "parent": 31,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 42,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "state-title"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 24
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 43,
+      "type": "text",
+      "parent": 42,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Weather data unavailable",
+      "codepoint_length": 24,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 44,
+      "type": "text",
+      "parent": 31,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 45,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 5,
+      "depth": 4,
+      "attrs": {
+        "id": "error-message",
+        "class": "state-message"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 46,
+      "type": "text",
+      "parent": 45,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Could not load the forecast. Please try again later.",
+      "codepoint_length": 52,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 47,
+      "type": "text",
+      "parent": 31,
+      "child_index": 6,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 48,
+      "type": "text",
+      "parent": 16,
+      "child_index": 6,
+      "depth": 3,
+      "text_raw": "\n\n    ",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 4
+    },
+    {
+      "preorder": 49,
+      "type": "text",
+      "parent": 16,
+      "child_index": 7,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 5
+    },
+    {
+      "preorder": 50,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 8,
+      "depth": 3,
+      "attrs": {
+        "id": "content"
+      },
+      "box": {
+        "x": 145,
+        "y": 93,
+        "width": 990,
+        "height": 509
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 51,
+      "type": "text",
+      "parent": 50,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 6
+    },
+    {
+      "preorder": 52,
+      "type": "element",
+      "tag": "header",
+      "parent": 50,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "header fade-in"
+      },
+      "box": {
+        "x": 145,
+        "y": 93.00003814697266,
+        "width": 990,
+        "height": 100.99999237060547
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 0.999996,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 53,
+      "type": "text",
+      "parent": 52,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 7
+    },
+    {
+      "preorder": 54,
+      "type": "element",
+      "tag": "div",
+      "parent": 52,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "location-block"
+      },
+      "box": {
+        "x": 145,
+        "y": 93.00003814697266,
+        "width": 112.140625,
+        "height": 75.99999237060547
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 55,
+      "type": "text",
+      "parent": 54,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 8
+    },
+    {
+      "preorder": 56,
+      "type": "element",
+      "tag": "div",
+      "parent": 54,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "label"
+      },
+      "box": {
+        "x": 145,
+        "y": 93.00003814697266,
+        "width": 112.140625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 57,
+      "type": "text",
+      "parent": 56,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Location",
+      "codepoint_length": 8,
+      "text_visible": true,
+      "visible_text_index": 9
+    },
+    {
+      "preorder": 58,
+      "type": "text",
+      "parent": 54,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 10
+    },
+    {
+      "preorder": 59,
+      "type": "element",
+      "tag": "div",
+      "parent": 54,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "loc-name",
+        "class": "name"
+      },
+      "box": {
+        "x": 145,
+        "y": 117.00003814697266,
+        "width": 112.140625,
+        "height": 51.99999237060547
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 52
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 60,
+      "type": "text",
+      "parent": 59,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Berlin",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 11
+    },
+    {
+      "preorder": 61,
+      "type": "text",
+      "parent": 54,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 12
+    },
+    {
+      "preorder": 62,
+      "type": "text",
+      "parent": 52,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 13
+    },
+    {
+      "preorder": 63,
+      "type": "element",
+      "tag": "div",
+      "parent": 52,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "date-block"
+      },
+      "box": {
+        "x": 964.984375,
+        "y": 119.00003814697266,
+        "width": 170.015625,
+        "height": 49.99999237060547
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 64,
+      "type": "text",
+      "parent": 63,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 14
+    },
+    {
+      "preorder": 65,
+      "type": "element",
+      "tag": "div",
+      "parent": 63,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "label"
+      },
+      "box": {
+        "x": 964.984375,
+        "y": 119.00003814697266,
+        "width": 170.015625,
+        "height": 11.999992370605469
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 66,
+      "type": "text",
+      "parent": 65,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Date",
+      "codepoint_length": 4,
+      "text_visible": true,
+      "visible_text_index": 15
+    },
+    {
+      "preorder": 67,
+      "type": "text",
+      "parent": 63,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 16
+    },
+    {
+      "preorder": 68,
+      "type": "element",
+      "tag": "div",
+      "parent": 63,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "loc-date",
+        "class": "date"
+      },
+      "box": {
+        "x": 964.984375,
+        "y": 143.00003051757812,
+        "width": 170.015625,
+        "height": 26
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 22
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 69,
+      "type": "text",
+      "parent": 68,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Wed, 15 Jul 2026",
+      "codepoint_length": 16,
+      "text_visible": true,
+      "visible_text_index": 17
+    },
+    {
+      "preorder": 70,
+      "type": "text",
+      "parent": 63,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 18
+    },
+    {
+      "preorder": 71,
+      "type": "text",
+      "parent": 52,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 19
+    },
+    {
+      "preorder": 72,
+      "type": "text",
+      "parent": 50,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n\n      ",
+      "codepoint_length": 8,
+      "text_visible": true,
+      "visible_text_index": 20
+    },
+    {
+      "preorder": 73,
+      "type": "element",
+      "tag": "section",
+      "parent": 50,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "hero fade-in delay-1"
+      },
+      "box": {
+        "x": 145,
+        "y": 194.00003051757812,
+        "width": 990,
+        "height": 191
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 0.999996,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 74,
+      "type": "text",
+      "parent": 73,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 21
+    },
+    {
+      "preorder": 75,
+      "type": "element",
+      "tag": "div",
+      "parent": 73,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "id": "weather-icon",
+        "class": "weather-icon"
+      },
+      "box": {
+        "x": 145,
+        "y": 223.50003051757812,
+        "width": 132,
+        "height": 132
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 76,
+      "type": "element",
+      "tag": "svg",
+      "parent": 75,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {},
+      "box": {
+        "x": 145,
+        "y": 223.50003051757812,
+        "width": 132,
+        "height": 132
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 77,
+      "type": "text",
+      "parent": 76,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 22
+    },
+    {
+      "preorder": 78,
+      "type": "element",
+      "tag": "path",
+      "parent": 76,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 171.39999389648438,
+        "y": 264.56671142578125,
+        "width": 79.20001220703125,
+        "height": 43.413330078125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 79,
+      "type": "text",
+      "parent": 76,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 23
+    },
+    {
+      "preorder": 80,
+      "type": "element",
+      "tag": "line",
+      "parent": 76,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 191.1999969482422,
+        "y": 321.1800537109375,
+        "width": 3.9600067138671875,
+        "height": 13.199981689453125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 81,
+      "type": "text",
+      "parent": 76,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 24
+    },
+    {
+      "preorder": 82,
+      "type": "element",
+      "tag": "line",
+      "parent": 76,
+      "child_index": 5,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 209.67999267578125,
+        "y": 321.1800537109375,
+        "width": 3.9600067138671875,
+        "height": 13.199981689453125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 83,
+      "type": "text",
+      "parent": 76,
+      "child_index": 6,
+      "depth": 7,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 25
+    },
+    {
+      "preorder": 84,
+      "type": "element",
+      "tag": "line",
+      "parent": 76,
+      "child_index": 7,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 228.16000366210938,
+        "y": 321.1800537109375,
+        "width": 3.959991455078125,
+        "height": 13.199981689453125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 85,
+      "type": "text",
+      "parent": 76,
+      "child_index": 8,
+      "depth": 7,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 26
+    },
+    {
+      "preorder": 86,
+      "type": "text",
+      "parent": 73,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 27
+    },
+    {
+      "preorder": 87,
+      "type": "element",
+      "tag": "div",
+      "parent": 73,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "hero-text"
+      },
+      "box": {
+        "x": 325,
+        "y": 194.00003051757812,
+        "width": 810,
+        "height": 191
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 88,
+      "type": "text",
+      "parent": 87,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 28
+    },
+    {
+      "preorder": 89,
+      "type": "element",
+      "tag": "div",
+      "parent": 87,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "id": "condition",
+        "class": "condition"
+      },
+      "box": {
+        "x": 325,
+        "y": 194.00003051757812,
+        "width": 810,
+        "height": 30
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 26
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 90,
+      "type": "text",
+      "parent": 89,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Light drizzle",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 29
+    },
+    {
+      "preorder": 91,
+      "type": "text",
+      "parent": 87,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 30
+    },
+    {
+      "preorder": 92,
+      "type": "element",
+      "tag": "div",
+      "parent": 87,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "condition-meta",
+        "class": "condition-meta"
+      },
+      "box": {
+        "x": 325,
+        "y": 230.00003051757812,
+        "width": 810,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 93,
+      "type": "text",
+      "parent": 92,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Peak at 13:00  ·  Lowest at 03:00  ·  24 hourly readings",
+      "codepoint_length": 56,
+      "text_visible": true,
+      "visible_text_index": 31
+    },
+    {
+      "preorder": 94,
+      "type": "text",
+      "parent": 87,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 32
+    },
+    {
+      "preorder": 95,
+      "type": "element",
+      "tag": "div",
+      "parent": 87,
+      "child_index": 5,
+      "depth": 6,
+      "attrs": {
+        "class": "temp-display"
+      },
+      "box": {
+        "x": 325,
+        "y": 267.0000305175781,
+        "width": 810,
+        "height": 118
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 96,
+      "type": "text",
+      "parent": 95,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 33
+    },
+    {
+      "preorder": 97,
+      "type": "element",
+      "tag": "div",
+      "parent": 95,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "temp-high"
+      },
+      "box": {
+        "x": 325,
+        "y": 267.0000305175781,
+        "width": 119.984375,
+        "height": 79.1875
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 88
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 98,
+      "type": "element",
+      "tag": "span",
+      "parent": 97,
+      "child_index": 0,
+      "depth": 8,
+      "attrs": {
+        "id": "temp-high"
+      },
+      "box": {
+        "x": 325,
+        "y": 254.00003051757812,
+        "width": 89.765625,
+        "height": 104
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 88
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 99,
+      "type": "text",
+      "parent": 98,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "25",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 34
+    },
+    {
+      "preorder": 100,
+      "type": "element",
+      "tag": "span",
+      "parent": 97,
+      "child_index": 1,
+      "depth": 8,
+      "attrs": {
+        "class": "unit"
+      },
+      "box": {
+        "x": 420.765625,
+        "y": 279.6719055175781,
+        "width": 24.21875,
+        "height": 35
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 30
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 101,
+      "type": "text",
+      "parent": 100,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "°C",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 35
+    },
+    {
+      "preorder": 102,
+      "type": "text",
+      "parent": 95,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 36
+    },
+    {
+      "preorder": 103,
+      "type": "element",
+      "tag": "div",
+      "parent": 95,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {
+        "class": "temp-low"
+      },
+      "box": {
+        "x": 484.984375,
+        "y": 329.0000305175781,
+        "width": 73.46875,
+        "height": 56
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 104,
+      "type": "text",
+      "parent": 103,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "\n              ",
+      "codepoint_length": 15,
+      "text_visible": true,
+      "visible_text_index": 37
+    },
+    {
+      "preorder": 105,
+      "type": "element",
+      "tag": "div",
+      "parent": 103,
+      "child_index": 1,
+      "depth": 8,
+      "attrs": {
+        "class": "low-label"
+      },
+      "box": {
+        "x": 513.984375,
+        "y": 329.0000305175781,
+        "width": 44.46875,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 106,
+      "type": "text",
+      "parent": 105,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "Low",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 38
+    },
+    {
+      "preorder": 107,
+      "type": "text",
+      "parent": 103,
+      "child_index": 2,
+      "depth": 8,
+      "text_raw": "\n              ",
+      "codepoint_length": 15,
+      "text_visible": true,
+      "visible_text_index": 39
+    },
+    {
+      "preorder": 108,
+      "type": "element",
+      "tag": "div",
+      "parent": 103,
+      "child_index": 3,
+      "depth": 8,
+      "attrs": {
+        "id": "temp-low",
+        "class": "low-value"
+      },
+      "box": {
+        "x": 513.984375,
+        "y": 347.0000305175781,
+        "width": 44.46875,
+        "height": 38
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 32
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 109,
+      "type": "text",
+      "parent": 108,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "16°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 40
+    },
+    {
+      "preorder": 110,
+      "type": "text",
+      "parent": 103,
+      "child_index": 4,
+      "depth": 8,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 41
+    },
+    {
+      "preorder": 111,
+      "type": "text",
+      "parent": 95,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 42
+    },
+    {
+      "preorder": 112,
+      "type": "text",
+      "parent": 87,
+      "child_index": 6,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 43
+    },
+    {
+      "preorder": 113,
+      "type": "text",
+      "parent": 73,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 44
+    },
+    {
+      "preorder": 114,
+      "type": "text",
+      "parent": 50,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n\n      ",
+      "codepoint_length": 8,
+      "text_visible": true,
+      "visible_text_index": 45
+    },
+    {
+      "preorder": 115,
+      "type": "element",
+      "tag": "section",
+      "parent": 50,
+      "child_index": 5,
+      "depth": 4,
+      "attrs": {
+        "class": "chart-section fade-in delay-2"
+      },
+      "box": {
+        "x": 145,
+        "y": 385.0000305175781,
+        "width": 990,
+        "height": 216.99996948242188
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0.999996,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 116,
+      "type": "text",
+      "parent": 115,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 46
+    },
+    {
+      "preorder": 117,
+      "type": "element",
+      "tag": "div",
+      "parent": 115,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "chart-header"
+      },
+      "box": {
+        "x": 145,
+        "y": 385.0000305175781,
+        "width": 990,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 118,
+      "type": "text",
+      "parent": 117,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 47
+    },
+    {
+      "preorder": 119,
+      "type": "element",
+      "tag": "div",
+      "parent": 117,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "chart-title"
+      },
+      "box": {
+        "x": 145,
+        "y": 386.5000305175781,
+        "width": 235.859375,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 120,
+      "type": "text",
+      "parent": 119,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Hourly temperatures · UTC",
+      "codepoint_length": 25,
+      "text_visible": true,
+      "visible_text_index": 48
+    },
+    {
+      "preorder": 121,
+      "type": "text",
+      "parent": 117,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 49
+    },
+    {
+      "preorder": 122,
+      "type": "element",
+      "tag": "div",
+      "parent": 117,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "chart-stats",
+        "class": "chart-stats"
+      },
+      "box": {
+        "x": 944.109375,
+        "y": 385.0000305175781,
+        "width": 190.890625,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 123,
+      "type": "element",
+      "tag": "span",
+      "parent": 122,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 944.109375,
+        "y": 385.0000305175781,
+        "width": 89.09375,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 124,
+      "type": "text",
+      "parent": 123,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Average",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 50
+    },
+    {
+      "preorder": 125,
+      "type": "element",
+      "tag": "strong",
+      "parent": 123,
+      "child_index": 1,
+      "depth": 8,
+      "attrs": {},
+      "box": {
+        "x": 995.859375,
+        "y": 385.0000305175781,
+        "width": 37.34375,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 126,
+      "type": "text",
+      "parent": 125,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "21.2°C",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 51
+    },
+    {
+      "preorder": 127,
+      "type": "element",
+      "tag": "span",
+      "parent": 122,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 1061.203125,
+        "y": 385.0000305175781,
+        "width": 73.796875,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 128,
+      "type": "text",
+      "parent": 127,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "Range",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 52
+    },
+    {
+      "preorder": 129,
+      "type": "element",
+      "tag": "strong",
+      "parent": 127,
+      "child_index": 1,
+      "depth": 8,
+      "attrs": {},
+      "box": {
+        "x": 1102.84375,
+        "y": 385.0000305175781,
+        "width": 32.15625,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 130,
+      "type": "text",
+      "parent": 129,
+      "child_index": 0,
+      "depth": 9,
+      "text_raw": "9.3°C",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 53
+    },
+    {
+      "preorder": 131,
+      "type": "text",
+      "parent": 117,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 54
+    },
+    {
+      "preorder": 132,
+      "type": "text",
+      "parent": 115,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 55
+    },
+    {
+      "preorder": 133,
+      "type": "element",
+      "tag": "div",
+      "parent": 115,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "chart-container"
+      },
+      "box": {
+        "x": 145,
+        "y": 414.0000305175781,
+        "width": 990,
+        "height": 187.99996948242188
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 134,
+      "type": "text",
+      "parent": 133,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 56
+    },
+    {
+      "preorder": 135,
+      "type": "element",
+      "tag": "svg",
+      "parent": 133,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "id": "chart"
+      },
+      "box": {
+        "x": 145,
+        "y": 414.0000305175781,
+        "width": 990,
+        "height": 187.99996948242188
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 136,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 432.0000305175781,
+        "width": 934,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 137,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 156.203125,
+        "y": 426.0000305175781,
+        "width": 16.796875,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 138,
+      "type": "text",
+      "parent": 137,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "27°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 57
+    },
+    {
+      "preorder": 139,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 467.0000305175781,
+        "width": 934,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 140,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 155.703125,
+        "y": 461.0000305175781,
+        "width": 17.296875,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 141,
+      "type": "text",
+      "parent": 140,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "24°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 58
+    },
+    {
+      "preorder": 142,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 4,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 502.0000305175781,
+        "width": 934,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 143,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 5,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 157.25,
+        "y": 496.0000305175781,
+        "width": 15.75,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 144,
+      "type": "text",
+      "parent": 143,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 59
+    },
+    {
+      "preorder": 145,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 6,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 537,
+        "width": 934,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 146,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 7,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 157.59375,
+        "y": 531,
+        "width": 15.40625,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 147,
+      "type": "text",
+      "parent": 146,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "17°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 60
+    },
+    {
+      "preorder": 148,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 8,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 572,
+        "width": 934,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 149,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 9,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 156.953125,
+        "y": 566,
+        "width": 16.046875,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 150,
+      "type": "text",
+      "parent": 149,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "14°",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 61
+    },
+    {
+      "preorder": 151,
+      "type": "element",
+      "tag": "defs",
+      "parent": 135,
+      "child_index": 10,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 152,
+      "type": "element",
+      "tag": "lineargradient",
+      "parent": 151,
+      "child_index": 0,
+      "depth": 8,
+      "attrs": {
+        "id": "area-grad"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 153,
+      "type": "element",
+      "tag": "stop",
+      "parent": 152,
+      "child_index": 0,
+      "depth": 9,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 154,
+      "type": "element",
+      "tag": "stop",
+      "parent": 152,
+      "child_index": 1,
+      "depth": 9,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 155,
+      "type": "element",
+      "tag": "path",
+      "parent": 135,
+      "child_index": 11,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 453.3900146484375,
+        "width": 934,
+        "height": 118.6099853515625
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 156,
+      "type": "element",
+      "tag": "path",
+      "parent": 135,
+      "child_index": 12,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 453.3900146484375,
+        "width": 934,
+        "height": 97.22003173828125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 157,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 13,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 168.625,
+        "y": 580,
+        "width": 28.75,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 158,
+      "type": "text",
+      "parent": 157,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "00:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 62
+    },
+    {
+      "preorder": 159,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 14,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 290.4588928222656,
+        "y": 580,
+        "width": 28.734375,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 160,
+      "type": "text",
+      "parent": 159,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "03:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 63
+    },
+    {
+      "preorder": 161,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 15,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 412.23809814453125,
+        "y": 580,
+        "width": 28.828125,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 162,
+      "type": "text",
+      "parent": 161,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "06:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 64
+    },
+    {
+      "preorder": 163,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 16,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 534.064208984375,
+        "y": 580,
+        "width": 28.828125,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 164,
+      "type": "text",
+      "parent": 163,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "09:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 65
+    },
+    {
+      "preorder": 165,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 17,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 656.8902587890625,
+        "y": 580,
+        "width": 26.828125,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 166,
+      "type": "text",
+      "parent": 165,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "12:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 66
+    },
+    {
+      "preorder": 167,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 18,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 778.6382446289062,
+        "y": 580,
+        "width": 26.984375,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 168,
+      "type": "text",
+      "parent": 167,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "15:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 67
+    },
+    {
+      "preorder": 169,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 19,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 900.36279296875,
+        "y": 580,
+        "width": 27.1875,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 170,
+      "type": "text",
+      "parent": 169,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "18:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 68
+    },
+    {
+      "preorder": 171,
+      "type": "element",
+      "tag": "text",
+      "parent": 135,
+      "child_index": 20,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 1022.3685302734375,
+        "y": 580,
+        "width": 26.828125,
+        "height": 12
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 172,
+      "type": "text",
+      "parent": 171,
+      "child_index": 0,
+      "depth": 8,
+      "text_raw": "21:00",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 69
+    },
+    {
+      "preorder": 173,
+      "type": "element",
+      "tag": "circle",
+      "parent": 135,
+      "child_index": 21,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 703.9130249023438,
+        "y": 446.388916015625,
+        "width": 14,
+        "height": 14
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 174,
+      "type": "element",
+      "tag": "circle",
+      "parent": 135,
+      "child_index": 22,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 707.4130249023438,
+        "y": 449.888916015625,
+        "width": 7,
+        "height": 7
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 175,
+      "type": "element",
+      "tag": "circle",
+      "parent": 135,
+      "child_index": 23,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 297.8260803222656,
+        "y": 543.6111450195312,
+        "width": 14,
+        "height": 14
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 176,
+      "type": "element",
+      "tag": "circle",
+      "parent": 135,
+      "child_index": 24,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 301.3260803222656,
+        "y": 547.1111450195312,
+        "width": 7,
+        "height": 7
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 177,
+      "type": "element",
+      "tag": "circle",
+      "parent": 135,
+      "child_index": 25,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 140,
+        "y": 409.0000305175781,
+        "width": 10,
+        "height": 10
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 178,
+      "type": "element",
+      "tag": "line",
+      "parent": 135,
+      "child_index": 26,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 145,
+        "y": 432.0000305175781,
+        "width": 0,
+        "height": 139.99996948242188
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 0,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 179,
+      "type": "element",
+      "tag": "rect",
+      "parent": 135,
+      "child_index": 27,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 183,
+        "y": 432.0000305175781,
+        "width": 934,
+        "height": 139.99996948242188
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 180,
+      "type": "text",
+      "parent": 133,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 70
+    },
+    {
+      "preorder": 181,
+      "type": "element",
+      "tag": "div",
+      "parent": 133,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "id": "tooltip",
+        "class": "tooltip hidden"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 182,
+      "type": "text",
+      "parent": 181,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 183,
+      "type": "element",
+      "tag": "div",
+      "parent": 181,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {
+        "class": "t-time"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 10
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 184,
+      "type": "text",
+      "parent": 181,
+      "child_index": 2,
+      "depth": 7,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 185,
+      "type": "element",
+      "tag": "div",
+      "parent": 181,
+      "child_index": 3,
+      "depth": 7,
+      "attrs": {
+        "class": "t-temp"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 186,
+      "type": "text",
+      "parent": 181,
+      "child_index": 4,
+      "depth": 7,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 187,
+      "type": "text",
+      "parent": 133,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 71
+    },
+    {
+      "preorder": 188,
+      "type": "text",
+      "parent": 115,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 72
+    },
+    {
+      "preorder": 189,
+      "type": "text",
+      "parent": 50,
+      "child_index": 6,
+      "depth": 4,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 73
+    },
+    {
+      "preorder": 190,
+      "type": "text",
+      "parent": 16,
+      "child_index": 9,
+      "depth": 3,
+      "text_raw": "\n  ",
+      "codepoint_length": 3,
+      "text_visible": true,
+      "visible_text_index": 74
+    },
+    {
+      "preorder": 191,
+      "type": "text",
+      "parent": 14,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 192,
+      "type": "element",
+      "tag": "script",
+      "parent": 14,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 193,
+      "type": "text",
+      "parent": 192,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n(function() {\n  // ---------- Parameters ----------\n  const params = new URLSearchParams(window.location.search);\n  const latRaw = parseFloat(params.get('lat'));\n  const lonRaw = parseFloat(params.get('lon'));\n  const name = params.get('name') || 'Berlin';\n  const dateParam = params.get('date');\n\n  const lat = isNaN(latRaw) ? 52.52 : latRaw;\n  const lon = isNaN(lonRaw) ? 13.405 : lonRaw;\n\n  const todayStr = new Date().toISOString().slice(0, 10);\n  const requestedDate = dateParam && /^\\d{4}-\\d{2}-\\d{2}$/.test(dateParam) ? dateParam : todayStr;\n\n  const isPast = requestedDate < todayStr;\n  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';\n\n  // ---------- Weather code mapping ----------\n  const weatherCodes = {\n    0:  { desc: 'Clear sky',                       icon: 'sun',        accent: '#f5a623', glow: 'rgba(245,166,35,0.22)' },\n    1:  { desc: 'Mainly clear',                    icon: 'sun-cloud',  accent: '#f5a623', glow: 'rgba(245,166,35,0.18)' },\n    2:  { desc: 'Partly cloudy',                   icon: 'sun-cloud',  accent: '#e0a458', glow: 'rgba(224,164,88,0.16)' },\n    3:  { desc: 'Overcast',                        icon: 'cloud',      accent: '#a8b3c1', glow: 'rgba(168,179,193,0.12)' },\n    45: { desc: 'Fog',                             icon: 'fog',        accent: '#a8b3c1', glow: 'rgba(168,179,193,0.10)' },\n    48: { desc: 'Depositing rime fog',             icon: 'fog',        accent: '#a8b3c1', glow: 'rgba(168,179,193,0.10)' },\n    51: { desc: 'Light drizzle',                   icon: 'drizzle',    accent: '#6ba6e8', glow: 'rgba(107,166,232,0.14)' },\n    53: { desc: 'Moderate drizzle',                icon: 'drizzle',    accent: '#6ba6e8', glow: 'rgba(107,166,232,0.16)' },\n    55: { desc: 'Dense drizzle',                   icon: 'drizzle',    accent: '#5a93d6', glow: 'rgba(90,147,214,0.18)' },\n    56: { desc: 'Light freezing drizzle',          icon: 'drizzle',    accent: '#8db8e8', glow: 'rgba(141,184,232,0.14)' },\n    57: { desc: 'Dense freezing drizzle',          icon: 'drizzle',    accent: '#8db8e8', glow: 'rgba(141,184,232,0.16)' },\n    61: { desc: 'Slight rain',                     icon: 'rain',       accent: '#5b9bd5', glow: 'rgba(91,155,213,0.16)' },\n    63: { desc: 'Moderate rain',                   icon: 'rain',       accent: '#4a8cc4', glow: 'rgba(74,140,196,0.18)' },\n    65: { desc: 'Heavy rain',                      icon: 'rain',       accent: '#3a7ab0', glow: 'rgba(58,122,176,0.22)' },\n    66: { desc: 'Light freezing rain',             icon: 'rain',       accent: '#8db8e8', glow: 'rgba(141,184,232,0.16)' },\n    67: { desc: 'Heavy freezing rain',             icon: 'rain',       accent: '#7aa5d9', glow: 'rgba(122,165,217,0.18)' },\n    71: { desc: 'Slight snow fall',                icon: 'snow',       accent: '#c5d4e0', glow: 'rgba(197,212,224,0.18)' },\n    73: { desc: 'Moderate snow fall',              icon: 'snow',       accent: '#b5c5d4', glow: 'rgba(181,197,212,0.20)' },\n    75: { desc: 'Heavy snow fall',                 icon: 'snow',       accent: '#9fb1c2', glow: 'rgba(159,177,194,0.22)' },\n    77: { desc: 'Snow grains',                     icon: 'snow',       accent: '#c5d4e0', glow: 'rgba(197,212,224,0.18)' },\n    80: { desc: 'Slight rain showers',             icon: 'rain',       accent: '#5b9bd5', glow: 'rgba(91,155,213,0.16)' },\n    81: { desc: 'Moderate rain showers',           icon: 'rain',       accent: '#4a8cc4', glow: 'rgba(74,140,196,0.18)' },\n    82: { desc: 'Violent rain showers',            icon: 'rain',       accent: '#3a7ab0', glow: 'rgba(58,122,176,0.22)' },\n    85: { desc: 'Slight snow showers',             icon: 'snow',       accent: '#c5d4e0', glow: 'rgba(197,212,224,0.18)' },\n    86: { desc: 'Heavy snow showers',              icon: 'snow',       accent: '#9fb1c2', glow: 'rgba(159,177,194,0.22)' },\n    95: { desc: 'Thunderstorm',                    icon: 'storm',      accent: '#d97706', glow: 'rgba(217,119,6,0.22)' },\n    96: { desc: 'Thunderstorm with slight hail',   icon: 'storm',      accent: '#c2410c', glow: 'rgba(194,65,12,0.24)' },\n    99: { desc: 'Thunderstorm with heavy hail',    icon: 'storm',      accent: '#b03a0c', glow: 'rgba(176,58,12,0.26)' }\n  };\n\n  // ---------- SVG icons ----------\n  const icons = {\n    sun: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n      <circle cx=\"50\" cy=\"50\" r=\"16\" fill=\"currentColor\" fill-opacity=\"0.22\"/>\n      <circle cx=\"50\" cy=\"50\" r=\"16\"/>\n      <line x1=\"50\" y1=\"14\" x2=\"50\" y2=\"24\"/>\n      <line x1=\"50\" y1=\"76\" x2=\"50\" y2=\"86\"/>\n      <line x1=\"14\" y1=\"50\" x2=\"24\" y2=\"50\"/>\n      <line x1=\"76\" y1=\"50\" x2=\"86\" y2=\"50\"/>\n      <line x1=\"25\" y1=\"25\" x2=\"32\" y2=\"32\"/>\n      <line x1=\"68\" y1=\"68\" x2=\"75\" y2=\"75\"/>\n      <line x1=\"75\" y1=\"25\" x2=\"68\" y2=\"32\"/>\n      <line x1=\"32\" y1=\"68\" x2=\"25\" y2=\"75\"/>\n    </svg>`,\n    'sun-cloud': `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <circle cx=\"36\" cy=\"34\" r=\"11\" fill=\"currentColor\" fill-opacity=\"0.2\"/>\n      <line x1=\"36\" y1=\"14\" x2=\"36\" y2=\"20\"/>\n      <line x1=\"16\" y1=\"34\" x2=\"22\" y2=\"34\"/>\n      <line x1=\"22\" y1=\"20\" x2=\"26\" y2=\"24\"/>\n      <line x1=\"50\" y1=\"20\" x2=\"46\" y2=\"24\"/>\n      <path d=\"M32 64 Q32 54 42 54 Q45 46 55 48 Q67 44 69 56 Q79 56 79 66 Q79 76 69 76 L37 76 Q27 76 27 68 Q27 64 32 64 Z\" fill=\"currentColor\" fill-opacity=\"0.14\"/>\n    </svg>`,\n    cloud: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M26 66 Q26 54 38 54 Q42 42 54 44 Q68 40 70 54 Q80 54 80 64 Q80 76 70 76 L32 76 Q20 76 20 68 Q20 62 26 66 Z\" fill=\"currentColor\" fill-opacity=\"0.14\"/>\n    </svg>`,\n    fog: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n      <line x1=\"18\" y1=\"40\" x2=\"82\" y2=\"40\" opacity=\"0.55\"/>\n      <line x1=\"12\" y1=\"54\" x2=\"88\" y2=\"54\"/>\n      <line x1=\"22\" y1=\"68\" x2=\"78\" y2=\"68\" opacity=\"0.55\"/>\n      <line x1=\"32\" y1=\"80\" x2=\"68\" y2=\"80\" opacity=\"0.35\"/>\n    </svg>`,\n    drizzle: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M26 52 Q26 40 38 40 Q42 30 54 32 Q66 28 70 42 Q80 42 80 52 Q80 64 70 64 L32 64 Q20 64 20 56 Q20 50 26 52 Z\" fill=\"currentColor\" fill-opacity=\"0.12\"/>\n      <line x1=\"38\" y1=\"74\" x2=\"35\" y2=\"84\"/>\n      <line x1=\"52\" y1=\"74\" x2=\"49\" y2=\"84\"/>\n      <line x1=\"66\" y1=\"74\" x2=\"63\" y2=\"84\"/>\n    </svg>`,\n    rain: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M26 48 Q26 36 38 36 Q42 26 54 28 Q66 24 70 38 Q80 38 80 48 Q80 60 70 60 L32 60 Q20 60 20 52 Q20 46 26 48 Z\" fill=\"currentColor\" fill-opacity=\"0.12\"/>\n      <line x1=\"36\" y1=\"70\" x2=\"32\" y2=\"86\"/>\n      <line x1=\"50\" y1=\"70\" x2=\"46\" y2=\"86\"/>\n      <line x1=\"64\" y1=\"70\" x2=\"60\" y2=\"86\"/>\n      <line x1=\"72\" y1=\"70\" x2=\"68\" y2=\"86\" opacity=\"0.7\"/>\n    </svg>`,\n    snow: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M26 48 Q26 36 38 36 Q42 26 54 28 Q66 24 70 38 Q80 38 80 48 Q80 60 70 60 L32 60 Q20 60 20 52 Q20 46 26 48 Z\" fill=\"currentColor\" fill-opacity=\"0.12\"/>\n      <g stroke-width=\"1.6\">\n        <line x1=\"36\" y1=\"74\" x2=\"36\" y2=\"82\"/>\n        <line x1=\"32\" y1=\"78\" x2=\"40\" y2=\"78\"/>\n        <line x1=\"50\" y1=\"76\" x2=\"50\" y2=\"84\"/>\n        <line x1=\"46\" y1=\"80\" x2=\"54\" y2=\"80\"/>\n        <line x1=\"64\" y1=\"74\" x2=\"64\" y2=\"82\"/>\n        <line x1=\"60\" y1=\"78\" x2=\"68\" y2=\"78\"/>\n      </g>\n    </svg>`,\n    storm: `<svg viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M26 42 Q26 30 38 30 Q42 20 54 22 Q66 18 70 32 Q80 32 80 42 Q80 54 70 54 L32 54 Q20 54 20 46 Q20 40 26 42 Z\" fill=\"currentColor\" fill-opacity=\"0.12\"/>\n      <path d=\"M50 58 L42 76 L52 76 L44 92\" stroke-width=\"2.6\" fill=\"none\"/>\n    </svg>`\n  };\n\n  // ---------- Utilities ----------\n  function formatDate(dateStr) {\n    const d = new Date(dateStr + 'T00:00:00Z');\n    const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];\n    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];\n    return `${weekdays[d.getUTCDay()]}, ${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;\n  }\n\n  function formatHour(isoStr) {\n    const d = new Date(isoStr);\n    return String(d.getUTCHours()).padStart(2, '0') + ':00';\n  }\n\n  function setAccent(color, glow) {\n    document.documentElement.style.setProperty('--accent', color);\n    document.documentElement.style.setProperty('--accent-glow', glow);\n  }\n\n  function showError(msg) {\n    document.getElementById('loading').classList.add('hidden');\n    document.getElementById('content').classList.add('hidden');\n    document.getElementById('error').classList.remove('hidden');\n    document.getElementById('error-message').textContent = msg;\n  }\n\n  function showContent() {\n    document.getElementById('loading').classList.add('hidden');\n    document.getElementById('error').classList.add('hidden');\n    document.getElementById('content').classList.remove('hidden');\n  }\n\n  // ---------- Chart ----------\n  let chartCache = null;\n\n  function buildChart(times, temps, maxT, minT) {\n    const svg = document.getElementById('chart');\n    const container = svg.parentElement;\n    const W = container.clientWidth;\n    const H = container.clientHeight;\n    if (W < 10 || H < 10) return;\n\n    const padL = 38, padR = 18, padT = 18, padB = 30;\n    const innerW = Math.max(W - padL - padR, 1);\n    const innerH = Math.max(H - padT - padB, 1);\n\n    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);\n    svg.innerHTML = '';\n\n    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#f5a623';\n    const cardBg = '#1a1d24';\n\n    const range = Math.max(maxT - minT, 1);\n    const pad = range * 0.22;\n    const yMin = minT - pad;\n    const yMax = maxT + pad;\n    const yRange = Math.max(yMax - yMin, 1);\n\n    const n = temps.length;\n    const xFor = i => padL + (n > 1 ? (i / (n - 1)) * innerW : innerW / 2);\n    const yFor = t => padT + (1 - (t - yMin) / yRange) * innerH;\n    const points = temps.map((t, i) => ({ x: xFor(i), y: yFor(t) }));\n\n    const ns = 'http://www.w3.org/2000/svg';\n\n    // Grid lines\n    const gridCount = 4;\n    for (let i = 0; i <= gridCount; i++) {\n      const y = padT + (i / gridCount) * innerH;\n      const val = yMax - (i / gridCount) * yRange;\n      const line = document.createElementNS(ns, 'line');\n      line.setAttribute('x1', padL);\n      line.setAttribute('y1', y);\n      line.setAttribute('x2', W - padR);\n      line.setAttribute('y2', y);\n      line.setAttribute('stroke', 'rgba(255,255,255,0.06)');\n      line.setAttribute('stroke-width', '1');\n      if (i > 0 && i < gridCount) line.setAttribute('stroke-dasharray', '2,4');\n      svg.appendChild(line);\n\n      const label = document.createElementNS(ns, 'text');\n      label.setAttribute('x', padL - 10);\n      label.setAttribute('y', y + 4);\n      label.setAttribute('text-anchor', 'end');\n      label.setAttribute('fill', 'rgba(255,255,255,0.35)');\n      label.setAttribute('font-size', '10');\n      label.setAttribute('font-family', 'inherit');\n      label.textContent = Math.round(val) + '°';\n      svg.appendChild(label);\n    }\n\n    // Build smooth path\n    let pathD = '';\n    let areaD = '';\n    points.forEach((p, i) => {\n      if (i === 0) {\n        pathD += `M ${p.x.toFixed(2)} ${p.y.toFixed(2)}`;\n        areaD += `M ${p.x.toFixed(2)} ${p.y.toFixed(2)}`;\n      } else {\n        const prev = points[i - 1];\n        const cpX = (prev.x + p.x) / 2;\n        pathD += ` C ${cpX.toFixed(2)} ${prev.y.toFixed(2)}, ${cpX.toFixed(2)} ${p.y.toFixed(2)}, ${p.x.toFixed(2)} ${p.y.toFixed(2)}`;\n        areaD += ` C ${cpX.toFixed(2)} ${prev.y.toFixed(2)}, ${cpX.toFixed(2)} ${p.y.toFixed(2)}, ${p.x.toFixed(2)} ${p.y.toFixed(2)}`;\n      }\n    });\n    const lastP = points[n - 1];\n    const firstP = points[0];\n    areaD += ` L ${lastP.x.toFixed(2)} ${(padT + innerH).toFixed(2)} L ${firstP.x.toFixed(2)} ${(padT + innerH).toFixed(2)} Z`;\n\n    // Defs / gradient\n    const defs = document.createElementNS(ns, 'defs');\n    const grad = document.createElementNS(ns, 'linearGradient');\n    grad.setAttribute('id', 'area-grad');\n    grad.setAttribute('x1', '0'); grad.setAttribute('y1', '0');\n    grad.setAttribute('x2', '0'); grad.setAttribute('y2', '1');\n    const s1 = document.createElementNS(ns, 'stop');\n    s1.setAttribute('offset', '0%');\n    s1.setAttribute('stop-color', accent);\n    s1.setAttribute('stop-opacity', '0.35');\n    const s2 = document.createElementNS(ns, 'stop');\n    s2.setAttribute('offset', '100%');\n    s2.setAttribute('stop-color', accent);\n    s2.setAttribute('stop-opacity', '0');\n    grad.appendChild(s1); grad.appendChild(s2);\n    defs.appendChild(grad);\n    svg.appendChild(defs);\n\n    // Area\n    const area = document.createElementNS(ns, 'path');\n    area.setAttribute('d', areaD);\n    area.setAttribute('fill', 'url(#area-grad)');\n    area.style.opacity = '0';\n    area.style.transition = 'opacity 1s ease 0.4s';\n    svg.appendChild(area);\n    requestAnimationFrame(() => { area.style.opacity = '1'; });\n\n    // Line\n    const line = document.createElementNS(ns, 'path');\n    line.setAttribute('d', pathD);\n    line.setAttribute('fill', 'none');\n    line.setAttribute('stroke', accent);\n    line.setAttribute('stroke-width', '2.2');\n    line.setAttribute('stroke-linecap', 'round');\n    line.setAttribute('stroke-linejoin', 'round');\n    svg.appendChild(line);\n\n    // Draw-in animation\n    try {\n      const pathLen = line.getTotalLength();\n      line.style.strokeDasharray = pathLen;\n      line.style.strokeDashoffset = pathLen;\n      line.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s';\n      requestAnimationFrame(() => { line.style.strokeDashoffset = '0'; });\n    } catch(e) { /* getTotalLength may fail in some browsers; ignore */ }\n\n    // X-axis labels\n    const labelStep = Math.max(1, Math.floor(n / 8));\n    for (let i = 0; i < n; i += labelStep) {\n      const x = xFor(i);\n      const label = document.createElementNS(ns, 'text');\n      label.setAttribute('x', x);\n      label.setAttribute('y', H - padB + 18);\n      label.setAttribute('text-anchor', 'middle');\n      label.setAttribute('fill', 'rgba(255,255,255,0.42)');\n      label.setAttribute('font-size', '10');\n      label.setAttribute('font-family', 'inherit');\n      label.textContent = formatHour(times[i]);\n      svg.appendChild(label);\n    }\n\n    // Min/max markers\n    const maxIdx = temps.indexOf(maxT);\n    const minIdx = temps.indexOf(minT);\n    [maxIdx, minIdx].forEach(idx => {\n      const p = points[idx];\n      const outer = document.createElementNS(ns, 'circle');\n      outer.setAttribute('cx', p.x);\n      outer.setAttribute('cy', p.y);\n      outer.setAttribute('r', '7');\n      outer.setAttribute('fill', accent);\n      outer.setAttribute('fill-opacity', '0.18');\n      svg.appendChild(outer);\n\n      const c = document.createElementNS(ns, 'circle');\n      c.setAttribute('cx', p.x);\n      c.setAttribute('cy', p.y);\n      c.setAttribute('r', '3.5');\n      c.setAttribute('fill', cardBg);\n      c.setAttribute('stroke', accent);\n      c.setAttribute('stroke-width', '2');\n      svg.appendChild(c);\n    });\n\n    // Hover elements\n    const tooltip = document.getElementById('tooltip');\n    const hoverDot = document.createElementNS(ns, 'circle');\n    hoverDot.setAttribute('r', '5');\n    hoverDot.setAttribute('fill', '#ffffff');\n    hoverDot.setAttribute('stroke', accent);\n    hoverDot.setAttribute('stroke-width', '2.5');\n    hoverDot.style.opacity = '0';\n    hoverDot.style.transition = 'opacity 0.15s';\n    svg.appendChild(hoverDot);\n\n    const hoverLine = document.createElementNS(ns, 'line');\n    hoverLine.setAttribute('y1', padT);\n    hoverLine.setAttribute('y2', padT + innerH);\n    hoverLine.setAttribute('stroke', 'rgba(255,255,255,0.18)');\n    hoverLine.setAttribute('stroke-width', '1');\n    hoverLine.setAttribute('stroke-dasharray', '2,3');\n    hoverLine.style.opacity = '0';\n    hoverLine.style.transition = 'opacity 0.15s';\n    svg.appendChild(hoverLine);\n\n    const overlay = document.createElementNS(ns, 'rect');\n    overlay.setAttribute('x', padL);\n    overlay.setAttribute('y', padT);\n    overlay.setAttribute('width', innerW);\n    overlay.setAttribute('height', innerH);\n    overlay.setAttribute('fill', 'transparent');\n    overlay.style.cursor = 'crosshair';\n    svg.appendChild(overlay);\n\n    overlay.addEventListener('mousemove', (e) => {\n      const rect = svg.getBoundingClientRect();\n      const scaleX = W / rect.width;\n      const mouseX = (e.clientX - rect.left) * scaleX;\n      const relX = (mouseX - padL) / innerW;\n      const idx = Math.max(0, Math.min(n - 1, Math.round(relX * (n - 1))));\n      const p = points[idx];\n      hoverDot.setAttribute('cx', p.x);\n      hoverDot.setAttribute('cy', p.y);\n      hoverDot.style.opacity = '1';\n      hoverLine.setAttribute('x1', p.x);\n      hoverLine.setAttribute('x2', p.x);\n      hoverLine.style.opacity = '1';\n\n      const pixelX = (p.x / W) * rect.width;\n      const pixelY = (p.y / H) * rect.height;\n      tooltip.style.left = pixelX + 'px';\n      tooltip.style.top = pixelY + 'px';\n      tooltip.classList.remove('hidden');\n      tooltip.querySelector('.t-time').textContent = formatHour(times[idx]) + ' UTC';\n      tooltip.querySelector('.t-temp').textContent = temps[idx].toFixed(1) + '°C';\n    });\n\n    overlay.addEventListener('mouseleave', () => {\n      hoverDot.style.opacity = '0';\n      hoverLine.style.opacity = '0';\n      tooltip.classList.add('hidden');\n    });\n  }\n\n  // ---------- Main ----------\n  async function init() {\n    document.getElementById('loc-name').textContent = name;\n    document.getElementById('loc-date').textContent = formatDate(requestedDate);\n\n    const query = new URLSearchParams({\n      latitude: String(lat),\n      longitude: String(lon),\n      daily: 'temperature_2m_max,temperature_2m_min,weather_code',\n      hourly: 'temperature_2m',\n      timezone: 'UTC',\n      temperature_unit: 'celsius',\n      start_date: requestedDate,\n      end_date: requestedDate\n    });\n    const url = `${endpoint}?${query.toString()}`;\n\n    try {\n      const res = await fetch(url);\n      if (!res.ok) throw new Error(`Server responded with status ${res.status}`);\n      const data = await res.json();\n\n      if (!data || !data.daily || !data.daily.time || !data.daily.time.length ||\n          !data.hourly || !Array.isArray(data.hourly.temperature_2m) || !data.hourly.temperature_2m.length) {\n        throw new Error('No weather data available for this date.');\n      }\n\n      const maxT = data.daily.temperature_2m_max[0];\n      const minT = data.daily.temperature_2m_min[0];\n      const code = data.daily.weather_code[0];\n      const wc = weatherCodes[code] || {\n        desc: 'Weather condition ' + code,\n        icon: 'cloud',\n        accent: '#a8b3c1',\n        glow: 'rgba(168,179,193,0.12)'\n      };\n\n      setAccent(wc.accent, wc.glow);\n\n      document.getElementById('temp-high').textContent = Math.round(maxT);\n      document.getElementById('temp-low').textContent = Math.round(minT) + '°';\n      document.getElementById('condition').textContent = wc.desc;\n      document.getElementById('weather-icon').innerHTML = icons[wc.icon] || icons.cloud;\n\n      const times = data.hourly.time;\n      const temps = data.hourly.temperature_2m;\n\n      let maxHr = 0, minHr = 0;\n      for (let i = 1; i < temps.length; i++) {\n        if (temps[i] > temps[maxHr]) maxHr = i;\n        if (temps[i] < temps[minHr]) minHr = i;\n      }\n      document.getElementById('condition-meta').textContent =\n        `Peak at ${formatHour(times[maxHr])}  ·  Lowest at ${formatHour(times[minHr])}  ·  ${temps.length} hourly readings`;\n\n      const avg = temps.reduce((a, b) => a + b, 0) / temps.length;\n      document.getElementById('chart-stats').innerHTML =\n        `<span>Average<strong>${avg.toFixed(1)}°C</strong></span>` +\n        `<span>Range<strong>${(maxT - minT).toFixed(1)}°C</strong></span>`;\n\n      showContent();\n      chartCache = { times, temps, maxT, minT };\n      requestAnimationFrame(() => buildChart(times, temps, maxT, minT));\n    } catch (err) {\n      console.error('Weather fetch error:', err);\n      showError(err.message || 'Could not retrieve weather data. Please try again.');\n    }\n  }\n\n  // Rebuild chart on resize (debounced)\n  let resizeTimer;\n  window.addEventListener('resize', () => {\n    clearTimeout(resizeTimer);\n    resizeTimer = setTimeout(() => {\n      if (chartCache) buildChart(chartCache.times, chartCache.temps, chartCache.maxT, chartCache.minT);\n    }, 150);\n  });\n\n  init();\n})();\n",
+      "codepoint_length": 20949,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 194,
+      "type": "text",
+      "parent": 14,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    }
+  ]
+}

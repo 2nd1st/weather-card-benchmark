@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weather — Daily Card</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-0: #07090f;
+  --bg-1: #0b0e18;
+  --bg-2: #11141f;
+  --ink: #f4ead5;
+  --ink-2: #d4c8a8;
+  --ink-dim: #9d9176;
+  --ink-faint: #5e5645;
+  --accent: #f0a868;
+  --accent-2: #e87b4d;
+  --accent-cool: #6cb4d4;
+  --accent-cool-2: #4a8aa8;
+  --line: rgba(244, 234, 213, 0.06);
+  --line-2: rgba(244, 234, 213, 0.12);
+  --line-3: rgba(244, 234, 213, 0.2);
+  --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html, body {
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg-0);
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 1100px 800px at 12% -10%, rgba(240, 168, 104, 0.10), transparent 55%),
+    radial-gradient(ellipse 900px 700px at 88% 110%, rgba(108, 180, 212, 0.05), transparent 55%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.85  0 0 0 0 0.7  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  z-index: 100;
+}
+
+.stage {
+  width: 1280px;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+.card {
+  width: 1200px;
+  height: 720px;
+  background: linear-gradient(155deg, rgba(29, 34, 49, 0.55), rgba(15, 19, 32, 0.55));
+  border: 1px solid var(--line-2);
+  border-radius: 22px;
+  box-shadow:
+    0 40px 80px -30px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(244, 234, 213, 0.03) inset,
+    0 1px 0 rgba(244, 234, 213, 0.06) inset;
+  padding: 40px 56px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+.header-left .eyebrow { margin-bottom: 12px; }
+
+.location {
+  font-family: var(--serif);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin: 0;
+}
+
+.coords {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 10px;
+  letter-spacing: 0.08em;
+}
+
+.coords .sep { color: var(--ink-faint); margin: 0 8px; }
+
+.header-right { text-align: right; }
+.header-right .eyebrow { margin-bottom: 12px; }
+
+.weekday {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.date {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 56px;
+  padding: 28px 0 24px;
+  align-items: center;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.condition .icon-wrap {
+  width: 52px;
+  height: 52px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.condition .icon-wrap svg { width: 100%; height: 100%; }
+
+.condition .label {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+}
+
+.temp-display {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  line-height: 0.82;
+  margin-top: 4px;
+}
+
+.temp-display .value {
+  font-family: var(--serif);
+  font-size: 180px;
+  font-weight: 300;
+  letter-spacing: -0.06em;
+  background: linear-gradient(180deg, #fbe9c8 0%, #f0a868 70%, #e87b4d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.temp-display .unit {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--accent);
+  margin-top: 14px;
+}
+
+.temp-meta {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.temp-meta .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--line-3);
+}
+
+.temp-meta .low-label { color: var(--accent-cool); }
+.temp-meta .low-val {
+  color: var(--ink-2);
+  font-family: var(--serif);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-self: stretch;
+  align-content: center;
+}
+
+.stat {
+  background: linear-gradient(155deg, rgba(244, 234, 213, 0.04), rgba(244, 234, 213, 0.01));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 0;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 0 1px 1px 0;
+}
+
+.stat.cool::before { background: var(--accent-cool); }
+.stat.warm::before { background: var(--accent-2); }
+.stat.neutral::before { background: var(--ink-dim); }
+
+.stat .label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.stat .value {
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.stat .value .small {
+  font-size: 16px;
+  color: var(--ink-dim);
+  font-weight: 300;
+}
+
+.stat .sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  letter-spacing: 0.08em;
+}
+
+.hourly {
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.hourly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.hourly-header .title {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+.hourly-header .title .accent {
+  color: var(--ink-dim);
+  font-weight: 500;
+  margin-left: 10px;
+  letter-spacing: 0.15em;
+}
+
+.hourly-header .sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 180px;
+  width: 100%;
+}
+
+#chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#chart .line-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawLine 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+#chart .area-path {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.8s forwards;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+#chart .pt {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+#chart .extremum-label {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1.4s forwards;
+}
+
+#chart .extremum-dot {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out 1.2s forwards;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(11, 14, 24, 0.96);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--sans);
+  transform: translate(-50%, -130%);
+  opacity: 0;
+  transition: opacity 0.12s;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
+}
+
+.tooltip.show { opacity: 1; }
+
+.tooltip .hour {
+  font-family: var(--mono);
+  color: var(--ink-faint);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tooltip .temp {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ink);
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.tooltip .temp .unit {
+  font-size: 12px;
+  color: var(--accent);
+  margin-left: 2px;
+  font-weight: 400;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.state .icon-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(240, 168, 104, 0.08);
+  border: 1px solid var(--line-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.state .icon-circle svg { width: 32px; height: 32px; }
+
+.state .title {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.state .desc {
+  font-size: 13px;
+  color: var(--ink-dim);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.state .detail {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+}
+
+.state .spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--line-2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.state .spinner-text {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink-dim);
+  margin-top: 4px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card > .header,
+.card > .main,
+.card > .hourly {
+  animation: fadeUp 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.card > .header { animation-delay: 0.05s; }
+.card > .main { animation-delay: 0.15s; }
+.card > .hourly { animation-delay: 0.25s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="card" id="card">
+    <div class="state">
+      <div class="spinner"></div>
+      <div class="spinner-text">Loading atmospheric data…</div>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  'use strict';
+
+  const card = document.getElementById('card');
+  const params = new URLSearchParams(window.location.search);
+
+  function parseNum(val, defaultVal) {
+    const n = parseFloat(val);
+    return isNaN(n) ? defaultVal : n;
+  }
+
+  const lat = parseNum(params.get('lat'), 52.52);
+  const lon = parseNum(params.get('lon'), 13.405);
+  const name = params.get('name') ?? 'Berlin';
+
+  function todayUTC() {
+    const d = new Date();
+    return d.toISOString().slice(0, 10);
+  }
+
+  function isValidDate(s) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+    const d = new Date(s + 'T00:00:00Z');
+    return !isNaN(d.getTime());
+  }
+
+  const rawDate = params.get('date');
+  const dateStr = (rawDate && isValidDate(rawDate)) ? rawDate : todayUTC();
+
+  function isPastDate(date) {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const target = new Date(date + 'T00:00:00Z');
+    return target < today;
+  }
+
+  function wmoDescription(code) {
+    const map = {
+      0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+      45: 'Fog', 48: 'Depositing rime fog',
+      51: 'Light drizzle', 53: 'Moderate drizzle', 55: 'Dense drizzle',
+      56: 'Light freezing drizzle', 57: 'Dense freezing drizzle',
+      61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+      66: 'Light freezing rain', 67: 'Heavy freezing rain',
+      71: 'Slight snowfall', 73: 'Moderate snowfall', 75: 'Heavy snowfall',
+      77: 'Snow grains',
+      80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
+      85: 'Slight snow showers', 86: 'Heavy snow showers',
+      95: 'Thunderstorm', 96: 'Thunderstorm with slight hail', 99: 'Thunderstorm with heavy hail'
+    };
+    return map[code] ?? 'Unknown conditions';
+  }
+
+  function weatherIcon(code) {
+    const sw = '1.4';
+    const sc = 'currentColor';
+    const common = `fill="none" stroke="${sc}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"`;
+
+    if (code === 0) {
+      return `<svg viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="8" ${common}/>
+        <g stroke="${sc}" stroke-width="${sw}" stroke-linecap="round">
+          <line x1="24" y1="5" x2="24" y2="11"/><line x1="24" y1="37" x2="24" y2="43"/>
+          <line x1="5" y1="24" x2="11" y2="24"/><line x1="37" y1="24" x2="43" y2="24"/>
+          <line x1="10.5" y1="10.5" x2="14.7" y2="14.7"/><line x1="33.3" y1="33.3" x2="37.5" y2="37.5"/>
+          <line x1="37.5" y1="10.5" x2="33.3" y2="14.7"/><line x1="14.7" y1="33.3" x2="10.5" y2="37.5"/>
+        </g>
+      </svg>`;
+    }
+    if ([1, 2].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <circle cx="17" cy="17" r="6" ${common}/>
+        <g stroke="${sc}" stroke-width="${sw}" stroke-linecap="round">
+          <line x1="17" y1="5" x2="17" y2="8"/><line x1="5" y1="17" x2="8" y2="17"/>
+          <line x1="8.8" y1="8.8" x2="11" y2="11"/><line x1="25.2" y1="8.8" x2="23" y2="11"/>
+          <line x1="8.8" y1="25.2" x2="11" y2="23"/>
+        </g>
+        <path d="M16 38 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H20 a6 6 0 0 1 -4 -10 z" ${common}/>
+      </svg>`;
+    }
+    if (code === 3) {
+      return `<svg viewBox="0 0 48 48">
+        <path d="M14 30 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H18 a6 6 0 0 1 -4 -10 z" ${common} opacity="0.55"/>
+        <path d="M12 36 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+      </svg>`;
+    }
+    if ([45, 48].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <g stroke="${sc}" stroke-width="${sw}" stroke-linecap="round">
+          <line x1="8" y1="18" x2="40" y2="18"/><line x1="11" y1="24" x2="37" y2="24"/>
+          <line x1="8" y1="30" x2="40" y2="30"/><line x1="13" y1="36" x2="35" y2="36"/>
+        </g>
+      </svg>`;
+    }
+    if ([51, 53, 55, 56, 57].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <path d="M12 26 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+        <g stroke="${sc}" stroke-width="${sw}" stroke-linecap="round">
+          <line x1="18" y1="38" x2="17" y2="42"/><line x1="24" y1="38" x2="23" y2="42"/><line x1="30" y1="38" x2="29" y2="42"/>
+        </g>
+      </svg>`;
+    }
+    if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <path d="M12 24 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+        <g stroke="${sc}" stroke-width="${sw}" stroke-linecap="round">
+          <line x1="16" y1="36" x2="14" y2="43"/><line x1="22" y1="36" x2="20" y2="43"/>
+          <line x1="28" y1="36" x2="26" y2="43"/><line x1="34" y1="36" x2="32" y2="43"/>
+        </g>
+      </svg>`;
+    }
+    if ([71, 73, 75, 77, 85, 86].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <path d="M12 24 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+        <g fill="${sc}">
+          <circle cx="16" cy="40" r="1.4"/><circle cx="22" cy="42" r="1.4"/>
+          <circle cx="28" cy="40" r="1.4"/><circle cx="34" cy="42" r="1.4"/>
+        </g>
+      </svg>`;
+    }
+    if ([95, 96, 99].includes(code)) {
+      return `<svg viewBox="0 0 48 48">
+        <path d="M12 22 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+        <path d="M23 30 L18 40 L23 40 L20 47" ${common}/>
+      </svg>`;
+    }
+    return `<svg viewBox="0 0 48 48">
+      <path d="M12 32 a8 8 0 0 1 8 -8 a10 10 0 0 1 9 6 a6 6 0 0 1 -1 12 H16 a6 6 0 0 1 -4 -10 z" ${common}/>
+    </svg>`;
+  }
+
+  function formatDateParts(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00Z');
+    if (isNaN(d.getTime())) return { weekday: '—', date: dateStr };
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return {
+      weekday: weekdays[d.getUTCDay()],
+      date: `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
+    };
+  }
+
+  function formatCoord(lat, lon) {
+    const latStr = `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}`;
+    const lonStr = `${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`;
+    return { lat: latStr, lon: lonStr };
+  }
+
+  function formatTemp(t) {
+    if (t === null || t === undefined || isNaN(t)) return '–';
+    return Math.round(t).toString();
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function showLoading() {
+    card.innerHTML = `
+      <div class="state">
+        <div class="spinner"></div>
+        <div class="spinner-text">Loading atmospheric data…</div>
+      </div>`;
+  }
+
+  function showError(message, detail) {
+    card.innerHTML = `
+      <div class="state">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          </svg>
+        </div>
+        <div class="title">Unable to load weather</div>
+        <div class="desc">${escapeHtml(message)}</div>
+        ${detail ? `<div class="detail">${escapeHtml(detail)}</div>` : ''}
+      </div>`;
+  }
+
+  function render(data) {
+    const daily = data.daily;
+    const hourly = data.hourly;
+
+    if (!daily || !daily.time || !daily.time.length) {
+      showError('The weather service responded, but no daily data was available for this date.');
+      return;
+    }
+
+    const tmax = daily.temperature_2m_max[0];
+    const tmin = daily.temperature_2m_min[0];
+    const wcode = daily.weather_code[0];
+
+    if (tmax === null || tmax === undefined || tmin === null || tmin === undefined || wcode === undefined || wcode === null) {
+      showError('The weather service responded, but the daily data was incomplete for this date.');
+      return;
+    }
+
+    const condition = wmoDescription(wcode);
+
+    if (!hourly || !hourly.temperature_2m || !hourly.temperature_2m.length) {
+      showError('The weather service responded, but no hourly data was available for this date.');
+      return;
+    }
+
+    const rawTemps = hourly.temperature_2m.slice(0, 24);
+    const temps = [];
+    for (let i = 0; i < 24; i++) {
+      const t = rawTemps[i];
+      temps.push((t === undefined || t === null || isNaN(t)) ? null : t);
+    }
+
+    const validTemps = temps.filter(t => t !== null);
+    if (validTemps.length === 0) {
+      showError('No valid hourly temperature values were returned for this date.');
+      return;
+    }
+
+    const avg = validTemps.reduce((a, b) => a + b, 0) / validTemps.length;
+    const range = tmax - tmin;
+
+    let warmestIdx = -1, coolestIdx = -1;
+    for (let i = 0; i < temps.length; i++) {
+      if (temps[i] === null) continue;
+      if (warmestIdx === -1 || temps[i] > temps[warmestIdx]) warmestIdx = i;
+      if (coolestIdx === -1 || temps[i] < temps[coolestIdx]) coolestIdx = i;
+    }
+
+    const dateParts = formatDateParts(dateStr);
+    const coords = formatCoord(lat, lon);
+
+    card.innerHTML = `
+      <header class="header">
+        <div class="header-left">
+          <div class="eyebrow">Location</div>
+          <h1 class="location">${escapeHtml(name)}</h1>
+          <div class="coords">${coords.lat}<span class="sep">·</span>${coords.lon}</div>
+        </div>
+        <div class="header-right">
+          <div class="eyebrow">Date</div>
+          <div class="weekday">${dateParts.weekday}</div>
+          <div class="date">${dateParts.date} · UTC</div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="hero">
+          <div class="condition">
+            <div class="icon-wrap">${weatherIcon(wcode)}</div>
+            <div class="label">${escapeHtml(condition)}</div>
+          </div>
+          <div class="temp-display">
+            <span class="value">${formatTemp(tmax)}</span>
+            <span class="unit">°C</span>
+          </div>
+          <div class="temp-meta">
+            <span>Daily High</span>
+            <span class="dot"></span>
+            <span class="low-label">Low</span>
+            <span class="low-val">${formatTemp(tmin)}°</span>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat warm">
+            <div class="label">Maximum</div>
+            <div class="value">${formatTemp(tmax)}<span class="small">°C</span></div>
+            <div class="sub">PEAK · ${String(warmestIdx).padStart(2,'0')}:00</div>
+          </div>
+          <div class="stat cool">
+            <div class="label">Minimum</div>
+            <div class="value">${formatTemp(tmin)}<span class="small">°C</span></div>
+            <div class="sub">TROUGH · ${String(coolestIdx).padStart(2,'0')}:00</div>
+          </div>
+          <div class="stat">
+            <div class="label">Mean</div>
+            <div class="value">${avg.toFixed(1)}<span class="small">°C</span></div>
+            <div class="sub">DAILY AVERAGE</div>
+          </div>
+          <div class="stat neutral">
+            <div class="label">Range</div>
+            <div class="value">${range.toFixed(1)}<span class="small">°C</span></div>
+            <div class="sub">DIURNAL SWING</div>
+          </div>
+        </div>
+      </main>
+
+      <section class="hourly">
+        <div class="hourly-header">
+          <div class="title">Hourly Temperature <span class="accent">· 24h</span></div>
+          <div class="sub">TIMES IN UTC</div>
+        </div>
+        <div class="chart-wrap">
+          ${buildChartSVG(temps)}
+          <div class="tooltip" id="tooltip">
+            <div class="hour">--:00</div>
+            <div class="temp">--<span class="unit">°C</span></div>
+          </div>
+        </div>
+      </section>`;
+
+    setupChartInteraction(temps);
+  }
+
+  function buildChartSVG(temps) {
+    const W = 1088, H = 180;
+    const padL = 38, padR = 28, padT = 24, padB = 32;
+    const chartW = W - padL - padR;
+    const chartH = H - padT - padB;
+
+    const validIdx = temps.map((t, i) => t === null ? -1 : i).filter(i => i >= 0);
+    if (validIdx.length === 0) return '';
+
+    const tValues = validIdx.map(i => temps[i]);
+    const minT = Math.min(...tValues);
+    const maxT = Math.max(...tValues);
+    const range = maxT - minT;
+    const pad = Math.max(range * 0.3, 1.5);
+    const yMin = minT - pad;
+    const yMax = maxT + pad;
+    const yRange = yMax - yMin;
+
+    const x = i => padL + (i / 23) * chartW;
+    const y = t => padT + (1 - (t - yMin) / yRange) * chartH;
+
+    const interpTemps = temps.slice();
+    for (let i = 0; i < 24; i++) {
+      if (interpTemps[i] === null) {
+        let prev = null, next = null;
+        for (let j = i - 1; j >= 0; j--) { if (temps[j] !== null) { prev = temps[j]; break; } }
+        for (let j = i + 1; j < 24; j++) { if (temps[j] !== null) { next = temps[j]; break; } }
+        if (prev !== null && next !== null) interpTemps[i] = (prev + next) / 2;
+        else if (prev !== null) interpTemps[i] = prev;
+        else if (next !== null) interpTemps[i] = next;
+        else interpTemps[i] = 0;
+      }
+    }
+
+    const points = interpTemps.map((t, i) => ({ x: x(i), y: y(t), t, i }));
+
+    function smoothPath(pts) {
+      if (pts.length < 2) return '';
+      let d = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[i - 1] || pts[i];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[i + 2] || p2;
+        const tension = 0.18;
+        const cp1x = p1.x + (p2.x - p0.x) * tension;
+        const cp1y = p1.y + (p2.y - p0.y) * tension;
+        const cp2x = p2.x - (p3.x - p1.x) * tension;
+        const cp2y = p2.y - (p3.y - p1.y) * tension;
+        d += ` C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
+      }
+      return d;
+    }
+
+    const linePath = smoothPath(points);
+    const lastPt = points[points.length - 1];
+    const firstPt = points[0];
+    const areaPath = linePath + ` L ${lastPt.x.toFixed(2)} ${(padT + chartH).toFixed(2)} L ${firstPt.x.toFixed(2)} ${(padT + chartH).toFixed(2)} Z`;
+
+    let maxIdx = -1, minIdx = -1;
+    for (let i = 0; i < 24; i++) {
+      if (temps[i] === null) continue;
+      if (maxIdx === -1 || temps[i] > temps[maxIdx]) maxIdx = i;
+      if (minIdx === -1 || temps[i] < temps[minIdx]) minIdx = i;
+    }
+
+    const gridLines = [];
+    const step = range > 20 ? 5 : range > 10 ? 3 : range > 5 ? 2 : 1;
+    const startVal = Math.ceil(yMin / step) * step;
+    for (let v = startVal; v <= yMax; v += step) {
+      gridLines.push({ v, y: y(v) });
+    }
+
+    const hourTicks = [0, 3, 6, 9, 12, 15, 18, 21];
+
+    return `<svg id="chart" viewBox="0 0 ${W} ${H}">
+      <defs>
+        <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f0a868" stop-opacity="0.32"/>
+          <stop offset="60%" stop-color="#f0a868" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#f0a868" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#6cb4d4"/>
+          <stop offset="50%" stop-color="#f0a868"/>
+          <stop offset="100%" stop-color="#e87b4d"/>
+        </linearGradient>
+      </defs>
+
+      <rect x="${padL}" y="${padT}" width="${(x(6) - padL).toFixed(2)}" height="${chartH}" fill="rgba(108, 180, 212, 0.025)"/>
+      <rect x="${x(18).toFixed(2)}" y="${padT}" width="${(padL + chartW - x(18)).toFixed(2)}" height="${chartH}" fill="rgba(108, 180, 212, 0.025)"/>
+
+      ${gridLines.map(g => `
+        <line x1="${padL}" y1="${g.y.toFixed(2)}" x2="${(W - padR).toFixed(2)}" y2="${g.y.toFixed(2)}" stroke="rgba(244,234,213,0.05)" stroke-width="1" stroke-dasharray="2 4"/>
+        <text x="${(padL - 8).toFixed(2)}" y="${(g.y + 3).toFixed(2)}" text-anchor="end" fill="#5e5645" font-size="10" font-family="ui-monospace, monospace">${Math.round(g.v)}°</text>
+      `).join('')}
+
+      ${hourTicks.map(h => `
+        <line x1="${x(h).toFixed(2)}" y1="${padT}" x2="${x(h).toFixed(2)}" y2="${(padT + chartH + 4).toFixed(2)}" stroke="rgba(244,234,213,0.08)" stroke-width="1"/>
+        <text x="${x(h).toFixed(2)}" y="${(H - 10).toFixed(2)}" text-anchor="middle" fill="#5e5645" font-size="10" font-family="ui-monospace, monospace" letter-spacing="0.05em">${String(h).padStart(2,'0')}:00</text>
+      `).join('')}
+
+      <path class="area-path" d="${areaPath}" fill="url(#area-grad)"/>
+      <path class="line-path" d="${linePath}" pathLength="1" fill="none" stroke="url(#line-grad)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+      ${points.map((p, i) => temps[i] === null ? '' : `
+        <circle class="pt" data-i="${i}" cx="${p.x.toFixed(2)}" cy="${p.y.toFixed(2)}" r="2.5" fill="#0b0e18" stroke="#f0a868" stroke-width="1.2" opacity="0.7" style="animation-delay: ${0.7 + i * 0.02}s"/>
+      `).join('')}
+
+      ${maxIdx >= 0 ? `
+        <circle class="extremum-dot" cx="${x(maxIdx).toFixed(2)}" cy="${y(temps[maxIdx]).toFixed(2)}" r="5" fill="#e87b4d" stroke="#0b0e18" stroke-width="2"/>
+        <text class="extremum-label" x="${x(maxIdx).toFixed(2)}" y="${(y(temps[maxIdx]) - 12).toFixed(2)}" text-anchor="middle" fill="#f0a868" font-size="12" font-family="ui-serif, Georgia, serif" font-weight="500">${Math.round(temps[maxIdx])}°</text>
+      ` : ''}
+      ${minIdx >= 0 ? `
+        <circle class="extremum-dot" cx="${x(minIdx).toFixed(2)}" cy="${y(temps[minIdx]).toFixed(2)}" r="5" fill="#6cb4d4" stroke="#0b0e18" stroke-width="2"/>
+        <text class="extremum-label" x="${x(minIdx).toFixed(2)}" y="${(y(temps[minIdx]) + 18).toFixed(2)}" text-anchor="middle" fill="#6cb4d4" font-size="12" font-family="ui-serif, Georgia, serif" font-weight="500">${Math.round(temps[minIdx])}°</text>
+      ` : ''}
+
+      <line id="hover-line" x1="0" y1="${padT}" x2="0" y2="${(padT + chartH).toFixed(2)}" stroke="rgba(244,234,213,0.35)" stroke-width="1" stroke-dasharray="2 3" opacity="0"/>
+      <circle id="hover-dot" cx="0" cy="0" r="5" fill="#f4ead5" stroke="#0b0e18" stroke-width="2.5" opacity="0"/>
+    </svg>`;
+  }
+
+  function setupChartInteraction(temps) {
+    const chart = document.getElementById('chart');
+    const tooltip = document.getElementById('tooltip');
+    if (!chart || !tooltip) return;
+
+    const hoverLine = chart.querySelector('#hover-line');
+    const hoverDot = chart.querySelector('#hover-dot');
+    const chartWrap = chart.parentElement;
+
+    const W = 1088, H = 180;
+    const padL = 38, padR = 28, padT = 24, padB = 32;
+    const chartW = W - padL - padR;
+    const chartH = H - padT - padB;
+
+    const validIdx = temps.map((t, i) => t === null ? -1 : i).filter(i => i >= 0);
+    const tValues = validIdx.map(i => temps[i]);
+    const minT = Math.min(...tValues);
+    const maxT = Math.max(...tValues);
+    const range = maxT - minT;
+    const pad = Math.max(range * 0.3, 1.5);
+    const yMin = minT - pad;
+    const yMax = maxT + pad;
+    const yRange = yMax - yMin;
+
+    const x = i => padL + (i / 23) * chartW;
+    const y = t => padT + (1 - (t - yMin) / yRange) * chartH;
+
+    function onMove(e) {
+      const rect = chartWrap.getBoundingClientRect();
+      const xPx = e.clientX - rect.left;
+      const xView = (xPx / rect.width) * W;
+      const hourF = (xView - padL) / chartW * 23;
+      const hour = Math.round(hourF);
+
+      if (hour < 0 || hour > 23 || temps[hour] === null || temps[hour] === undefined) {
+        hideHover();
+        return;
+      }
+
+      const px = x(hour);
+      const py = y(temps[hour]);
+
+      hoverLine.setAttribute('x1', px);
+      hoverLine.setAttribute('x2', px);
+      hoverLine.setAttribute('opacity', '1');
+      hoverDot.setAttribute('cx', px);
+      hoverDot.setAttribute('cy', py);
+      hoverDot.setAttribute('opacity', '1');
+
+      const tooltipX = (px / W) * rect.width;
+      const tooltipY = (py / H) * rect.height;
+      tooltip.style.left = tooltipX + 'px';
+      tooltip.style.top = tooltipY + 'px';
+      tooltip.querySelector('.hour').textContent = String(hour).padStart(2, '0') + ':00 UTC';
+      tooltip.querySelector('.temp').innerHTML = Math.round(temps[hour]) + '<span class="unit">°C</span>';
+      tooltip.classList.add('show');
+    }
+
+    function hideHover() {
+      hoverLine.setAttribute('opacity', '0');
+      hoverDot.setAttribute('opacity', '0');
+      tooltip.classList.remove('show');
+    }
+
+    chart.addEventListener('mousemove', onMove);
+    chart.addEventListener('mouseleave', hideHover);
+  }
+
+  function init() {
+    showLoading();
+
+    const endpoint = isPastDate(dateStr) ? '/api/om/archive' : '/api/om/forecast';
+    const queryParams = new URLSearchParams({
+      latitude: lat,
+      longitude: lon,
+      daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+      hourly: 'temperature_2m',
+      timezone: 'UTC',
+      temperature_unit: 'celsius',
+      start_date: dateStr,
+      end_date: dateStr
+    });
+
+    const url = `${endpoint}?${queryParams.toString()}`;
+
+    fetch(url)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
+        return r.json();
+      })
+      .then(data => {
+        if (data.error) throw new Error(data.reason || data.error || 'API returned an error');
+        render(data);
+      })
+      .catch(err => {
+        const msg = err.message || 'An unexpected error occurred.';
+        const detail = `Endpoint: ${endpoint}  ·  Date: ${dateStr}  ·  Location: ${name}`;
+        showError(`The weather service could not be reached. ${msg}`, detail);
+      });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

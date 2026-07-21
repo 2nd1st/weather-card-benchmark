@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather Card</title>
+<style>
+  :root{
+    --bg0:#0b1020;
+    --bg1:#172554;
+    --card:rgba(255,255,255,.12);
+    --card2:rgba(255,255,255,.08);
+    --stroke:rgba(255,255,255,.22);
+    --text:#f8fafc;
+    --muted:#cbd5e1;
+    --accent:#7dd3fc;
+    --warm:#fdba74;
+    --bad:#fecaca;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 20% 15%, rgba(125,211,252,.32), transparent 34%),
+      radial-gradient(circle at 82% 22%, rgba(253,186,116,.22), transparent 30%),
+      linear-gradient(135deg,var(--bg0),var(--bg1) 58%,#020617);
+    overflow:hidden;
+  }
+  .stage{
+    width:1280px;height:800px;margin:0 auto;position:relative;
+    display:grid;place-items:center;padding:42px;
+  }
+  .orb{position:absolute;border-radius:999px;filter:blur(2px);opacity:.55;pointer-events:none}
+  .orb.a{width:330px;height:330px;left:76px;top:76px;background:rgba(56,189,248,.16)}
+  .orb.b{width:250px;height:250px;right:120px;bottom:96px;background:rgba(251,146,60,.14)}
+  .card{
+    width:1120px;min-height:640px;position:relative;overflow:hidden;
+    border:1px solid var(--stroke);border-radius:34px;
+    background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
+    box-shadow:0 34px 90px rgba(2,6,23,.48), inset 0 1px 0 rgba(255,255,255,.2);
+    backdrop-filter:blur(18px);
+  }
+  .card:before{
+    content:"";position:absolute;inset:-40% -20% auto auto;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(125,211,252,.25),transparent 66%);
+  }
+  .inner{position:relative;display:grid;grid-template-columns:410px 1fr;gap:34px;padding:44px;height:100%}
+  .summary{
+    border-radius:28px;padding:34px;background:linear-gradient(180deg,rgba(2,6,23,.28),rgba(15,23,42,.18));
+    border:1px solid rgba(255,255,255,.16);display:flex;flex-direction:column;justify-content:space-between;min-height:560px;
+  }
+  .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800;font-size:12px}
+  h1{margin:12px 0 4px;font-size:52px;line-height:.98;letter-spacing:-.045em}
+  .date{color:var(--muted);font-size:18px;margin:0}
+  .condition{display:flex;align-items:center;gap:16px;margin-top:34px}
+  .icon{width:86px;height:86px;border-radius:26px;display:grid;place-items:center;font-size:48px;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+  .condition b{display:block;font-size:28px;line-height:1.1}
+  .condition span{color:var(--muted);font-size:14px}
+  .temps{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:38px}
+  .temp{padding:22px;border-radius:22px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14)}
+  .temp small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800}
+  .temp strong{display:block;margin-top:8px;font-size:42px;letter-spacing:-.04em}
+  .max strong{color:var(--warm)} .min strong{color:var(--accent)}
+  .meta{margin-top:34px;color:var(--muted);font-size:13px;line-height:1.55}
+  .panel{border-radius:28px;padding:30px;background:rgba(2,6,23,.24);border:1px solid rgba(255,255,255,.14);min-height:560px;display:flex;flex-direction:column}
+  .panelHead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}
+  .panelHead h2{margin:0;font-size:28px;letter-spacing:-.03em}
+  .panelHead p{margin:0;color:var(--muted);font-size:13px}
+  .hours{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:12px;overflow:auto;padding-right:6px;align-content:start;
+  }
+  .hour{
+    min-height:92px;border-radius:18px;padding:14px 10px;text-align:center;
+    background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.13);
+  }
+  .hour small{display:block;color:var(--muted);font-weight:800;font-size:12px;letter-spacing:.08em}
+  .hour b{display:block;margin-top:12px;font-size:23px;letter-spacing:-.03em}
+  .status{
+    position:absolute;left:44px;right:44px;bottom:26px;display:none;padding:14px 18px;border-radius:16px;
+    background:rgba(127,29,29,.5);border:1px solid rgba(254,202,202,.45);color:var(--bad);font-weight:700;
+  }
+  .status.show{display:block}
+  .loading{color:var(--muted)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:99px}
+  @media (max-width:1279px),(max-height:799px){
+    body{overflow:auto}
+    .stage{transform:scale(min(calc(100vw/1280),calc(100vh/800)));transform-origin:top left}
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <div class="orb a"></div><div class="orb b"></div>
+    <section class="card" aria-live="polite">
+      <div class="inner">
+        <div class="summary">
+          <div>
+            <div class="eyebrow">Weather Card</div>
+            <h1 id="place">—</h1>
+            <p class="date" id="dateLabel">—</p>
+            <div class="condition">
+              <div class="icon" id="icon">☁️</div>
+              <div><b id="condition">Loading…</b><span id="coords">—</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="temps">
+              <div class="temp max"><small>Maximum</small><strong id="tmax">--°C</strong></div>
+              <div class="temp min"><small>Minimum</small><strong id="tmin">--°C</strong></div>
+            </div>
+            <div class="meta" id="meta">Coordinates are read from the URL query string. Times and dates use UTC.</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panelHead">
+            <div><h2>Hourly temperature</h2><p id="hourCount">Waiting for data…</p></div>
+            <p id="source">Source: —</p>
+          </div>
+          <div class="hours" id="hours"></div>
+        </div>
+      </div>
+      <div class="status" id="status" role="alert"></div>
+    </section>
+  </main>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const qs = new URLSearchParams(location.search);
+  const todayUtc = new Date().toISOString().slice(0,10);
+  const num = (v,d)=>{ const n = Number(v); return Number.isFinite(n) ? n : d; };
+  const lat = num(qs.get('lat'), 52.52);
+  const lon = num(qs.get('lon'), 13.405);
+  const name = (qs.get('name') || 'Berlin').trim() || 'Berlin';
+  const dateParam = qs.get('date');
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(dateParam || '') ? dateParam : todayUtc;
+
+  const codeMap = {
+    0:['Clear sky','☀️'],1:['Mainly clear','🌤️'],2:['Partly cloudy','⛅'],3:['Overcast','☁️'],
+    45:['Fog','🌫️'],48:['Depositing rime fog','🌫️'],51:['Light drizzle','🌦️'],53:['Moderate drizzle','🌦️'],55:['Dense drizzle','🌧️'],
+    56:['Light freezing drizzle','🌧️'],57:['Dense freezing drizzle','🌧️'],61:['Slight rain','🌦️'],63:['Moderate rain','🌧️'],65:['Heavy rain','🌧️'],
+    66:['Light freezing rain','🌧️'],67:['Heavy freezing rain','🌧️'],71:['Slight snow','🌨️'],73:['Moderate snow','🌨️'],75:['Heavy snow','❄️'],
+    77:['Snow grains','❄️'],80:['Slight rain showers','🌦️'],81:['Moderate rain showers','🌧️'],82:['Violent rain showers','⛈️'],
+    85:['Slight snow showers','🌨️'],86:['Heavy snow showers','❄️'],95:['Thunderstorm','⛈️'],96:['Thunderstorm with slight hail','⛈️'],99:['Thunderstorm with heavy hail','⛈️']
+  };
+  const fmt = v => (v === null || v === undefined || Number.isNaN(Number(v))) ? '--°C' : `${Math.round(Number(v))}°C`;
+  const niceDate = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+
+  document.title = `${name} weather — ${date}`;
+  $('place').textContent = name;
+  $('dateLabel').textContent = niceDate(date);
+  $('coords').textContent = `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`;
+  $('hours').innerHTML = '<div class="hour loading"><small>UTC</small><b>…</b></div>';
+
+  function fail(msg){
+    $('status').className = 'status show';
+    $('status').textContent = `Weather data could not be loaded. ${msg || ''}`.trim();
+    $('condition').textContent = 'Unavailable';
+    $('hourCount').textContent = 'No hourly data available';
+    $('source').textContent = 'Source: unavailable';
+    $('hours').innerHTML = '';
+  }
+
+  async function load(){
+    const endpoint = date < todayUtc ? '/api/om/archive' : '/api/om/forecast';
+    $('source').textContent = `Source: ${endpoint.replace('/api/om/','')}`;
+    const params = new URLSearchParams({
+      latitude:String(lat), longitude:String(lon),
+      daily:'temperature_2m_max,temperature_2m_min,weather_code',
+      hourly:'temperature_2m', timezone:'UTC', temperature_unit:'celsius',
+      start_date:date, end_date:date
+    });
+    let res;
+    try{ res = await fetch(`${endpoint}?${params.toString()}`); }
+    catch(e){ fail('Network request failed.'); return; }
+    if(!res.ok){ fail(`API returned HTTP ${res.status}.`); return; }
+    let data;
+    try{ data = await res.json(); }
+    catch(e){ fail('The API response was not valid JSON.'); return; }
+
+    const di = Array.isArray(data?.daily?.time) ? data.daily.time.indexOf(date) : -1;
+    if(di < 0){ fail('Daily values for the requested date were missing.'); return; }
+    const tmax = data.daily.temperature_2m_max?.[di];
+    const tmin = data.daily.temperature_2m_min?.[di];
+    const code = data.daily.weather_code?.[di];
+    $('tmax').textContent = fmt(tmax);
+    $('tmin').textContent = fmt(tmin);
+    const cond = codeMap[Number(code)] || [`Weather code ${code}`, '🌡️'];
+    $('condition').textContent = cond[0];
+    $('icon').textContent = cond[1];
+
+    const times = Array.isArray(data?.hourly?.time) ? data.hourly.time : [];
+    const temps = Array.isArray(data?.hourly?.temperature_2m) ? data.hourly.temperature_2m : [];
+    const rows = times.map((t,i)=>({t,v:temps[i]})).filter(x => typeof x.t === 'string' && x.t.startsWith(date));
+    if(!rows.length){ fail('Hourly temperatures for the requested date were missing.'); return; }
+    $('hours').innerHTML = rows.map(x => `<div class="hour"><small>${x.t.slice(11,16)}</small><b>${fmt(x.v)}</b></div>`).join('');
+    $('hourCount').textContent = `${rows.length} hourly reading${rows.length === 1 ? '' : 's'} for ${date}`;
+  }
+  load();
+})();
+</script>
+</body>
+</html>

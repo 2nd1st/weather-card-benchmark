@@ -1,0 +1,27 @@
+{
+  "N": 2,
+  "auth": {
+    "credential_ref": "WCB_OPENCODE_KEY",
+    "method": "oauth"
+  },
+  "billing": "plan",
+  "config_id": "minimax-m3--opencode-go--dev",
+  "effort": null,
+  "family": "minimax",
+  "m": {
+    "min": 2,
+    "q": 1
+  },
+  "model_id": "minimax-m3",
+  "protocol": "api",
+  "served_model": "minimax-m3",
+  "telemetry": {
+    "completion_tokens": 91816,
+    "cost_usd": null,
+    "prompt_tokens": 1427,
+    "total_tokens": 93243,
+    "wall_ms": 651977
+  },
+  "transport": "opencode-go-gateway",
+  "vendor_sanction_ref": null
+}

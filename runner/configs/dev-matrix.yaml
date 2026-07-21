@@ -1,0 +1,54 @@
+# dev-matrix.yaml — DEV config matrix for the weather-card-benchmark runner.
+#
+# DEV MODE ONLY. Output goes to data/batches-dev/ (gitignored), never
+# data/batches/. Both configs route through a private OpenAI-compatible gateway
+# NOT the vendors' official endpoints — public data must
+# use official keys, so this matrix is unfit for publication.
+#
+# The full production matrix (production-matrix.yaml, all Tiers, four protocol
+# arms, effort axis) is data-driven and lives elsewhere; this file is the
+# minimal two-config happy-path used to exercise R1->R7 end to end (M1).
+#
+# Schema note: fields mirror the axes captured by
+# data/SCHEMA/config.schema.json (family / model_id / effort / protocol /
+# billing / auth / transport). `credential_ref` is an env-var NAME, never a
+# secret value.
+
+version: 1
+
+# Batch-uniform slot count. Production uses N in {3,4,5}; dev uses N=2 to keep
+# iterations cheap. NOTE: config.schema.json enums N to {3,4,5} for published
+# batches — N=2 is a dev-only relaxation and dev batches are not published.
+N: 2
+
+# Shared transport defaults for every config below.
+transport:
+  # base already includes /v1 (the OpenAI-compatible route root).
+  base_url: http://localhost:8080/v1
+  descriptor: sub2api-dev-gateway   # NOT vendor-native; dev provenance flag
+  proxy: sub2api                    # dev only; production US arms use ZERO proxy
+
+configs:
+  - config_id: gpt-5.6-sol--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    # OpenAI effort axis: reasoning.effort in none/minimal/low/medium/high/xhigh(/max)
+    effort: medium
+    effort_param: reasoning.effort   # per-vendor adapter key
+    protocol: api                    # api | agent | cli
+    billing: metered                 # metered => vendor_sanction_ref must be null
+    auth:
+      method: api-key
+      credential_ref: WCB_GPT_KEY    # env var name, resolved from runner/.env
+
+  - config_id: grok-4.5--api--raw--dev
+    family: grok
+    model_id: grok-4.5               # dot, not hyphen (MODEL-MATRIX)
+    # xAI reasoning tier; effort axis is a coarse "reasoning" toggle.
+    effort: null
+    effort_param: reasoning
+    protocol: api
+    billing: metered
+    auth:
+      method: api-key
+      credential_ref: WCB_GROK_KEY

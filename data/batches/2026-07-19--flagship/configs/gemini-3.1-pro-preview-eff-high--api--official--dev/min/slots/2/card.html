@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800, initial-scale=1.0">
+<title>Weather Card</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 1280px;
+        height: 800px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f3f4f6;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1f2937;
+        overflow: hidden;
+    }
+    .card {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        width: 1040px;
+        padding: 48px;
+        box-sizing: border-box;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 24px;
+        margin-bottom: 32px;
+    }
+    .title h1 {
+        margin: 0;
+        font-size: 48px;
+        font-weight: 800;
+        color: #111827;
+        letter-spacing: -1px;
+    }
+    .title p {
+        margin: 8px 0 0 0;
+        font-size: 22px;
+        color: #6b7280;
+        font-weight: 500;
+    }
+    .condition {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .condition .icon {
+        font-size: 56px;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+    .condition .desc {
+        font-size: 24px;
+        font-weight: 700;
+        color: #374151;
+    }
+    .temps {
+        display: flex;
+        gap: 32px;
+        margin-bottom: 40px;
+    }
+    .temp-box {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 24px 32px;
+        border-radius: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .temp-box .label {
+        font-size: 16px;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+    }
+    .temp-box .value {
+        font-size: 56px;
+        font-weight: 800;
+        margin-top: 8px;
+        color: #111827;
+    }
+    .hourly-wrapper {
+        background: #ffffff;
+    }
+    .hourly-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #374151;
+    }
+    .hourly-chart {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        height: 200px;
+        padding-top: 20px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .hour-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
+        width: 34px;
+        position: relative;
+    }
+    .hour-temp {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #4b5563;
+    }
+    .hour-bar {
+        width: 20px;
+        border-radius: 6px 6px 0 0;
+        transition: height 0.3s ease;
+    }
+    .hour-time {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-top: 12px;
+        font-weight: 500;
+    }
+    .message {
+        font-size: 24px;
+        font-weight: 600;
+        color: #374151;
+        background: #ffffff;
+        padding: 40px 80px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .message.error {
+        color: #dc2626;
+        background: #fef2f2;
+        border: 2px solid #fecaca;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div id="loading" class="message">Loading Weather Data...</div>
+<div id="error" class="message error">Failed to load weather data. Please try again.</div>
+<div id="card" class="card" style="display: none;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const today = new Date().toISOString().split('T')[0];
+
+    const lat = params.get('lat') || '52.52';
+    const lon = params.get('lon') || '13.405';
+    const name = params.get('name') || 'Berlin';
+    const date = params.get('date') || today;
+
+    const isPast = date < today;
+    const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+    const apiUrl = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${date}&end_date=${date}`;
+
+    fetch(apiUrl)
+        .then(res => {
+            if (!res.ok) throw new Error('API Error');
+            return res.json();
+        })
+        .then(data => render(data, name, date))
+        .catch(() => {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        });
+
+    const wmoCodes = {
+        0: {text: 'Clear sky', icon: '☀️'},
+        1: {text: 'Mainly clear', icon: '🌤️'},
+        2: {text: 'Partly cloudy', icon: '⛅'},
+        3: {text: 'Overcast', icon: '☁️'},
+        45: {text: 'Fog', icon: '🌫️'},
+        48: {text: 'Depositing rime fog', icon: '🌫️'},
+        51: {text: 'Light drizzle', icon: '🌧️'},
+        53: {text: 'Moderate drizzle', icon: '🌧️'},
+        55: {text: 'Dense drizzle', icon: '🌧️'},
+        56: {text: 'Light freezing drizzle', icon: '🌧️❄️'},
+        57: {text: 'Dense freezing drizzle', icon: '🌧️❄️'},
+        61: {text: 'Slight rain', icon: '🌧️'},
+        63: {text: 'Moderate rain', icon: '🌧️'},
+        65: {text: 'Heavy rain', icon: '🌧️'},
+        66: {text: 'Light freezing rain', icon: '🌧️❄️'},
+        67: {text: 'Heavy freezing rain', icon: '🌧️❄️'},
+        71: {text: 'Slight snow', icon: '❄️'},
+        73: {text: 'Moderate snow', icon: '❄️'},
+        75: {text: 'Heavy snow', icon: '❄️'},
+        77: {text: 'Snow grains', icon: '❄️'},
+        80: {text: 'Slight rain showers', icon: '🌦️'},
+        81: {text: 'Moderate rain showers', icon: '🌦️'},
+        82: {text: 'Violent rain showers', icon: '🌦️'},
+        85: {text: 'Slight snow showers', icon: '🌨️'},
+        86: {text: 'Heavy snow showers', icon: '🌨️'},
+        95: {text: 'Thunderstorm', icon: '⛈️'},
+        96: {text: 'Thunderstorm, slight hail', icon: '⛈️'},
+        99: {text: 'Thunderstorm, heavy hail', icon: '⛈️'}
+    };
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, tag => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        }[tag]));
+    }
+
+    function getBarColor(temp) {
+        if (temp <= 0) return '#3b82f6';
+        if (temp <= 12) return '#0ea5e9';
+        if (temp <= 22) return '#f59e0b';
+        return '#ef4444';
+    }
+
+    function render(data, name, date) {
+        if (!data || !data.daily || !data.hourly) {
+            throw new Error('Invalid Data');
+        }
+
+        document.getElementById('loading').style.display = 'none';
+        const card = document.getElementById('card');
+        card.style.display = 'block';
+
+        const max = data.daily.temperature_2m_max[0];
+        const min = data.daily.temperature_2m_min[0];
+        const code = data.daily.weather_code[0];
+        const hourly = data.hourly.temperature_2m;
+
+        const condition = wmoCodes[code] || {text: 'Unknown Condition', icon: '🌡️'};
+
+        const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' 
+        });
+
+        card.innerHTML = `
+            <div class="header">
+                <div class="title">
+                    <h1>${escapeHTML(name)}</h1>
+                    <p>${escapeHTML(formattedDate)}</p>
+                </div>
+                <div class="condition">
+                    <div class="icon">${condition.icon}</div>
+                    <div class="desc">${condition.text}</div>
+                </div>
+            </div>
+            
+            <div class="temps">
+                <div class="temp-box">
+                    <div class="label">Maximum Temperature</div>
+                    <div class="value">${max.toFixed(1)}°C</div>
+                </div>
+                <div class="temp-box">
+                    <div class="label">Minimum Temperature</div>
+                    <div class="value">${min.toFixed(1)}°C</div>
+                </div>
+            </div>
+
+            <div class="hourly-wrapper">
+                <div class="hourly-title">Hourly Forecast</div>
+                <div class="hourly-chart" id="hourly-chart"></div>
+            </div>
+        `;
+
+        const chart = document.getElementById('hourly-chart');
+        const scaleMin = Math.min(...hourly) - 2;
+        const scaleMax = Math.max(...hourly) + 2;
+        const range = (scaleMax - scaleMin) || 1;
+
+        hourly.forEach((temp, i) => {
+            const heightPct = Math.max(8, ((temp - scaleMin) / range) * 100);
+            const hourLabel = i.toString().padStart(2, '0');
+            const col = document.createElement('div');
+            col.className = 'hour-col';
+            col.innerHTML = `
+                <div class="hour-temp">${Math.round(temp)}°</div>
+                <div class="hour-bar" style="height: ${heightPct}%; background: ${getBarColor(temp)};"></div>
+                <div class="hour-time">${hourLabel}:00</div>
+            `;
+            chart.appendChild(col);
+        });
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+# dev-matrix-expanded.yaml — 12-config DEV matrix (gpt×7 + grok×5) via sub2api.
+# DEV ONLY(gitignored batches-dev,永不发布);目的:让 /matrix 有可看的
+# 家族聚类 + effort 聚类。N=2(dev 放宽)。
+version: 1
+N: 2
+
+transport:
+  base_url: http://localhost:8080/v1
+  descriptor: sub2api-dev-gateway
+  proxy: sub2api
+
+configs:
+  # ---- GPT family:sol 三档 effort + 三个 tier + 上代 mini ----
+  - config_id: gpt-5.6-sol-eff-low--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: low
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.6-sol-eff-medium--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.6-sol-eff-high--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-sol
+    effort: high
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.6-terra--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-terra
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.6-luna--api--raw--dev
+    family: gpt
+    model_id: gpt-5.6-luna
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.5--api--raw--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  - config_id: gpt-5.4-mini--api--raw--dev
+    family: gpt
+    model_id: gpt-5.4-mini
+    effort: medium
+    effort_param: reasoning.effort
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GPT_KEY }
+
+  # ---- Grok family:4.5 + 4.3 三变体 + fast 档 ----
+  - config_id: grok-4.5--api--raw--dev
+    family: grok
+    model_id: grok-4.5
+    effort: null
+    effort_param: reasoning
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GROK_KEY }
+
+  - config_id: grok-4.3--api--raw--dev
+    family: grok
+    model_id: grok-4.3
+    effort: null
+    effort_param: reasoning
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GROK_KEY }
+
+  - config_id: grok-4.3-low--api--raw--dev
+    family: grok
+    model_id: grok-4.3-low        # effort 烧进 model id 的 sub2 变体
+    effort: null
+    effort_param: reasoning
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GROK_KEY }
+
+  - config_id: grok-4.3-high--api--raw--dev
+    family: grok
+    model_id: grok-4.3-high
+    effort: null
+    effort_param: reasoning
+    protocol: api
+    billing: plan  # sub2 订阅账号(dev)
+    auth: { method: api-key, credential_ref: WCB_GROK_KEY }
+
+  # grok-4.20-fast:剔除(sub2 网关该 console 变体无推理面,0/4 valid,纯污染)

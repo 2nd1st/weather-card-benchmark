@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/weather-snapshot.schema.json",
+  "title": "weather-snapshot.json",
+  "description": "Per-batch FROZEN weather library: the exact Open-Meteo-compatible responses the same-origin cache-api served during the batch, one per (city,date) in manifest.cities, plus the canary expected-value table the fidelity golden checks against (scheme §1.2 'snapshot hash (canary 数值,如 max 27.4°/min 13.9°/code 61)'). This artifact's raw bytes are the input to manifest.snapshot_sha256 (DATA-LAYOUT §2). Because it is a directly-hashed byte stream like manifest.json, the SAME byte-exact discipline applies — RFC 8785 (JCS) serialization, NFC-first on every string, and the canonical decimal-string grammar for every non-integer numeric value (see CONTRACT-NOTES §1-§3). WARNING: JSON Schema validates SHAPE ONLY; the runner MUST enforce JCS/NFC/decimal-string and re-derivable snapshot_sha256. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. FLAGGED scheme-silent choices: (1) Open-Meteo wire format uses JSON NUMBERS for temperatures/coords, but this FROZEN artifact encodes every non-integer as a canonical decimal STRING for hash reproducibility (same rationale as manifest coordinates, DECISIONS-M0 §2/§3); the cache-api re-materializes JSON-number wire shape when serving to the browser. (2) fetched_at is a FROZEN deterministic value (the init-script Date freeze target, scheme §2.2) and DOES enter snapshot_sha256. (3) The exact set of response fields is fixed by the pinned contract query (daily=temperature_2m_max,temperature_2m_min,weather_code; hourly=temperature_2m; timezone=UTC; temperature_unit=celsius), so additionalProperties:false is safe.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "source", "extractor_version", "fetched_at", "locations"],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Owning batch id (date + event slug, DESIGN §2.2)."
+    },
+    "extractor_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The extractor_version this canary expected-value table was written against (scheme §1.2 '期望值表随 extractor 版本落盘'; §4/§11 golden written independently and version-pinned). MUST equal the locked extractor_version and the value carried by meta.json.fidelity / fidelity-trace.json for the same batch, so a re-versioned extractor drifting away from a stale canary is detectable from the bytes. FROZEN and enters snapshot_sha256."
+    },
+    "source": {
+      "type": "string",
+      "enum": ["open-meteo"],
+      "description": "Upstream weather source the response shape mimics. cache-api is Open-Meteo-compatible (DESIGN §4.3)."
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 UTC timestamp the snapshot was captured. This is the FROZEN value the shoot init-script pins Date/snapshot 'fetched_at' to (scheme §2.2). FROZEN and deterministic → it DOES enter snapshot_sha256 (unlike the presentational timestamps in index.json)."
+    },
+    "locations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "One served response per (city,date) fixture. MUST cover exactly manifest.cities; (city,date) unique AFTER NFC (runner-enforced, same discipline as manifest.cities). Persisted order = same JCS-byte order as manifest.cities (runner-enforced).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["city", "date", "lat", "lon", "endpoint", "response", "canary"],
+        "properties": {
+          "city": {"type": "string", "minLength": 1, "description": "City name; equals the matching manifest.cities[].city after NFC."},
+          "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "format": "date", "description": "UTC calendar date; equals the matching manifest.cities[].date. Runner must reject impossible calendar dates (Draft 2020-12 format is annotation-only)."},
+          "lat": {"type": "string", "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Requested latitude as a canonical decimal string; equals the matching manifest.cities[].lat."},
+          "lon": {"type": "string", "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Requested longitude as a canonical decimal string; equals the matching manifest.cities[].lon."},
+          "endpoint": {
+            "type": "string",
+            "enum": ["forecast", "archive"],
+            "description": "Which whitelisted cache-api endpoint served this (city,date): /api/om/forecast or /api/om/archive (scheme §6 whitelist). Chosen by date relative to fetched_at."
+          },
+          "response": {"$ref": "#/$defs/omResponse", "description": "The Open-Meteo-compatible response body served for this (city,date), verbatim shape, non-integer numerics as canonical decimal strings (see $comment)."},
+          "canary": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["daily", "hourly_temperature_2m"],
+            "description": "Canary expected-value table for this (city,date), versioned with extractor_version. The independently-written golden the fidelity extractor is checked against (scheme §1.2, §4 'golden fixtures 期望值独立预先写定'). Derived from response but persisted separately so a drifting response is detectable.",
+            "properties": {
+              "daily": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["temperature_2m_max", "temperature_2m_min", "weather_code"],
+                "description": "Expected daily values (scheme §1.2 canary e.g. max 27.4 / min 13.9 / code 61).",
+                "properties": {
+                  "temperature_2m_max": {"type": "string", "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Expected daily max °C, canonical decimal string."},
+                  "temperature_2m_min": {"type": "string", "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Expected daily min °C, canonical decimal string."},
+                  "weather_code": {"type": "integer", "minimum": 0, "description": "Expected WMO weather code (integer, e.g. 61)."}
+                }
+              },
+              "hourly_temperature_2m": {
+                "type": "array",
+                "minItems": 24,
+                "maxItems": 24,
+                "description": "Expected hourly temperature_2m °C for UTC hours 0..23 in order (24 values). Canonical decimal strings.",
+                "items": {"type": "string", "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "decimalString": {
+      "type": "string",
+      "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$",
+      "description": "Canonical decimal string grammar (CONTRACT-NOTES §3): no exponent / no leading + / no leading zero except 0.x / no trailing decimal zero / no -0."
+    },
+    "omResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latitude", "longitude", "generationtime_ms", "utc_offset_seconds", "timezone", "timezone_abbreviation", "elevation", "daily_units", "daily", "hourly_units", "hourly"],
+      "description": "Open-Meteo-compatible response object. Field set is fixed by the pinned contract query. All non-integer numerics are canonical decimal strings in this FROZEN artifact (see top-level $comment).",
+      "properties": {
+        "latitude": {"$ref": "#/$defs/decimalString", "description": "Grid-snapped latitude Open-Meteo echoes (may differ from requested lat within ±0.01, scheme §3 tolerance)."},
+        "longitude": {"$ref": "#/$defs/decimalString", "description": "Grid-snapped longitude Open-Meteo echoes."},
+        "generationtime_ms": {"$ref": "#/$defs/decimalString", "description": "Open-Meteo generation time (ms) as served; frozen value, canonical decimal string."},
+        "utc_offset_seconds": {"type": "integer", "description": "UTC offset in seconds; 0 for timezone=UTC/GMT (contract query pins timezone=UTC)."},
+        "timezone": {"type": "string", "minLength": 1, "description": "Timezone as served (e.g. 'GMT'); contract query pins UTC."},
+        "timezone_abbreviation": {"type": "string", "minLength": 1, "description": "Timezone abbreviation as served (e.g. 'GMT')."},
+        "elevation": {"$ref": "#/$defs/decimalString", "description": "Elevation (m) as served, canonical decimal string."},
+        "daily_units": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["time", "temperature_2m_max", "temperature_2m_min", "weather_code"],
+          "description": "Unit strings for the daily block (e.g. temperature '°C', weather_code 'wmo code').",
+          "properties": {
+            "time": {"type": "string", "minLength": 1},
+            "temperature_2m_max": {"type": "string", "minLength": 1},
+            "temperature_2m_min": {"type": "string", "minLength": 1},
+            "weather_code": {"type": "string", "minLength": 1}
+          }
+        },
+        "daily": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["time", "temperature_2m_max", "temperature_2m_min", "weather_code"],
+          "description": "Daily block. The harness passes ?date= for a single UTC day (start_date=end_date), so arrays are length 1; all four arrays share the same length and index alignment (runner-enforced).",
+          "properties": {
+            "time": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}, "description": "UTC dates (ISO 8601 date)."},
+            "temperature_2m_max": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/decimalString"}, "description": "Daily max °C per day, canonical decimal strings."},
+            "temperature_2m_min": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/decimalString"}, "description": "Daily min °C per day."},
+            "weather_code": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 0}, "description": "WMO weather code per day (integer)."}
+          }
+        },
+        "hourly_units": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["time", "temperature_2m"],
+          "description": "Unit strings for the hourly block.",
+          "properties": {
+            "time": {"type": "string", "minLength": 1},
+            "temperature_2m": {"type": "string", "minLength": 1}
+          }
+        },
+        "hourly": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["time", "temperature_2m"],
+          "description": "Hourly block for one UTC day = 24 points (hours 0..23). Both arrays length 24, index-aligned (runner-enforced).",
+          "properties": {
+            "time": {"type": "array", "minItems": 24, "maxItems": 24, "items": {"type": "string", "minLength": 1}, "description": "24 UTC hour timestamps (ISO 8601 local-naive UTC, e.g. '2026-08-01T00:00')."},
+            "temperature_2m": {"type": "array", "minItems": 24, "maxItems": 24, "items": {"$ref": "#/$defs/decimalString"}, "description": "24 hourly temperature_2m °C, canonical decimal strings, hours 0..23 in order."}
+          }
+        }
+      }
+    }
+  }
+}

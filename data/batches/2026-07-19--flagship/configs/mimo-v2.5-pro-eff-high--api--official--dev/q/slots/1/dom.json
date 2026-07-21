@@ -1,0 +1,1171 @@
+{
+  "dump_format_version": "dom-dump-v1",
+  "visibility_rule": "dom-dump-v1",
+  "captured_at_virtual_ms": 5000,
+  "url": "http://card.local/card.html?lat=52.52&lon=13.405&name=Berlin&date=2026-07-15",
+  "viewport": {
+    "width": [
+      1280,
+      800
+    ],
+    "height": null
+  },
+  "counts": {
+    "nodes": 61,
+    "elements": 36,
+    "text_nodes": 25,
+    "visible_text_nodes": 12
+  },
+  "nodes": [
+    {
+      "preorder": 0,
+      "type": "element",
+      "tag": "html",
+      "parent": null,
+      "child_index": 0,
+      "depth": 0,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 1,
+      "type": "element",
+      "tag": "head",
+      "parent": 0,
+      "child_index": 0,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 2,
+      "type": "text",
+      "parent": 1,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 3,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 4,
+      "type": "text",
+      "parent": 1,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 5,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 6,
+      "type": "text",
+      "parent": 1,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 7,
+      "type": "element",
+      "tag": "title",
+      "parent": 1,
+      "child_index": 5,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 8,
+      "type": "text",
+      "parent": 7,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "Weather Card",
+      "codepoint_length": 12,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 9,
+      "type": "text",
+      "parent": 1,
+      "child_index": 6,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 10,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 7,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 11,
+      "type": "text",
+      "parent": 10,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n  @import url('data:text/css,');\n\n  * { margin: 0; padding: 0; box-sizing: border-box; }\n\n  body {\n    width: 1280px;\n    height: 800px;\n    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;\n    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    overflow: hidden;\n    color: #fff;\n  }\n\n  .card {\n    width: 900px;\n    min-height: 620px;\n    border-radius: 28px;\n    padding: 48px 52px;\n    position: relative;\n    overflow: hidden;\n    background: rgba(255,255,255,0.07);\n    backdrop-filter: blur(24px);\n    -webkit-backdrop-filter: blur(24px);\n    border: 1px solid rgba(255,255,255,0.12);\n    box-shadow: 0 32px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;\n  }\n\n  .card::before {\n    content: '';\n    position: absolute;\n    top: -50%;\n    left: -50%;\n    width: 200%;\n    height: 200%;\n    background: radial-gradient(ellipse at 30% 20%, rgba(120,160,255,0.12) 0%, transparent 50%),\n                radial-gradient(ellipse at 70% 80%, rgba(255,120,200,0.08) 0%, transparent 50%);\n    pointer-events: none;\n    z-index: 0;\n  }\n\n  .card > * { position: relative; z-index: 1; }\n\n  .header {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-start;\n    margin-bottom: 36px;\n  }\n\n  .location-name {\n    font-size: 32px;\n    font-weight: 700;\n    letter-spacing: -0.5px;\n    text-shadow: 0 2px 12px rgba(0,0,0,0.3);\n  }\n\n  .date-label {\n    font-size: 15px;\n    color: rgba(255,255,255,0.6);\n    margin-top: 6px;\n    font-weight: 400;\n  }\n\n  .condition-badge {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n    gap: 6px;\n  }\n\n  .weather-icon {\n    font-size: 52px;\n    line-height: 1;\n    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));\n  }\n\n  .condition-text {\n    font-size: 14px;\n    color: rgba(255,255,255,0.7);\n    text-transform: uppercase;\n    letter-spacing: 1.5px;\n    font-weight: 600;\n  }\n\n  .temp-section {\n    display: flex;\n    align-items: flex-end;\n    gap: 40px;\n    margin-bottom: 44px;\n  }\n\n  .temp-main {\n    display: flex;\n    flex-direction: column;\n  }\n\n  .temp-max {\n    font-size: 88px;\n    font-weight: 200;\n    line-height: 1;\n    letter-spacing: -4px;\n    text-shadow: 0 4px 20px rgba(0,0,0,0.3);\n  }\n\n  .temp-max span {\n    font-size: 44px;\n    font-weight: 300;\n    vertical-align: super;\n    letter-spacing: 0;\n    margin-left: 2px;\n    opacity: 0.7;\n  }\n\n  .temp-min {\n    font-size: 30px;\n    font-weight: 300;\n    color: rgba(255,255,255,0.45);\n    margin-top: 4px;\n    letter-spacing: -1px;\n  }\n\n  .temp-min span {\n    font-size: 18px;\n  }\n\n  .divider {\n    width: 1px;\n    height: 80px;\n    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);\n    align-self: center;\n  }\n\n  .temp-detail-list {\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    padding-bottom: 8px;\n  }\n\n  .temp-detail-item {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    font-size: 15px;\n    color: rgba(255,255,255,0.6);\n  }\n\n  .temp-detail-item .dot {\n    width: 8px;\n    height: 8px;\n    border-radius: 50%;\n  }\n\n  .dot.high { background: #ff7e7e; box-shadow: 0 0 8px rgba(255,126,126,0.5); }\n  .dot.low { background: #7eb8ff; box-shadow: 0 0 8px rgba(126,184,255,0.5); }\n\n  .hourly-section {\n    margin-top: 8px;\n  }\n\n  .hourly-title {\n    font-size: 13px;\n    text-transform: uppercase;\n    letter-spacing: 2px;\n    color: rgba(255,255,255,0.4);\n    margin-bottom: 20px;\n    font-weight: 600;\n  }\n\n  .chart-container {\n    width: 100%;\n    height: 200px;\n    position: relative;\n  }\n\n  canvas#tempChart {\n    width: 100%;\n    height: 100%;\n    display: block;\n  }\n\n  .error-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    min-height: 480px;\n    text-align: center;\n    gap: 16px;\n  }\n\n  .error-icon {\n    font-size: 64px;\n    opacity: 0.5;\n  }\n\n  .error-title {\n    font-size: 24px;\n    font-weight: 600;\n  }\n\n  .error-msg {\n    font-size: 15px;\n    color: rgba(255,255,255,0.5);\n    max-width: 400px;\n    line-height: 1.6;\n  }\n\n  .loading-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    min-height: 480px;\n    gap: 20px;\n  }\n\n  .spinner {\n    width: 48px;\n    height: 48px;\n    border: 3px solid rgba(255,255,255,0.1);\n    border-top-color: rgba(255,255,255,0.6);\n    border-radius: 50%;\n    animation: spin 0.8s linear infinite;\n  }\n\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n\n  .loading-text {\n    font-size: 15px;\n    color: rgba(255,255,255,0.4);\n    letter-spacing: 1px;\n  }\n",
+      "codepoint_length": 4701,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 12,
+      "type": "text",
+      "parent": 1,
+      "child_index": 8,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 13,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 9,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 14,
+      "type": "text",
+      "parent": 13,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "*,*::before,*::after{animation-play-state:paused !important;transition:none !important;caret-color:transparent !important;}",
+      "codepoint_length": 123,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 15,
+      "type": "text",
+      "parent": 0,
+      "child_index": 1,
+      "depth": 1,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 16,
+      "type": "element",
+      "tag": "body",
+      "parent": 0,
+      "child_index": 2,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 17,
+      "type": "text",
+      "parent": 16,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 18,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {
+        "id": "app",
+        "class": "card"
+      },
+      "box": {
+        "x": 190,
+        "y": 90,
+        "width": 900,
+        "height": 620
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 19,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 0,
+      "depth": 3,
+      "attrs": {
+        "class": "header"
+      },
+      "box": {
+        "x": 243,
+        "y": 139,
+        "width": 794,
+        "height": 75
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 20,
+      "type": "element",
+      "tag": "div",
+      "parent": 19,
+      "child_index": 0,
+      "depth": 4,
+      "attrs": {},
+      "box": {
+        "x": 243,
+        "y": 139,
+        "width": 178.515625,
+        "height": 62
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 21,
+      "type": "element",
+      "tag": "div",
+      "parent": 20,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "class": "location-name"
+      },
+      "box": {
+        "x": 243,
+        "y": 139,
+        "width": 178.515625,
+        "height": 38
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 32
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 22,
+      "type": "text",
+      "parent": 21,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Berlin",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 0
+    },
+    {
+      "preorder": 23,
+      "type": "element",
+      "tag": "div",
+      "parent": 20,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "date-label"
+      },
+      "box": {
+        "x": 243,
+        "y": 183,
+        "width": 178.515625,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 24,
+      "type": "text",
+      "parent": 23,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Wednesday, July 15, 2026",
+      "codepoint_length": 24,
+      "text_visible": true,
+      "visible_text_index": 1
+    },
+    {
+      "preorder": 25,
+      "type": "element",
+      "tag": "div",
+      "parent": 19,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "condition-badge"
+      },
+      "box": {
+        "x": 913.15625,
+        "y": 139,
+        "width": 123.84375,
+        "height": 75
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 26,
+      "type": "element",
+      "tag": "div",
+      "parent": 25,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "class": "weather-icon"
+      },
+      "box": {
+        "x": 985,
+        "y": 139,
+        "width": 52,
+        "height": 52
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 52
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 27,
+      "type": "text",
+      "parent": 26,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "🌦️",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 2
+    },
+    {
+      "preorder": 28,
+      "type": "element",
+      "tag": "div",
+      "parent": 25,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "condition-text"
+      },
+      "box": {
+        "x": 913.15625,
+        "y": 197,
+        "width": 123.84375,
+        "height": 17
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 14
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 29,
+      "type": "text",
+      "parent": 28,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Light Drizzle",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 3
+    },
+    {
+      "preorder": 30,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 1,
+      "depth": 3,
+      "attrs": {
+        "class": "temp-section"
+      },
+      "box": {
+        "x": 243,
+        "y": 250,
+        "width": 794,
+        "height": 127
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 31,
+      "type": "element",
+      "tag": "div",
+      "parent": 30,
+      "child_index": 0,
+      "depth": 4,
+      "attrs": {
+        "class": "temp-main"
+      },
+      "box": {
+        "x": 243,
+        "y": 250,
+        "width": 139.578125,
+        "height": 127
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 32,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-max"
+      },
+      "box": {
+        "x": 243,
+        "y": 250,
+        "width": 139.578125,
+        "height": 88
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 88
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 33,
+      "type": "text",
+      "parent": 32,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "25",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 4
+    },
+    {
+      "preorder": 34,
+      "type": "element",
+      "tag": "span",
+      "parent": 32,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {},
+      "box": {
+        "x": 335.875,
+        "y": 253.671875,
+        "width": 46.703125,
+        "height": 52
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 0.7,
+        "font_size": 44
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 35,
+      "type": "text",
+      "parent": 34,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "°C",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 5
+    },
+    {
+      "preorder": 36,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-min"
+      },
+      "box": {
+        "x": 243,
+        "y": 342,
+        "width": 139.578125,
+        "height": 35
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 30
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 37,
+      "type": "text",
+      "parent": 36,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "16",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 6
+    },
+    {
+      "preorder": 38,
+      "type": "element",
+      "tag": "span",
+      "parent": 36,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {},
+      "box": {
+        "x": 272.671875,
+        "y": 354,
+        "width": 18.375,
+        "height": 21
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 18
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 39,
+      "type": "text",
+      "parent": 38,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "°C",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 7
+    },
+    {
+      "preorder": 40,
+      "type": "element",
+      "tag": "div",
+      "parent": 30,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "divider"
+      },
+      "box": {
+        "x": 422.578125,
+        "y": 273.5,
+        "width": 1,
+        "height": 80
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 41,
+      "type": "element",
+      "tag": "div",
+      "parent": 30,
+      "child_index": 2,
+      "depth": 4,
+      "attrs": {
+        "class": "temp-detail-list"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 295,
+        "width": 112.578125,
+        "height": 82
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 42,
+      "type": "element",
+      "tag": "div",
+      "parent": 41,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-detail-item"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 295,
+        "width": 112.578125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 43,
+      "type": "element",
+      "tag": "span",
+      "parent": 42,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {
+        "class": "dot high"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 300,
+        "width": 8,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 44,
+      "type": "text",
+      "parent": 42,
+      "child_index": 1,
+      "depth": 6,
+      "text_raw": " High: 25.3 °C",
+      "codepoint_length": 14,
+      "text_visible": true,
+      "visible_text_index": 8
+    },
+    {
+      "preorder": 45,
+      "type": "element",
+      "tag": "div",
+      "parent": 41,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-detail-item"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 323,
+        "width": 112.578125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 46,
+      "type": "element",
+      "tag": "span",
+      "parent": 45,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {
+        "class": "dot low"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 328,
+        "width": 8,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 47,
+      "type": "text",
+      "parent": 45,
+      "child_index": 1,
+      "depth": 6,
+      "text_raw": " Low: 16.0 °C",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 9
+    },
+    {
+      "preorder": 48,
+      "type": "element",
+      "tag": "div",
+      "parent": 41,
+      "child_index": 2,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-detail-item"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 351,
+        "width": 112.578125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 49,
+      "type": "element",
+      "tag": "span",
+      "parent": 48,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {
+        "class": "dot"
+      },
+      "box": {
+        "x": 463.578125,
+        "y": 356,
+        "width": 8,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 50,
+      "type": "element",
+      "tag": "span",
+      "parent": 48,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {},
+      "box": {
+        "x": 481.578125,
+        "y": 351,
+        "width": 94.578125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 51,
+      "type": "text",
+      "parent": 50,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "Range: 9.3 °C",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 10
+    },
+    {
+      "preorder": 52,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 2,
+      "depth": 3,
+      "attrs": {
+        "class": "hourly-section"
+      },
+      "box": {
+        "x": 243,
+        "y": 421,
+        "width": 794,
+        "height": 236
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 53,
+      "type": "element",
+      "tag": "div",
+      "parent": 52,
+      "child_index": 0,
+      "depth": 4,
+      "attrs": {
+        "class": "hourly-title"
+      },
+      "box": {
+        "x": 243,
+        "y": 421,
+        "width": 794,
+        "height": 16
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 13
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 54,
+      "type": "text",
+      "parent": 53,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Hourly Temperatures",
+      "codepoint_length": 19,
+      "text_visible": true,
+      "visible_text_index": 11
+    },
+    {
+      "preorder": 55,
+      "type": "element",
+      "tag": "div",
+      "parent": 52,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "chart-container"
+      },
+      "box": {
+        "x": 243,
+        "y": 457,
+        "width": 794,
+        "height": 200
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 56,
+      "type": "element",
+      "tag": "canvas",
+      "parent": 55,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "id": "tempChart"
+      },
+      "box": {
+        "x": 243,
+        "y": 457,
+        "width": 794,
+        "height": 200
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 57,
+      "type": "text",
+      "parent": 16,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 58,
+      "type": "element",
+      "tag": "script",
+      "parent": 16,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 59,
+      "type": "text",
+      "parent": 58,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n(function() {\n  const params = new URLSearchParams(window.location.search);\n  const lat = parseFloat(params.get('lat')) || 52.52;\n  const lon = parseFloat(params.get('lon')) || 13.405;\n  const locationName = params.get('name') || 'Berlin';\n\n  let dateParam = params.get('date');\n  let targetDate;\n  if (dateParam && /^\\d{4}-\\d{2}-\\d{2}$/.test(dateParam)) {\n    targetDate = dateParam;\n  } else {\n    const now = new Date();\n    targetDate = now.toISOString().split('T')[0];\n  }\n\n  const todayUTC = new Date().toISOString().split('T')[0];\n  const isPast = targetDate < todayUTC;\n  const apiBase = isPast ? '/api/om/archive' : '/api/om/forecast';\n\n  const weatherDescriptions = {\n    0: ['Clear Sky', '☀️'],\n    1: ['Mainly Clear', '🌤️'],\n    2: ['Partly Cloudy', '⛅'],\n    3: ['Overcast', '☁️'],\n    45: ['Fog', '🌫️'],\n    48: ['Depositing Rime Fog', '🌫️'],\n    51: ['Light Drizzle', '🌦️'],\n    53: ['Moderate Drizzle', '🌦️'],\n    55: ['Dense Drizzle', '🌧️'],\n    56: ['Light Freezing Drizzle', '🌧️'],\n    57: ['Dense Freezing Drizzle', '🌧️'],\n    61: ['Slight Rain', '🌧️'],\n    63: ['Moderate Rain', '🌧️'],\n    65: ['Heavy Rain', '🌧️'],\n    66: ['Light Freezing Rain', '🌨️'],\n    67: ['Heavy Freezing Rain', '🌨️'],\n    71: ['Slight Snowfall', '🌨️'],\n    73: ['Moderate Snowfall', '❄️'],\n    75: ['Heavy Snowfall', '❄️'],\n    77: ['Snow Grains', '🌨️'],\n    80: ['Slight Rain Showers', '🌦️'],\n    81: ['Moderate Rain Showers', '🌧️'],\n    82: ['Violent Rain Showers', '⛈️'],\n    85: ['Slight Snow Showers', '🌨️'],\n    86: ['Heavy Snow Showers', '❄️'],\n    95: ['Thunderstorm', '⛈️'],\n    96: ['Thunderstorm with Slight Hail', '⛈️'],\n    99: ['Thunderstorm with Heavy Hail', '⛈️'],\n  };\n\n  function getWeatherInfo(code) {\n    return weatherDescriptions[code] || ['Unknown', '❓'];\n  }\n\n  function formatDate(dateStr) {\n    const d = new Date(dateStr + 'T12:00:00Z');\n    return d.toLocaleDateString('en-US', {\n      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'\n    });\n  }\n\n  const url = `${apiBase}?latitude=${lat}&longitude=${lon}` +\n    `&daily=temperature_2m_max,temperature_2m_min,weather_code` +\n    `&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius` +\n    `&start_date=${targetDate}&end_date=${targetDate}`;\n\n  fetch(url)\n    .then(res => {\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      return res.json();\n    })\n    .then(data => renderWeather(data))\n    .catch(err => showError(err.message));\n\n  function renderWeather(data) {\n    const app = document.getElementById('app');\n    const daily = data.daily;\n    const hourly = data.hourly;\n\n    if (!daily || !daily.temperature_2m_max || daily.temperature_2m_max.length === 0) {\n      showError('No data returned for this date.');\n      return;\n    }\n\n    const maxTemp = daily.temperature_2m_max[0];\n    const minTemp = daily.temperature_2m_min[0];\n    const weatherCode = daily.weather_code[0];\n    const [conditionName, conditionIcon] = getWeatherInfo(weatherCode);\n\n    const hourlyTemps = hourly.temperature_2m || [];\n    const hourlyTimes = hourly.temperature_2m ? Array.from({length: 24}, (_, i) => i) : [];\n\n    app.innerHTML = '';\n\n    // Header\n    const header = el('div', 'header');\n\n    const leftHeader = el('div');\n    const nameEl = el('div', 'location-name');\n    nameEl.textContent = locationName;\n    const dateEl = el('div', 'date-label');\n    dateEl.textContent = formatDate(targetDate);\n    leftHeader.append(nameEl, dateEl);\n\n    const rightHeader = el('div', 'condition-badge');\n    const iconEl = el('div', 'weather-icon');\n    iconEl.textContent = conditionIcon;\n    const condText = el('div', 'condition-text');\n    condText.textContent = conditionName;\n    rightHeader.append(iconEl, condText);\n\n    header.append(leftHeader, rightHeader);\n\n    // Temp section\n    const tempSection = el('div', 'temp-section');\n\n    const tempMain = el('div', 'temp-main');\n    const tempMaxEl = el('div', 'temp-max');\n    tempMaxEl.innerHTML = `${Math.round(maxTemp)}<span>°C</span>`;\n    const tempMinEl = el('div', 'temp-min');\n    tempMinEl.innerHTML = `${Math.round(minTemp)}<span>°C</span>`;\n    tempMain.append(tempMaxEl, tempMinEl);\n\n    const divider = el('div', 'divider');\n\n    const detailList = el('div', 'temp-detail-list');\n    const highItem = el('div', 'temp-detail-item');\n    highItem.innerHTML = `<span class=\"dot high\"></span> High: ${maxTemp.toFixed(1)} °C`;\n    const lowItem = el('div', 'temp-detail-item');\n    lowItem.innerHTML = `<span class=\"dot low\"></span> Low: ${minTemp.toFixed(1)} °C`;\n    const rangeItem = el('div', 'temp-detail-item');\n    const rangeDot = el('span');\n    rangeDot.className = 'dot';\n    rangeDot.style.background = 'linear-gradient(135deg, #ff7e7e, #7eb8ff)';\n    rangeDot.style.boxShadow = '0 0 8px rgba(200,150,255,0.5)';\n    const rangeSpan = el('span');\n    rangeSpan.textContent = `Range: ${(maxTemp - minTemp).toFixed(1)} °C`;\n    rangeItem.append(rangeDot, rangeSpan);\n    detailList.append(highItem, lowItem, rangeItem);\n\n    tempSection.append(tempMain, divider, detailList);\n\n    // Hourly section\n    const hourlySection = el('div', 'hourly-section');\n    const hourlyTitle = el('div', 'hourly-title');\n    hourlyTitle.textContent = 'Hourly Temperatures';\n    const chartContainer = el('div', 'chart-container');\n    const canvas = document.createElement('canvas');\n    canvas.id = 'tempChart';\n    chartContainer.appendChild(canvas);\n    hourlySection.append(hourlyTitle, chartContainer);\n\n    app.append(header, tempSection, hourlySection);\n\n    drawChart(canvas, hourlyTemps, hourlyTimes);\n  }\n\n  function drawChart(canvas, temps, hours) {\n    const dpr = window.devicePixelRatio || 1;\n    const rect = canvas.parentElement.getBoundingClientRect();\n    canvas.width = rect.width * dpr;\n    canvas.height = rect.height * dpr;\n    canvas.style.width = rect.width + 'px';\n    canvas.style.height = rect.height + 'px';\n    const ctx = canvas.getContext('2d');\n    ctx.scale(dpr, dpr);\n\n    const W = rect.width;\n    const H = rect.height;\n    const padLeft = 36;\n    const padRight = 20;\n    const padTop = 24;\n    const padBottom = 36;\n    const chartW = W - padLeft - padRight;\n    const chartH = H - padTop - padBottom;\n\n    if (!temps || temps.length === 0) return;\n\n    const minT = Math.floor(Math.min(...temps) - 1);\n    const maxT = Math.ceil(Math.max(...temps) + 1);\n    const rangeT = maxT - minT || 1;\n\n    function x(i) { return padLeft + (i / (temps.length - 1)) * chartW; }\n    function y(t) { return padTop + (1 - (t - minT) / rangeT) * chartH; }\n\n    // Grid lines\n    ctx.strokeStyle = 'rgba(255,255,255,0.06)';\n    ctx.lineWidth = 1;\n    const gridLines = 5;\n    for (let i = 0; i <= gridLines; i++) {\n      const gy = padTop + (i / gridLines) * chartH;\n      ctx.beginPath();\n      ctx.moveTo(padLeft, gy);\n      ctx.lineTo(W - padRight, gy);\n      ctx.stroke();\n\n      const tempLabel = maxT - (i / gridLines) * rangeT;\n      ctx.fillStyle = 'rgba(255,255,255,0.3)';\n      ctx.font = '11px Segoe UI, sans-serif';\n      ctx.textAlign = 'right';\n      ctx.textBaseline = 'middle';\n      ctx.fillText(Math.round(tempLabel) + '°', padLeft - 8, gy);\n    }\n\n    // Hour labels\n    ctx.fillStyle = 'rgba(255,255,255,0.3)';\n    ctx.font = '11px Segoe UI, sans-serif';\n    ctx.textAlign = 'center';\n    ctx.textBaseline = 'top';\n    const labelStep = temps.length > 24 ? Math.ceil(temps.length / 24) : 1;\n    for (let i = 0; i < temps.length; i += labelStep) {\n      ctx.fillText(i.toString().padStart(2, '0') + ':00', x(i), H - padBottom + 12);\n    }\n\n    // Gradient fill under curve\n    const grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);\n    grad.addColorStop(0, 'rgba(120,180,255,0.25)');\n    grad.addColorStop(1, 'rgba(120,180,255,0.0)');\n\n    ctx.beginPath();\n    ctx.moveTo(x(0), padTop + chartH);\n    for (let i = 0; i < temps.length; i++) {\n      if (i === 0) ctx.lineTo(x(i), y(temps[i]));\n      else {\n        const cx1 = x(i - 1) + (x(i) - x(i - 1)) * 0.4;\n        const cx2 = x(i) - (x(i) - x(i - 1)) * 0.4;\n        ctx.bezierCurveTo(cx1, y(temps[i-1]), cx2, y(temps[i]), x(i), y(temps[i]));\n      }\n    }\n    ctx.lineTo(x(temps.length - 1), padTop + chartH);\n    ctx.closePath();\n    ctx.fillStyle = grad;\n    ctx.fill();\n\n    // Line\n    const lineGrad = ctx.createLinearGradient(padLeft, 0, W - padRight, 0);\n    lineGrad.addColorStop(0, '#64b5f6');\n    lineGrad.addColorStop(0.5, '#ce93d8');\n    lineGrad.addColorStop(1, '#f48fb1');\n\n    ctx.beginPath();\n    for (let i = 0; i < temps.length; i++) {\n      if (i === 0) ctx.moveTo(x(i), y(temps[i]));\n      else {\n        const cx1 = x(i - 1) + (x(i) - x(i - 1)) * 0.4;\n        const cx2 = x(i) - (x(i) - x(i - 1)) * 0.4;\n        ctx.bezierCurveTo(cx1, y(temps[i-1]), cx2, y(temps[i]), x(i), y(temps[i]));\n      }\n    }\n    ctx.strokeStyle = lineGrad;\n    ctx.lineWidth = 2.5;\n    ctx.stroke();\n\n    // Dots\n    for (let i = 0; i < temps.length; i += labelStep) {\n      ctx.beginPath();\n      ctx.arc(x(i), y(temps[i]), 3.5, 0, Math.PI * 2);\n      ctx.fillStyle = '#fff';\n      ctx.fill();\n      ctx.strokeStyle = 'rgba(120,180,255,0.5)';\n      ctx.lineWidth = 2;\n      ctx.stroke();\n    }\n  }\n\n  function showError(msg) {\n    const app = document.getElementById('app');\n    app.innerHTML = `\n      <div class=\"error-container\">\n        <div class=\"error-icon\">⚠️</div>\n        <div class=\"error-title\">Weather Data Unavailable</div>\n        <div class=\"error-msg\">Unable to load weather data for <strong>${locationName}</strong> on <strong>${targetDate}</strong>.<br>${msg}</div>\n      </div>`;\n  }\n\n  function el(tag, cls) {\n    const e = document.createElement(tag);\n    if (cls) e.className = cls;\n    return e;\n  }\n})();\n",
+      "codepoint_length": 9716,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 60,
+      "type": "text",
+      "parent": 16,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    }
+  ]
+}

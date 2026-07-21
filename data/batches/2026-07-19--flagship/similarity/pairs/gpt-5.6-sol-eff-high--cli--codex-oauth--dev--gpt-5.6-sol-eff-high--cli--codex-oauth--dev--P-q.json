@@ -1,0 +1,55 @@
+{
+ "batch_id": "2026-07-19--unified",
+ "channels": [
+  "v-phash",
+  "v-dhash",
+  "v-color",
+  "v-palette",
+  "v-layout",
+  "v-edge",
+  "v-ssim",
+  "c-shingle",
+  "c-winnow",
+  "c-feature",
+  "c-ast-js",
+  "c-css-prop",
+  "c-ncd",
+  "d-geom",
+  "d-text",
+  "d-pqgram",
+  "d-tagpath"
+ ],
+ "config_a": "gpt-5.6-sol-eff-high--cli--codex-oauth--dev",
+ "config_b": "gpt-5.6-sol-eff-high--cli--codex-oauth--dev",
+ "kind": "self",
+ "pairs": [
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.6768292682926829,
+    "v_ssim_raw": 0.33784312263798655
+   },
+   "s": {
+    "c-ast-js": 0.9542025746857513,
+    "c-css-prop": 0.9347959097595281,
+    "c-feature": 0.5792682926829268,
+    "c-ncd": 0.32317073170731714,
+    "c-shingle": 0.3329537690731041,
+    "c-winnow": 0.3545734840698869,
+    "d-geom": 0.9681445228318035,
+    "d-pqgram": 0.36750483558994196,
+    "d-tagpath": 0.08333333333333333,
+    "d-text": 0.02564102564102564,
+    "v-color": 0.17182509003760904,
+    "v-dhash": 0.63671875,
+    "v-edge": 0.7886338595770975,
+    "v-layout": 0.9291327068728791,
+    "v-palette": 0.2258094824711901,
+    "v-phash": 0.4375,
+    "v-ssim": 0.6689215613189933
+   },
+   "slot_a": 0,
+   "slot_b": 1
+  }
+ ],
+ "variant": "P-q"
+}

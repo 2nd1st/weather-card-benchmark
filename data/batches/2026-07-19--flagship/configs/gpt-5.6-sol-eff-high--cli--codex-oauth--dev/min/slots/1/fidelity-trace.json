@@ -1,0 +1,1949 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 1,
+  "occurrences": [
+    {
+      "id": {
+        "node_preorder": 70,
+        "start": 6,
+        "end": 10
+      },
+      "pattern_id": "max-label-v1",
+      "namespace": "max-label",
+      "merged_categories": [
+        "max"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 83,
+        "start": 0,
+        "end": 7
+      },
+      "pattern_id": "max-label-v1",
+      "namespace": "max-label",
+      "merged_categories": [
+        "max"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 86,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 92,
+        "start": 0,
+        "end": 7
+      },
+      "pattern_id": "min-label-v1",
+      "namespace": "min-label",
+      "merged_categories": [
+        "min"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 95,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 110,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 110,
+        "start": 6,
+        "end": 11
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 116,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 123,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 130,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 137,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 144,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 151,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 158,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 165,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 172,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 179,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 186,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 193,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 200,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 207,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 214,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 221,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 228,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 235,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 242,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 249,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 256,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 263,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 270,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 277,
+        "start": 0,
+        "end": 5
+      },
+      "pattern_id": "hourly-label-v1",
+      "namespace": "hourly-label",
+      "merged_categories": [
+        "hourly"
+      ],
+      "voided": false,
+      "voided_reason": null
+    }
+  ],
+  "arbitration": {
+    "considered": [
+      {
+        "node_preorder": 70,
+        "start": 6,
+        "length": 4,
+        "pattern_id": "max-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 83,
+        "start": 0,
+        "length": 7,
+        "pattern_id": "max-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 86,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 92,
+        "start": 0,
+        "length": 7,
+        "pattern_id": "min-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 95,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 110,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 110,
+        "start": 6,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 116,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 123,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 130,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 137,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 144,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 151,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 158,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 165,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 172,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 179,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 186,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 193,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 200,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 207,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 214,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 221,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 228,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 235,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 242,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 249,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 256,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 263,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 270,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 277,
+        "start": 0,
+        "length": 5,
+        "pattern_id": "hourly-label-v1",
+        "selected": true
+      }
+    ]
+  },
+  "salience": {
+    "f_max": 20.0,
+    "candidates": [
+      {
+        "occurrence_id": {
+          "node_preorder": 86,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 20.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 95,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 20.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      }
+    ],
+    "E": [
+      {
+        "node_preorder": 86,
+        "start": 0,
+        "end": 3
+      },
+      {
+        "node_preorder": 95,
+        "start": 0,
+        "end": 3
+      }
+    ]
+  },
+  "max_min_binding": {
+    "branch": "double-label",
+    "distances": [
+      {
+        "label_id": {
+          "node_preorder": 70,
+          "start": 6,
+          "end": 10
+        },
+        "temp_id": {
+          "node_preorder": 86,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 4,
+        "text_coord_diff": 15
+      },
+      {
+        "label_id": {
+          "node_preorder": 70,
+          "start": 6,
+          "end": 10
+        },
+        "temp_id": {
+          "node_preorder": 95,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 4,
+        "text_coord_diff": 25
+      },
+      {
+        "label_id": {
+          "node_preorder": 83,
+          "start": 0,
+          "end": 7
+        },
+        "temp_id": {
+          "node_preorder": 86,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 83,
+          "start": 0,
+          "end": 7
+        },
+        "temp_id": {
+          "node_preorder": 95,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 4,
+        "text_coord_diff": 17
+      },
+      {
+        "label_id": {
+          "node_preorder": 92,
+          "start": 0,
+          "end": 7
+        },
+        "temp_id": {
+          "node_preorder": 86,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 4,
+        "text_coord_diff": 3
+      },
+      {
+        "label_id": {
+          "node_preorder": 92,
+          "start": 0,
+          "end": 7
+        },
+        "temp_id": {
+          "node_preorder": 95,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      }
+    ],
+    "max": {
+      "label_id": {
+        "node_preorder": 83,
+        "start": 0,
+        "end": 7
+      },
+      "temp_id": {
+        "node_preorder": 86,
+        "start": 0,
+        "end": 3
+      },
+      "canonical_id": {
+        "node_preorder": 86,
+        "start": 0,
+        "end": 3
+      },
+      "value": "25",
+      "display_decimals": 0
+    },
+    "min": {
+      "label_id": {
+        "node_preorder": 92,
+        "start": 0,
+        "end": 7
+      },
+      "temp_id": {
+        "node_preorder": 95,
+        "start": 0,
+        "end": 3
+      },
+      "canonical_id": {
+        "node_preorder": 95,
+        "start": 0,
+        "end": 3
+      },
+      "value": "16",
+      "display_decimals": 0
+    },
+    "canonical_published": true,
+    "decision_path": [
+      {
+        "code": "branch-double-label",
+        "detail": null
+      },
+      {
+        "code": "double-label-bound",
+        "detail": "Tmax=(86, 0, 3) Tmin=(95, 0, 3)"
+      },
+      {
+        "code": "canonical-published",
+        "detail": "true"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "proceed",
+    "has_label": true,
+    "candidates": [],
+    "label_parse": [
+      {
+        "occurrence_id": {
+          "node_preorder": 110,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 0
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 110,
+          "start": 6,
+          "end": 11
+        },
+        "parsed_hour": 23
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 116,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 0
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 123,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 1
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 130,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 2
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 137,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 3
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 144,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 4
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 151,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 5
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 158,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 6
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 165,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 7
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 172,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 8
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 179,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 9
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 186,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 10
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 193,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 11
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 200,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 12
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 207,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 13
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 214,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 14
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 221,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 15
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 228,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 16
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 235,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 17
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 242,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 18
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 249,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 19
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 256,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 20
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 263,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 21
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 270,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 22
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 277,
+          "start": 0,
+          "end": 5
+        },
+        "parsed_hour": 23
+      }
+    ],
+    "bindings": [],
+    "signature": [
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      },
+      {
+        "node_preorder": 2147483647,
+        "start": 2147483647,
+        "end": 2147483647
+      }
+    ],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "proceed"
+      },
+      {
+        "code": "hourly-branch",
+        "detail": "labeled"
+      },
+      {
+        "code": "hourly-no-candidate",
+        "detail": null
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "name-substring-hit",
+          "detail": "node=51"
+        }
+      ]
+    },
+    "date": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "date-hit",
+          "detail": "2026-07-15"
+        }
+      ]
+    },
+    "condition": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "condition-wmo-hit",
+          "detail": "node=57"
+        }
+      ]
+    },
+    "max": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-double-label",
+          "detail": null
+        },
+        {
+          "code": "double-label-bound",
+          "detail": "Tmax=(86, 0, 3) Tmin=(95, 0, 3)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "min": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-double-label",
+          "detail": null
+        },
+        {
+          "code": "double-label-bound",
+          "detail": "Tmax=(86, 0, 3) Tmin=(95, 0, 3)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "proceed"
+        },
+        {
+          "code": "hourly-branch",
+          "detail": "labeled"
+        },
+        {
+          "code": "hourly-no-candidate",
+          "detail": null
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 19,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 21,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 23,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 25,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 27,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 29,
+      "text_coord_base": 0,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 31,
+      "text_coord_base": 0,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 32,
+      "text_coord_base": 5,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 34,
+      "text_coord_base": 5,
+      "codepoint_length": 18
+    },
+    {
+      "node_preorder": 35,
+      "text_coord_base": 23,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 36,
+      "text_coord_base": 23,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 37,
+      "text_coord_base": 23,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 39,
+      "text_coord_base": 23,
+      "codepoint_length": 12
+    },
+    {
+      "node_preorder": 40,
+      "text_coord_base": 35,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 41,
+      "text_coord_base": 35,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 43,
+      "text_coord_base": 35,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 45,
+      "text_coord_base": 35,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 48,
+      "text_coord_base": 35,
+      "codepoint_length": 17
+    },
+    {
+      "node_preorder": 49,
+      "text_coord_base": 52,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 51,
+      "text_coord_base": 52,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 52,
+      "text_coord_base": 58,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 54,
+      "text_coord_base": 58,
+      "codepoint_length": 24
+    },
+    {
+      "node_preorder": 55,
+      "text_coord_base": 82,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 57,
+      "text_coord_base": 82,
+      "codepoint_length": 7
+    },
+    {
+      "node_preorder": 58,
+      "text_coord_base": 89,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 59,
+      "text_coord_base": 89,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 62,
+      "text_coord_base": 89,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 66,
+      "text_coord_base": 89,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 68,
+      "text_coord_base": 89,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 70,
+      "text_coord_base": 89,
+      "codepoint_length": 10
+    },
+    {
+      "node_preorder": 71,
+      "text_coord_base": 99,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 74,
+      "text_coord_base": 99,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 76,
+      "text_coord_base": 101,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 77,
+      "text_coord_base": 103,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 79,
+      "text_coord_base": 103,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 81,
+      "text_coord_base": 103,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 83,
+      "text_coord_base": 103,
+      "codepoint_length": 7
+    },
+    {
+      "node_preorder": 84,
+      "text_coord_base": 110,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 86,
+      "text_coord_base": 110,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 87,
+      "text_coord_base": 113,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 88,
+      "text_coord_base": 113,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 90,
+      "text_coord_base": 113,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 92,
+      "text_coord_base": 113,
+      "codepoint_length": 7
+    },
+    {
+      "node_preorder": 93,
+      "text_coord_base": 120,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 95,
+      "text_coord_base": 120,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 96,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 97,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 98,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 99,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 100,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 101,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 103,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 105,
+      "text_coord_base": 123,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 107,
+      "text_coord_base": 123,
+      "codepoint_length": 19
+    },
+    {
+      "node_preorder": 108,
+      "text_coord_base": 142,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 110,
+      "text_coord_base": 142,
+      "codepoint_length": 21
+    },
+    {
+      "node_preorder": 111,
+      "text_coord_base": 163,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 112,
+      "text_coord_base": 163,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 116,
+      "text_coord_base": 163,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 118,
+      "text_coord_base": 168,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 120,
+      "text_coord_base": 170,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 123,
+      "text_coord_base": 171,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 125,
+      "text_coord_base": 176,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 127,
+      "text_coord_base": 178,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 130,
+      "text_coord_base": 179,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 132,
+      "text_coord_base": 184,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 134,
+      "text_coord_base": 186,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 137,
+      "text_coord_base": 187,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 139,
+      "text_coord_base": 192,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 141,
+      "text_coord_base": 194,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 144,
+      "text_coord_base": 195,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 146,
+      "text_coord_base": 200,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 148,
+      "text_coord_base": 202,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 151,
+      "text_coord_base": 203,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 153,
+      "text_coord_base": 208,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 155,
+      "text_coord_base": 210,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 158,
+      "text_coord_base": 211,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 160,
+      "text_coord_base": 216,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 162,
+      "text_coord_base": 218,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 165,
+      "text_coord_base": 219,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 167,
+      "text_coord_base": 224,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 169,
+      "text_coord_base": 226,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 172,
+      "text_coord_base": 227,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 174,
+      "text_coord_base": 232,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 176,
+      "text_coord_base": 234,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 179,
+      "text_coord_base": 235,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 181,
+      "text_coord_base": 240,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 183,
+      "text_coord_base": 242,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 186,
+      "text_coord_base": 243,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 188,
+      "text_coord_base": 248,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 190,
+      "text_coord_base": 250,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 193,
+      "text_coord_base": 251,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 195,
+      "text_coord_base": 256,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 197,
+      "text_coord_base": 258,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 200,
+      "text_coord_base": 259,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 202,
+      "text_coord_base": 264,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 204,
+      "text_coord_base": 266,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 207,
+      "text_coord_base": 267,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 209,
+      "text_coord_base": 272,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 211,
+      "text_coord_base": 274,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 214,
+      "text_coord_base": 275,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 216,
+      "text_coord_base": 280,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 218,
+      "text_coord_base": 282,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 221,
+      "text_coord_base": 283,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 223,
+      "text_coord_base": 288,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 225,
+      "text_coord_base": 290,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 228,
+      "text_coord_base": 291,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 230,
+      "text_coord_base": 296,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 232,
+      "text_coord_base": 298,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 235,
+      "text_coord_base": 299,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 237,
+      "text_coord_base": 304,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 239,
+      "text_coord_base": 306,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 242,
+      "text_coord_base": 307,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 244,
+      "text_coord_base": 312,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 246,
+      "text_coord_base": 314,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 249,
+      "text_coord_base": 315,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 251,
+      "text_coord_base": 320,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 253,
+      "text_coord_base": 322,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 256,
+      "text_coord_base": 323,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 258,
+      "text_coord_base": 328,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 260,
+      "text_coord_base": 330,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 263,
+      "text_coord_base": 331,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 265,
+      "text_coord_base": 336,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 267,
+      "text_coord_base": 338,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 270,
+      "text_coord_base": 339,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 272,
+      "text_coord_base": 344,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 274,
+      "text_coord_base": 346,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 277,
+      "text_coord_base": 347,
+      "codepoint_length": 5
+    },
+    {
+      "node_preorder": 279,
+      "text_coord_base": 352,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 281,
+      "text_coord_base": 354,
+      "codepoint_length": 1
+    },
+    {
+      "node_preorder": 282,
+      "text_coord_base": 355,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 283,
+      "text_coord_base": 355,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 297,
+      "text_coord_base": 355,
+      "codepoint_length": 0
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weather Card</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 800px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card {
+    width: 900px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 40px 50px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .location { font-size: 36px; font-weight: 700; color: #2d3748; }
+  .date { font-size: 20px; color: #718096; margin-top: 4px; margin-bottom: 28px; }
+  .main {
+    display: flex; align-items: center; gap: 40px;
+    padding-bottom: 28px; border-bottom: 1px solid #e2e8f0;
+  }
+  .icon { font-size: 100px; line-height: 1; }
+  .temps { flex: 1; }
+  .condition { font-size: 24px; color: #4a5568; margin-bottom: 8px; }
+  .temp-row { display: flex; gap: 30px; align-items: baseline; }
+  .max-temp { font-size: 56px; font-weight: 700; color: #e53e3e; }
+  .min-temp { font-size: 40px; font-weight: 600; color: #3182ce; }
+  .divider { font-size: 36px; color: #cbd5e0; }
+  .hourly { margin-top: 28px; }
+  .hourly-title { font-size: 18px; font-weight: 600; color: #4a5568; margin-bottom: 16px; }
+  .hours {
+    display: flex; gap: 8px; overflow-x: auto;
+  }
+  .hour {
+    flex: 1; min-width: 0;
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 10px 4px;
+    text-align: center;
+  }
+  .hour-time { font-size: 13px; color: #718096; }
+  .hour-icon { font-size: 22px; margin: 4px 0; }
+  .hour-temp { font-size: 15px; font-weight: 600; color: #2d3748; }
+  .error {
+    text-align: center; font-size: 24px; color: #e53e3e;
+    padding: 60px 20px;
+  }
+  .loading { text-align: center; font-size: 22px; color: #4a5568; padding: 60px; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="loading">Loading weather data...</div>
+</div>
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const lat = parseFloat(params.get('lat')) || 52.52;
+  const lon = parseFloat(params.get('lon')) || 13.405;
+  const name = params.get('name') || 'Berlin';
+  let date = params.get('date');
+  if (!date) {
+    const d = new Date();
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth()+1).padStart(2,'0');
+    const dd = String(d.getUTCDate()).padStart(2,'0');
+    date = `${y}-${m}-${dd}`;
+  }
+
+  const today = new Date();
+  const todayStr = today.getUTCFullYear() + '-' + String(today.getUTCMonth()+1).padStart(2,'0') + '-' + String(today.getUTCDate()).padStart(2,'0');
+  const isPast = date < todayStr;
+  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  const url = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${date}&end_date=${date}`;
+
+  const wmo = {
+    0:  {desc:'Clear sky', icon:'☀️'},
+    1:  {desc:'Mainly clear', icon:'🌤️'},
+    2:  {desc:'Partly cloudy', icon:'⛅'},
+    3:  {desc:'Overcast', icon:'☁️'},
+    45: {desc:'Fog', icon:'🌫️'},
+    48: {desc:'Depositing rime fog', icon:'🌫️'},
+    51: {desc:'Light drizzle', icon:'🌦️'},
+    53: {desc:'Drizzle', icon:'🌦️'},
+    55: {desc:'Dense drizzle', icon:'🌧️'},
+    56: {desc:'Freezing drizzle', icon:'🌧️'},
+    57: {desc:'Dense freezing drizzle', icon:'🌧️'},
+    61: {desc:'Slight rain', icon:'🌧️'},
+    63: {desc:'Rain', icon:'🌧️'},
+    65: {desc:'Heavy rain', icon:'🌧️'},
+    66: {desc:'Freezing rain', icon:'🌧️'},
+    67: {desc:'Heavy freezing rain', icon:'🌧️'},
+    71: {desc:'Slight snow', icon:'🌨️'},
+    73: {desc:'Snow', icon:'🌨️'},
+    75: {desc:'Heavy snow', icon:'❄️'},
+    77: {desc:'Snow grains', icon:'🌨️'},
+    80: {desc:'Rain showers', icon:'🌦️'},
+    81: {desc:'Rain showers', icon:'🌧️'},
+    82: {desc:'Violent rain showers', icon:'⛈️'},
+    85: {desc:'Snow showers', icon:'🌨️'},
+    86: {desc:'Heavy snow showers', icon:'❄️'},
+    95: {desc:'Thunderstorm', icon:'⛈️'},
+    96: {desc:'Thunderstorm with hail', icon:'⛈️'},
+    99: {desc:'Thunderstorm with heavy hail', icon:'⛈️'}
+  };
+
+  function hourIcon(hour, code) {
+    // simple day/night differentiation for clear/partly
+    const isNight = hour < 6 || hour >= 20;
+    if (code === 0) return isNight ? '🌙' : '☀️';
+    if (code === 1) return isNight ? '🌙' : '🌤️';
+    if (code === 2) return isNight ? '☁️' : '⛅';
+    return (wmo[code] && wmo[code].icon) || '🌡️';
+  }
+
+  function formatDate(d) {
+    const dt = new Date(d + 'T00:00:00Z');
+    return dt.toUTCString().split(' ').slice(0,4).join(' ');
+  }
+
+  function showError(msg) {
+    document.getElementById('card').innerHTML = `<div class="error">${msg}</div>`;
+  }
+
+  fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      if (!data.daily || !data.daily.temperature_2m_max) throw new Error('Invalid data');
+      const tmax = data.daily.temperature_2m_max[0];
+      const tmin = data.daily.temperature_2m_min[0];
+      const code = data.daily.weather_code[0];
+      const cond = wmo[code] || {desc:'Unknown', icon:'🌡️'};
+      const hours = data.hourly.temperature_2m;
+
+      let hoursHtml = '';
+      for (let i = 0; i < 24; i++) {
+        const temp = hours[i];
+        if (temp === null || temp === undefined) continue;
+        hoursHtml += `
+          <div class="hour">
+            <div class="hour-time">${String(i).padStart(2,'0')}:00</div>
+            <div class="hour-icon">${hourIcon(i, code)}</div>
+            <div class="hour-temp">${Math.round(temp)}°</div>
+          </div>`;
+      }
+
+      document.getElementById('card').innerHTML = `
+        <div class="location">${name}</div>
+        <div class="date">${formatDate(date)}</div>
+        <div class="main">
+          <div class="icon">${cond.icon}</div>
+          <div class="temps">
+            <div class="condition">${cond.desc}</div>
+            <div class="temp-row">
+              <span class="max-temp">${Math.round(tmax)}°C</span>
+              <span class="divider">/</span>
+              <span class="min-temp">${Math.round(tmin)}°C</span>
+            </div>
+          </div>
+        </div>
+        <div class="hourly">
+          <div class="hourly-title">Hourly Temperatures</div>
+          <div class="hours">${hoursHtml}</div>
+        </div>
+      `;
+    })
+    .catch(err => {
+      showError('Unable to load weather data: ' + err.message);
+    });
+})();
+</script>
+</body>
+</html>

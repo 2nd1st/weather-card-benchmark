@@ -1,0 +1,549 @@
+/* =========================================================================
+   weather-card-benchmark — design system (spec §5)
+   "仪表台 Dark" / exhibit-glow. Base = mockup-b.html (hero scale, halos,
+   panel gradients, mono numerals, exhibit glow); tempered by mockup-a's
+   hairline-and-ink restraint on data-dense surfaces (matrix, progress,
+   tables, raw viewers — no glow there). Violet (--acc-2) is reserved
+   EXCLUSIVELY for community / vote elements; cyan owns everything else.
+   ========================================================================= */
+
+:root {
+  --bg:#0B0E14; --bg-elev:#11151F; --panel:#151B29; --panel-2:#1B2334;
+  --line:#232C41; --line-strong:#31405F;
+  /* Text tiers (contrast measured on --bg #0B0E14):
+     --ink        primary          ~15:1
+     --ink-dim    secondary body   ~7.9:1  (was #93A0B8 7.3:1)
+     --ink-faint  readable minor   ~5.6:1  (was #5C6883 3.5:1 — under the 4.5 floor)
+     --ink-faintest  decorative    ~3.5:1  (eyebrows / micro-tags ONLY, never body-adjacent copy)
+     Secondary/label copy uses --ink-dim or --ink-faint so it clears WCAG AA;
+     --ink-faintest is reserved for purely ornamental metadata. */
+  --ink:#E8ECF4; --ink-dim:#9AA7BF; --ink-faint:#7E8BA8; --ink-faintest:#5C6883;
+  --acc:#37D6E4; --acc-2:#7C8CF8; --good:#3BD97F; --warn:#F5B454; --bad:#F0647A;
+  --font-sans:-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --radius:10px; --radius-lg:14px; --gap:14px;
+  --lh-body:1.65;
+  --wrap:1288px;
+}
+
+/* CJK needs more breathing room than the en-tuned default (spec §6). */
+:root:lang(zh), html[lang="zh"] { --lh-body:1.8; }
+
+* { margin:0; padding:0; box-sizing:border-box; min-width:0; }
+html { scroll-behavior:smooth; }
+
+/* Dark scrollbars everywhere. On devices with always-visible scrollbars
+   (external mouse / "Show scroll bars: Always") the UA default paints a WHITE
+   track on our dark theme — every overflow container (gate panel, matrix,
+   drawers, code viewers) framed itself in white. Overlay-scrollbar systems are
+   unaffected visually. */
+* { scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent; }
+*::-webkit-scrollbar { width:10px; height:10px; }
+*::-webkit-scrollbar-track { background:transparent; }
+*::-webkit-scrollbar-thumb {
+  background:var(--line-strong); border-radius:5px;
+  border:2px solid transparent; background-clip:content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background-color:var(--ink-faintest); }
+*::-webkit-scrollbar-corner { background:transparent; }
+body {
+  background:var(--bg); color:var(--ink);
+  font-family:var(--font-sans); font-size:14px; line-height:var(--lh-body);
+  -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+a { color:inherit; text-decoration:none; }
+button { font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img, iframe { max-width:100%; }
+/* EXCEPTION — fixed-viewport card exhibits must NOT be clamped by the reset above.
+   ScaledExhibit / CardFrame / the gallery gate mount an untrusted card at an
+   INTERNAL 1280×800 viewport (inline width:1280px) and scale the whole frame down
+   with a CSS transform. max-width:100% would shrink that iframe to its (often
+   ~200px tile) container, so the card lays out at the wrong width and the
+   transform then slices panels / enlarges text. Every such iframe is
+   sandbox="allow-scripts" (untrusted, opaque origin) — the systemic hook — and
+   each lives inside an overflow:hidden wrapper, so exempting it cannot cause page
+   overflow. Covers all surfaces (gallery tiles, arena pairs, compare, card page). */
+iframe[sandbox~="allow-scripts"] { max-width:none; }
+:focus-visible { outline:2px solid var(--acc); outline-offset:2px; border-radius:2px; }
+::selection { background:rgb(55 214 228 / 22%); }
+@media (prefers-reduced-motion:reduce) { *{ transition:none!important; animation:none!important; } }
+
+.wrap { width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:clamp(16px,4vw,44px); }
+/* CONTAINER RULE (single source of alignment — audit: no x≈204 vs x≈120 drift):
+   `.wrap` (1288px, centered) is THE shared grid. The nav, the footer, and every
+   interactive / data / FORM surface use bare `.wrap`, so their content gutters
+   line up pixel-for-pixel at all widths.
+   `.measure` / `.measure-wide` are OPT-IN reading measures for long-form PROSE
+   ONLY (findings, methodology). They narrow the centered column so text does not
+   strand across a wide viewport — an intentional article layout, not the shared
+   grid. Interactive/form/data pages must NEVER use them (contribute was on
+   `measure-wide`, which pushed its content to x≈204 while the nav/footer sat at
+   x≈120 — it now uses bare `.wrap`). margin-inline:auto is inherited, so these
+   only change max-width. */
+.wrap.measure { max-width:880px; }
+.wrap.measure-wide { max-width:1120px; }
+.mono { font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+.dim { color:var(--ink-dim); }
+.faint { color:var(--ink-faint); }
+.faintest { color:var(--ink-faintest); }
+main.site-main { position:relative; z-index:1; flex:1 0 auto; width:100%; }
+
+/* micro-type utilities (mockup-a). .u is a decorative eyebrow → faintest tier.
+   .u2 is a readable minor label → held at the ≥12px legibility floor. */
+.u { font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faintest); }
+.u2 { font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--ink-dim); }
+
+/* gradient hairline */
+.hl {
+  height:1px; border:0; width:100%;
+  background:linear-gradient(90deg, transparent, rgba(55,214,228,.42) 28%, rgba(124,140,248,.42) 72%, transparent);
+}
+
+/* ---- atmosphere: fixed depth field ---- */
+.atmo {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1000px 640px at 12% -8%, rgba(55,214,228,.075), transparent 62%),
+    radial-gradient(1100px 720px at 96% 14%, rgba(124,140,248,.065), transparent 62%),
+    radial-gradient(900px 640px at 50% 118%, rgba(124,140,248,.05), transparent 60%);
+}
+.atmo::after {
+  content:""; position:absolute; inset:0;
+  background-image:radial-gradient(rgba(147,160,184,.05) 1px, transparent 1px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.7), transparent 70%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.7), transparent 70%);
+}
+
+/* =========================== nav =========================== */
+.site-nav {
+  position:sticky; top:0; z-index:20;
+  background:rgba(11,14,20,.82); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.site-nav .wrap { display:flex; align-items:center; gap:18px; height:54px; }
+.brand { display:flex; align-items:center; gap:10px; font:600 13px var(--font-mono); letter-spacing:.02em; white-space:nowrap; flex:none; }
+.brand-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:linear-gradient(135deg, var(--acc), var(--acc-2));
+  box-shadow:0 0 12px rgba(55,214,228,.55);
+}
+.brand small { color:var(--ink-faint); font-weight:400; }
+.nav-links { display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; }
+.nav-links::-webkit-scrollbar { display:none; }
+.nav-links a {
+  font:12px var(--font-mono); color:var(--ink-dim);
+  padding:6px 10px; border-radius:8px; white-space:nowrap; transition:color .15s, background .15s;
+}
+.nav-links a:hover { color:var(--ink); background:var(--panel); }
+.nav-links a.on { color:var(--acc); background:rgba(55,214,228,.07); }
+.nav-side { display:flex; gap:8px; align-items:center; flex:none; }
+
+/* "more" disclosure */
+.nav-more { position:relative; }
+.nav-more > summary {
+  list-style:none; cursor:pointer;
+  font:12px var(--font-mono); color:var(--ink-dim);
+  padding:6px 10px; border-radius:8px;
+}
+.nav-more > summary::-webkit-details-marker { display:none; }
+.nav-more[open] > summary, .nav-more > summary:hover { color:var(--ink); background:var(--panel); }
+.nav-more-menu {
+  position:absolute; top:calc(100% + 6px); right:0; z-index:30;
+  min-width:180px; display:flex; flex-direction:column; gap:2px;
+  padding:8px; border:1px solid var(--line-strong); border-radius:var(--radius);
+  background:var(--panel); box-shadow:0 18px 40px rgba(0,0,0,.5);
+}
+.nav-more-menu a { font:12px var(--font-mono); color:var(--ink-dim); padding:7px 10px; border-radius:7px; white-space:nowrap; }
+.nav-more-menu a:hover { color:var(--acc); background:var(--panel-2); }
+
+/* LocaleSwitch */
+.loc { display:inline-flex; align-items:center; gap:2px; font:11px var(--font-mono); color:var(--ink-faint);
+  border:1px solid var(--line); border-radius:999px; padding:3px 4px; }
+.loc a { padding:2px 7px; border-radius:999px; color:var(--ink-dim); transition:color .15s, background .15s; }
+.loc a:hover { color:var(--ink); }
+.loc a.on { color:var(--ink); background:var(--panel-2); font-weight:600; }
+.nav-gh { font:11px var(--font-mono); color:var(--ink-faint); border:1px solid var(--line); border-radius:999px; padding:5px 11px; transition:color .15s, border-color .15s; }
+.nav-gh:hover { color:var(--acc); border-color:var(--line-strong); }
+
+/* =========================== badges =========================== */
+.b {
+  display:inline-flex; align-items:center; gap:5px;
+  font:10.5px/1 var(--font-mono); letter-spacing:.03em;
+  padding:4px 8px; border-radius:999px;
+  border:1px solid var(--line-strong); color:var(--ink-dim);
+  white-space:nowrap;
+}
+.b-grade-q   { border-color:rgba(55,214,228,.55);  color:var(--acc); }
+.b-grade-dev { border-color:rgba(245,180,84,.55);  color:var(--warn); }
+.b-grade-com { border-color:rgba(124,140,248,.62); color:var(--acc-2); }
+.b-unreviewed { border-color:rgba(124,140,248,.62); color:var(--acc-2); border-style:dashed; }
+.b-patched   { background:var(--warn); border-color:var(--warn); color:#171006; font-weight:700; }
+.b-effort    { background:var(--panel-2); border-color:var(--line); color:var(--ink-dim); }
+.b-arm       { border-color:var(--line-strong); color:var(--ink-dim); }
+
+/* =========================== buttons =========================== */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font:12.5px var(--font-mono); color:var(--ink);
+  background:var(--panel-2); border:1px solid var(--line-strong);
+  border-radius:var(--radius); padding:9px 16px; cursor:pointer;
+  transition:border-color .15s, box-shadow .15s, background .15s, color .15s;
+  white-space:nowrap;
+}
+.btn:hover { border-color:var(--acc); box-shadow:0 0 18px rgba(55,214,228,.12); }
+.btn:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; border-color:var(--line); }
+.btn-hero {
+  background:linear-gradient(120deg, rgba(55,214,228,.16), rgba(124,140,248,.16)), var(--panel-2);
+  border:1px solid rgba(55,214,228,.5); color:var(--acc); font-weight:600; padding:11px 22px;
+}
+.btn-hero:hover { box-shadow:0 0 28px rgba(55,214,228,.22); }
+.btn-acc { border-color:var(--acc); color:var(--acc); background:rgb(55 214 228 / 6%); }
+.btn-ghost { background:transparent; border-color:var(--line); color:var(--ink-dim); }
+.btn-ghost:hover { color:var(--ink); box-shadow:none; }
+.btn-violet { border-color:rgba(124,140,248,.55); color:var(--acc-2); background:rgb(124 140 248 / 8%); }
+.btn-violet:hover { border-color:var(--acc-2); box-shadow:0 0 18px rgba(124,140,248,.16); }
+
+/* segmented control */
+.seg { display:inline-flex; border:1px solid var(--line-strong); border-radius:var(--radius); overflow:hidden; }
+.seg button { font:11.5px var(--font-mono); color:var(--ink-dim); padding:8px 15px; cursor:pointer; transition:color .15s, background .15s; }
+.seg button + button { border-left:1px solid var(--line); }
+.seg button:hover { color:var(--ink); }
+.seg button.on { background:rgba(55,214,228,.1); color:var(--acc); }
+.seg.violet button.on { background:rgba(124,140,248,.12); color:var(--acc-2); }
+
+/* =========================== panels / exhibits =========================== */
+.panelbox {
+  background:linear-gradient(var(--panel), var(--panel)) padding-box,
+    linear-gradient(155deg, rgba(55,214,228,.4), rgba(49,64,95,.5) 42%, rgba(124,140,248,.4)) border-box;
+  border:1px solid transparent; border-radius:var(--radius-lg);
+}
+.exhibit { position:relative; }
+.exhibit > .halo {
+  position:absolute; inset:-36px; z-index:-1; pointer-events:none;
+  background:radial-gradient(55% 55% at 50% 45%, var(--halo, rgba(55,214,228,.11)), transparent 72%);
+}
+.exhibit.violet { --halo:rgba(124,140,248,.12); }
+
+/* plain card surface (data-dense / restrained register, mockup-a) */
+.card-plain { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius-lg); }
+
+/* =========================== hero =========================== */
+.hero { padding:clamp(48px,8vw,96px) 0 34px; position:relative; }
+.kicker {
+  font:11px var(--font-mono); letter-spacing:.3em; text-transform:uppercase;
+  color:var(--acc); margin-bottom:20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+}
+.kicker::before { content:""; width:34px; height:1px; background:linear-gradient(90deg, var(--acc), transparent); flex:none; }
+h1.hero-title { font-size:clamp(2.5rem,6.2vw,4.7rem); line-height:1.04; letter-spacing:-.025em; font-weight:700; max-width:16ch; }
+h1.hero-title .dim { color:var(--ink-faint); font-weight:600; }
+h1.hero-title .glow {
+  background:linear-gradient(115deg, var(--acc) 10%, var(--acc-2) 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero-sub { margin-top:22px; color:var(--ink-dim); max-width:62ch; font-size:15px; }
+.hero-sub em { font-style:normal; color:var(--ink); }
+.hero-cta { display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; }
+
+/* hero split (defect: the hero's right half was dead space). On desktop the lede
+   sits left and an exhibit visual fills the otherwise-empty right column; the
+   stats strip spans full width below. Applied only when featured shots exist
+   (.hero-split) and only ≥1024px — below that it collapses to the single-column
+   stack with the exhibit hidden. The exhibit column claims only the empty right
+   space, so the text column's measure is unchanged. */
+.hero-lede { min-width:0; }
+.hero-exhibit { display:none; position:relative; aspect-ratio:1 / 1; }
+@media (min-width:1024px) {
+  .hero-split {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) clamp(280px,30%,400px);
+    column-gap:clamp(28px,4vw,72px);
+    align-items:center;
+  }
+  .hero-split > .hero-lede { grid-column:1; grid-row:1; }
+  .hero-split > .hero-exhibit { display:block; grid-column:2; grid-row:1; }
+  .hero-split > .stats,
+  .hero-split > .stats-scope { grid-column:1 / -1; }
+}
+/* exhibit composition: 2–3 rotated, glowing card shots (exhibit-glow, §5).
+   Static transform-only — nothing animates, so prefers-reduced-motion is safe by
+   construction. Cyan halo on two cards, violet on one. */
+.hx-card {
+  position:absolute; width:72%; aspect-ratio:16 / 10;
+  border-radius:var(--radius-lg); overflow:hidden;
+  border:1px solid var(--line-strong); background:var(--bg-elev);
+  box-shadow:0 22px 55px rgba(0,0,0,.55);
+}
+.hx-card img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+.hx-halo {
+  position:absolute; inset:-30px; z-index:-1; pointer-events:none;
+  background:radial-gradient(55% 55% at 50% 45%, var(--hx-halo, rgba(55,214,228,.16)), transparent 72%);
+}
+.hx-card-1 { top:2%;  left:0;   transform:rotate(-6deg);    z-index:1; --hx-halo:rgba(124,140,248,.20); }
+.hx-card-2 { top:24%; right:0;  transform:rotate(5deg);     z-index:2; --hx-halo:rgba(55,214,228,.15); }
+.hx-card-3 { top:48%; left:10%; width:78%; transform:rotate(-2.5deg); z-index:3; --hx-halo:rgba(55,214,228,.22); box-shadow:0 30px 66px rgba(0,0,0,.62); }
+
+/* =========================== stats strip =========================== */
+.stats {
+  margin-top:52px;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+  gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden;
+}
+.stat { background:var(--bg-elev); padding:20px 22px; position:relative; }
+.stat::before { content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(70% 60% at 50% 0%, rgba(55,214,228,.05), transparent 70%); }
+.stat:nth-child(even)::before { background:radial-gradient(70% 60% at 50% 0%, rgba(124,140,248,.05), transparent 70%); }
+.stat .n {
+  font:600 clamp(24px,2.6vw,34px)/1.1 var(--font-mono); letter-spacing:-.02em; font-variant-numeric:tabular-nums;
+  background:linear-gradient(120deg, var(--ink) 30%, var(--acc) 130%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.stat:nth-child(even) .n { background:linear-gradient(120deg, var(--ink) 30%, var(--acc-2) 130%); -webkit-background-clip:text; background-clip:text; }
+.stat .l { font:10.5px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); margin-top:6px; }
+.stats-scope { margin-top:10px; font:10.5px var(--font-mono); color:var(--ink-faint); letter-spacing:.04em; }
+
+/* =========================== gate overlay =========================== */
+/* SSR always renders the real page beneath; the gate is an overlay, never a
+   redirect (spec §4.0). Default hidden (fail-open); shown only when the
+   pre-hydration script stamps data-gate="pending". */
+.gate-overlay { display:none; position:fixed; inset:0; z-index:60; }
+:root[data-gate="pending"] .gate-overlay { display:flex; align-items:flex-start; justify-content:center; }
+/* modal scroll lock — without it the page scrolls behind the gate and (on
+   always-visible-scrollbar devices) paints a second, page-level scrollbar. */
+:root[data-gate="pending"] body { overflow:hidden; }
+.gate-overlay[data-force="hidden"] { display:none !important; }
+.gate-backdrop {
+  position:absolute; inset:0;
+  background:rgba(8,11,17,.55); backdrop-filter:blur(9px) saturate(.9);
+}
+.gate-panel {
+  position:relative; z-index:1; margin:clamp(16px,5vh,56px) auto;
+  /* the first screen should command the viewport — scale with it on big displays */
+  width:min(1380px, calc(100% - 48px)); max-height:calc(100vh - 32px);
+  /* vertical scroll only — a stray horizontal track (seen on always-visible-
+     scrollbar devices) reads as a broken white frame around the panel */
+  overflow-y:auto; overflow-x:hidden;
+  padding:clamp(18px,3vw,38px);
+}
+.gate-head { display:flex; flex-wrap:wrap; gap:14px; align-items:baseline; justify-content:space-between; margin-bottom:6px; }
+.gate-head h2 { font-size:clamp(20px,1.5vw,27px); letter-spacing:-.01em; font-weight:600; }
+.gate-progress { display:flex; align-items:center; gap:10px; font:11px var(--font-mono); color:var(--ink-dim); }
+.gate-dots { display:inline-flex; gap:6px; }
+.pdot { width:9px; height:9px; border-radius:50%; border:1px solid var(--line-strong); }
+.pdot.done { background:var(--acc); border-color:var(--acc); box-shadow:0 0 8px rgba(55,214,228,.6); }
+.gate-sub { color:var(--ink-dim); font-size:13px; max-width:70ch; margin-bottom:18px; }
+.gate-meta { display:flex; flex-wrap:wrap; gap:8px 18px; font:11px var(--font-mono); color:var(--ink-faint); margin-bottom:16px; }
+.gate-meta b { color:var(--ink-dim); font-weight:500; }
+.gate-skip { text-align:center; margin-top:16px; }
+.gate-skip button, .gate-skip a { font:11px var(--font-mono); color:var(--ink-faint); border-bottom:1px dotted var(--line-strong); }
+.gate-skip button:hover, .gate-skip a:hover { color:var(--ink-dim); }
+
+/* blind pair scaffolding (shared by gate + arena) */
+.pair { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; }
+.blindframe { padding:12px; }
+.blind-tag { display:flex; justify-content:space-between; align-items:center; font:11px var(--font-mono); color:var(--ink-faint); padding:2px 4px 10px; }
+.blind-tag .who { color:var(--ink-dim); letter-spacing:.18em; text-transform:uppercase; }
+.choices { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+.choice {
+  flex:1 1 130px; text-align:center; padding:13px 10px;
+  font:600 12.5px var(--font-mono); letter-spacing:.04em;
+  background:var(--panel-2); border:1px solid var(--line-strong); border-radius:var(--radius);
+  cursor:pointer; color:var(--ink); transition:border-color .15s, box-shadow .15s;
+}
+.choice:hover { border-color:var(--acc); box-shadow:0 0 20px rgba(55,214,228,.14); }
+.choice:disabled { opacity:.45; cursor:not-allowed; box-shadow:none; border-color:var(--line); }
+.choice small { display:block; font-weight:400; color:var(--ink-faint); letter-spacing:0; margin-top:3px; }
+.choice.alt:hover { border-color:var(--acc-2); box-shadow:0 0 20px rgba(124,140,248,.16); }
+.choice.mute { flex:0 1 120px; color:var(--ink-dim); background:transparent; border-color:var(--line); }
+
+/* No-winner verdicts. These two are semantically OPPOSITE ("both are fine" vs
+   "neither works") yet both used .mute — identical, washed out, and easy to
+   misread as disabled. Each now carries its own hue and a real interactive
+   treatment, while staying visually secondary to the A/B picks. */
+.choice.tie {
+  flex:0 1 120px; background:transparent;
+  color:var(--good); border-color:color-mix(in srgb, var(--good) 32%, var(--line));
+}
+.choice.tie:hover { border-color:var(--good); box-shadow:0 0 20px rgba(59,217,127,.16); }
+.choice.reject {
+  flex:0 1 120px; background:transparent;
+  color:var(--bad); border-color:color-mix(in srgb, var(--bad) 32%, var(--line));
+}
+.choice.reject:hover { border-color:var(--bad); box-shadow:0 0 20px rgba(240,100,122,.16); }
+.choice.tie small, .choice.reject small { color:var(--ink-faint); }
+
+/* =========================== prompt panel =========================== */
+/* The verbatim task text. Monospace and unstyled-on-purpose: this is evidence,
+   not prose — it should read as the file it is. */
+.pp { border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--panel); overflow:hidden; }
+.pp-head {
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:11px 14px; border-bottom:1px solid var(--line); background:var(--panel-2);
+}
+.pp-title { font:600 12px var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-dim); }
+.pp-dl { margin-left:auto; font:600 11.5px var(--font-mono); color:var(--acc); text-decoration:none; }
+.pp-dl:hover { text-decoration:underline; }
+.pp-body {
+  margin:0; padding:14px 16px; overflow-x:auto;
+  font:12.5px/1.7 var(--font-mono); color:var(--ink-dim); white-space:pre-wrap; word-break:break-word;
+}
+.pp-clamp { max-height:230px; overflow-y:auto; }
+.pp-foot {
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:9px 14px; border-top:1px solid var(--line); background:var(--panel-2);
+}
+.pp-note { font-size:12px; color:var(--ink-faint); }
+.pp-sha { margin-left:auto; font:11px var(--font-mono); color:var(--ink-faintest); }
+
+/* Render-census flag button — overlays a gallery tile while the slot debug
+   filter is engaged. Maintainer tool: deliberately loud so a flagged tile is
+   unmistakable during a sweep. */
+.gx-flags { position:absolute; top:8px; right:8px; z-index:3; display:flex; gap:5px; }
+.gx-flag {
+  font:600 10.5px var(--font-mono); letter-spacing:.04em;
+  padding:4px 8px; border-radius:999px; cursor:pointer;
+  color:var(--ink-dim); background:rgba(11,14,20,.82);
+  border:1px solid var(--line-strong); backdrop-filter:blur(4px);
+  transition:color .12s, border-color .12s, background .12s;
+}
+.gx-flag:hover { color:var(--warn); border-color:var(--warn); }
+.gx-flag.on {
+  color:#0B0E14; background:var(--bad); border-color:var(--bad);
+}
+
+/* =========================== card frame (sandboxed iframe) =========================== */
+.cardframe { position:relative; width:100%; overflow:hidden; border-radius:var(--radius); background:var(--bg-elev); }
+.cardframe iframe { display:block; border:0; background:transparent; }
+.cf-poster { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.cf-msg { position:absolute; inset:0; display:grid; place-items:center; font:11px var(--font-mono); color:var(--ink-faint); }
+.cf-shimmer { position:absolute; inset:0; background:
+    linear-gradient(100deg, transparent 20%, rgba(147,160,184,.08) 40%, transparent 60%), var(--bg-elev);
+  background-size:220% 100%; animation:cf-sweep 1.3s linear infinite; }
+@keyframes cf-sweep { from { background-position:180% 0; } to { background-position:-80% 0; } }
+
+/* =========================== toolbar / filter bar =========================== */
+.toolbar {
+  display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+  padding:14px; border:1px solid var(--line); border-radius:var(--radius-lg);
+  background:rgba(17,21,31,.7); backdrop-filter:blur(8px); margin-bottom:18px;
+}
+.search {
+  display:flex; align-items:center; gap:8px;
+  background:var(--bg); border:1px solid var(--line-strong); border-radius:var(--radius);
+  padding:7px 12px; min-width:180px; flex:1 1 200px; max-width:300px;
+}
+.search input { background:none; border:0; outline:0; color:var(--ink); font:12px var(--font-mono); width:100%; }
+.search input::placeholder { color:var(--ink-faint); }
+.fgroup { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.fgroup .gl { font:10px var(--font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin-right:2px; }
+.chip {
+  font:11px var(--font-mono); color:var(--ink-dim);
+  border:1px solid var(--line); border-radius:999px; padding:5px 11px;
+  cursor:pointer; transition:all .15s; background:transparent;
+}
+.chip:hover { border-color:var(--line-strong); color:var(--ink); }
+.chip.on { border-color:rgba(55,214,228,.6); color:var(--acc); background:rgba(55,214,228,.07); }
+.chip.on2 { border-color:rgba(124,140,248,.65); color:var(--acc-2); background:rgba(124,140,248,.08); }
+.chip:disabled { opacity:.5; cursor:not-allowed; }
+.tools-side { display:flex; gap:8px; align-items:center; margin-left:auto; flex-wrap:wrap; }
+.switch { display:inline-flex; align-items:center; gap:7px; font:11px var(--font-mono); color:var(--ink-dim); cursor:pointer; }
+.sw { width:28px; height:16px; border-radius:999px; background:var(--panel-2); border:1px solid var(--line-strong); position:relative; flex:none; transition:background .15s, border-color .15s; }
+.sw::after { content:""; position:absolute; top:2px; left:3px; width:10px; height:10px; border-radius:50%; background:var(--ink-faint); transition:left .15s, background .15s; }
+.switch.on .sw { background:rgba(55,214,228,.2); border-color:var(--acc); }
+.switch.on .sw::after { left:13px; background:var(--acc); box-shadow:0 0 8px rgba(55,214,228,.7); }
+.resultline { font:11px var(--font-mono); color:var(--ink-faint); margin-bottom:14px; display:flex; gap:14px; flex-wrap:wrap; }
+.resultline b { color:var(--ink-dim); font-weight:500; }
+
+/* =========================== grid / tiles =========================== */
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:var(--gap); }
+.grid.compact { grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); }
+.tile {
+  position:relative; background:var(--panel);
+  border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:10px; display:flex; flex-direction:column; gap:10px;
+  transition:border-color .2s, box-shadow .2s, transform .2s; cursor:pointer;
+  color:inherit;
+}
+.tile:hover { border-color:var(--line-strong); box-shadow:0 0 24px rgba(55,214,228,.08), 0 16px 34px rgba(0,0,0,.45); transform:translateY(-2px); }
+.tile:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+/* Unified 16:10 (= 1280/800) for BOTH the frozen-shot <img> path AND the live
+   CardFrame path, so mixed live/static grids align row-for-row. The static shot
+   is the card cropped to its native 16:10; the live tile content-fits inside a
+   16:10 CardFrame (aspect-ratio:1280/800). object-position favors the card top. */
+.thumb {
+  border-radius:var(--radius); overflow:hidden; position:relative; aspect-ratio:16 / 10;
+  background:radial-gradient(85% 75% at 50% 22%, rgba(55,214,228,.09), transparent 72%), var(--bg-elev);
+  display:grid; place-items:center;
+}
+.thumb img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+.tile-live {
+  position:absolute; top:10px; right:10px;
+  font:9px var(--font-mono); letter-spacing:.12em; color:var(--acc);
+  background:rgba(11,14,20,.75); border:1px solid rgba(55,214,228,.4);
+  padding:3px 7px; border-radius:999px; backdrop-filter:blur(4px);
+}
+.tlabel { display:flex; flex-direction:column; gap:7px; padding:0 4px 4px; }
+.tname { font:600 12.5px var(--font-mono); letter-spacing:-.01em; display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; overflow:hidden; }
+.tname .eff { color:var(--ink-faint); font-weight:400; }
+.tname .txt { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.trow { display:flex; gap:5px; flex-wrap:wrap; }
+.tcounts { font:10.5px var(--font-mono); color:var(--ink-faint); display:flex; gap:12px; }
+.tcounts .ok { color:var(--good); }
+.tcounts .part { color:var(--warn); }
+.tcounts .bad { color:var(--bad); }
+
+/* =========================== sections =========================== */
+.section { position:relative; margin-top:clamp(48px,7vw,84px); }
+.section-head { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; flex-wrap:wrap; margin-bottom:20px; }
+h2.sec, .sec-title { font-size:clamp(19px,2.4vw,24px); letter-spacing:-.015em; font-weight:600; margin-bottom:6px; }
+.sec-sub { color:var(--ink-dim); font-size:13px; max-width:74ch; }
+/* etched legend variant (data-dense surfaces, mockup-a) */
+.section.etched { border-top:1px solid var(--line); padding-top:52px; }
+.section.etched .sec-tag { position:absolute; top:-7px; left:0; background:var(--bg); padding-right:14px;
+  font:10px var(--font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); }
+.section.etched .sec-num { position:absolute; top:-7px; right:0; background:var(--bg); padding-left:14px;
+  font:10px var(--font-mono); letter-spacing:.16em; color:var(--ink-faint); }
+
+/* =========================== empty state =========================== */
+.emptystate {
+  display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
+  padding:clamp(32px,7vw,72px) 24px; border:1px dashed var(--line-strong); border-radius:var(--radius-lg);
+  background:var(--bg-elev); color:var(--ink-dim);
+}
+.emptystate-icon { font-size:26px; opacity:.7; }
+.emptystate h3 { font:600 15px var(--font-mono); color:var(--ink); letter-spacing:-.01em; }
+.emptystate p { font-size:13px; max-width:52ch; }
+
+/* =========================== modal =========================== */
+.modal-backdrop { position:fixed; inset:0; z-index:80; background:rgba(8,11,17,.6); backdrop-filter:blur(6px); display:grid; place-items:start center; padding:clamp(16px,6vh,64px) 16px; overflow:auto; }
+.modal { position:relative; width:min(680px, 100%); padding:clamp(18px,3vw,28px); }
+.modal-head { display:flex; align-items:baseline; justify-content:space-between; gap:14px; margin-bottom:14px; }
+.modal-head h2 { font-size:18px; font-weight:600; letter-spacing:-.01em; }
+.modal-close { font:16px var(--font-mono); color:var(--ink-dim); width:30px; height:30px; border-radius:8px; display:grid; place-items:center; }
+.modal-close:hover { color:var(--ink); background:var(--panel-2); }
+
+/* =========================== attribution bar =========================== */
+.attribution {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  font:10px var(--font-mono); letter-spacing:.1em; color:var(--ink-faint);
+  padding:8px 12px; border-top:1px solid var(--line);
+}
+.attribution .dot { color:var(--line-strong); }
+.attribution b { color:var(--ink-dim); font-weight:500; }
+
+/* =========================== footer =========================== */
+footer.site-footer { flex:none; margin-top:70px; border-top:1px solid var(--line); padding:30px 0 46px; position:relative; z-index:1; }
+.foot-in { display:flex; flex-wrap:wrap; gap:14px 30px; justify-content:space-between; align-items:baseline; font:12px var(--font-mono); color:var(--ink-faint); }
+.foot-in p { max-width:56ch; }
+/* links read as one tight cluster (item 16), separated from the tagline */
+.foot-links { display:flex; gap:14px; flex-wrap:wrap; align-items:baseline; }
+.foot-links a { color:var(--ink-dim); transition:color .15s; }
+.foot-links a:hover { color:var(--acc); }
+
+/* =========================== responsive =========================== */
+@media (max-width:700px) {
+  .tools-side { margin-left:0; width:100%; }
+  .gate-panel { margin-top:0; }
+}

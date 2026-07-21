@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "{label} — card — weather-card-benchmark",
+    "description": "Screenshot, raw source, per-field fidelity and telemetry for {label}. Metrics refer to the original model output; similarity measures convergence, not quality."
+  },
+  "notFound": {
+    "title": "No such config",
+    "message": "Nothing in the registry matches this id. It may have been a dev-only run that is no longer on disk."
+  },
+  "breadcrumb": { "gallery": "gallery" },
+  "provenance": {
+    "heading": "provenance",
+    "config": "config",
+    "batch": "batch",
+    "batchesMore": "+{count} more",
+    "transport": "transport",
+    "protocol": "protocol",
+    "billing": "billing",
+    "served": "served model",
+    "captured": "captured",
+    "runs": "runs",
+    "copy": "copy {field}",
+    "modelLink": "all efforts & arms of this model →"
+  },
+  "controls": {
+    "variant": "variant",
+    "render": "render",
+    "original": "original",
+    "patched": "patched",
+    "live": "live",
+    "city": "city",
+    "delay": "delay",
+    "reload": "reload",
+    "fixture": "fixture",
+    "liveNow": "live now",
+    "screenshot": "screenshot",
+    "runLive": "run live"
+  },
+  "patch": {
+    "tag": "patched · {category}",
+    "category": {
+      "render-fix": "render fix",
+      "asset-path": "asset path",
+      "truncation-repair": "truncation repair"
+    },
+    "by": "— {by}, {ts}",
+    "metricsCaption": "metrics refer to the original output",
+    "preserved": "The original output is preserved and viewable — toggle render above.",
+    "diff": "view diff ↗"
+  },
+  "slots": {
+    "heading": "slots",
+    "slot": "slot {index}",
+    "valid": "valid",
+    "patched": "patched",
+    "noOutput": "no output"
+  },
+  "viewer": {
+    "frameLabel": "slot {index} · {variant} · sandboxed iframe",
+    "sandboxNote": "allow-scripts · srcdoc",
+    "shotAlt": "{label} {variant} slot {index} screenshot",
+    "noShot": "no screenshot for this slot",
+    "loading": "loading…",
+    "unavailable": "card unavailable",
+    "runLivePrompt": "run the raw output in a sandboxed iframe",
+    "fixtureNote": "fixture · {city} · {date} — the measured scenario",
+    "liveNote": "live · {city} — decorative, deviates from the measured scenario",
+    "caption": "The screenshot is the exact frozen pixels the similarity channels measured. Run live re-executes the raw output in a sandboxed iframe; its rendering depends on your browser and fonts and is not guaranteed to match the measured pixels."
+  },
+  "neighbors": {
+    "heading": "similarity neighbors",
+    "channel": "channel",
+    "nearest": "nearest",
+    "farthest": "farthest",
+    "caption": "similarity measures convergence within this session — not quality.",
+    "session": "within session {batch}",
+    "noneInSession": "No similarity data for this session — this batch has no computed pairs.",
+    "tooFewPeers": "Too few peers in this session to show neighbors (needs 6+ configs sharing one fixture).",
+    "noChannelData": "No sufficient similarity for {channel} in this session."
+  },
+  "fidelity": {
+    "heading": "Fidelity — does the card show the right data?",
+    "none": "No fidelity verdict — this slot is {state} (fidelity is computed for valid slots only).",
+    "name": "name",
+    "condition": "condition",
+    "date": "date",
+    "maxTemp": "max temp",
+    "minTemp": "min temp",
+    "shown": "shown: {value}",
+    "hourly": "hourly",
+    "hourlyDetail": "coverage {coverage} · {match} match · {mismatch} mismatch · {notShown} not shown",
+    "requestSide": "request side",
+    "violations": "{count} violation(s)",
+    "extractor": "extractor {version}"
+  },
+  "source": {
+    "heading": "Source — raw model output, one byte unchanged",
+    "download": "download card.html",
+    "expand": "show all {lines} lines · {size}",
+    "collapse": "collapse source",
+    "none": "No card.html for this slot ({state})."
+  },
+  "rawConfig": { "heading": "config.json", "toggle": "show raw config" },
+  "sendLog": { "heading": "send-log", "toggle": "show send-log", "notOnDisk": "not on disk", "none": "No send-log on disk for this config." },
+  "l1": {
+    "heading": "L1 — cheap deterministic descriptors",
+    "none": "No L1 — this slot is {state}.",
+    "bytesTotal": "bytes total",
+    "bytesSplit": "html / css / js",
+    "domNodes": "dom nodes",
+    "domDepth": "dom depth",
+    "cssRules": "css rules",
+    "jsPresent": "js present",
+    "brightness": "brightness",
+    "contrast": "contrast",
+    "colorfulness": "colorfulness",
+    "whitespace": "whitespace",
+    "yes": "yes",
+    "no": "no"
+  },
+  "telemetry": {
+    "heading": "This slot's telemetry",
+    "promptTokens": "prompt tokens",
+    "completionTokens": "completion tokens",
+    "totalTokens": "total tokens",
+    "wall": "wall",
+    "cost": "cost",
+    "requestId": "request id"
+  },
+  "tombstone": {
+    "heading": "No valid output",
+    "message": "Every slot for this config failed to render — a broken output is data, not a hidden gap. The state chips and send-log below show exactly what happened."
+  }
+}

@@ -1,0 +1,1384 @@
+{
+  "dump_format_version": "dom-dump-v1",
+  "visibility_rule": "dom-dump-v1",
+  "captured_at_virtual_ms": 5000,
+  "url": "http://card.local/card.html?lat=52.52&lon=13.405&name=Berlin&date=2026-07-15",
+  "viewport": {
+    "width": [
+      1280,
+      800
+    ],
+    "height": null
+  },
+  "counts": {
+    "nodes": 80,
+    "elements": 37,
+    "text_nodes": 43,
+    "visible_text_nodes": 30
+  },
+  "nodes": [
+    {
+      "preorder": 0,
+      "type": "element",
+      "tag": "html",
+      "parent": null,
+      "child_index": 0,
+      "depth": 0,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 1,
+      "type": "element",
+      "tag": "head",
+      "parent": 0,
+      "child_index": 0,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 2,
+      "type": "text",
+      "parent": 1,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 3,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 4,
+      "type": "text",
+      "parent": 1,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 5,
+      "type": "element",
+      "tag": "meta",
+      "parent": 1,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 6,
+      "type": "text",
+      "parent": 1,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 7,
+      "type": "element",
+      "tag": "title",
+      "parent": 1,
+      "child_index": 5,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 8,
+      "type": "text",
+      "parent": 7,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "Weather Card",
+      "codepoint_length": 12,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 9,
+      "type": "text",
+      "parent": 1,
+      "child_index": 6,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 10,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 7,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 11,
+      "type": "text",
+      "parent": 10,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n  *{margin:0;padding:0;box-sizing:border-box}\n  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');\n  body{\n    width:1280px;height:800px;\n    font-family:'Inter',system-ui,-apple-system,sans-serif;\n    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);\n    display:flex;align-items:center;justify-content:center;\n    overflow:hidden;color:#fff;\n  }\n  .card{\n    width:960px;min-height:520px;\n    background:rgba(255,255,255,0.08);\n    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);\n    border:1px solid rgba(255,255,255,0.12);\n    border-radius:32px;padding:48px 56px;\n    box-shadow:0 32px 64px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1);\n    position:relative;overflow:hidden;\n  }\n  .card::before{\n    content:'';position:absolute;top:-50%;right:-30%;width:500px;height:500px;\n    background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%);\n    border-radius:50%;pointer-events:none;\n  }\n  .card.error{display:flex;align-items:center;justify-content:center;flex-direction:column}\n  .error-msg{font-size:1.3rem;color:rgba(255,255,255,0.6);text-align:center;line-height:1.8}\n  .error-msg .icon{font-size:3rem;margin-bottom:16px;display:block}\n\n  .top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}\n  .location-info{flex:1}\n  .location-name{font-size:2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}\n  .location-date{font-size:1rem;font-weight:400;color:rgba(255,255,255,0.55);letter-spacing:0.02em}\n\n  .weather-main{text-align:right;flex-shrink:0}\n  .weather-icon-wrap{margin-bottom:8px}\n  .weather-icon-wrap svg{width:80px;height:80px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.2))}\n  .weather-condition{font-size:1.05rem;font-weight:500;color:rgba(255,255,255,0.8);margin-bottom:4px}\n  .temp-range{font-size:0.95rem;color:rgba(255,255,255,0.5);font-weight:400}\n  .temp-range .hi{color:rgba(255,255,255,0.85);font-weight:600}\n  .temp-range .lo{color:rgba(255,255,255,0.45);font-weight:400}\n  .temp-range .sep{margin:0 6px;color:rgba(255,255,255,0.25)}\n\n  .current-temp{font-size:4.5rem;font-weight:300;letter-spacing:-0.04em;line-height:1;margin-bottom:4px}\n  .current-temp .unit{font-size:1.8rem;font-weight:400;vertical-align:super;color:rgba(255,255,255,0.5)}\n\n  .chart-section{margin-top:12px}\n  .chart-title{font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px}\n  .chart-container{position:relative;width:100%;height:200px}\n  .chart-container canvas{width:100%;height:100%;display:block}\n\n  .loading-wrap{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100%}\n  .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.6);border-radius:50%;animation:spin 0.8s linear infinite}\n  @keyframes spin{to{transform:rotate(360deg)}}\n  .loading-text{margin-top:16px;color:rgba(255,255,255,0.4);font-size:0.95rem}\n",
+      "codepoint_length": 3029,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 12,
+      "type": "text",
+      "parent": 1,
+      "child_index": 8,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 13,
+      "type": "element",
+      "tag": "style",
+      "parent": 1,
+      "child_index": 9,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 14,
+      "type": "text",
+      "parent": 13,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "*,*::before,*::after{animation-play-state:paused !important;transition:none !important;caret-color:transparent !important;}",
+      "codepoint_length": 123,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 15,
+      "type": "text",
+      "parent": 0,
+      "child_index": 1,
+      "depth": 1,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 16,
+      "type": "element",
+      "tag": "body",
+      "parent": 0,
+      "child_index": 2,
+      "depth": 1,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 17,
+      "type": "text",
+      "parent": 16,
+      "child_index": 0,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 18,
+      "type": "element",
+      "tag": "div",
+      "parent": 16,
+      "child_index": 1,
+      "depth": 2,
+      "attrs": {
+        "id": "card",
+        "class": "card"
+      },
+      "box": {
+        "x": 160,
+        "y": 107,
+        "width": 960,
+        "height": 586
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 19,
+      "type": "text",
+      "parent": 18,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 0
+    },
+    {
+      "preorder": 20,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 1,
+      "depth": 3,
+      "attrs": {
+        "class": "top-row"
+      },
+      "box": {
+        "x": 217,
+        "y": 156,
+        "width": 846,
+        "height": 133
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 21,
+      "type": "text",
+      "parent": 20,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 1
+    },
+    {
+      "preorder": 22,
+      "type": "element",
+      "tag": "div",
+      "parent": 20,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "location-info"
+      },
+      "box": {
+        "x": 217,
+        "y": 156,
+        "width": 715.328125,
+        "height": 62
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 23,
+      "type": "text",
+      "parent": 22,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 2
+    },
+    {
+      "preorder": 24,
+      "type": "element",
+      "tag": "div",
+      "parent": 22,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "location-name"
+      },
+      "box": {
+        "x": 217,
+        "y": 156,
+        "width": 715.328125,
+        "height": 38
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 32
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 25,
+      "type": "text",
+      "parent": 24,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Berlin",
+      "codepoint_length": 6,
+      "text_visible": true,
+      "visible_text_index": 3
+    },
+    {
+      "preorder": 26,
+      "type": "text",
+      "parent": 22,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 4
+    },
+    {
+      "preorder": 27,
+      "type": "element",
+      "tag": "div",
+      "parent": 22,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "location-date"
+      },
+      "box": {
+        "x": 217,
+        "y": 200,
+        "width": 715.328125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 28,
+      "type": "text",
+      "parent": 27,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Wednesday, July 15, 2026",
+      "codepoint_length": 24,
+      "text_visible": true,
+      "visible_text_index": 5
+    },
+    {
+      "preorder": 29,
+      "type": "text",
+      "parent": 22,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 6
+    },
+    {
+      "preorder": 30,
+      "type": "text",
+      "parent": 20,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 7
+    },
+    {
+      "preorder": 31,
+      "type": "element",
+      "tag": "div",
+      "parent": 20,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "weather-main"
+      },
+      "box": {
+        "x": 932.328125,
+        "y": 156,
+        "width": 130.671875,
+        "height": 133
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 32,
+      "type": "text",
+      "parent": 31,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 8
+    },
+    {
+      "preorder": 33,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 1,
+      "depth": 5,
+      "attrs": {
+        "class": "weather-icon-wrap"
+      },
+      "box": {
+        "x": 932.328125,
+        "y": 156,
+        "width": 130.671875,
+        "height": 83
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 34,
+      "type": "element",
+      "tag": "svg",
+      "parent": 33,
+      "child_index": 0,
+      "depth": 6,
+      "attrs": {},
+      "box": {
+        "x": 983,
+        "y": 156,
+        "width": 80,
+        "height": 80
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 35,
+      "type": "element",
+      "tag": "defs",
+      "parent": 34,
+      "child_index": 0,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 36,
+      "type": "element",
+      "tag": "lineargradient",
+      "parent": 35,
+      "child_index": 0,
+      "depth": 8,
+      "attrs": {
+        "id": "cl3"
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 37,
+      "type": "element",
+      "tag": "stop",
+      "parent": 36,
+      "child_index": 0,
+      "depth": 9,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 38,
+      "type": "element",
+      "tag": "stop",
+      "parent": 36,
+      "child_index": 1,
+      "depth": 9,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 39,
+      "type": "element",
+      "tag": "path",
+      "parent": 34,
+      "child_index": 1,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 987,
+        "y": 173.59933471679688,
+        "width": 54,
+        "height": 34.400665283203125
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 40,
+      "type": "element",
+      "tag": "g",
+      "parent": 34,
+      "child_index": 2,
+      "depth": 7,
+      "attrs": {},
+      "box": {
+        "x": 1007,
+        "y": 212,
+        "width": 30,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 41,
+      "type": "element",
+      "tag": "line",
+      "parent": 40,
+      "child_index": 0,
+      "depth": 8,
+      "attrs": {},
+      "box": {
+        "x": 1007,
+        "y": 212,
+        "width": 2,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 42,
+      "type": "element",
+      "tag": "line",
+      "parent": 40,
+      "child_index": 1,
+      "depth": 8,
+      "attrs": {},
+      "box": {
+        "x": 1021,
+        "y": 212,
+        "width": 2,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 43,
+      "type": "element",
+      "tag": "line",
+      "parent": 40,
+      "child_index": 2,
+      "depth": 8,
+      "attrs": {},
+      "box": {
+        "x": 1035,
+        "y": 212,
+        "width": 2,
+        "height": 8
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 44,
+      "type": "text",
+      "parent": 31,
+      "child_index": 2,
+      "depth": 5,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 9
+    },
+    {
+      "preorder": 45,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 3,
+      "depth": 5,
+      "attrs": {
+        "class": "weather-condition"
+      },
+      "box": {
+        "x": 932.328125,
+        "y": 247,
+        "width": 130.671875,
+        "height": 20
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16.8
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 46,
+      "type": "text",
+      "parent": 45,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "Light drizzle",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 10
+    },
+    {
+      "preorder": 47,
+      "type": "text",
+      "parent": 31,
+      "child_index": 4,
+      "depth": 5,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 11
+    },
+    {
+      "preorder": 48,
+      "type": "element",
+      "tag": "div",
+      "parent": 31,
+      "child_index": 5,
+      "depth": 5,
+      "attrs": {
+        "class": "temp-range"
+      },
+      "box": {
+        "x": 932.328125,
+        "y": 271,
+        "width": 130.671875,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15.2
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 49,
+      "type": "text",
+      "parent": 48,
+      "child_index": 0,
+      "depth": 6,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 12
+    },
+    {
+      "preorder": 50,
+      "type": "element",
+      "tag": "span",
+      "parent": 48,
+      "child_index": 1,
+      "depth": 6,
+      "attrs": {
+        "class": "hi"
+      },
+      "box": {
+        "x": 932.328125,
+        "y": 271,
+        "width": 55.203125,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15.2
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 51,
+      "type": "text",
+      "parent": 50,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "↑ 25.3°",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 13
+    },
+    {
+      "preorder": 52,
+      "type": "text",
+      "parent": 48,
+      "child_index": 2,
+      "depth": 6,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 14
+    },
+    {
+      "preorder": 53,
+      "type": "element",
+      "tag": "span",
+      "parent": 48,
+      "child_index": 3,
+      "depth": 6,
+      "attrs": {
+        "class": "sep"
+      },
+      "box": {
+        "x": 997.5625,
+        "y": 271,
+        "width": 4.265625,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15.2
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 54,
+      "type": "text",
+      "parent": 53,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "·",
+      "codepoint_length": 1,
+      "text_visible": true,
+      "visible_text_index": 15
+    },
+    {
+      "preorder": 55,
+      "type": "text",
+      "parent": 48,
+      "child_index": 4,
+      "depth": 6,
+      "text_raw": "\n            ",
+      "codepoint_length": 13,
+      "text_visible": true,
+      "visible_text_index": 16
+    },
+    {
+      "preorder": 56,
+      "type": "element",
+      "tag": "span",
+      "parent": 48,
+      "child_index": 5,
+      "depth": 6,
+      "attrs": {
+        "class": "lo"
+      },
+      "box": {
+        "x": 1011.859375,
+        "y": 271,
+        "width": 51.140625,
+        "height": 18
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 15.2
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 57,
+      "type": "text",
+      "parent": 56,
+      "child_index": 0,
+      "depth": 7,
+      "text_raw": "↓ 16.0°",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 17
+    },
+    {
+      "preorder": 58,
+      "type": "text",
+      "parent": 48,
+      "child_index": 6,
+      "depth": 6,
+      "text_raw": "\n          ",
+      "codepoint_length": 11,
+      "text_visible": true,
+      "visible_text_index": 18
+    },
+    {
+      "preorder": 59,
+      "type": "text",
+      "parent": 31,
+      "child_index": 6,
+      "depth": 5,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 19
+    },
+    {
+      "preorder": 60,
+      "type": "text",
+      "parent": 20,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 20
+    },
+    {
+      "preorder": 61,
+      "type": "text",
+      "parent": 18,
+      "child_index": 2,
+      "depth": 3,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 21
+    },
+    {
+      "preorder": 62,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 3,
+      "depth": 3,
+      "attrs": {
+        "class": "current-temp"
+      },
+      "box": {
+        "x": 217,
+        "y": 325,
+        "width": 846,
+        "height": 72
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 72
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 63,
+      "type": "text",
+      "parent": 62,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "20.6",
+      "codepoint_length": 4,
+      "text_visible": true,
+      "visible_text_index": 22
+    },
+    {
+      "preorder": 64,
+      "type": "element",
+      "tag": "span",
+      "parent": 62,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "unit"
+      },
+      "box": {
+        "x": 345.703125,
+        "y": 335,
+        "width": 25.890625,
+        "height": 34
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 28.8
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 65,
+      "type": "text",
+      "parent": 64,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "°C",
+      "codepoint_length": 2,
+      "text_visible": true,
+      "visible_text_index": 23
+    },
+    {
+      "preorder": 66,
+      "type": "text",
+      "parent": 18,
+      "child_index": 4,
+      "depth": 3,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 24
+    },
+    {
+      "preorder": 67,
+      "type": "element",
+      "tag": "div",
+      "parent": 18,
+      "child_index": 5,
+      "depth": 3,
+      "attrs": {
+        "class": "chart-section"
+      },
+      "box": {
+        "x": 217,
+        "y": 409,
+        "width": 846,
+        "height": 235
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 68,
+      "type": "text",
+      "parent": 67,
+      "child_index": 0,
+      "depth": 4,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 25
+    },
+    {
+      "preorder": 69,
+      "type": "element",
+      "tag": "div",
+      "parent": 67,
+      "child_index": 1,
+      "depth": 4,
+      "attrs": {
+        "class": "chart-title"
+      },
+      "box": {
+        "x": 217,
+        "y": 409,
+        "width": 846,
+        "height": 15
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 12.8
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 70,
+      "type": "text",
+      "parent": 69,
+      "child_index": 0,
+      "depth": 5,
+      "text_raw": "Hourly Temperature",
+      "codepoint_length": 18,
+      "text_visible": true,
+      "visible_text_index": 26
+    },
+    {
+      "preorder": 71,
+      "type": "text",
+      "parent": 67,
+      "child_index": 2,
+      "depth": 4,
+      "text_raw": "\n        ",
+      "codepoint_length": 9,
+      "text_visible": true,
+      "visible_text_index": 27
+    },
+    {
+      "preorder": 72,
+      "type": "element",
+      "tag": "div",
+      "parent": 67,
+      "child_index": 3,
+      "depth": 4,
+      "attrs": {
+        "class": "chart-container"
+      },
+      "box": {
+        "x": 217,
+        "y": 444,
+        "width": 846,
+        "height": 200
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 73,
+      "type": "element",
+      "tag": "canvas",
+      "parent": 72,
+      "child_index": 0,
+      "depth": 5,
+      "attrs": {
+        "id": "chart"
+      },
+      "box": {
+        "x": 217,
+        "y": 444,
+        "width": 846,
+        "height": 200
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 74,
+      "type": "text",
+      "parent": 67,
+      "child_index": 4,
+      "depth": 4,
+      "text_raw": "\n      ",
+      "codepoint_length": 7,
+      "text_visible": true,
+      "visible_text_index": 28
+    },
+    {
+      "preorder": 75,
+      "type": "text",
+      "parent": 18,
+      "child_index": 6,
+      "depth": 3,
+      "text_raw": "\n    ",
+      "codepoint_length": 5,
+      "text_visible": true,
+      "visible_text_index": 29
+    },
+    {
+      "preorder": 76,
+      "type": "text",
+      "parent": 16,
+      "child_index": 2,
+      "depth": 2,
+      "text_raw": "\n",
+      "codepoint_length": 1,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 77,
+      "type": "element",
+      "tag": "script",
+      "parent": 16,
+      "child_index": 3,
+      "depth": 2,
+      "attrs": {},
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "intersects_viewport": false,
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1,
+        "font_size": 16
+      },
+      "element_visible": false
+    },
+    {
+      "preorder": 78,
+      "type": "text",
+      "parent": 77,
+      "child_index": 0,
+      "depth": 3,
+      "text_raw": "\n(function(){\n  const params = new URLSearchParams(location.search);\n  const lat = params.get('lat') || '52.52';\n  const lon = params.get('lon') || '13.405';\n  const name = params.get('name') || 'Berlin';\n  const today = new Date().toISOString().slice(0,10);\n  const date = params.get('date') || today;\n\n  const isPast = date < today;\n  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';\n\n  const url = endpoint + '?' + new URLSearchParams({\n    latitude: lat,\n    longitude: lon,\n    daily: 'temperature_2m_max,temperature_2m_min,weather_code',\n    hourly: 'temperature_2m',\n    timezone: 'UTC',\n    temperature_unit: 'celsius',\n    start_date: date,\n    end_date: date\n  }).toString();\n\n  const wmoDescriptions = {\n    0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',\n    45:'Foggy',48:'Rime fog',\n    51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',\n    56:'Light freezing drizzle',57:'Dense freezing drizzle',\n    61:'Slight rain',63:'Moderate rain',65:'Heavy rain',\n    66:'Light freezing rain',67:'Heavy freezing rain',\n    71:'Slight snowfall',73:'Moderate snowfall',75:'Heavy snowfall',\n    77:'Snow grains',\n    80:'Slight rain showers',81:'Moderate rain showers',82:'Violent rain showers',\n    85:'Slight snow showers',86:'Heavy snow showers',\n    95:'Thunderstorm',96:'Thunderstorm with hail',99:'Severe thunderstorm'\n  };\n\n  function weatherIcon(code, size){\n    const s = size || 72;\n    const icons = {\n      clear:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"sun\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#FFD93D\"/><stop offset=\"100%\" stop-color=\"#FF8C00\"/></linearGradient></defs><circle cx=\"40\" cy=\"40\" r=\"16\" fill=\"url(#sun)\"/><g stroke=\"#FFD93D\" stroke-width=\"3\" stroke-linecap=\"round\"><line x1=\"40\" y1=\"10\" x2=\"40\" y2=\"18\"/><line x1=\"40\" y1=\"62\" x2=\"40\" y2=\"70\"/><line x1=\"10\" y1=\"40\" x2=\"18\" y2=\"40\"/><line x1=\"62\" y1=\"40\" x2=\"70\" y2=\"40\"/><line x1=\"18.8\" y1=\"18.8\" x2=\"24.4\" y2=\"24.4\"/><line x1=\"55.6\" y1=\"55.6\" x2=\"61.2\" y2=\"61.2\"/><line x1=\"61.2\" y1=\"18.8\" x2=\"55.6\" y2=\"24.4\"/><line x1=\"24.4\" y1=\"55.6\" x2=\"18.8\" y2=\"61.2\"/></g></svg>`,\n      partlyCloudy:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"sun2\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#FFD93D\"/><stop offset=\"100%\" stop-color=\"#FF8C00\"/></linearGradient><linearGradient id=\"cl1\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#E8E8E8\"/><stop offset=\"100%\" stop-color=\"#B0B8C8\"/></linearGradient></defs><circle cx=\"32\" cy=\"28\" r=\"13\" fill=\"url(#sun2)\"/><g stroke=\"#FFD93D\" stroke-width=\"2.5\" stroke-linecap=\"round\"><line x1=\"32\" y1=\"6\" x2=\"32\" y2=\"12\"/><line x1=\"14\" y1=\"28\" x2=\"8\" y2=\"28\"/><line x1=\"16\" y1=\"12\" x2=\"20.5\" y2=\"16.5\"/><line x1=\"48\" y1=\"12\" x2=\"43.5\" y2=\"16.5\"/></g><path d=\"M22 62a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H22z\" fill=\"url(#cl1)\" opacity=\"0.95\"/></svg>`,\n      cloudy:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"cl2\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#D0D0D0\"/><stop offset=\"100%\" stop-color=\"#8892A0\"/></linearGradient></defs><path d=\"M18 58a11 11 0 0 1 0-22h.5a15 15 0 0 1 28 5.5h.5a9 9 0 0 1 0 18H18z\" fill=\"url(#cl2)\" opacity=\"0.7\" transform=\"translate(6,-8)\"/><path d=\"M14 66a13 13 0 0 1 0-26h1a17 17 0 0 1 32 7h1a11 11 0 0 1 0 22H14z\" fill=\"url(#cl2)\"/></svg>`,\n      fog:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><g stroke=\"rgba(200,210,220,0.7)\" stroke-width=\"3.5\" stroke-linecap=\"round\"><line x1=\"12\" y1=\"28\" x2=\"68\" y2=\"28\"/><line x1=\"18\" y1=\"38\" x2=\"62\" y2=\"38\"/><line x1=\"12\" y1=\"48\" x2=\"68\" y2=\"48\"/><line x1=\"22\" y1=\"58\" x2=\"58\" y2=\"58\"/></g></svg>`,\n      drizzle:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"cl3\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#B8C4D4\"/><stop offset=\"100%\" stop-color=\"#7A8A9E\"/></linearGradient></defs><path d=\"M16 50a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z\" fill=\"url(#cl3)\"/><g stroke=\"rgba(120,180,255,0.7)\" stroke-width=\"2\" stroke-linecap=\"round\"><line x1=\"26\" y1=\"56\" x2=\"24\" y2=\"64\"/><line x1=\"40\" y1=\"56\" x2=\"38\" y2=\"64\"/><line x1=\"54\" y1=\"56\" x2=\"52\" y2=\"64\"/></g></svg>`,\n      rain:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"cl4\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#8896A8\"/><stop offset=\"100%\" stop-color=\"#556070\"/></linearGradient></defs><path d=\"M16 46a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z\" fill=\"url(#cl4)\"/><g stroke=\"rgba(80,160,255,0.8)\" stroke-width=\"2.2\" stroke-linecap=\"round\"><line x1=\"22\" y1=\"54\" x2=\"18\" y2=\"66\"/><line x1=\"34\" y1=\"54\" x2=\"30\" y2=\"66\"/><line x1=\"46\" y1=\"54\" x2=\"42\" y2=\"66\"/><line x1=\"58\" y1=\"54\" x2=\"54\" y2=\"66\"/></g></svg>`,\n      snow:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"cl5\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#C8D0DC\"/><stop offset=\"100%\" stop-color=\"#8896A8\"/></linearGradient></defs><path d=\"M16 46a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z\" fill=\"url(#cl5)\"/><g fill=\"rgba(200,220,255,0.85)\"><circle cx=\"24\" cy=\"60\" r=\"2.5\"/><circle cx=\"40\" cy=\"58\" r=\"2.5\"/><circle cx=\"56\" cy=\"62\" r=\"2.5\"/><circle cx=\"32\" cy=\"68\" r=\"2\"/><circle cx=\"48\" cy=\"70\" r=\"2\"/></g></svg>`,\n      thunder:`<svg viewBox=\"0 0 80 80\" width=\"${s}\" height=\"${s}\"><defs><linearGradient id=\"cl6\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#6B7280\"/><stop offset=\"100%\" stop-color=\"#374151\"/></linearGradient></defs><path d=\"M16 42a12 12 0 0 1 0-24h1a16 16 0 0 1 30 6h1a10 10 0 0 1 0 20H16z\" fill=\"url(#cl6)\"/><polygon points=\"42,44 34,60 40,60 36,76 52,56 44,56 50,44\" fill=\"#FFD93D\" opacity=\"0.95\"/></svg>`\n    };\n    if(code===0) return icons.clear;\n    if(code<=2) return icons.partlyCloudy;\n    if(code===3) return icons.cloudy;\n    if(code===45||code===48) return icons.fog;\n    if(code>=51&&code<=57) return icons.drizzle;\n    if((code>=61&&code<=67)||(code>=80&&code<=82)) return icons.rain;\n    if((code>=71&&code<=77)||(code>=85&&code<=86)) return icons.snow;\n    if(code>=95) return icons.thunder;\n    return icons.cloudy;\n  }\n\n  function weatherBg(code){\n    if(code===0) return 'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)';\n    if(code<=2) return 'linear-gradient(135deg,#1a1a2e,#1e3a5f,#162447)';\n    if(code===3) return 'linear-gradient(135deg,#2d3436,#636e72,#2d3436)';\n    if(code===45||code===48) return 'linear-gradient(135deg,#485460,#808e9b,#485460)';\n    if(code>=51&&code<=57) return 'linear-gradient(135deg,#0c2461,#1e3799,#0c2461)';\n    if((code>=61&&code<=67)||(code>=80&&code<=82)) return 'linear-gradient(135deg,#0c2461,#1B1464,#0c2461)';\n    if((code>=71&&code<=77)||(code>=85&&code<=86)) return 'linear-gradient(135deg,#2c3e50,#4ca1af,#2c3e50)';\n    if(code>=95) return 'linear-gradient(135deg,#0f0c29,#302b63,#24243e)';\n    return 'linear-gradient(135deg,#0f0c29,#302b63,#24243e)';\n  }\n\n  function formatDate(d){\n    const dt = new Date(d+'T12:00:00Z');\n    const opts = {weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'UTC'};\n    return dt.toLocaleDateString('en-US',opts);\n  }\n\n  function drawChart(canvas, hours, temps){\n    const ctx = canvas.getContext('2d');\n    const dpr = window.devicePixelRatio || 1;\n    const rect = canvas.getBoundingClientRect();\n    canvas.width = rect.width * dpr;\n    canvas.height = rect.height * dpr;\n    ctx.scale(dpr, dpr);\n    const W = rect.width, H = rect.height;\n    const padL=48, padR=20, padT=30, padB=40;\n    const cW = W-padL-padR, cH = H-padT-padB;\n\n    const validTemps = temps.filter(t=>t!==null&&t!==undefined&&!isNaN(t));\n    if(!validTemps.length) return;\n    const tMin = Math.floor(Math.min(...validTemps))-2;\n    const tMax = Math.ceil(Math.max(...validTemps))+2;\n    const tRange = tMax-tMin||1;\n\n    function x(i){return padL + (i/23)*cW}\n    function y(t){return padT + cH - ((t-tMin)/tRange)*cH}\n\n    // grid lines\n    ctx.strokeStyle='rgba(255,255,255,0.06)';\n    ctx.lineWidth=1;\n    const gridSteps=5;\n    for(let i=0;i<=gridSteps;i++){\n      const gy = padT + (i/gridSteps)*cH;\n      ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();\n      const val = tMax - (i/gridSteps)*tRange;\n      ctx.fillStyle='rgba(255,255,255,0.3)';\n      ctx.font='11px Inter,system-ui,sans-serif';\n      ctx.textAlign='right';\n      ctx.textBaseline='middle';\n      ctx.fillText(Math.round(val)+'°',padL-10,gy);\n    }\n\n    // hour labels\n    ctx.fillStyle='rgba(255,255,255,0.25)';\n    ctx.font='11px Inter,system-ui,sans-serif';\n    ctx.textAlign='center';\n    ctx.textBaseline='top';\n    for(let i=0;i<24;i+=3){\n      const xp = x(i);\n      ctx.fillText(String(i).padStart(2,'0')+':00',xp,H-padB+14);\n    }\n\n    // build path points for smooth curve\n    const points = [];\n    for(let i=0;i<24;i++){\n      if(temps[i]!==null&&temps[i]!==undefined&&!isNaN(temps[i])){\n        points.push({x:x(i),y:y(temps[i]),i:i,t:temps[i]});\n      }\n    }\n    if(points.length<2) return;\n\n    // gradient fill under curve\n    const grad = ctx.createLinearGradient(0,padT,0,padT+cH);\n    grad.addColorStop(0,'rgba(99,179,237,0.25)');\n    grad.addColorStop(1,'rgba(99,179,237,0.01)');\n\n    ctx.beginPath();\n    ctx.moveTo(points[0].x,padT+cH);\n    ctx.lineTo(points[0].x,points[0].y);\n    for(let i=1;i<points.length;i++){\n      const prev=points[i-1], cur=points[i];\n      const cpx=(prev.x+cur.x)/2;\n      ctx.bezierCurveTo(cpx,prev.y,cpx,cur.y,cur.x,cur.y);\n    }\n    ctx.lineTo(points[points.length-1].x,padT+cH);\n    ctx.closePath();\n    ctx.fillStyle=grad;\n    ctx.fill();\n\n    // curve stroke\n    ctx.beginPath();\n    ctx.moveTo(points[0].x,points[0].y);\n    for(let i=1;i<points.length;i++){\n      const prev=points[i-1], cur=points[i];\n      const cpx=(prev.x+cur.x)/2;\n      ctx.bezierCurveTo(cpx,prev.y,cpx,cur.y,cur.x,cur.y);\n    }\n    ctx.strokeStyle='rgba(99,179,237,0.85)';\n    ctx.lineWidth=2.5;\n    ctx.lineJoin='round';\n    ctx.stroke();\n\n    // data dots\n    points.forEach(p=>{\n      ctx.beginPath();\n      ctx.arc(p.x,p.y,3.5,0,Math.PI*2);\n      ctx.fillStyle='#63b3ed';\n      ctx.fill();\n      ctx.strokeStyle='rgba(255,255,255,0.3)';\n      ctx.lineWidth=1.5;\n      ctx.stroke();\n    });\n\n    // highlight max/min\n    const maxP = points.reduce((a,b)=>b.t>a.t?b:a);\n    const minP = points.reduce((a,b)=>b.t<a.t?b:a);\n\n    [[maxP,'▲','#FFD93D'],[minP,'▼','#63b3ed']].forEach(([p,arrow,col])=>{\n      ctx.fillStyle=col;\n      ctx.font='bold 12px Inter,system-ui,sans-serif';\n      ctx.textAlign='center';\n      ctx.textBaseline='bottom';\n      const offsetY = arrow==='▲'?-12:20;\n      const anchor = arrow==='▲'?'bottom':'top';\n      ctx.textBaseline = arrow==='▲'?'bottom':'top';\n      const yy = arrow==='▲'?p.y-10:p.y+12;\n      ctx.fillText(arrow+' '+p.t.toFixed(1)+'°',p.x,yy);\n      ctx.textBaseline='alphabetic';\n    });\n  }\n\n  fetch(url).then(r=>{\n    if(!r.ok) throw new Error('API error '+r.status);\n    return r.json();\n  }).then(data=>{\n    const card = document.getElementById('card');\n    const daily = data.daily;\n    const hourly = data.hourly;\n    if(!daily||!hourly) throw new Error('Invalid data');\n\n    const tMax = daily.temperature_2m_max[0];\n    const tMin = daily.temperature_2m_min[0];\n    const wmo = daily.weather_code[0];\n    const desc = wmoDescriptions[wmo]||'Unknown';\n    const bg = weatherBg(wmo);\n    document.body.style.background = bg;\n\n    // current or average temp\n    const nowHour = new Date().getUTCHours();\n    const temps = hourly.temperature_2m;\n    const currentTemp = (date===today && temps[nowHour]!==undefined) ? temps[nowHour] : ((tMax+tMin)/2);\n\n    card.innerHTML = `\n      <div class=\"top-row\">\n        <div class=\"location-info\">\n          <div class=\"location-name\">${name}</div>\n          <div class=\"location-date\">${formatDate(date)}</div>\n        </div>\n        <div class=\"weather-main\">\n          <div class=\"weather-icon-wrap\">${weatherIcon(wmo,72)}</div>\n          <div class=\"weather-condition\">${desc}</div>\n          <div class=\"temp-range\">\n            <span class=\"hi\">↑ ${tMax.toFixed(1)}°</span>\n            <span class=\"sep\">·</span>\n            <span class=\"lo\">↓ ${tMin.toFixed(1)}°</span>\n          </div>\n        </div>\n      </div>\n      <div class=\"current-temp\">${currentTemp.toFixed(1)}<span class=\"unit\">°C</span></div>\n      <div class=\"chart-section\">\n        <div class=\"chart-title\">Hourly Temperature</div>\n        <div class=\"chart-container\"><canvas id=\"chart\"></canvas></div>\n      </div>\n    `;\n\n    drawChart(document.getElementById('chart'), null, temps);\n  }).catch(err=>{\n    const card = document.getElementById('card');\n    card.classList.add('error');\n    card.innerHTML = `\n      <div class=\"error-msg\">\n        <span class=\"icon\">⚠️</span>\n        Unable to load weather data.<br>\n        <small style=\"opacity:0.5\">${err.message}</small>\n      </div>`;\n  });\n})();\n",
+      "codepoint_length": 12951,
+      "text_visible": false,
+      "visible_text_index": null
+    },
+    {
+      "preorder": 79,
+      "type": "text",
+      "parent": 16,
+      "child_index": 4,
+      "depth": 2,
+      "text_raw": "\n\n",
+      "codepoint_length": 2,
+      "text_visible": false,
+      "visible_text_index": null
+    }
+  ]
+}

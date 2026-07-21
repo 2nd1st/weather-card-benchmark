@@ -1,0 +1,55 @@
+# dev-cc-fable5.yaml — Claude Code CLI 全 effort 网格(claude-fable-5)。DEV。
+# plan×harness 官方通道:本地直登、零 proxy、stock 隔离(--setting-sources "" --strict-mcp-config)。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: claude-code-cli-headless
+  proxy: none
+
+configs:
+  - config_id: claude-fable-5-eff-low--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: low
+    effort_param: cli---effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-fable-5-eff-medium--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: medium
+    effort_param: cli---effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-fable-5-eff-high--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: high
+    effort_param: cli---effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-fable-5-eff-xhigh--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: xhigh
+    effort_param: cli---effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: claude-fable-5-eff-max--cli--claude-code--dev
+    family: claude
+    model_id: claude-fable-5
+    effort: max
+    effort_param: cli---effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

@@ -1,0 +1,485 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 0,
+  "occurrences": [
+    {
+      "id": {
+        "node_preorder": 29,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 32,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "min-label-v1",
+      "namespace": "min-label",
+      "merged_categories": [
+        "min"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 34,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 42,
+        "start": 0,
+        "end": 4
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 42,
+        "start": 6,
+        "end": 9
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    }
+  ],
+  "arbitration": {
+    "considered": [
+      {
+        "node_preorder": 29,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 32,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "min-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 34,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 42,
+        "start": 0,
+        "length": 4,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 42,
+        "start": 6,
+        "length": 3,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      }
+    ]
+  },
+  "salience": {
+    "f_max": 112.0,
+    "candidates": [
+      {
+        "occurrence_id": {
+          "node_preorder": 29,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 112.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 34,
+          "start": 0,
+          "end": 3
+        },
+        "font_size": 36.0,
+        "salience_ratio": 0.6785714285714286,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 42,
+          "start": 0,
+          "end": 4
+        },
+        "font_size": 12.0,
+        "salience_ratio": 0.8928571428571429,
+        "in_E": false
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 42,
+          "start": 6,
+          "end": 9
+        },
+        "font_size": 12.0,
+        "salience_ratio": 0.8928571428571429,
+        "in_E": false
+      }
+    ],
+    "E": [
+      {
+        "node_preorder": 29,
+        "start": 0,
+        "end": 3
+      }
+    ]
+  },
+  "max_min_binding": {
+    "branch": "single-label",
+    "distances": [
+      {
+        "label_id": {
+          "node_preorder": 32,
+          "start": 0,
+          "end": 3
+        },
+        "temp_id": {
+          "node_preorder": 29,
+          "start": 0,
+          "end": 3
+        },
+        "dom_edges": 3,
+        "text_coord_diff": 3
+      }
+    ],
+    "max": {
+      "label_id": null,
+      "temp_id": null,
+      "canonical_id": null,
+      "value": null,
+      "display_decimals": null
+    },
+    "min": {
+      "label_id": {
+        "node_preorder": 32,
+        "start": 0,
+        "end": 3
+      },
+      "temp_id": {
+        "node_preorder": 29,
+        "start": 0,
+        "end": 3
+      },
+      "canonical_id": {
+        "node_preorder": 29,
+        "start": 0,
+        "end": 3
+      },
+      "value": "25",
+      "display_decimals": 0
+    },
+    "canonical_published": false,
+    "decision_path": [
+      {
+        "code": "branch-single-label",
+        "detail": "min"
+      },
+      {
+        "code": "single-label-no-remaining-ambiguous",
+        "detail": null
+      },
+      {
+        "code": "canonical-published",
+        "detail": "false"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "canonical-incomplete-ambiguous",
+    "has_label": null,
+    "candidates": [],
+    "label_parse": [],
+    "bindings": [],
+    "signature": [],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "daily canonical not fully published"
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "name-substring-hit",
+          "detail": "node=22"
+        }
+      ]
+    },
+    "date": {
+      "state": "not-found",
+      "decision_path": [
+        {
+          "code": "date-unparseable",
+          "detail": null
+        }
+      ]
+    },
+    "condition": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "condition-wmo-hit",
+          "detail": "node=36"
+        }
+      ]
+    },
+    "max": {
+      "state": "ambiguous",
+      "decision_path": [
+        {
+          "code": "branch-single-label",
+          "detail": "min"
+        },
+        {
+          "code": "single-label-no-remaining-ambiguous",
+          "detail": null
+        },
+        {
+          "code": "canonical-published",
+          "detail": "false"
+        }
+      ]
+    },
+    "min": {
+      "state": "mismatch",
+      "decision_path": [
+        {
+          "code": "branch-single-label",
+          "detail": "min"
+        },
+        {
+          "code": "single-label-no-remaining-ambiguous",
+          "detail": null
+        },
+        {
+          "code": "canonical-published",
+          "detail": "false"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "ambiguous",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "daily canonical not fully published"
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 22,
+      "text_coord_base": 0,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 24,
+      "text_coord_base": 6,
+      "codepoint_length": 11
+    },
+    {
+      "node_preorder": 26,
+      "text_coord_base": 17,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 29,
+      "text_coord_base": 19,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 32,
+      "text_coord_base": 22,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 34,
+      "text_coord_base": 25,
+      "codepoint_length": 3
+    },
+    {
+      "node_preorder": 36,
+      "text_coord_base": 28,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 40,
+      "text_coord_base": 41,
+      "codepoint_length": 18
+    },
+    {
+      "node_preorder": 42,
+      "text_coord_base": 59,
+      "codepoint_length": 9
+    },
+    {
+      "node_preorder": 142,
+      "text_coord_base": 68,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 146,
+      "text_coord_base": 70,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 150,
+      "text_coord_base": 72,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 154,
+      "text_coord_base": 74,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 158,
+      "text_coord_base": 76,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 162,
+      "text_coord_base": 78,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 166,
+      "text_coord_base": 80,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 170,
+      "text_coord_base": 82,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 173,
+      "text_coord_base": 84,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 187,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 189,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 191,
+      "text_coord_base": 86,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 193,
+      "text_coord_base": 86,
+      "codepoint_length": 18
+    },
+    {
+      "node_preorder": 194,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 195,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 216,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 218,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 221,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 224,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 226,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 229,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 232,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 235,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 238,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    },
+    {
+      "node_preorder": 241,
+      "text_coord_base": 104,
+      "codepoint_length": 0
+    }
+  ]
+}

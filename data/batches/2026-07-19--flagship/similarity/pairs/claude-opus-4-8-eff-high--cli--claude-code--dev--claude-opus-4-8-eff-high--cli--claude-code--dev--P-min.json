@@ -1,0 +1,55 @@
+{
+ "batch_id": "2026-07-19--unified",
+ "channels": [
+  "v-phash",
+  "v-dhash",
+  "v-color",
+  "v-palette",
+  "v-layout",
+  "v-edge",
+  "v-ssim",
+  "c-shingle",
+  "c-winnow",
+  "c-feature",
+  "c-ast-js",
+  "c-css-prop",
+  "c-ncd",
+  "d-geom",
+  "d-text",
+  "d-pqgram",
+  "d-tagpath"
+ ],
+ "config_a": "claude-opus-4-8-eff-high--cli--claude-code--dev",
+ "config_b": "claude-opus-4-8-eff-high--cli--claude-code--dev",
+ "kind": "self",
+ "pairs": [
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.5433333333333333,
+    "v_ssim_raw": 0.616849907012012
+   },
+   "s": {
+    "c-ast-js": 0.9529673439077592,
+    "c-css-prop": 0.9401478948073129,
+    "c-feature": 0.803030303030303,
+    "c-ncd": 0.45666666666666667,
+    "c-shingle": 0.4810866574965612,
+    "c-winnow": 0.29130434782608694,
+    "d-geom": 0.9060396199065852,
+    "d-pqgram": 0.8675623800383877,
+    "d-tagpath": 0.5,
+    "d-text": 0.3076923076923077,
+    "v-color": 0.8936255963466173,
+    "v-dhash": 0.5703125,
+    "v-edge": 0.751734153437689,
+    "v-layout": 0.9109433650391662,
+    "v-palette": 0.9926709070760871,
+    "v-phash": 0.71875,
+    "v-ssim": 0.808424953506006
+   },
+   "slot_a": 0,
+   "slot_b": 1
+  }
+ ],
+ "variant": "P-min"
+}

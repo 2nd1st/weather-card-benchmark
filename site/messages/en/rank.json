@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "title": "Community ranking",
+    "description": "Which weather cards people prefer — blind pairwise votes, ranked by Bradley–Terry strength."
+  },
+  "title": "Community ranking",
+  "angleLabel": "angle",
+  "lead": "How people actually voted when shown two cards side by side, with the model identities hidden.",
+  "caveat": "This measures UI preference, not model capability — a prettier card wins here even if another is more correct.",
+  "methodLink": "How voting works →"
+}

@@ -1,0 +1,138 @@
+# dev-opencode-go.yaml — opencode go 订阅通道横向测试。DEV。
+# 效度:aggregator gateway,provenance 未验证(可能 re-proxy);channel 维度=opencode-go;
+# 用途 dev 探索 + cross-check(vs 官方同模型),非发布级主数据。effort 先默认档(透传待 R8)。
+version: 1
+N: 2
+transport:
+  base_url: https://opencode.ai/zen/go/v1
+  descriptor: opencode-go-gateway
+  proxy: none
+configs:
+  - config_id: minimax-m3--opencode-go--dev
+    family: minimax
+    model_id: minimax-m3
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: minimax-m2.7--opencode-go--dev
+    family: minimax
+    model_id: minimax-m2.7
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k3--opencode-go--dev
+    family: kimi
+    model_id: kimi-k3
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k2.7-code--opencode-go--dev
+    family: kimi
+    model_id: kimi-k2.7-code
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: kimi-k2.6--opencode-go--dev
+    family: kimi
+    model_id: kimi-k2.6
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: glm-5.2--opencode-go--dev
+    family: glm
+    model_id: glm-5.2
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: glm-5.1--opencode-go--dev
+    family: glm
+    model_id: glm-5.1
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: deepseek-v4-pro--opencode-go--dev
+    family: deepseek
+    model_id: deepseek-v4-pro
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: deepseek-v4-flash--opencode-go--dev
+    family: deepseek
+    model_id: deepseek-v4-flash
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: qwen3.7-max--opencode-go--dev
+    family: qwen
+    model_id: qwen3.7-max
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: qwen3.7-plus--opencode-go--dev
+    family: qwen
+    model_id: qwen3.7-plus
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: qwen3.6-plus--opencode-go--dev
+    family: qwen
+    model_id: qwen3.6-plus
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: mimo-v2.5-pro--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2.5-pro
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: mimo-v2.5--opencode-go--dev
+    family: mimo
+    model_id: mimo-v2.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: hy3-preview--opencode-go--dev
+    family: hunyuan
+    model_id: hy3-preview
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }
+  - config_id: grok-4.5--opencode-go--dev
+    family: grok
+    model_id: grok-4.5
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: oauth, credential_ref: WCB_OPENCODE_KEY }

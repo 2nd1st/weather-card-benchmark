@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Weather Card</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-2: #273449;
+    --accent: #38bdf8;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --line: #334155;
+    --warm: #fb923c;
+    --cool: #60a5fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1280px;
+    height: 800px;
+    background: linear-gradient(135deg, #0b1120 0%, #1e293b 100%);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #stage {
+    width: 1280px;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    width: 960px;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .header {
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #1d4ed8 0%, #0ea5e9 100%);
+  }
+  .header .loc { font-size: 34px; font-weight: 700; letter-spacing: 0.3px; }
+  .header .date { font-size: 18px; margin-top: 6px; color: rgba(255,255,255,0.85); }
+  .header .coords { font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.65); }
+  .header .cond {
+    text-align: right;
+  }
+  .header .cond .icon { font-size: 60px; line-height: 1; }
+  .header .cond .text { font-size: 18px; font-weight: 600; margin-top: 8px; }
+
+  .summary {
+    display: flex;
+    padding: 28px 40px;
+    gap: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .temp-block { display: flex; align-items: baseline; gap: 10px; }
+  .temp-block .label { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .temp-block .val { font-size: 46px; font-weight: 700; }
+  .temp-max .val { color: var(--warm); }
+  .temp-min .val { color: var(--cool); }
+
+  .hourly { padding: 24px 40px 36px; }
+  .hourly h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 220px;
+    padding-top: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
+  }
+  .bar .t {
+    font-size: 11px;
+    color: var(--text);
+    margin-bottom: 6px;
+    white-space: nowrap;
+  }
+  .bar .fill {
+    width: 60%;
+    max-width: 22px;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(to top, var(--cool), var(--warm));
+    min-height: 4px;
+  }
+  .bar .h {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .status {
+    padding: 60px 40px;
+    text-align: center;
+    font-size: 20px;
+  }
+  .status.error { color: #f87171; }
+  .status .sub { display:block; font-size: 14px; color: var(--muted); margin-top: 10px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="card" id="card">
+    <div class="status" id="loading">Loading weather…</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var WMO = {
+    0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+    45: "Fog", 48: "Rime fog",
+    51: "Light drizzle", 53: "Drizzle", 55: "Dense drizzle",
+    56: "Freezing drizzle", 57: "Dense freezing drizzle",
+    61: "Slight rain", 63: "Rain", 65: "Heavy rain",
+    66: "Freezing rain", 67: "Heavy freezing rain",
+    71: "Slight snow", 73: "Snow", 75: "Heavy snow",
+    77: "Snow grains",
+    80: "Slight showers", 81: "Showers", 82: "Violent showers",
+    85: "Slight snow showers", 86: "Heavy snow showers",
+    95: "Thunderstorm", 96: "Thunderstorm w/ hail", 99: "Severe thunderstorm w/ hail"
+  };
+  var ICON = {
+    0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
+    45: "🌫️", 48: "🌫️",
+    51: "🌦️", 53: "🌦️", 55: "🌦️", 56: "🌧️", 57: "🌧️",
+    61: "🌧️", 63: "🌧️", 65: "🌧️", 66: "🌧️", 67: "🌧️",
+    71: "🌨️", 73: "🌨️", 75: "🌨️", 77: "🌨️",
+    80: "🌦️", 81: "🌧️", 82: "⛈️",
+    85: "🌨️", 86: "🌨️",
+    95: "⛈️", 96: "⛈️", 99: "⛈️"
+  };
+
+  function conditionText(code) {
+    if (code == null || WMO[code] == null) return "Unknown";
+    return WMO[code];
+  }
+  function conditionIcon(code) {
+    if (code == null || ICON[code] == null) return "❓";
+    return ICON[code];
+  }
+
+  function qp(name, def) {
+    var v = new URLSearchParams(window.location.search).get(name);
+    if (v === null || v === "") return def;
+    return v;
+  }
+
+  function todayUTC() {
+    var d = new Date();
+    var y = d.getUTCFullYear();
+    var m = String(d.getUTCMonth() + 1).padStart(2, "0");
+    var day = String(d.getUTCDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  }
+
+  function isValidDate(s) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(new Date(s + "T00:00:00Z").getTime());
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function showError(msg, detail) {
+    var card = document.getElementById("card");
+    card.innerHTML =
+      '<div class="status error">' + esc(msg) +
+      (detail ? '<span class="sub">' + esc(detail) + "</span>" : "") +
+      "</div>";
+  }
+
+  function fmtTemp(t) {
+    if (t == null || isNaN(t)) return "–";
+    return Math.round(t) + "°C";
+  }
+
+  function fmtDate(iso) {
+    var d = new Date(iso + "T00:00:00Z");
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString("en-GB", {
+      weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "UTC"
+    });
+  }
+
+  function render(cfg, data) {
+    var daily = data.daily || {};
+    var hourly = data.hourly || {};
+    var code = (daily.weather_code && daily.weather_code[0] != null) ? daily.weather_code[0] : null;
+    var tmax = (daily.temperature_2m_max && daily.temperature_2m_max.length) ? daily.temperature_2m_max[0] : null;
+    var tmin = (daily.temperature_2m_min && daily.temperature_2m_min.length) ? daily.temperature_2m_min[0] : null;
+
+    var times = hourly.time || [];
+    var temps = hourly.temperature_2m || [];
+
+    // Build hourly list, filtering to the requested date only.
+    var hours = [];
+    for (var i = 0; i < times.length; i++) {
+      if (String(times[i]).indexOf(cfg.date) === 0) {
+        hours.push({ time: times[i], temp: temps[i] });
+      }
+    }
+
+    // Compute chart scale from valid hourly temps.
+    var valid = hours.map(function (h) { return h.temp; }).filter(function (t) { return t != null && !isNaN(t); });
+    var lo = valid.length ? Math.min.apply(null, valid) : 0;
+    var hi = valid.length ? Math.max.apply(null, valid) : 1;
+    var span = (hi - lo) || 1;
+
+    var bars = hours.map(function (h) {
+      var hh = String(h.time).slice(11, 16);
+      var t = h.temp;
+      var frac = (t != null && !isNaN(t)) ? (t - lo) / span : 0;
+      var pct = 15 + frac * 85; // 15%..100% of chart height
+      return (
+        '<div class="bar" title="' + esc(hh + " — " + fmtTemp(t)) + '">' +
+          '<div class="t">' + (t != null && !isNaN(t) ? Math.round(t) + "°" : "–") + "</div>" +
+          '<div class="fill" style="height:' + pct.toFixed(1) + '%"></div>' +
+          '<div class="h">' + esc(hh) + "</div>" +
+        "</div>"
+      );
+    }).join("");
+
+    if (!bars) {
+      bars = '<div style="color:var(--muted);padding:40px;">No hourly data available for this date.</div>';
+    }
+
+    var html =
+      '<div class="header">' +
+        '<div>' +
+          '<div class="loc">' + esc(cfg.name) + "</div>" +
+          '<div class="date">' + esc(fmtDate(cfg.date)) + "</div>" +
+          '<div class="coords">' + esc(cfg.lat) + ", " + esc(cfg.lon) + "</div>" +
+        "</div>" +
+        '<div class="cond">' +
+          '<div class="icon">' + conditionIcon(code) + "</div>" +
+          '<div class="text">' + esc(conditionText(code)) + "</div>" +
+        "</div>" +
+      "</div>" +
+      '<div class="summary">' +
+        '<div class="temp-block temp-max"><span class="label">High</span><span class="val">' + fmtTemp(tmax) + "</span></div>" +
+        '<div class="temp-block temp-min"><span class="label">Low</span><span class="val">' + fmtTemp(tmin) + "</span></div>" +
+      "</div>" +
+      '<div class="hourly">' +
+        "<h2>Hourly Temperature (UTC)</h2>" +
+        '<div class="chart">' + bars + "</div>" +
+      "</div>";
+
+    document.getElementById("card").innerHTML = html;
+  }
+
+  function main() {
+    var today = todayUTC();
+    var dateParam = qp("date", today);
+    if (!isValidDate(dateParam)) dateParam = today;
+
+    var cfg = {
+      lat: qp("lat", "52.52"),
+      lon: qp("lon", "13.405"),
+      name: qp("name", "Berlin"),
+      date: dateParam
+    };
+
+    if (isNaN(parseFloat(cfg.lat)) || isNaN(parseFloat(cfg.lon))) {
+      cfg.lat = "52.52"; cfg.lon = "13.405";
+    }
+
+    // Choose endpoint: archive for past dates, forecast for today/future.
+    var endpoint = (cfg.date < today) ? "/api/om/archive" : "/api/om/forecast";
+
+    var params = new URLSearchParams({
+      latitude: cfg.lat,
+      longitude: cfg.lon,
+      daily: "temperature_2m_max,temperature_2m_min,weather_code",
+      hourly: "temperature_2m",
+      timezone: "UTC",
+      temperature_unit: "celsius",
+      start_date: cfg.date,
+      end_date: cfg.date
+    });
+
+    var url = endpoint + "?" + params.toString();
+
+    fetch(url, { headers: { "Accept": "application/json" } })
+      .then(function (resp) {
+        if (!resp.ok) {
+          throw new Error("Server responded with " + resp.status + " " + resp.statusText);
+        }
+        return resp.json();
+      })
+      .then(function (data) {
+        if (!data || (!data.daily && !data.hourly)) {
+          throw new Error("Weather data was empty or malformed.");
+        }
+        if (data.error) {
+          throw new Error(data.reason || "API returned an error.");
+        }
+        render(cfg, data);
+      })
+      .catch(function (err) {
+        showError("Weather data could not be loaded.", err && err.message ? err.message : String(err));
+      });
+  }
+
+  main();
+})();
+</script>
+</body>
+</html>

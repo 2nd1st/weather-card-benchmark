@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Card</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px;
+    height: 800px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  .card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    width: 900px;
+    padding: 48px 56px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  }
+  .card.error {
+    text-align: center;
+    padding: 80px 56px;
+  }
+  .card.error h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #ff6b6b;
+  }
+  .card.error p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+  .location {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .date {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+  .coords {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+  }
+  .condition-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 40px;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .condition-badge .icon {
+    font-size: 24px;
+  }
+  .temp-row {
+    display: flex;
+    align-items: baseline;
+    gap: 48px;
+    margin-bottom: 12px;
+  }
+  .temp-block {
+    display: flex;
+    flex-direction: column;
+  }
+  .temp-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .temp-value {
+    font-size: 64px;
+    font-weight: 200;
+    line-height: 1;
+  }
+  .temp-value .unit {
+    font-size: 28px;
+    vertical-align: super;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+  .hourly-section {
+    margin-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+  }
+  .hourly-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .hourly-grid {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .hourly-grid::-webkit-scrollbar { height: 4px; }
+  .hourly-grid::-webkit-scrollbar-track { background: transparent; }
+  .hourly-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .hour-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 62px;
+    padding: 12px 6px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .hour-cell:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .hour-time {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+  .hour-temp {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .loading {
+    text-align: center;
+    padding: 120px 56px;
+    font-size: 20px;
+    color: rgba(255,255,255,0.5);
+  }
+  .loading .spinner {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="card" id="app">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div>Loading weather data…</div>
+  </div>
+</div>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const lat = parseFloat(params.get('lat')) || 52.52;
+  const lon = parseFloat(params.get('lon')) || 13.405;
+  const name = params.get('name') || 'Berlin';
+
+  const todayUTC = new Date().toISOString().slice(0, 10);
+  const date = params.get('date') || todayUTC;
+
+  const isPast = date < todayUTC;
+  const apiBase = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  const weatherCodes = {
+    0: ['Clear sky', '☀️'],
+    1: ['Mainly clear', '🌤️'],
+    2: ['Partly cloudy', '⛅'],
+    3: ['Overcast', '☁️'],
+    45: ['Fog', '🌫️'],
+    48: ['Depositing rime fog', '🌫️'],
+    51: ['Light drizzle', '🌦️'],
+    53: ['Moderate drizzle', '🌦️'],
+    55: ['Dense drizzle', '🌧️'],
+    56: ['Light freezing drizzle', '🌧️❄️'],
+    57: ['Dense freezing drizzle', '🌧️❄️'],
+    61: ['Slight rain', '🌦️'],
+    63: ['Moderate rain', '🌧️'],
+    65: ['Heavy rain', '🌧️'],
+    66: ['Light freezing rain', '🌧️❄️'],
+    67: ['Heavy freezing rain', '🌧️❄️'],
+    71: ['Slight snowfall', '🌨️'],
+    73: ['Moderate snowfall', '🌨️'],
+    75: ['Heavy snowfall', '❄️'],
+    77: ['Snow grains', '🌨️'],
+    80: ['Slight rain showers', '🌦️'],
+    81: ['Moderate rain showers', '🌧️'],
+    82: ['Violent rain showers', '⛈️'],
+    85: ['Slight snow showers', '🌨️'],
+    86: ['Heavy snow showers', '❄️'],
+    95: ['Thunderstorm', '⛈️'],
+    96: ['Thunderstorm w/ slight hail', '⛈️'],
+    99: ['Thunderstorm w/ heavy hail', '⛈️']
+  };
+
+  const url = `${apiBase}?latitude=${lat}&longitude=${lon}` +
+    `&daily=temperature_2m_max,temperature_2m_min,weather_code` +
+    `&hourly=temperature_2m` +
+    `&timezone=UTC&temperature_unit=celsius` +
+    `&start_date=${date}&end_date=${date}`;
+
+  const app = document.getElementById('app');
+
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function formatDate(d) {
+    const dt = new Date(d + 'T00:00:00Z');
+    return dayNames[dt.getUTCDay()] + ', ' + monthNames[dt.getUTCMonth()] + ' ' + dt.getUTCDate() + ', ' + dt.getUTCFullYear();
+  }
+
+  function showError(msg) {
+    app.innerHTML = `<div class="error"><h2>⚠️ Unable to Load Weather</h2><p>${msg}</p></div>`;
+  }
+
+  fetch(url).then(function(res) {
+    if (!res.ok) throw new Error('API returned ' + res.status);
+    return res.json();
+  }).then(function(data) {
+    if (!data.daily || !data.daily.time || data.daily.time.length === 0) {
+      showError('No data available for the requested date.');
+      return;
+    }
+
+    const maxTemp = data.daily.temperature_2m_max[0];
+    const minTemp = data.daily.temperature_2m_min[0];
+    const code = data.daily.weather_code[0];
+    const [condition, icon] = weatherCodes[code] || ['Unknown (' + code + ')', '❓'];
+
+    const hourlyTemps = data.hourly.temperature_2m;
+
+    let hourlyHTML = '';
+    for (let i = 0; i < 24 && i < hourlyTemps.length; i++) {
+      const t = hourlyTemps[i];
+      if (t == null) continue;
+      const h = String(i).padStart(2, '0');
+      hourlyHTML += '<div class="hour-cell">' +
+        '<span class="hour-time">' + h + ':00</span>' +
+        '<span class="hour-temp">' + Math.round(t) + '°</span>' +
+        '</div>';
+    }
+
+    app.innerHTML =
+      '<div class="header">' +
+        '<div>' +
+          '<div class="location">' + name + '</div>' +
+          '<div class="date">' + formatDate(date) + '</div>' +
+          '<div class="coords">' + lat.toFixed(4) + '°, ' + lon.toFixed(4) + '°</div>' +
+        '</div>' +
+        '<div class="condition-badge"><span class="icon">' + icon + '</span>' + condition + '</div>' +
+      '</div>' +
+      '<div class="temp-row">' +
+        '<div class="temp-block"><span class="temp-label">High</span><span class="temp-value">' + Math.round(maxTemp) + '<span class="unit">°C</span></span></div>' +
+        '<div class="temp-block"><span class="temp-label">Low</span><span class="temp-value">' + Math.round(minTemp) + '<span class="unit">°C</span></span></div>' +
+      '</div>' +
+      '<div class="hourly-section">' +
+        '<div class="hourly-title">Hourly Temperatures</div>' +
+        '<div class="hourly-grid">' + hourlyHTML + '</div>' +
+      '</div>';
+  }).catch(function() {
+    showError('Could not load weather data. Please check the location and date, then try again.');
+  });
+})();
+</script>
+</body>
+</html>

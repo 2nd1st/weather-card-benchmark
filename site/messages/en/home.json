@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "title": "One prompt. Every model.",
+    "description": "An open benchmark: every model builds the same weather card. Raw outputs, deterministic similarity, and blind community preference — you pick the winner."
+  },
+  "hero": {
+    "kicker": "open benchmark · deterministic data · community preference",
+    "title1": "One prompt.",
+    "title2": "Every model.",
+    "title3": "You pick the winner.",
+    "sub": "Every model gets the same ask: build a weather card. We publish every raw output, measure pairwise similarity deterministically, and let the community vote — blind — on which cards they prefer to look at.",
+    "ctaArena": "Enter the arena",
+    "ctaMethodology": "Read the methodology"
+  },
+  "stats": {
+    "aria": "live figures",
+    "models": "models",
+    "configs": "configs",
+    "validCards": "valid cards",
+    "votes": "community votes",
+    "scopeNote": "counts across the registry · qualified is the default gallery view"
+  },
+  "featured": {
+    "title": "Featured cards",
+    "caption": "rotating sample · reseeded daily"
+  },
+  "gate": {
+    "title": "Three blind picks unlock the gallery",
+    "sub": "Two anonymous cards, identical live data. Pick the one you prefer — identities reveal after each choice. Your picks become open community-preference data.",
+    "skip": "browse without voting",
+    "metaAngle": "angle",
+    "metaVariant": "variant",
+    "metaCity": "city",
+    "metaFixture": "fixture",
+    "nextPick": "next pick",
+    "continueLabel": "see what unlocks",
+    "pair": {
+      "cardA": "card A",
+      "cardB": "card B",
+      "identityHidden": "identity hidden",
+      "preferA": "Prefer A",
+      "preferB": "Prefer B",
+      "tie": "Tie",
+      "tieSub": "equally fine",
+      "bothBad": "Both bad",
+      "bothBadSub": "neither works",
+      "revealTitle": "Choice recorded — identities revealed",
+      "yourPick": "your pick",
+      "tooFast": "Take a moment to look at both cards, then choose.",
+      "voteError": "Something went wrong — try the next pair.",
+      "loading": "loading",
+      "noOutput": "no output"
+    },
+    "unlock": {
+      "title": "Gallery unlocked",
+      "body": "Three blind picks in — that's real community-preference data now. The full gallery is open. Share your picks or dive straight in.",
+      "enter": "Enter the gallery",
+      "shareLabel": "share your picks",
+      "copy": "Copy share text",
+      "copied": "Copied",
+      "x": "Post to X",
+      "text": "3 blind picks · one prompt, every model · {url}"
+    }
+  },
+  "latest": {
+    "title": "Newest arrivals",
+    "caption": "The models that most recently entered the benchmark, one card per model."
+  },
+  "ranked": {
+    "title": "Community favourites",
+    "caption": "Ranked by blind pairwise votes (Bradley–Terry strength), one card per model."
+  },
+  "prompt": {
+    "title": "What every model was asked",
+    "caption": "The task text, verbatim — identical for all of them.",
+    "heading": "prompt",
+    "download": "download"
+  }
+}

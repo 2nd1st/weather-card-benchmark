@@ -1,0 +1,89 @@
+# dev-official-gemini.yaml — Google Gemini 官方 API(AI Studio key,N=4 正式规格,metered)。
+#
+# 路径选择(2026-07-20 三源调研 + 实测):走 Developer API 的 **OpenAI 兼容层**
+# `/v1beta/openai`,Bearer 认证 + 标准 choices[0].message.content + SSE 流式,
+# 与我们的 openai_compat adapter 完全兼容,无需原生 adapter。
+# 兼容层把 `reasoning_effort` 映射到 Gemini 3 的 thinking_level,实测档位真实生效
+# (thinking token 随档递增),故沿用 effort_param: reasoning_effort。
+#
+# harness 侧刻意留空:gemini-cli 的个人 OAuth 通路 2026-06-18 已停服,继任
+# Antigravity CLI 闭源 + 自更新 + ToS 风险,不适合做可复现 harness → 标 N/A 暂缓。
+#
+# 档位探针(2026-07-20,urllib + HTTP 错误捕获):
+#   gemini-3.5-flash      : none≡minimal(thinking=0) / low / medium / high 接受
+#                           xhigh、max → HTTP 400 拒绝
+#   gemini-3.1-pro-preview: low / medium / high 接受;minimal、xhigh → HTTP 400 拒绝
+#   (none 与 minimal 同为 0 thinking = 别名,只取 minimal 一席避免重复。)
+version: 1
+N: 4
+
+transport:
+  base_url: https://generativelanguage.googleapis.com/v1beta/openai
+  descriptor: google-gemini-developer-api-openai-compat
+  proxy: none
+
+configs:
+  # ---- gemini-3.5-flash(stable 主力,4 档)----
+  - config_id: gemini-3.5-flash-eff-minimal--api--official--dev
+    family: gemini
+    model_id: gemini-3.5-flash
+    effort: minimal
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  - config_id: gemini-3.5-flash-eff-low--api--official--dev
+    family: gemini
+    model_id: gemini-3.5-flash
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  - config_id: gemini-3.5-flash-eff-medium--api--official--dev
+    family: gemini
+    model_id: gemini-3.5-flash
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  - config_id: gemini-3.5-flash-eff-high--api--official--dev
+    family: gemini
+    model_id: gemini-3.5-flash
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  # ---- gemini-3.1-pro-preview(旗舰,3 档;不支持 minimal)----
+  - config_id: gemini-3.1-pro-preview-eff-low--api--official--dev
+    family: gemini
+    model_id: gemini-3.1-pro-preview
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  - config_id: gemini-3.1-pro-preview-eff-medium--api--official--dev
+    family: gemini
+    model_id: gemini-3.1-pro-preview
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }
+
+  - config_id: gemini-3.1-pro-preview-eff-high--api--official--dev
+    family: gemini
+    model_id: gemini-3.1-pro-preview
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_GEMINI_KEY }

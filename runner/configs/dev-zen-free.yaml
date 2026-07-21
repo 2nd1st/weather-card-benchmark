@@ -1,0 +1,63 @@
+# dev-zen-free.yaml — zen free 档 6 模型(api 臂,零余额实证可用;nemotron/north 新家族)。
+version: 1
+N: 2
+
+transport:
+  base_url: https://opencode.ai/zen/v1
+  descriptor: opencode-zen-free-tier
+  proxy: none
+
+configs:
+  - config_id: nemotron-3-ultra-free--zen-free--dev
+    family: nemotron
+    model_id: nemotron-3-ultra-free
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }
+
+  - config_id: north-mini-code-free--zen-free--dev
+    family: north
+    model_id: north-mini-code-free
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }
+
+  - config_id: big-pickle--zen-free--dev
+    family: opencode
+    model_id: big-pickle
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }
+
+  - config_id: deepseek-v4-flash-free--zen-free--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-free
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }
+
+  - config_id: hy3-free--zen-free--dev
+    family: hunyuan
+    model_id: hy3-free
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }
+
+  - config_id: mimo-v2.5-free--zen-free--dev
+    family: mimo
+    model_id: mimo-v2.5-free
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: plan
+    auth: { method: api-key, credential_ref: WCB_ZEN_KEY }

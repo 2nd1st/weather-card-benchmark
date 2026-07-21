@@ -1,0 +1,693 @@
+{
+  "version": 1,
+  "updated": "2026-07-20",
+  "note_en": "Planned coverage for channels OUTSIDE production-matrix.yaml (which plans the official-api arm). Each cell = model x effort x arm. status hints are computed by the site against landed data; 'planned' entries with awaiting notes are seats we intend to fill.",
+  "note_zh": "production-matrix.yaml 之外通道的计划覆盖(matrix 只管官方 api 臂)。每格 = 模型 × effort × 臂。落地状态由站点对照真实数据计算;awaiting 备注表示待补的席位。",
+  "arms": [
+    {
+      "arm": "CC",
+      "arm_group": "harness",
+      "family": "claude",
+      "harness_en": "Claude Code CLI, isolated stock environment (no settings/skills/MCP)",
+      "harness_zh": "Claude Code CLI,隔离纯净环境(无 settings/skills/MCP)",
+      "models": [
+        {
+          "model_id": "claude-fable-5",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-opus-4-8",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-sonnet-5",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-haiku-4-5",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "codex-oauth",
+      "arm_group": "harness",
+      "family": "gpt",
+      "harness_en": "codex CLI signed into ChatGPT (isolated CODEX_HOME); community-reproducible by any ChatGPT subscriber",
+      "harness_zh": "codex CLI 直登 ChatGPT(隔离 CODEX_HOME);任何 ChatGPT 订阅者可复现",
+      "models": [
+        {
+          "model_id": "gpt-5.6-sol",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-terra",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-luna",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        },
+        {
+          "model_id": "gpt-5.5",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        },
+        {
+          "model_id": "gpt-5.4",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        },
+        {
+          "model_id": "gpt-5.4-mini",
+          "efforts": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "codex-app",
+      "arm_group": "harness",
+      "family": "gpt",
+      "harness_en": "ChatGPT app codex @ultra (app-only tier, manual protocol)",
+      "harness_zh": "ChatGPT app codex @ultra(app 独占档,手动跑)",
+      "models": [
+        {
+          "model_id": "gpt-5.6-terra",
+          "efforts": [
+            "ultra"
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-sol",
+          "efforts": [
+            "ultra"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "kiro",
+      "arm_group": "harness",
+      "family": "multi",
+      "harness_en": "kiro-cli (AWS Kiro) on a GitHub-login credit plan, isolated fake-HOME stock environment; effort configs are driven through the interactive TUI via pty because --no-interactive silently drops effort (CLI 2.13.0)",
+      "harness_zh": "kiro-cli(AWS Kiro)GitHub 登录 credit 订阅,隔离 fake-HOME 纯净环境;--no-interactive 会静默丢弃 effort(CLI 2.13.0),带 effort 的席位经 pty 驱动 interactive TUI 跑",
+      "models": [
+        {
+          "model_id": "claude-sonnet-5",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-opus-4-8",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-opus-4-7",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-opus-4-6",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-opus-4-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "claude-sonnet-4-6",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ]
+        },
+        {
+          "model_id": "claude-sonnet-4-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "claude-sonnet-4",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "claude-haiku-4-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-sol",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-terra",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "gpt-5.6-luna",
+          "efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        {
+          "model_id": "deepseek-v3.2",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.1",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3-coder-next",
+          "efforts": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "grok-cli",
+      "arm_group": "harness",
+      "family": "grok",
+      "harness_en": "grok CLI OAuth, isolated fake-HOME stock environment",
+      "harness_zh": "grok CLI OAuth,隔离 fake-HOME 纯净环境",
+      "models": [
+        {
+          "model_id": "grok-4.5",
+          "efforts": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "qoder",
+      "arm_group": "harness",
+      "family": "qwen",
+      "harness_en": "Qoder CLI (Alibaba, Claude-Code-compatible; iFlow's successor), stock login; --reasoning-effort silently ignored for qwen so no effort axis",
+      "harness_zh": "Qoder CLI(阿里,Claude Code 兼容;iFlow 官方继任)登录态直用;--reasoning-effort 对 qwen 静默忽略,不展开 effort",
+      "models": [
+        {
+          "model_id": "qwen3.8-max-preview",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.7-max",
+          "efforts": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "opencode",
+      "arm_group": "harness",
+      "family": "multi",
+      "harness_en": "opencode CLI on the go subscription, isolated XDG home",
+      "harness_zh": "opencode CLI 走 go 订阅,隔离 XDG home",
+      "models": [
+        {
+          "model_id": "qwen3.7-max",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.7-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.6-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.5-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k3",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.7-code",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.6",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5.2",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5.1",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m3",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.7",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2.5-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2-omni",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "deepseek-v4-flash",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "hy3-preview",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "grok-4.5",
+          "efforts": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "go",
+      "arm_group": "api",
+      "family": "multi",
+      "harness_en": "opencode go gateway api (plain api calls through the go subscription endpoint)",
+      "harness_zh": "opencode go 网关 api(经 go 订阅端点的纯 api 调用)",
+      "models": [
+        {
+          "model_id": "qwen3.7-max",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.7-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.6-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "qwen3.5-plus",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k3",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.7-code",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.6",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "kimi-k2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5.2",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5.1",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "glm-5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m3",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.7",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "minimax-m2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2.5-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2.5",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "mimo-v2-omni",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "deepseek-v4-flash",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "hy3-preview",
+          "efforts": [
+            null
+          ]
+        },
+        {
+          "model_id": "grok-4.5",
+          "efforts": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "qwen-code",
+      "arm_group": "harness",
+      "family": "qwen",
+      "harness_en": "Alibaba coding-plan harness (Qoder CLI headless; qwen-code ToS now bans automation)",
+      "harness_zh": "阿里 coding plan harness(Qoder CLI 有官方 headless;qwen-code 条款已禁自动化)",
+      "models": [
+        {
+          "model_id": "qwen3.7-max",
+          "efforts": [
+            null
+          ],
+          "awaiting_en": "plan pending — free tier ended 2026-04; automation must go via Qoder CLI ($20/mo)",
+          "awaiting_zh": "等订阅——免费额度 2026-04 已取消;自动化需改走 Qoder CLI($20/月)"
+        }
+      ]
+    },
+    {
+      "arm": "kimi-coding",
+      "arm_group": "harness",
+      "family": "kimi",
+      "harness_en": "Kimi Code CLI (first-party, replaced kimi-cli 2026-06) on Kimi membership",
+      "harness_zh": "Kimi Code CLI(第一方,2026-06 取代 kimi-cli)走 Kimi 会员",
+      "models": [
+        {
+          "model_id": "kimi-k3",
+          "efforts": [
+            null
+          ],
+          "awaiting_en": "membership pending (Andante ¥49/mo+)",
+          "awaiting_zh": "等会员(Andante ¥49/月起)"
+        }
+      ]
+    },
+    {
+      "arm": "mimo-code",
+      "arm_group": "harness",
+      "family": "mimo",
+      "harness_en": "MiMo Code (Xiaomi first-party coding harness)",
+      "harness_zh": "MiMo Code(小米第一方 coding harness)",
+      "models": [
+        {
+          "model_id": "mimo-v2.5-pro",
+          "efforts": [
+            null
+          ],
+          "awaiting_en": "login pending",
+          "awaiting_zh": "等待登录"
+        }
+      ]
+    },
+    {
+      "arm": "glm-coding",
+      "arm_group": "harness",
+      "family": "glm",
+      "harness_en": "GLM Coding Plan harness",
+      "harness_zh": "GLM Coding Plan 订阅 harness;无自家 CLI,官配 Claude Code 兼容端点(峰时 14-18 点 2-3x 扣量,跑批避峰)",
+      "models": [
+        {
+          "model_id": "glm-5.2",
+          "efforts": [
+            null
+          ],
+          "awaiting_en": "coding-plan subscription pending",
+          "awaiting_zh": "等 coding plan 订阅"
+        }
+      ]
+    },
+    {
+      "arm": "antigravity",
+      "arm_group": "harness",
+      "family": "gemini",
+      "harness_en": "Google Antigravity CLI (successor to gemini-cli, launched 2026-05-19)",
+      "harness_zh": "Google Antigravity CLI(接替 gemini-cli,2026-05-19 发布)",
+      "models": [
+        {
+          "model_id": "gemini-3.1-pro-preview",
+          "efforts": [
+            null
+          ],
+          "awaiting_en": "deferred by decision — gemini-cli consumer OAuth stopped serving 2026-06-18; Antigravity is closed-source with a self-updating installer and undocumented stock isolation, so it is unsuitable as a reproducible harness. Google is covered via the official Developer API arm instead.",
+          "awaiting_zh": "主动暂缓——gemini-cli 个人 OAuth 通路 2026-06-18 停服;Antigravity 闭源 + 自更新安装器 + stock 隔离点未文档化,不适合做可复现 harness。Google 改以官方 Developer API 臂覆盖。"
+        }
+      ]
+    }
+  ]
+}

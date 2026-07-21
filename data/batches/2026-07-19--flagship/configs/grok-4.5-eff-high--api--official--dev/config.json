@@ -1,0 +1,27 @@
+{
+  "N": 4,
+  "auth": {
+    "credential_ref": "WCB_XAI_OFFICIAL_KEY",
+    "method": "api-key"
+  },
+  "billing": "metered",
+  "config_id": "grok-4.5-eff-high--api--official--dev",
+  "effort": "high",
+  "family": "grok",
+  "m": {
+    "min": 4,
+    "q": 4
+  },
+  "model_id": "grok-4.5",
+  "protocol": "api",
+  "served_model": "grok-4.5",
+  "telemetry": {
+    "completion_tokens": 33348,
+    "cost_usd": null,
+    "prompt_tokens": 4176,
+    "total_tokens": 37524,
+    "wall_ms": 324364
+  },
+  "transport": "xai-official-api",
+  "vendor_sanction_ref": null
+}

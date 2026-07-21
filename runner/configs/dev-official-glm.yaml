@@ -1,0 +1,53 @@
+# dev-official-glm.yaml — Zhipu GLM official API (BigModel OpenAI-compat, thinking axis).
+# 2026-07-20 probe (bigmodel /chat/completions, glm-5.2): thinking axis is REAL —
+#   thinking.type=disabled → completion_tokens=76, no reasoning_content;
+#   thinking.type=enabled  → completion_tokens=632, reasoning_content=2022ch;
+#   default (no param)     → thinking ON. Adapter's effort_param=thinking.type maps
+#   exactly (same mechanism as the doubao/Ark arm).
+# Endpoint: bigmodel.cn (CN) verified via /models (glm-4.5..5.2 listed). z.ai intl
+# key returned 401 — not used. Top+new only: glm-5.2 (flagship) + glm-5.1.
+# billing=metered (paid API on gifted 2M free credits; frugal N keeps well under).
+version: 1
+N: 4
+
+transport:
+  base_url: https://open.bigmodel.cn/api/paas/v4
+  descriptor: bigmodel-openai-compat
+  proxy: none
+
+configs:
+  - config_id: glm-5.2-eff-enabled--api--official--dev
+    family: glm
+    model_id: glm-5.2
+    effort: enabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_BIGMODEL_KEY }
+
+  - config_id: glm-5.2-eff-disabled--api--official--dev
+    family: glm
+    model_id: glm-5.2
+    effort: disabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_BIGMODEL_KEY }
+
+  - config_id: glm-5.1-eff-enabled--api--official--dev
+    family: glm
+    model_id: glm-5.1
+    effort: enabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_BIGMODEL_KEY }
+
+  - config_id: glm-5.1-eff-disabled--api--official--dev
+    family: glm
+    model_id: glm-5.1
+    effort: disabled
+    effort_param: thinking.type
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_BIGMODEL_KEY }

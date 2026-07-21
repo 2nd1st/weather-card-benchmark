@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "{label} — card — weather-card-benchmark",
+    "description": "{label} 的截图、原始源码、逐字段 fidelity 与 telemetry。所有指标以原始模型输出为准;similarity 衡量的是趋同程度,不是质量。"
+  },
+  "notFound": {
+    "title": "找不到该 config",
+    "message": "registry 里没有匹配这个 id 的条目。它可能是一次 dev 专用运行,已不在磁盘上。"
+  },
+  "breadcrumb": { "gallery": "gallery" },
+  "provenance": {
+    "heading": "溯源",
+    "config": "config",
+    "batch": "batch",
+    "batchesMore": "另有 {count} 个",
+    "transport": "transport",
+    "protocol": "protocol",
+    "billing": "billing",
+    "served": "served model",
+    "captured": "采集于",
+    "runs": "运行",
+    "copy": "复制{field}",
+    "modelLink": "该 model 的全部 effort 与 arm →"
+  },
+  "controls": {
+    "variant": "variant",
+    "render": "渲染",
+    "original": "original",
+    "patched": "patched",
+    "live": "live",
+    "city": "城市",
+    "delay": "延迟",
+    "reload": "重载",
+    "fixture": "fixture",
+    "liveNow": "实时",
+    "screenshot": "截图",
+    "runLive": "运行 live"
+  },
+  "patch": {
+    "tag": "patched · {category}",
+    "category": {
+      "render-fix": "render fix",
+      "asset-path": "asset path",
+      "truncation-repair": "truncation repair"
+    },
+    "by": "— {by},{ts}",
+    "metricsCaption": "所有指标以原始输出为准",
+    "preserved": "原始输出已完整保留,可在上方切换渲染查看。",
+    "diff": "查看 diff ↗"
+  },
+  "slots": {
+    "heading": "slots",
+    "slot": "slot {index}",
+    "valid": "valid",
+    "patched": "patched",
+    "noOutput": "无输出"
+  },
+  "viewer": {
+    "frameLabel": "slot {index} · {variant} · sandboxed iframe",
+    "sandboxNote": "allow-scripts · srcdoc",
+    "shotAlt": "{label} {variant} slot {index} 截图",
+    "noShot": "该 slot 没有截图",
+    "loading": "加载中…",
+    "unavailable": "卡片不可用",
+    "runLivePrompt": "在 sandboxed iframe 中运行原始输出",
+    "fixtureNote": "fixture · {city} · {date} — 即测量时的场景",
+    "liveNote": "live · {city} — 仅供观感,已偏离测量场景",
+    "caption": "截图是 similarity 通道测量时的原始像素。运行 live 会在 sandboxed iframe 中重新执行原始输出;渲染结果取决于你的浏览器和字体,不保证与测量像素一致。"
+  },
+  "neighbors": {
+    "heading": "similarity 邻居",
+    "channel": "channel",
+    "nearest": "最近",
+    "farthest": "最远",
+    "caption": "similarity 衡量本 session 内的趋同程度 —— 不是质量。",
+    "session": "限于 session {batch}",
+    "noneInSession": "本 session 没有 similarity 数据 —— 这个 batch 没有计算 pairs。",
+    "tooFewPeers": "本 session 的同伴太少,无法展示邻居(需要 6 个以上共享同一 fixture 的 config)。",
+    "noChannelData": "本 session 中 {channel} 没有足够的 similarity 数据。"
+  },
+  "fidelity": {
+    "heading": "Fidelity —— 卡片展示的数据对不对?",
+    "none": "没有 fidelity 判定 —— 该 slot 为 {state}(fidelity 仅对 valid slot 计算)。",
+    "name": "name",
+    "condition": "condition",
+    "date": "date",
+    "maxTemp": "max temp",
+    "minTemp": "min temp",
+    "shown": "展示值:{value}",
+    "hourly": "hourly",
+    "hourlyDetail": "coverage {coverage} · {match} 命中 · {mismatch} 不符 · {notShown} 未展示",
+    "requestSide": "request side",
+    "violations": "{count} 处违规",
+    "extractor": "extractor {version}"
+  },
+  "source": {
+    "heading": "源码 —— 原始模型输出,一字节未改",
+    "download": "下载 card.html",
+    "expand": "展开全部 {lines} 行 · {size}",
+    "collapse": "收起源码",
+    "none": "该 slot 没有 card.html({state})。"
+  },
+  "rawConfig": { "heading": "config.json", "toggle": "展开原始 config" },
+  "sendLog": { "heading": "send-log", "toggle": "展开 send-log", "notOnDisk": "磁盘上没有", "none": "该 config 磁盘上没有 send-log。" },
+  "l1": {
+    "heading": "L1 —— 廉价的确定性描述量",
+    "none": "没有 L1 —— 该 slot 为 {state}。",
+    "bytesTotal": "bytes 总计",
+    "bytesSplit": "html / css / js",
+    "domNodes": "dom 节点",
+    "domDepth": "dom 深度",
+    "cssRules": "css 规则",
+    "jsPresent": "含 js",
+    "brightness": "brightness",
+    "contrast": "contrast",
+    "colorfulness": "colorfulness",
+    "whitespace": "留白",
+    "yes": "是",
+    "no": "否"
+  },
+  "telemetry": {
+    "heading": "该 slot 的 telemetry",
+    "promptTokens": "prompt tokens",
+    "completionTokens": "completion tokens",
+    "totalTokens": "total tokens",
+    "wall": "wall",
+    "cost": "cost",
+    "requestId": "request id"
+  },
+  "tombstone": {
+    "heading": "没有 valid 输出",
+    "message": "这个 config 的每个 slot 都渲染失败了 —— 失败本身是数据,不是被藏起来的空缺。下方的 state 芯片与 send-log 会精确显示发生了什么。"
+  }
+}

@@ -1,0 +1,20 @@
+# dev-kimi.yaml — 单 config 增量:Kimi K3 via sub2(网关 id = k3)。DEV ONLY。
+version: 1
+N: 2
+
+transport:
+  base_url: http://localhost:8080/v1
+  descriptor: sub2api-dev-gateway
+  proxy: sub2api
+
+configs:
+  - config_id: kimi-k3--api--raw--dev
+    family: kimi
+    model_id: kimi-k3       # 展示规范名(sub2 网关路由名是 "k3",发送层用短名;见 DEV-MERGE-NOTE)
+    effort: null
+    effort_param: null
+    protocol: api
+    billing: metered
+    auth:
+      method: api-key
+      credential_ref: WCB_KIMI_KEY

@@ -1,0 +1,27 @@
+{
+  "N": 2,
+  "auth": {
+    "credential_ref": "WCB_NONE",
+    "method": "oauth-login"
+  },
+  "billing": "plan",
+  "config_id": "gpt-5.6-sol-eff-high--cli--codex-oauth--dev",
+  "effort": "high",
+  "family": "gpt",
+  "m": {
+    "min": 2,
+    "q": 2
+  },
+  "model_id": "gpt-5.6-sol",
+  "protocol": "cli",
+  "served_model": "gpt-5.6-sol",
+  "telemetry": {
+    "completion_tokens": 52393,
+    "cost_usd": null,
+    "prompt_tokens": null,
+    "total_tokens": null,
+    "wall_ms": 536492
+  },
+  "transport": "codex-cli-oauth-chatgpt",
+  "vendor_sanction_ref": null
+}

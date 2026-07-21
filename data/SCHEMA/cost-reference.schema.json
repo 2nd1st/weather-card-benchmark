@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/cost-reference.schema.json",
+  "title": "cost-reference.json — per family×arm per-call USD ranges (REDESIGN-SPEC-v3 §2.4, §9)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "entries"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated": { "type": "string" },
+    "per_config_calls": { "type": "integer", "minimum": 0 },
+    "note_en": { "type": "string" },
+    "note_zh": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["family", "arm", "per_call_usd"],
+        "properties": {
+          "family": { "type": "string", "minLength": 1 },
+          "arm": { "type": "string", "minLength": 1 },
+          "per_call_usd": {
+            "type": "array",
+            "description": "[lo, hi] per-call USD range.",
+            "prefixItems": [{ "type": "number", "minimum": 0 }, { "type": "number", "minimum": 0 }],
+            "items": { "type": "number", "minimum": 0 },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "basis": { "enum": ["observed", "plan", "estimated"] },
+          "note_en": { "type": "string" },
+          "note_zh": { "type": "string" }
+        }
+      }
+    }
+  }
+}

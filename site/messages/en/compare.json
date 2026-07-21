@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "title": "Compare — weather-card-benchmark",
+    "description": "Put 2–4 model weather cards side by side, live, on one shared city and moment. Same prompt, same data."
+  },
+  "title": "Compare",
+  "subtitle": "Put 2–4 configs side by side — one shared city, date, and API delay, rendered live in sandboxed frames.",
+  "add": "add config",
+  "addMore": "add another",
+  "remove": "remove",
+  "openCard": "open card ↗",
+  "picker": {
+    "title": "Add a config",
+    "search": "search model, arm, family…",
+    "noResults": "no configs match",
+    "added": "added",
+    "full": "4 configs max — remove one to add another",
+    "validShort": "{count} valid"
+  },
+  "controls": {
+    "city": "city",
+    "date": "date",
+    "delay": "API delay",
+    "variant": "variant",
+    "variantHint": "Prompt variant: P-min is the minimal data-only spec; P-q is the same prompt plus one line — “pay particular attention to visual design quality.” Toggle to compare.",
+    "variantTitle": {
+      "P-min": "P-min — the minimal, data-only prompt (no styling guidance).",
+      "P-q": "P-q — P-min plus one line: “pay particular attention to visual design quality.”"
+    },
+    "reload": "reload all",
+    "reloadHint": "reload every frame with the current city, date, and delay"
+  },
+  "slot": {
+    "cycle": "slot {index} / {total}",
+    "one": "1 valid slot"
+  },
+  "tombstone": {
+    "title": "no valid slot",
+    "message": "This config has no valid {variant} card to render. Its states and raw output live on the card page."
+  },
+  "empty": {
+    "title": "Nothing to compare yet",
+    "message": "Add 2 to 4 configs to put their live weather cards side by side."
+  },
+  "hint": "compare 2–4 configs · same prompt · same data",
+  "share": {
+    "copy": "copy link",
+    "copied": "link copied"
+  },
+  "live": {
+    "note": "live weather is rendered in-frame for the shared city; the frozen screenshots on the card pages are the measured pixels",
+    "loading": "rendering",
+    "unavailable": "card unavailable"
+  }
+}

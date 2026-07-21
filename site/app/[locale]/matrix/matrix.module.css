@@ -1,0 +1,365 @@
+/* /matrix — data-dense restrained register (mockup-a: hairline + ink, no glow,
+   no gradients). Scoped module; global tokens (--acc, --line, …) come from
+   globals.css. The 208px fixed row-head column (--mx-head) and the
+   figure/figcaption tooltip below are ports of proven fixes — do not regress. */
+
+.mx-page { position: relative; }
+
+.mx-honesty {
+  font: 12px/1.6 var(--font-mono);
+  color: var(--ink-dim);
+  letter-spacing: 0.01em;
+  max-width: 78ch;
+  margin-bottom: 18px;
+}
+
+.mx-sub { color: var(--ink-dim); font-size: 12px; }
+
+/* ---- measured-set line (replaces the old session selector) ---- */
+.mx-setline {
+  font: 11.5px var(--font-mono); color: var(--ink-dim);
+  letter-spacing: 0.02em; padding-bottom: 16px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+/* shared small group label (filters, order, colour mode) */
+.mx-gl {
+  font: 10px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---- controls row: filters + result count ---- */
+.mx-controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  margin-bottom: 18px;
+}
+.mx-fgroup { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* always-visible "N of M configs" count, right-aligned */
+.mx-count {
+  margin-left: auto;
+  font: 12px var(--font-mono); color: var(--ink-dim);
+  letter-spacing: 0.02em; white-space: nowrap;
+}
+
+/* ---- colour-scale legend + contrast toggle row ---- */
+.mx-scale-row {
+  display: flex; flex-wrap: wrap; align-items: flex-end;
+  justify-content: space-between; gap: 10px 24px; margin: 4px 0 16px;
+}
+.mx-colormode { display: inline-flex; align-items: center; gap: 8px; }
+.mx-legend {
+  display: flex; align-items: flex-end; flex-wrap: wrap; gap: 8px 20px;
+  margin: 0; font: 10px var(--font-mono);
+}
+.mx-legend-sublabel {
+  font: 9px var(--font-mono); color: var(--ink-faint);
+  letter-spacing: 0.06em; margin-top: 1px;
+}
+.mx-legend-scale { display: flex; flex-direction: column; gap: 3px; }
+.mx-legend-bar {
+  display: block; width: 100%; height: 10px; border-radius: 4px;
+  border: 1px solid var(--line);
+}
+.mx-legend-ticks {
+  display: flex; justify-content: space-between;
+  font: 10px var(--font-mono); color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+.mx-legend-tick { position: relative; }
+.mx-legend-tick::before {
+  content: ""; position: absolute; top: -5px; left: 50%;
+  width: 1px; height: 3px; background: var(--line-strong);
+}
+.mx-legend-ins { display: inline-flex; align-items: center; gap: 5px; padding-bottom: 2px; }
+.mx-legend-swatch {
+  width: 11px; height: 11px; border-radius: 2px; border: 1px solid var(--line);
+}
+
+/* ---- empty state wrapper ---- */
+.mx-empty { margin-top: 8px; }
+
+/* =================== body: channel rail (top) + main heatmap =================== */
+/* Vertical stack: the 17-channel selector sits ABOVE the matrix so the heatmap
+   claims the full content width (was a ~244px right rail that squeezed 114×114). */
+.mx-body {
+  display: flex; flex-direction: column; gap: 20px;
+  min-width: 0;
+}
+
+.mx-main { min-width: 0; }
+.mx-main-title {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.mx-chan { font: 600 15px var(--font-mono); color: var(--ink); letter-spacing: 0.02em; }
+.mx-diag {
+  font: 9px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--warn); border: 1px solid rgba(245, 180, 84, 0.4);
+  border-radius: 4px; padding: 1px 5px;
+}
+.mx-chan-desc {
+  flex: 1 1 100%; font: 12px/1.5 var(--font-mono); color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+.mx-scroll-x {
+  overflow-x: auto; overflow-y: hidden; padding-bottom: 6px;
+  /* full-bleed breakout (2026-07-19: 133 列中心列装不下) — the heatmap
+     escapes the centered content column and claims the viewport width, minus a
+     24px gutter each side. Header/prose stay in-column; body overflow-x:hidden
+     clips the sub-pixel excess. */
+  width: calc(100vw - 48px);
+  margin-left: calc(50% - 50vw + 24px);
+  /* In fit mode the grid is NARROWER than this full-bleed box, and a plain
+     block child would sit hard against the left edge while the rest of the page
+     stays centred (2026-07-20). Centre the grid when it is smaller than the
+     box; `justify-content` (not `margin:auto`) so an overflowing grid still
+     scrolls from its left edge instead of being clipped on both sides. */
+  display: flex;
+  justify-content: safe center;
+}
+
+/* the 2×2 grid: [corner][colheads] / [rowheads][canvas]. --mx-head fixes the
+   row-head column width AND the col-head row height at 208px (the ported fix). */
+.mx-grid { display: grid; --mx-head: 208px; }
+
+/* corner + row-head column stay pinned to the left while the canvas scrolls
+   horizontally under them (sticky, opaque bg masks the cells behind). Column
+   headers are intentionally NOT sticky-top: the x-scroll container clips y, so a
+   top-sticky would reference the page viewport and float oddly — skipped. */
+.mx-corner {
+  width: var(--mx-head); height: var(--mx-head);
+  position: sticky; left: 0; z-index: 3; background: var(--bg);
+}
+
+.mx-colheads { display: flex; align-items: flex-end; height: var(--mx-head); }
+.mx-colhead {
+  display: flex; align-items: flex-end; justify-content: center;
+  height: 100%; overflow: hidden; color: var(--ink-dim);
+  border-bottom: 1px solid var(--line);
+}
+.mx-colhead span {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font: 11px var(--font-mono); letter-spacing: 0.02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-height: calc(var(--mx-head) - 8px); padding: 4px 0;
+}
+.mx-colhead:hover span, .mx-colhead.hot span { color: var(--acc); }
+
+.mx-rowheads {
+  display: flex; flex-direction: column; width: var(--mx-head);
+  position: sticky; left: 0; z-index: 2; background: var(--bg);
+}
+
+/* Model-cluster bands (fit mode). One block per contiguous run of a family, so
+   193 unreadable per-config names become ~15 legible group labels. A run too
+   short to hold its name still renders as a tinted block with a hairline, which
+   keeps the boundary visible — the label is a bonus, the boundary is the point. */
+.mx-band {
+  display: flex; align-items: center; justify-content: flex-end;
+  overflow: hidden; font: 10px var(--font-mono); color: var(--ink-faint);
+  background: color-mix(in srgb, var(--panel-2) 55%, transparent);
+}
+.mx-band + .mx-band { border-top: 1px solid var(--line-strong); }
+.mx-band-row { width: 100%; padding-right: 6px; }
+.mx-band-col {
+  height: 100%; align-items: flex-end; justify-content: center;
+  padding-bottom: 4px; border-top: none;
+}
+.mx-band-col + .mx-band-col { border-top: none; border-left: 1px solid var(--line-strong); }
+.mx-band span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mx-rowhead {
+  display: flex; align-items: center; justify-content: flex-end;
+  width: 100%; overflow: hidden; color: var(--ink-dim);
+  border-right: 1px solid var(--line); padding-right: 8px;
+}
+.mx-rowhead span {
+  font: 11px var(--font-mono); letter-spacing: 0.02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: calc(var(--mx-head) - 12px);
+}
+.mx-rowhead:hover span, .mx-rowhead.hot span { color: var(--acc); }
+
+.mx-canvas-wrap { position: relative; cursor: pointer; }
+.mx-canvas { display: block; }
+
+.mx-hint { margin-top: 12px; line-height: 1.6; }
+
+/* ---- crosshair overlay ---- */
+/* NB: crosshair highlight bands are their OWN class (`mx-crossband`), NOT the
+   fit-mode cluster `mx-band` — a shared name made this `position:absolute` win
+   over the flex cluster bands and collapsed the fit-mode row/col heads. */
+.mx-cross { position: absolute; inset: 0; pointer-events: none; }
+.mx-crossband { position: absolute; }
+.mx-cellbox {
+  position: absolute; border: 1px solid var(--acc);
+  box-shadow: 0 0 0 1px rgba(55, 214, 228, 0.3);
+}
+
+/* ---- 17 channels: compact labeled tab rail, full-width row ABOVE the matrix.
+   The three families (visual / code / DOM) lay out side-by-side and wrap. ---- */
+.mx-channels { width: 100%; min-width: 0; }
+.mx-channels-title {
+  font: 11px var(--font-mono); color: var(--ink-dim);
+  letter-spacing: 0.02em; margin-bottom: 12px;
+}
+.mx-channel-groups {
+  display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: flex-start;
+}
+.mx-group { margin-bottom: 0; min-width: 0; }
+.mx-group-label {
+  font: 10px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 8px;
+}
+.mx-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.mx-tab {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px;
+  background: var(--panel); color: var(--ink-dim); cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.mx-tab:hover { border-color: var(--line-strong); background: var(--bg-elev); color: var(--ink); }
+.mx-tab:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+.mx-tab.active {
+  border-color: var(--acc); background: rgba(55, 214, 228, 0.08); color: var(--acc);
+}
+.mx-tab-label { font: 11.5px var(--font-mono); letter-spacing: 0.01em; }
+.mx-tab-diag {
+  font: 8px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--warn);
+}
+
+/* ---- floating tooltip (figure/figcaption; diagonal single-figure guard) ---- */
+.mx-tooltip {
+  position: fixed; z-index: 70; pointer-events: none;
+  /* big enough to actually READ the two cards (the old 320px was
+     illegible); width scales with the viewport, images at native 16:10. */
+  width: min(760px, 52vw); padding: 16px 18px;
+  background: var(--panel); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg); box-shadow: 0 22px 56px rgba(0, 0, 0, 0.6);
+  font: 12px var(--font-mono); color: var(--ink);
+}
+.mx-tt-pair { line-height: 1.5; margin-bottom: 10px; font-size: 13px; }
+.mx-tt-thumbs { display: flex; gap: 12px; margin-bottom: 10px; }
+.mx-tt-fig {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+}
+.mx-tt-fig img {
+  width: 100%; border-radius: 8px; border: 1px solid var(--line);
+  /* shots are native 1280×800 — matching the aspect means zero cropping */
+  aspect-ratio: 1280 / 800; object-fit: cover; background: var(--bg-elev);
+}
+.mx-tt-fig figcaption {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mx-tt-noshot {
+  display: grid; place-items: center; aspect-ratio: 1280 / 800;
+  border: 1px dashed var(--line-strong); border-radius: 8px;
+  color: var(--ink-faint); font-size: 11px;
+}
+.mx-tt-chan { color: var(--acc); margin-bottom: 6px; }
+.mx-tt-self { color: var(--ink-faint); }
+.mx-tt-val strong { color: var(--ink); }
+.mx-tt-insufficient { color: var(--ink-faint); }
+
+/* =========================== pair-detail drawer =========================== */
+.mx-drawer-backdrop {
+  /* Start BELOW the sticky site-nav (54px wrap + 1px border). The drawer lives
+     inside main.site-main (z-index:1), so its z-index:80 is scoped to that
+     stacking context and can never beat the nav (z-index:20, a sibling of main)
+     — top:0 always let the nav occlude the drawer title. Offsetting the backdrop
+     keeps the nav visible/usable and the drawer fully readable below it. */
+  position: fixed; inset: 55px 0 0 0; z-index: 80;
+  background: rgba(8, 11, 17, 0.6); backdrop-filter: blur(6px);
+  display: flex; justify-content: flex-end;
+}
+.mx-drawer {
+  position: relative; width: min(640px, 100%); height: 100%; overflow-y: auto;
+  background: var(--bg-elev); border-left: 1px solid var(--line-strong);
+  padding: clamp(18px, 3vw, 28px); box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
+}
+.mx-drawer-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  margin-bottom: 16px;
+}
+.mx-drawer-title { font: 600 18px var(--font-mono); letter-spacing: -0.01em; }
+.mx-drawer-close {
+  font: 15px var(--font-mono); color: var(--ink-dim);
+  width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+  flex: none;
+}
+.mx-drawer-close:hover { color: var(--ink); background: var(--panel-2); }
+.mx-drawer-meta {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+
+.mx-pair-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;
+}
+@media (max-width: 480px) { .mx-pair-cards { grid-template-columns: 1fr; } }
+.mx-pair-card {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--panel); overflow: hidden;
+}
+.mx-pair-card-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding: 9px 11px; border-bottom: 1px solid var(--line);
+}
+.mx-pair-name {
+  font: 11px var(--font-mono); color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mx-pair-fam { color: var(--ink-faint); }
+.mx-pair-mini { font: 10px var(--font-mono); color: var(--ink-dim); flex: none; }
+.mx-pair-mini:hover { color: var(--acc); }
+/* drawer pair shots: native 1280×800 aspect — cover in a 4:3 box was cropping
+   both sides of every card (same defect as the old tooltip). */
+.mx-pair-shot { aspect-ratio: 1280 / 800; background: var(--bg); }
+.mx-pair-shot img { width: 100%; height: 100%; object-fit: cover; }
+.mx-pair-noshot {
+  display: grid; place-items: center; height: 100%; color: var(--ink-faint);
+}
+
+.mx-drawer-sec { margin-top: 20px; }
+.mx-drawer-h {
+  font: 600 12px var(--font-mono); letter-spacing: 0.04em;
+  color: var(--ink); margin-bottom: 6px;
+}
+
+.mx-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+.mx-drawer-nav {
+  display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 24px;
+  padding-top: 16px; border-top: 1px solid var(--line);
+  font: 11px var(--font-mono);
+}
+.mx-drawer-nav a { color: var(--ink-dim); }
+.mx-drawer-nav a:hover { color: var(--acc); }
+
+/* ---- similarity bars (module-scoped; mirrors bits.ChannelBar) ---- */
+.mx-sbar-list { display: flex; flex-direction: column; gap: 5px; }
+.mx-sbar-row { display: grid; grid-template-columns: 92px 1fr 64px; gap: 10px; align-items: center; }
+.mx-sbar-label {
+  font: 10px var(--font-mono); color: var(--ink-dim);
+  display: inline-flex; align-items: center; gap: 4px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mx-fam-v { border-left: 2px solid rgba(55, 214, 228, 0.5); padding-left: 6px; }
+.mx-fam-c { border-left: 2px solid rgba(124, 140, 248, 0.5); padding-left: 6px; }
+.mx-fam-d { border-left: 2px solid rgba(147, 160, 184, 0.5); padding-left: 6px; }
+.mx-sbar-diag { font-size: 8px; color: var(--warn); }
+.mx-sbar-track {
+  height: 8px; border-radius: 4px; background: var(--panel-2);
+  border: 1px solid var(--line); overflow: hidden; position: relative;
+}
+.mx-sbar-fill { height: 100%; }
+.mx-sbar-ins {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg, var(--line) 0, var(--line) 3px, transparent 3px, transparent 6px
+  );
+}
+.mx-sbar-value {
+  font: 10px var(--font-mono); color: var(--ink); text-align: right;
+  font-variant-numeric: tabular-nums;
+}

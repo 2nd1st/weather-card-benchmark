@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Weather</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+  background: #0a0e1a;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
+  transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 50% at 20% 20%, rgba(244, 162, 97, 0.12), transparent),
+    radial-gradient(ellipse 60% 60% at 80% 80%, rgba(99, 102, 241, 0.12), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.theme-clear  { background: linear-gradient(135deg, #2a3a6a 0%, #3a2a5a 50%, #5a3a4a 100%); }
+body.theme-cloudy { background: linear-gradient(135deg, #1f2a3a 0%, #161e2c 50%, #0c1018 100%); }
+body.theme-rain   { background: linear-gradient(135deg, #15243e 0%, #0c1626 50%, #050a14 100%); }
+body.theme-snow   { background: linear-gradient(135deg, #2a3a5a 0%, #1c2438 50%, #101828 100%); }
+body.theme-storm  { background: linear-gradient(135deg, #1f1432 0%, #120a1f 50%, #08050f 100%); }
+body.theme-fog    { background: linear-gradient(135deg, #3a4554 0%, #252d3a 50%, #161c26 100%); }
+
+.card {
+  width: 960px;
+  max-width: 100%;
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 52px 60px;
+  box-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1;
+  animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes draw  { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn{ to { opacity: 1; } }
+@keyframes spin  { to { transform: rotate(360deg); } }
+
+.loading, .error {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+.error-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.error-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.error-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: -0.01em;
+}
+
+.error-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 360px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 36px;
+  gap: 24px;
+  animation: fadeUp 0.5s 0.1s ease-out backwards;
+}
+
+.location {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.location-name {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.location-date {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+  margin-top: 6px;
+  letter-spacing: -0.005em;
+}
+
+.coords {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.32);
+  margin-top: 10px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
+.coords svg {
+  width: 10px;
+  height: 10px;
+  opacity: 0.55;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 12px 0 44px;
+  animation: fadeUp 0.5s 0.2s ease-out backwards;
+}
+
+.icon-wrap {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-glow {
+  position: absolute;
+  inset: 8%;
+  background: radial-gradient(circle, currentColor, transparent 60%);
+  filter: blur(24px);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.icon-wrap svg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.condition {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.temps {
+  display: flex;
+  align-items: stretch;
+  gap: 36px;
+}
+
+.temp {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.temp-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.temp-value {
+  font-size: 64px;
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  font-variant-numeric: tabular-nums;
+}
+
+.temp-unit {
+  font-size: 22px;
+  font-weight: 300;
+  margin-top: 8px;
+  margin-left: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0;
+}
+
+.temp-low { opacity: 0.55; }
+.temp-low .temp-value { color: rgba(255, 255, 255, 0.8); }
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.12) 15%, rgba(255, 255, 255, 0.12) 85%, transparent);
+  margin: 0 0 28px;
+  animation: fadeUp 0.5s 0.3s ease-out backwards;
+}
+
+.hourly { animation: fadeUp 0.5s 0.4s ease-out backwards; }
+
+.hourly-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hourly-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.hourly-meta {
+  display: flex;
+  gap: 18px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.hourly-meta-item { display: flex; align-items: center; gap: 6px; }
+
+.hourly-meta-dot {
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.chart {
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+
+.chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.chart .line {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: draw 1.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.chart .fill {
+  opacity: 0;
+  animation: fadeIn 1.2s 0.6s ease-out forwards;
+}
+
+.chart .point {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.chart .grid-line {
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.chart .label {
+  fill: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.chart .temp-label {
+  fill: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1000px) {
+  .card { padding: 40px 32px; }
+  .main { grid-template-columns: 160px 1fr; gap: 32px; }
+  .icon-wrap { width: 160px; height: 160px; }
+  .location-name { font-size: 32px; }
+  .temp-value { font-size: 52px; }
+  .condition { font-size: 24px; }
+}
+</style>
+</head>
+<body class="theme-cloudy">
+<div class="card">
+<div id="content">
+<div class="loading">
+<div class="spinner"></div>
+<div class="loading-text">Loading weather data…</div>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const lat = parseFloat(params.get('lat') || '52.52');
+  const lon = parseFloat(params.get('lon') || '13.405');
+  const name = params.get('name') || 'Berlin';
+  const date = params.get('date') || new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0];
+  const isPast = date < today;
+  const endpoint = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+  const url = new URL(endpoint, window.location.origin);
+  url.searchParams.set('latitude', String(lat));
+  url.searchParams.set('longitude', String(lon));
+  url.searchParams.set('daily', 'temperature_2m_max,temperature_2m_min,weather_code');
+  url.searchParams.set('hourly', 'temperature_2m');
+  url.searchParams.set('timezone', 'UTC');
+  url.searchParams.set('temperature_unit', 'celsius');
+  url.searchParams.set('start_date', date);
+  url.searchParams.set('end_date', date);
+
+  const CODES = {
+    0:  ['Clear sky',                     'clear',  'sun'],
+    1:  ['Mainly clear',                  'clear',  'sun-cloud'],
+    2:  ['Partly cloudy',                 'cloudy', 'sun-cloud'],
+    3:  ['Overcast',                      'cloudy', 'cloud'],
+    45: ['Foggy',                         'fog',    'fog'],
+    48: ['Depositing rime fog',           'fog',    'fog'],
+    51: ['Light drizzle',                 'rain',   'drizzle'],
+    53: ['Moderate drizzle',              'rain',   'drizzle'],
+    55: ['Dense drizzle',                 'rain',   'drizzle'],
+    56: ['Light freezing drizzle',        'rain',   'drizzle'],
+    57: ['Dense freezing drizzle',        'rain',   'drizzle'],
+    61: ['Slight rain',                   'rain',   'rain'],
+    63: ['Moderate rain',                 'rain',   'rain'],
+    65: ['Heavy rain',                    'rain',   'rain'],
+    66: ['Light freezing rain',           'rain',   'rain'],
+    67: ['Heavy freezing rain',           'rain',   'rain'],
+    71: ['Slight snow fall',              'snow',   'snow'],
+    73: ['Moderate snow fall',            'snow',   'snow'],
+    75: ['Heavy snow fall',               'snow',   'snow'],
+    77: ['Snow grains',                   'snow',   'snow'],
+    80: ['Slight rain showers',           'rain',   'rain'],
+    81: ['Moderate rain showers',         'rain',   'rain'],
+    82: ['Violent rain showers',          'rain',   'rain'],
+    85: ['Slight snow showers',           'snow',   'snow'],
+    86: ['Heavy snow showers',            'snow',   'snow'],
+    95: ['Thunderstorm',                  'storm',  'storm'],
+    96: ['Thunderstorm with slight hail', 'storm',  'storm'],
+    99: ['Thunderstorm with heavy hail',  'storm',  'storm'],
+  };
+
+  const ICONS = {
+    sun: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="38" fill="currentColor" opacity="0.95"/>
+      <g stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity="0.65">
+        <line x1="100" y1="30" x2="100" y2="20"/>
+        <line x1="100" y1="180" x2="100" y2="170"/>
+        <line x1="30" y1="100" x2="20" y2="100"/>
+        <line x1="180" y1="100" x2="170" y2="100"/>
+        <line x1="50" y1="50" x2="43" y2="43"/>
+        <line x1="150" y1="150" x2="157" y2="157"/>
+        <line x1="150" y1="50" x2="157" y2="43"/>
+        <line x1="50" y1="150" x2="43" y2="157"/>
+      </g>
+      <circle cx="90" cy="90" r="6" fill="#fff" opacity="0.5"/>
+    </svg>`,
+    'sun-cloud': `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="72" cy="68" r="30" fill="currentColor" opacity="0.95"/>
+      <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.6">
+        <line x1="72" y1="20" x2="72" y2="14"/>
+        <line x1="20" y1="68" x2="14" y2="68"/>
+        <line x1="34" y1="30" x2="29" y2="25"/>
+        <line x1="110" y1="30" x2="115" y2="25"/>
+      </g>
+      <path d="M 70 150 Q 42 150 42 128 Q 42 108 62 106 Q 68 86 95 86 Q 122 86 128 108 Q 150 102 165 118 Q 184 118 184 140 Q 184 156 165 156 L 78 156 Q 70 156 70 150 Z" fill="rgba(255,255,255,0.92)"/>
+    </svg>`,
+    cloud: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 55 140 Q 18 140 18 113 Q 18 88 45 85 Q 50 58 88 58 Q 118 58 128 82 Q 150 78 168 92 Q 188 92 188 118 Q 188 140 162 140 Z" fill="rgba(255,255,255,0.22)"/>
+      <path d="M 45 162 Q 12 162 12 138 Q 12 116 36 113 Q 40 90 72 90 Q 102 90 112 110 Q 134 106 150 120 Q 172 120 172 142 Q 172 162 148 162 Z" fill="rgba(255,255,255,0.55)"/>
+    </svg>`,
+    drizzle: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50 115 Q 18 115 18 90 Q 18 68 42 65 Q 48 38 82 38 Q 112 38 122 60 Q 142 54 158 70 Q 180 70 180 95 Q 180 115 154 115 Z" fill="rgba(255,255,255,0.55)"/>
+      <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.85">
+        <line x1="55" y1="132" x2="50" y2="150"/>
+        <line x1="82" y1="138" x2="77" y2="156"/>
+        <line x1="108" y1="138" x2="103" y2="156"/>
+        <line x1="134" y1="138" x2="129" y2="156"/>
+        <line x1="158" y1="132" x2="153" y2="150"/>
+      </g>
+    </svg>`,
+    rain: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50 115 Q 18 115 18 90 Q 18 68 42 65 Q 48 38 82 38 Q 112 38 122 60 Q 142 54 158 70 Q 180 70 180 95 Q 180 115 154 115 Z" fill="rgba(148,163,184,0.7)"/>
+      <g stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.9">
+        <line x1="50" y1="130" x2="42" y2="170"/>
+        <line x1="80" y1="135" x2="72" y2="175"/>
+        <line x1="110" y1="135" x2="102" y2="175"/>
+        <line x1="140" y1="135" x2="132" y2="175"/>
+        <line x1="170" y1="130" x2="162" y2="170"/>
+      </g>
+    </svg>`,
+    snow: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50 115 Q 18 115 18 90 Q 18 68 42 65 Q 48 38 82 38 Q 112 38 122 60 Q 142 54 158 70 Q 180 70 180 95 Q 180 115 154 115 Z" fill="rgba(203,213,225,0.7)"/>
+      <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.95">
+        <g transform="translate(55, 145)"><line x1="0" y1="-7" x2="0" y2="7"/><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="-5" y1="5" x2="5" y2="-5"/></g>
+        <g transform="translate(85, 162)"><line x1="0" y1="-7" x2="0" y2="7"/><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="-5" y1="5" x2="5" y2="-5"/></g>
+        <g transform="translate(112, 156)"><line x1="0" y1="-7" x2="0" y2="7"/><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="-5" y1="5" x2="5" y2="-5"/></g>
+        <g transform="translate(142, 162)"><line x1="0" y1="-7" x2="0" y2="7"/><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="-5" y1="5" x2="5" y2="-5"/></g>
+        <g transform="translate(170, 145)"><line x1="0" y1="-7" x2="0" y2="7"/><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-5" y1="-5" x2="5" y2="5"/><line x1="-5" y1="5" x2="5" y2="-5"/></g>
+      </g>
+    </svg>`,
+    storm: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50 110 Q 18 110 18 85 Q 18 63 42 60 Q 48 33 82 33 Q 112 33 122 55 Q 142 49 158 65 Q 180 65 180 90 Q 180 110 154 110 Z" fill="rgba(71,85,105,0.85)"/>
+      <path d="M 110 112 L 80 158 L 102 158 L 88 188 L 132 138 L 110 138 L 124 112 Z" fill="currentColor"/>
+    </svg>`,
+    fog: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="currentColor" stroke-linecap="round" opacity="0.7">
+        <line x1="30" y1="60"  x2="160" y2="60"  stroke-width="7"/>
+        <line x1="45" y1="88"  x2="172" y2="88"  stroke-width="7"/>
+        <line x1="30" y1="116" x2="155" y2="116" stroke-width="7"/>
+        <line x1="45" y1="144" x2="170" y2="144" stroke-width="7"/>
+      </g>
+    </svg>`,
+  };
+
+  const ICON_COLORS = {
+    clear:  '#FFC371',
+    cloudy: '#CBD5E1',
+    rain:   '#60A5FA',
+    snow:   '#E0F2FE',
+    storm:  '#FCD34D',
+    fog:    '#CBD5E1',
+  };
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function formatDate(d) {
+    return new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
+    });
+  }
+
+  function formatCoord(v, isLat) {
+    const abs = Math.abs(v);
+    const deg = Math.floor(abs);
+    const min = Math.floor((abs - deg) * 60);
+    const dir = isLat ? (v >= 0 ? 'N' : 'S') : (v >= 0 ? 'E' : 'W');
+    return `${deg}° ${min.toString().padStart(2, '0')}' ${dir}`;
+  }
+
+  function smoothPath(points) {
+    if (points.length < 2) return '';
+    const t = 0.2;
+    let d = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i - 1] || points[i];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2] || p2;
+      const cp1x = p1.x + (p2.x - p0.x) * t;
+      const cp1y = p1.y + (p2.y - p0.y) * t;
+      const cp2x = p2.x - (p3.x - p1.x) * t;
+      const cp2y = p2.y - (p3.y - p1.y) * t;
+      d += ` C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
+    }
+    return d;
+  }
+
+  async function load() {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (!data.daily || !data.daily.time || !data.daily.time.length) throw new Error('No daily data');
+      const idx = data.daily.time.indexOf(date);
+      if (idx === -1) throw new Error('Date not in response');
+
+      const max = data.daily.temperature_2m_max[idx];
+      const min = data.daily.temperature_2m_min[idx];
+      const code = data.daily.weather_code[idx];
+
+      const hours = data.hourly.time
+        .map((t, i) => ({ time: t, temp: data.hourly.temperature_2m[i] }))
+        .filter(h => h.time.startsWith(date));
+
+      if (!hours.length) throw new Error('No hourly data');
+
+      const info = CODES[code] || ['Unknown conditions', 'cloudy', 'cloud'];
+      const [label, theme, icon] = info;
+      document.body.className = `theme-${theme}`;
+      document.title = `Weather — ${name}`;
+
+      render(name, date, lat, lon, max, min, label, theme, icon, hours, isPast);
+    } catch (e) {
+      renderError();
+    }
+  }
+
+  function renderError() {
+    document.getElementById('content').innerHTML = `
+      <div class="error">
+        <div class="error-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="13"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="error-title">Unable to load weather data</div>
+        <div class="error-text">We couldn't fetch the forecast for this location and date. Please check your connection and try again.</div>
+      </div>
+    `;
+  }
+
+  function render(name, date, lat, lon, max, min, label, theme, icon, hours, isPast) {
+    const dateStr = formatDate(date);
+    const coordStr = `${formatCoord(lat, true)} · ${formatCoord(lon, false)}`;
+
+    document.getElementById('content').innerHTML = `
+      <div class="header">
+        <div class="location">
+          <div class="location-name">${escapeHtml(name)}</div>
+          <div class="location-date">${dateStr}</div>
+          <div class="coords">
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 1C5.24 1 3 3.24 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7a2 2 0 110-4 2 2 0 010 4z"/>
+            </svg>
+            ${coordStr}
+          </div>
+        </div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          ${isPast ? 'Historical' : 'Forecast'}
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="icon-wrap" style="color: ${ICON_COLORS[theme] || '#CBD5E1'}">
+          <div class="icon-glow"></div>
+          ${ICONS[icon] || ICONS.cloud}
+        </div>
+        <div class="info">
+          <div class="condition">${label}</div>
+          <div class="temps">
+            <div class="temp">
+              <div class="temp-label">High</div>
+              <div class="temp-value">${Math.round(max)}<span class="temp-unit">°C</span></div>
+            </div>
+            <div class="temp temp-low">
+              <div class="temp-label">Low</div>
+              <div class="temp-value">${Math.round(min)}<span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="hourly">
+        <div class="hourly-header">
+          <div class="hourly-title">Hourly Temperature · 24 Hours (UTC)</div>
+          <div class="hourly-meta">
+            <div class="hourly-meta-item" style="color:#FFC371"><span class="hourly-meta-dot"></span> High</div>
+            <div class="hourly-meta-item" style="color:#94A3B8"><span class="hourly-meta-dot"></span> Low</div>
+          </div>
+        </div>
+        <div class="chart" id="chart"></div>
+      </div>
+    `;
+
+    const chartEl = document.getElementById('chart');
+    const H = 150;
+    const renderChart = (W) => {
+      if (W > 0) chartEl.innerHTML = buildChartSvg(hours, min, max, W, H);
+    };
+    renderChart(chartEl.clientWidth || 800);
+
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(entries => renderChart(entries[0].contentRect.width)).observe(chartEl);
+    } else {
+      window.addEventListener('resize', () => renderChart(chartEl.clientWidth || 800));
+    }
+  }
+
+  function buildChartSvg(hours, dailyMin, dailyMax, W, H) {
+    const padX = 20, padY = 30;
+    const w = W - padX * 2, h = H - padY * 2;
+
+    const temps = hours.map(x => x.temp);
+    let tMin = Math.min.apply(null, temps.concat([dailyMin]));
+    let tMax = Math.max.apply(null, temps.concat([dailyMax]));
+    if (tMin === tMax) { tMin -= 1; tMax += 1; }
+    const range = tMax - tMin;
+    const pad = range * 0.2;
+    const yMin = tMin - pad;
+    const yMax = tMax + pad;
+    const yRange = yMax - yMin;
+
+    const points = hours.map((hr, i) => {
+      const x = padX + (i / Math.max(1, hours.length - 1)) * w;
+      const y = padY + (1 - (hr.temp - yMin) / yRange) * h;
+      return { x, y, temp: hr.temp, hour: i };
+    });
+
+    const linePath = smoothPath(points);
+    const last = points[points.length - 1];
+    const first = points[0];
+    const baseY = H - 18;
+    const fillPath = linePath + ` L ${last.x.toFixed(2)} ${baseY} L ${first.x.toFixed(2)} ${baseY} Z`;
+
+    const gridLines = [];
+    for (let i = 0; i <= 3; i++) {
+      const y = padY + (i / 3) * h;
+      gridLines.push(`<line class="grid-line" x1="${padX}" y1="${y.toFixed(2)}" x2="${(W - padX).toFixed(2)}" y2="${y.toFixed(2)}"/>`);
+    }
+
+    const labelIndices = points.map((_, i) => i).filter(i => i % 3 === 0 || i === points.length - 1);
+    const hourLabels = labelIndices.map(i => {
+      const p = points[i];
+      return `<text class="label" x="${p.x.toFixed(2)}" y="${(H - 4).toFixed(2)}" text-anchor="middle">${i.toString().padStart(2, '0')}</text>`;
+    }).join('');
+
+    const maxTemp = Math.max.apply(null, temps);
+    const minTemp = Math.min.apply(null, temps);
+    const maxIdx = temps.indexOf(maxTemp);
+    const minIdx = temps.indexOf(minTemp);
+
+    const tempLabels = [];
+    if (maxIdx >= 0 && hours[maxIdx]) {
+      const p = points[maxIdx];
+      const offsetY = p.y < padY + 14 ? 18 : -10;
+      tempLabels.push(`<text class="temp-label" x="${p.x.toFixed(2)}" y="${(p.y + offsetY).toFixed(2)}" text-anchor="middle">${Math.round(hours[maxIdx].temp)}°</text>`);
+    }
+    if (minIdx >= 0 && minIdx !== maxIdx && hours[minIdx]) {
+      const p = points[minIdx];
+      const offsetY = p.y > H - padY - 14 ? -18 : 20;
+      tempLabels.push(`<text class="temp-label" x="${p.x.toFixed(2)}" y="${(p.y + offsetY).toFixed(2)}" text-anchor="middle">${Math.round(hours[minIdx].temp)}°</text>`);
+    }
+
+    const dots = points.map((p, i) => {
+      const isMax = i === maxIdx;
+      const isMin = i === minIdx;
+      const isExtreme = isMax || isMin;
+      const r = isExtreme ? 4.5 : 2.2;
+      const fill = isMax ? '#FFC371' : isMin ? '#94A3B8' : 'rgba(255,255,255,0.45)';
+      const delay = (0.8 + i * 0.015).toFixed(2);
+      return `<circle class="point" cx="${p.x.toFixed(2)}" cy="${p.y.toFixed(2)}" r="${r}" fill="${fill}" style="animation-delay: ${delay}s"/>`;
+    }).join('');
+
+    return `
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#94A3B8"/>
+            <stop offset="50%"  stop-color="#FFC371"/>
+            <stop offset="100%" stop-color="#F4A261"/>
+          </linearGradient>
+          <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#FFC371" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#FFC371" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        ${gridLines.join('')}
+        <path class="fill" d="${fillPath}" fill="url(#fillGrad)"/>
+        <path class="line" d="${linePath}" stroke="url(#lineGrad)"/>
+        ${dots}
+        ${tempLabels.join('')}
+        ${hourLabels}
+      </svg>
+    `;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

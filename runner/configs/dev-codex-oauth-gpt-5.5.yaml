@@ -1,0 +1,51 @@
+# dev-codex-oauth-gpt-5.5.yaml — codex harness 全 effort,ChatGPT oauth 直登(转正通道)。
+# plan×harness 官方:codex login status = 'Logged in using ChatGPT';零 proxy。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: codex-cli-oauth-chatgpt
+  proxy: none
+
+configs:
+  # eff-minimal DROPPED 2026-07-20: codex harness has no "minimal" tier. Ladder =
+  # Light/Medium/High/Extra-High/Max/Ultra (app) = low/medium/high/xhigh/max/ultra (CLI);
+  # floor Light=low (already covered by eff-low). 5.6-family reject 'minimal' at model
+  # layer; 5.4/5.4-mini/5.5 accept it but codex force-injects web_search → 400. Not reachable.
+
+  - config_id: gpt-5.5-eff-low--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: low
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.5-eff-medium--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: medium
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.5-eff-high--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: high
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: gpt-5.5-eff-xhigh--cli--codex-oauth--dev
+    family: gpt
+    model_id: gpt-5.5
+    effort: xhigh
+    effort_param: model_reasoning_effort
+    protocol: cli
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

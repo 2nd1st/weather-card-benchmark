@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weather</title>
+<style>
+    :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #38bdf8;
+        --accent-glow: rgba(56, 189, 248, 0.4);
+        --error: #ef4444;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1280px;
+        height: 800px;
+        background: var(--bg-body);
+        background-image: radial-gradient(circle at top right, #1e293b, #0f172a 70%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .container {
+        width: 1160px;
+        height: 680px;
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    /* States */
+    .state {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        z-index: 10;
+        background: var(--bg-card);
+        border-radius: 40px;
+    }
+
+    .state.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .loader {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(56, 189, 248, 0.2);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .error-icon {
+        width: 64px;
+        height: 64px;
+        color: var(--error);
+        margin-bottom: 20px;
+    }
+
+    .error-text {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        text-align: center;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+
+    /* Weather Content */
+    #weather-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+    }
+
+    #weather-content.visible {
+        opacity: 1;
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+    }
+
+    .location-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .location-name {
+        font-size: 2.75rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 600px;
+    }
+
+    .date-display {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .temps {
+        text-align: right;
+    }
+
+    .temps-label {
+        font-size: 1rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .temps-values {
+        font-size: 2.25rem;
+        font-weight: 700;
+    }
+
+    .temps-values .max { color: var(--text-main); }
+    .temps-values .min { color: var(--text-muted); margin-left: 12px; }
+
+    /* Main Condition */
+    .main-condition {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: auto;
+        padding-left: 20px;
+    }
+
+    .condition-icon {
+        width: 120px;
+        height: 120px;
+        color: var(--accent);
+        filter: drop-shadow(0 0 20px var(--accent-glow));
+    }
+
+    .condition-text {
+        font-size: 4rem;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        background: linear-gradient(135deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Hourly Chart */
+    .hourly-chart-container {
+        width: 100%;
+        height: 220px;
+        position: relative;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Loading State -->
+    <div id="loading-state" class="state active">
+        <div class="loader"></div>
+        <div style="color: var(--text-muted); font-size: 1.1rem;">Fetching weather data...</div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="state">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div id="error-message" class="error-text">Unable to load weather data.</div>
+    </div>
+
+    <!-- Weather Content -->
+    <div id="weather-content">
+        <div class="header">
+            <div class="location-info">
+                <div id="loc-name" class="location-name"></div>
+                <div id="loc-date" class="date-display"></div>
+            </div>
+            <div class="temps">
+                <div class="temps-label">High / Low</div>
+                <div class="temps-values">
+                    <span id="temp-max" class="max"></span><span id="temp-min" class="min"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-condition">
+            <div id="cond-icon" class="condition-icon"></div>
+            <div id="cond-text" class="condition-text"></div>
+        </div>
+
+        <div id="chart-container" class="hourly-chart-container"></div>
+    </div>
+</div>
+
+<script>
+    const icons = {
+        sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+        cloudSun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M12 2v2"></path><path d="M4.93 4.93l1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M19.07 4.93l-1.41 1.41"></path><path d="M15.94 16A5 5 0 0 0 12 7a5 5 0 0 0-4.94 4"></path><path d="M18 16a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4h0a4 4 0 0 1 4-4h.26a5 5 0 0 1 9.48-1h.26a4 4 0 0 1 4 4z"></path></svg>`,
+        cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>`,
+        drizzle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><line x1="8" y1="19" x2="8" y2="21"></line><line x1="8" y1="13" x2="8" y2="15"></line><line x1="16" y1="19" x2="16" y2="21"></line><line x1="16" y1="13" x2="16" y2="15"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="12" y1="15" x2="12" y2="17"></line><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path></svg>`,
+        rain: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M16 13v8"></path><path d="M8 13v8"></path><path d="M12 15v8"></path><path d="M17.5 13H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>`,
+        snow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M17.5 13H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path><path d="M8 16h.01"></path><path d="M8 20h.01"></path><path d="M12 18h.01"></path><path d="M12 22h.01"></path><path d="M16 16h.01"></path><path d="M16 20h.01"></path></svg>`,
+        thunder: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M17.5 13H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path><path d="M13 13l-3 5h4l-3 5"></path></svg>`,
+        fog: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%"><path d="M4 14h16M4 18h16M4 22h16M8 6h.01M16 6h.01M12 10h.01"></path></svg>`
+    };
+
+    function getWeatherCondition(code) {
+        if (code === 0) return { text: 'Clear Sky', icon: icons.sun };
+        if (code === 1 || code === 2) return { text: 'Partly Cloudy', icon: icons.cloudSun };
+        if (code === 3) return { text: 'Overcast', icon: icons.cloud };
+        if (code === 45 || code === 48) return { text: 'Fog', icon: icons.fog };
+        if (code >= 51 && code <= 57) return { text: 'Drizzle', icon: icons.drizzle };
+        if (code >= 61 && code <= 67) return { text: 'Rain', icon: icons.rain };
+        if (code >= 71 && code <= 77) return { text: 'Snow', icon: icons.snow };
+        if (code >= 80 && code <= 82) return { text: 'Rain Showers', icon: icons.rain };
+        if (code >= 85 && code <= 86) return { text: 'Snow Showers', icon: icons.snow };
+        if (code >= 95 && code <= 99) return { text: 'Thunderstorm', icon: icons.thunder };
+        return { text: 'Unknown', icon: icons.cloud };
+    }
+
+    function drawSparkline(temps) {
+        const svgW = 1060;
+        const svgH = 220;
+        const padTop = 30;
+        const padBot = 40;
+        const drawH = svgH - padTop - padBot;
+        
+        const minT = Math.min(...temps);
+        const maxT = Math.max(...temps);
+        const range = (maxT - minT) || 1;
+
+        let points = [];
+        let texts = '';
+
+        temps.forEach((t, i) => {
+            const x = i * (svgW / 23);
+            const y = padTop + drawH - ((t - minT) / range) * drawH;
+            points.push(`${x},${y}`);
+
+            texts += `<text x="${x}" y="${y - 12}" fill="#f8fafc" font-size="14" font-weight="600" text-anchor="middle">${Math.round(t)}°</text>`;
+            
+            const timeStr = `${i.toString().padStart(2, '0')}:00`;
+            texts += `<text x="${x}" y="${svgH - 5}" fill="#94a3b8" font-size="12" font-weight="500" text-anchor="middle">${timeStr}</text>`;
+            
+            texts += `<circle cx="${x}" cy="${y}" r="4" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />`;
+        });
+
+        const polyline = `<polyline points="${points.join(' ')}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />`;
+        const polygon = `<polygon points="0,${svgH - padBot} ${points.join(' ')} ${svgW},${svgH - padBot}" fill="url(#sparkGradient)" opacity="0.3" />`;
+
+        const defs = `<defs>
+            <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+            </linearGradient>
+        </defs>`;
+
+        document.getElementById('chart-container').innerHTML = `
+            <svg viewBox="0 0 ${svgW} ${svgH}" width="100%" height="100%" style="overflow: visible;">
+                ${defs}
+                ${polygon}
+                ${polyline}
+                ${texts}
+            </svg>
+        `;
+    }
+
+    async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        const lat = params.get('lat') || '52.52';
+        const lon = params.get('lon') || '13.405';
+        const name = params.get('name') || 'Berlin';
+        const dateStr = params.get('date') || todayStr;
+
+        const isArchive = dateStr < todayStr;
+        const endpoint = isArchive ? '/api/om/archive' : '/api/om/forecast';
+
+        const url = `${endpoint}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${dateStr}&end_date=${dateStr}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Server returned ${response.status}`);
+            
+            const data = await response.json();
+            
+            if (!data.daily || !data.hourly || data.daily.time.length === 0) {
+                throw new Error("Missing weather data for this date.");
+            }
+
+            const maxTemp = data.daily.temperature_2m_max[0];
+            const minTemp = data.daily.temperature_2m_min[0];
+            const code = data.daily.weather_code[0];
+            const hourlyTemps = data.hourly.temperature_2m;
+
+            const condition = getWeatherCondition(code);
+            const dateObj = new Date(dateStr);
+            const formattedDate = new Intl.DateTimeFormat('en-US', { 
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
+            }).format(dateObj);
+
+            document.getElementById('loc-name').textContent = name;
+            document.getElementById('loc-date').textContent = formattedDate;
+            document.getElementById('temp-max').textContent = `${Math.round(maxTemp)}°`;
+            document.getElementById('temp-min').textContent = `${Math.round(minTemp)}°`;
+            
+            document.getElementById('cond-icon').innerHTML = condition.icon;
+            document.getElementById('cond-text').textContent = condition.text;
+
+            drawSparkline(hourlyTemps);
+
+            document.getElementById('loading-state').classList.remove('active');
+            document.getElementById('weather-content').classList.add('visible');
+
+        } catch (error) {
+            document.getElementById('loading-state').classList.remove('active');
+            document.getElementById('error-state').classList.add('active');
+            document.getElementById('error-message').textContent = `Could not load weather data: ${error.message}`;
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>

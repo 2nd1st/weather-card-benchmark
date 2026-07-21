@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "{model} — model — weather-card-benchmark",
+    "description": "One model across efforts and arms: the effort strip, output-size figures and effort-response curve for {model}. Similarity is not quality; community votes are a UI preference."
+  },
+  "notFound": {
+    "title": "No such model",
+    "message": "Nothing in the registry uses this model id."
+  },
+  "empty": {
+    "title": "No configs for this model",
+    "message": "This model has no runs on disk yet."
+  },
+  "breadcrumb": { "gallery": "gallery" },
+  "eyebrow": "{family} · {arms, plural, one {# arm} other {# arms}} · {efforts, plural, one {# effort} other {# efforts}}",
+  "heading": "effort strip",
+  "sub": "One model across every effort and arm. Each cell is a run — open it for the full card. Failure chips mark runs with no valid slot.",
+  "strip": {
+    "arm": "arm",
+    "effort": "effort",
+    "noConfig": "—",
+    "failure": "no valid slot",
+    "tokens": "{n} tok",
+    "tokensUnit": "tokens",
+    "bytes": "{n} B",
+    "openRun": "open run ↗",
+    "validCount": "{valid}/{total} valid",
+    "validAll": "{total, plural, one {# run · valid} other {# runs · all valid}}",
+    "validSome": "{valid} of {total} valid"
+  },
+  "chart": {
+    "heading": "effort → output size",
+    "caption": "Output completion tokens per effort, per arm. A read on how much each model spends as effort rises — not a quality axis.",
+    "tokens": "output tokens",
+    "bytes": "html bytes",
+    "toggle": "metric",
+    "growth": "{lo} → {hi} output",
+    "ariaGrowth": "output grows {mult}× from lowest to highest effort",
+    "noData": "Not enough sized runs to draw a curve.",
+    "effortAxis": "effort"
+  },
+  "links": { "gallery": "← gallery", "openCard": "open card ↗" }
+}

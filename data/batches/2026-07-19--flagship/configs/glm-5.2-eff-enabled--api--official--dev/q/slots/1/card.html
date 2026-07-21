@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Weather</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-0: #0a0e1a;
+  --bg-1: #131829;
+  --bg-2: #050811;
+  --fg: #f5f2eb;
+  --fg-muted: rgba(245, 242, 235, 0.6);
+  --fg-faint: rgba(245, 242, 235, 0.32);
+  --fg-ghost: rgba(245, 242, 235, 0.12);
+  --accent: #e8b04b;
+  --accent-2: #f4d27a;
+  --glow: rgba(232, 176, 75, 0.2);
+  --line: rgba(245, 242, 235, 0.08);
+}
+
+html, body { width: 100%; height: 100vh; overflow: hidden; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg-0);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'tnum' 1;
+}
+
+.atmosphere {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 0%, var(--bg-1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 100%, var(--glow) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-2) 100%);
+  transition: background 1.5s ease;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  animation: drift 28s ease-in-out infinite;
+  pointer-events: none;
+  transition: background 1.5s ease;
+}
+.orb-1 { width: 480px; height: 480px; background: var(--accent); top: -120px; right: -80px; opacity: 0.14; }
+.orb-2 { width: 560px; height: 560px; background: var(--accent-2); bottom: -200px; left: -120px; opacity: 0.09; animation-delay: -14s; }
+@keyframes drift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.05); }
+  66% { transform: translate(-20px,20px) scale(0.98); }
+}
+
+.grain {
+  position: fixed; inset: 0; z-index: 1;
+  opacity: 0.4; mix-bl

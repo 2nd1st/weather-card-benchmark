@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800, initial-scale=1.0">
+<title>Weather</title>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #38bdf8;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1280px;
+        height: 800px;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(circle at top right, #1e293b, #0f172a);
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        width: 600px;
+        background: var(--card-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--card-border);
+        border-radius: 32px;
+        padding: 48px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .location {
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+    }
+
+    .date {
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--text-muted);
+    }
+
+    .current-weather {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .icon-lg {
+        width: 96px;
+        height: 96px;
+        color: var(--accent);
+        filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.4));
+    }
+
+    .weather-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .condition {
+        font-size: 32px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+    }
+
+    .high-low {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .high-low .dot {
+        font-size: 12px;
+        opacity: 0.5;
+    }
+
+    .hourly-wrapper {
+        position: relative;
+    }
+
+    .hourly-wrapper::before,
+    .hourly-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 32px;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .hourly-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(30, 41, 59, 0.9), transparent);
+    }
+
+    .hourly-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(30, 41, 59, 0.9), transparent);
+    }
+
+    .hourly-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 16px 32px;
+        margin: 0 -32px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth;
+    }
+
+    .hourly-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hour-card {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 72px;
+        height: 104px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        transition: background 0.2s;
+    }
+
+    .hour-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hour-time {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--text-muted);
+    }
+
+    .hour-temp {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .loading, .error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 16px;
+        height: 300px;
+    }
+
+    .spinner {
+        animation: rotate 2s linear infinite;
+        width: 48px;
+        height: 48px;
+    }
+
+    .spinner .path {
+        stroke: var(--accent);
+        stroke-linecap: round;
+        animation: dash 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes dash {
+        0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+        50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+        100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+    }
+
+    .error-icon {
+        width: 64px;
+        height: 64px;
+        color: #ef4444;
+    }
+</style>
+</head>
+<body>
+
+<div class="card" id="app">
+    <div class="loading">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+        </svg>
+        <div style="font-size: 18px; color: var(--text-muted);">Loading weather data...</div>
+    </div>
+</div>
+
+<script>
+    const icons = {
+        sun: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+        cloudSun: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg>`,
+        cloud: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>`,
+        fog: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h16"/><path d="M4 18h16"/><path d="M4 22h16"/><path d="M17.5 10H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>`,
+        rain: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 22v-4"/><path d="M8 22v-4"/><path d="M16 22v-4"/></svg>`,
+        snow: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M8 15h.01"/><path d="M8 19h.01"/><path d="M12 17h.01"/><path d="M12 21h.01"/><path d="M16 15h.01"/><path d="M16 19h.01"/></svg>`,
+        lightning: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M13 19l-3 5h5l-3 5"/></svg>`,
+        error: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`
+    };
+
+    function getWeatherInfo(code) {
+        if (code === 0) return { label: 'Clear Sky', icon: icons.sun };
+        if ([1, 2].includes(code)) return { label: 'Partly Cloudy', icon: icons.cloudSun };
+        if (code === 3) return { label: 'Overcast', icon: icons.cloud };
+        if ([45, 48].includes(code)) return { label: 'Fog', icon: icons.fog };
+        if ([51, 53, 55, 56, 57].includes(code)) return { label: 'Drizzle', icon: icons.rain };
+        if ([61, 63, 65, 66, 67].includes(code)) return { label: 'Rain', icon: icons.rain };
+        if ([71, 73, 75, 77, 85, 86].includes(code)) return { label: 'Snow', icon: icons.snow };
+        if ([80, 81, 82].includes(code)) return { label: 'Showers', icon: icons.rain };
+        if ([95, 96, 99].includes(code)) return { label: 'Thunderstorm', icon: icons.lightning };
+        return { label: 'Unknown', icon: icons.cloud };
+    }
+
+    function getTodayUTC() {
+        const now = new Date();
+        const yyyy = now.getUTCFullYear();
+        const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+        const dd = String(now.getUTCDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function init() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lat = urlParams.get('lat') || '52.52';
+        const lon = urlParams.get('lon') || '13.405';
+        const name = urlParams.get('name') || 'Berlin';
+        
+        const today = getTodayUTC();
+        const dateParam = urlParams.get('date') || today;
+        
+        const endpoint = dateParam < today ? '/api/om/archive' : '/api/om/forecast';
+
+        const apiParams = new URLSearchParams({
+            latitude: lat,
+            longitude: lon,
+            daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+            hourly: 'temperature_2m',
+            timezone: 'UTC',
+            temperature_unit: 'celsius',
+            start_date: dateParam,
+            end_date: dateParam
+        });
+
+        const url = `${endpoint}?${apiParams.toString()}`;
+
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error('Network response was not ok');
+                return res.json();
+            })
+            .then(data => renderWeather(data, name, dateParam))
+            .catch(err => renderError(err));
+    }
+
+    function renderWeather(data, locationName, dateString) {
+        const app = document.getElementById('app');
+
+        if (!data.daily || !data.daily.time || data.daily.time.length === 0) {
+            renderError(new Error('Data not available for this date.'));
+            return;
+        }
+
+        const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
+        const minTemp = Math.round(data.daily.temperature_2m_min[0]);
+        const wmoCode = data.daily.weather_code[0];
+        
+        const weather = getWeatherInfo(wmoCode);
+        
+        const dateObj = new Date(dateString);
+        const displayDate = new Intl.DateTimeFormat('en-US', { 
+            weekday: 'long', 
+            month: 'long', 
+            day: 'numeric', 
+            year: 'numeric',
+            timeZone: 'UTC' 
+        }).format(dateObj);
+
+        let hourlyHtml = '';
+        if (data.hourly && data.hourly.time) {
+            data.hourly.time.forEach((timeStr, index) => {
+                const temp = data.hourly.temperature_2m[index];
+                if (temp === null || temp === undefined) return;
+                
+                const hour = timeStr.substring(11, 16);
+                hourlyHtml += `
+                    <div class="hour-card">
+                        <span class="hour-time">${hour}</span>
+                        <span class="hour-temp">${Math.round(temp)}&deg;</span>
+                    </div>
+                `;
+            });
+        }
+
+        app.innerHTML = `
+            <div class="header">
+                <h1 class="location">${locationName}</h1>
+                <p class="date">${displayDate}</p>
+            </div>
+            
+            <div class="current-weather">
+                <div class="icon-lg">
+                    ${weather.icon}
+                </div>
+                <div class="weather-info">
+                    <div class="condition">${weather.label}</div>
+                    <div class="high-low">
+                        <span>H: ${maxTemp}&deg;</span>
+                        <span class="dot">&bull;</span>
+                        <span>L: ${minTemp}&deg;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hourly-wrapper">
+                <div class="hourly-container">
+                    ${hourlyHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderError(error) {
+        const app = document.getElementById('app');
+        app.innerHTML = `
+            <div class="error">
+                <div class="error-icon">${icons.error}</div>
+                <h2>Unable to load weather data</h2>
+                <p style="color: var(--text-muted);">${error.message || 'Please check your connection or parameters.'}</p>
+            </div>
+        `;
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

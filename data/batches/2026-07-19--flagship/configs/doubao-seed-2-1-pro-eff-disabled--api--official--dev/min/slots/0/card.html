@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 1280px;
+            height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 48px;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .error {
+            text-align: center;
+            color: #dc3545;
+            font-size: 24px;
+            padding: 60px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+        .location {
+            font-size: 42px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .date {
+            font-size: 22px;
+            color: #718096;
+        }
+        .condition-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .weather-icon {
+            font-size: 96px;
+        }
+        .condition-text {
+            font-size: 32px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+        .temp-range {
+            display: flex;
+            gap: 32px;
+        }
+        .temp-high, .temp-low {
+            font-size: 28px;
+            font-weight: 500;
+        }
+        .temp-high { color: #e53e3e; }
+        .temp-low { color: #3182ce; }
+        .hourly-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 24px;
+        }
+        .hourly-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+        }
+        .hour-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+        }
+        .hour-time {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+        .hour-temp {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+        <div class="error">Loading weather data...</div>
+    </div>
+
+    <script>
+        const weatherCodes = {
+            0: { icon: "☀️", text: "Clear sky" },
+            1: { icon: "🌤️", text: "Mainly clear" },
+            2: { icon: "⛅", text: "Partly cloudy" },
+            3: { icon: "☁️", text: "Overcast" },
+            45: { icon: "🌫️", text: "Fog" },
+            48: { icon: "🌫️", text: "Depositing rime fog" },
+            51: { icon: "🌦️", text: "Light drizzle" },
+            53: { icon: "🌦️", text: "Moderate drizzle" },
+            55: { icon: "🌦️", text: "Dense drizzle" },
+            56: { icon: "🌧️", text: "Light freezing drizzle" },
+            57: { icon: "🌧️", text: "Dense freezing drizzle" },
+            61: { icon: "🌧️", text: "Slight rain" },
+            63: { icon: "🌧️", text: "Moderate rain" },
+            65: { icon: "🌧️", text: "Heavy rain" },
+            66: { icon: "🌧️", text: "Light freezing rain" },
+            67: { icon: "🌧️", text: "Heavy freezing rain" },
+            71: { icon: "🌨️", text: "Slight snow" },
+            73: { icon: "🌨️", text: "Moderate snow" },
+            75: { icon: "❄️", text: "Heavy snow" },
+            77: { icon: "❄️", text: "Snow grains" },
+            80: { icon: "🌦️", text: "Slight rain showers" },
+            81: { icon: "🌧️", text: "Moderate rain showers" },
+            82: { icon: "⛈️", text: "Violent rain showers" },
+            85: { icon: "🌨️", text: "Slight snow showers" },
+            86: { icon: "❄️", text: "Heavy snow showers" },
+            95: { icon: "⛈️", text: "Thunderstorm" },
+            96: { icon: "⛈️", text: "Thunderstorm with slight hail" },
+            99: { icon: "⛈️", text: "Thunderstorm with heavy hail" }
+        };
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const today = new Date().toISOString().split('T')[0];
+            return {
+                lat: parseFloat(params.get('lat')) || 52.52,
+                lon: parseFloat(params.get('lon')) || 13.405,
+                name: params.get('name') || 'Berlin',
+                date: params.get('date') || today
+            };
+        }
+
+        function isPastDate(dateStr) {
+            const today = new Date().toISOString().split('T')[0];
+            return dateStr < today;
+        }
+
+        async function fetchWeather() {
+            const { lat, lon, name, date } = getQueryParams();
+            const card = document.getElementById('card');
+
+            const baseParams = new URLSearchParams({
+                latitude: lat,
+                longitude: lon,
+                daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+                hourly: 'temperature_2m',
+                timezone: 'UTC',
+                temperature_unit: 'celsius',
+                start_date: date,
+                end_date: date
+            });
+
+            const endpoint = isPastDate(date) ? '/api/om/archive' : '/api/om/forecast';
+            const url = `${endpoint}?${baseParams.toString()}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('API request failed');
+                const data = await response.json();
+
+                if (!data.daily || !data.hourly) throw new Error('Invalid data format');
+
+                const maxTemp = data.daily.temperature_2m_max[0];
+                const minTemp = data.daily.temperature_2m_min[0];
+                const weatherCode = data.daily.weather_code[0];
+                const condition = weatherCodes[weatherCode] || { icon: "❓", text: "Unknown" };
+
+                const hourlyTemps = data.hourly.temperature_2m;
+                const hourlyTimes = data.hourly.time;
+
+                let hourlyHtml = '';
+                for (let i = 0; i < 24; i += 2) {
+                    const hour = new Date(hourlyTimes[i]).getUTCHours();
+                    const temp = Math.round(hourlyTemps[i]);
+                    hourlyHtml += `
+                        <div class="hour-card">
+                            <div class="hour-time">${hour.toString().padStart(2, '0')}:00</div>
+                            <div class="hour-temp">${temp}°</div>
+                        </div>
+                    `;
+                }
+
+                const formattedDate = new Date(date + 'T00:00:00Z').toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'UTC'
+                });
+
+                card.innerHTML = `
+                    <div class="header">
+                        <div>
+                            <div class="location">${name}</div>
+                            <div class="date">${formattedDate}</div>
+                        </div>
+                    </div>
+                    <div class="condition-section">
+                        <div class="weather-icon">${condition.icon}</div>
+                        <div>
+                            <div class="condition-text">${condition.text}</div>
+                            <div class="temp-range">
+                                <span class="temp-high">↑ ${Math.round(maxTemp)}°C</span>
+                                <span class="temp-low">↓ ${Math.round(minTemp)}°C</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hourly-title">Hourly Temperature</div>
+                    <div class="hourly-container">${hourlyHtml}</div>
+                `;
+            } catch (err) {
+                card.innerHTML = '<div class="error">Failed to load weather data. Please try again later.</div>';
+                console.error(err);
+            }
+        }
+
+        fetchWeather();
+    </script>
+</body>
+</html>

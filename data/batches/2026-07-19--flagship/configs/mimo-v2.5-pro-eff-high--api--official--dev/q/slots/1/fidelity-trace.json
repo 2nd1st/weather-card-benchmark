@@ -1,0 +1,487 @@
+{
+  "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+  "slot_index": 1,
+  "occurrences": [
+    {
+      "id": {
+        "node_preorder": 44,
+        "start": 0,
+        "end": 4
+      },
+      "pattern_id": "max-label-v1",
+      "namespace": "max-label",
+      "merged_categories": [
+        "max"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 44,
+        "start": 6,
+        "end": 13
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 47,
+        "start": 0,
+        "end": 3
+      },
+      "pattern_id": "min-label-v1",
+      "namespace": "min-label",
+      "merged_categories": [
+        "min"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 47,
+        "start": 5,
+        "end": 12
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    },
+    {
+      "id": {
+        "node_preorder": 51,
+        "start": 7,
+        "end": 13
+      },
+      "pattern_id": "temp-number-degree-v1",
+      "namespace": "temperature",
+      "merged_categories": [
+        "temperature"
+      ],
+      "voided": false,
+      "voided_reason": null
+    }
+  ],
+  "arbitration": {
+    "considered": [
+      {
+        "node_preorder": 44,
+        "start": 0,
+        "length": 4,
+        "pattern_id": "max-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 44,
+        "start": 6,
+        "length": 7,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 47,
+        "start": 0,
+        "length": 3,
+        "pattern_id": "min-label-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 47,
+        "start": 5,
+        "length": 7,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      },
+      {
+        "node_preorder": 51,
+        "start": 7,
+        "length": 6,
+        "pattern_id": "temp-number-degree-v1",
+        "selected": true
+      }
+    ]
+  },
+  "salience": {
+    "f_max": 15.0,
+    "candidates": [
+      {
+        "occurrence_id": {
+          "node_preorder": 44,
+          "start": 6,
+          "end": 13
+        },
+        "font_size": 15.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 47,
+          "start": 5,
+          "end": 12
+        },
+        "font_size": 15.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      },
+      {
+        "occurrence_id": {
+          "node_preorder": 51,
+          "start": 7,
+          "end": 13
+        },
+        "font_size": 15.0,
+        "salience_ratio": 0.0,
+        "in_E": true
+      }
+    ],
+    "E": [
+      {
+        "node_preorder": 44,
+        "start": 6,
+        "end": 13
+      },
+      {
+        "node_preorder": 47,
+        "start": 5,
+        "end": 12
+      },
+      {
+        "node_preorder": 51,
+        "start": 7,
+        "end": 13
+      }
+    ]
+  },
+  "max_min_binding": {
+    "branch": "double-label",
+    "distances": [
+      {
+        "label_id": {
+          "node_preorder": 44,
+          "start": 0,
+          "end": 4
+        },
+        "temp_id": {
+          "node_preorder": 44,
+          "start": 6,
+          "end": 13
+        },
+        "dom_edges": 0,
+        "text_coord_diff": 6
+      },
+      {
+        "label_id": {
+          "node_preorder": 44,
+          "start": 0,
+          "end": 4
+        },
+        "temp_id": {
+          "node_preorder": 47,
+          "start": 5,
+          "end": 12
+        },
+        "dom_edges": 2,
+        "text_coord_diff": 18
+      },
+      {
+        "label_id": {
+          "node_preorder": 44,
+          "start": 0,
+          "end": 4
+        },
+        "temp_id": {
+          "node_preorder": 51,
+          "start": 7,
+          "end": 13
+        },
+        "dom_edges": 3,
+        "text_coord_diff": 32
+      },
+      {
+        "label_id": {
+          "node_preorder": 47,
+          "start": 0,
+          "end": 3
+        },
+        "temp_id": {
+          "node_preorder": 44,
+          "start": 6,
+          "end": 13
+        },
+        "dom_edges": 2,
+        "text_coord_diff": 7
+      },
+      {
+        "label_id": {
+          "node_preorder": 47,
+          "start": 0,
+          "end": 3
+        },
+        "temp_id": {
+          "node_preorder": 47,
+          "start": 5,
+          "end": 12
+        },
+        "dom_edges": 0,
+        "text_coord_diff": 5
+      },
+      {
+        "label_id": {
+          "node_preorder": 47,
+          "start": 0,
+          "end": 3
+        },
+        "temp_id": {
+          "node_preorder": 51,
+          "start": 7,
+          "end": 13
+        },
+        "dom_edges": 3,
+        "text_coord_diff": 19
+      }
+    ],
+    "max": {
+      "label_id": {
+        "node_preorder": 44,
+        "start": 0,
+        "end": 4
+      },
+      "temp_id": {
+        "node_preorder": 44,
+        "start": 6,
+        "end": 13
+      },
+      "canonical_id": {
+        "node_preorder": 44,
+        "start": 6,
+        "end": 13
+      },
+      "value": "25.3",
+      "display_decimals": 1
+    },
+    "min": {
+      "label_id": {
+        "node_preorder": 47,
+        "start": 0,
+        "end": 3
+      },
+      "temp_id": {
+        "node_preorder": 47,
+        "start": 5,
+        "end": 12
+      },
+      "canonical_id": {
+        "node_preorder": 47,
+        "start": 5,
+        "end": 12
+      },
+      "value": "16",
+      "display_decimals": 1
+    },
+    "canonical_published": true,
+    "decision_path": [
+      {
+        "code": "branch-double-label",
+        "detail": null
+      },
+      {
+        "code": "double-label-bound",
+        "detail": "Tmax=(44, 6, 13) Tmin=(47, 5, 12)"
+      },
+      {
+        "code": "canonical-published",
+        "detail": "true"
+      }
+    ]
+  },
+  "hourly_binding": {
+    "pretriage": "proceed",
+    "has_label": false,
+    "candidates": [
+      {
+        "node_preorder": 51,
+        "start": 7,
+        "end": 13
+      }
+    ],
+    "label_parse": [],
+    "bindings": [],
+    "signature": [],
+    "decision_path": [
+      {
+        "code": "hourly-pretriage",
+        "detail": "proceed"
+      },
+      {
+        "code": "hourly-branch",
+        "detail": "no-label"
+      },
+      {
+        "code": "no-label-not-24",
+        "detail": "1"
+      },
+      {
+        "code": "hourly-structural-conflict",
+        "detail": "no-label-not-24"
+      }
+    ]
+  },
+  "field_paths": {
+    "name": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "name-substring-hit",
+          "detail": "node=22"
+        }
+      ]
+    },
+    "date": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "date-hit",
+          "detail": "2026-07-15"
+        }
+      ]
+    },
+    "condition": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "condition-wmo-hit",
+          "detail": "node=29"
+        }
+      ]
+    },
+    "max": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-double-label",
+          "detail": null
+        },
+        {
+          "code": "double-label-bound",
+          "detail": "Tmax=(44, 6, 13) Tmin=(47, 5, 12)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "min": {
+      "state": "match",
+      "decision_path": [
+        {
+          "code": "branch-double-label",
+          "detail": null
+        },
+        {
+          "code": "double-label-bound",
+          "detail": "Tmax=(44, 6, 13) Tmin=(47, 5, 12)"
+        },
+        {
+          "code": "canonical-published",
+          "detail": "true"
+        }
+      ]
+    },
+    "hourly": {
+      "state": "ambiguous",
+      "decision_path": [
+        {
+          "code": "hourly-pretriage",
+          "detail": "proceed"
+        },
+        {
+          "code": "hourly-branch",
+          "detail": "no-label"
+        },
+        {
+          "code": "no-label-not-24",
+          "detail": "1"
+        },
+        {
+          "code": "hourly-structural-conflict",
+          "detail": "no-label-not-24"
+        }
+      ]
+    }
+  },
+  "text_model": [
+    {
+      "node_preorder": 22,
+      "text_coord_base": 0,
+      "codepoint_length": 6
+    },
+    {
+      "node_preorder": 24,
+      "text_coord_base": 6,
+      "codepoint_length": 24
+    },
+    {
+      "node_preorder": 27,
+      "text_coord_base": 30,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 29,
+      "text_coord_base": 32,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 33,
+      "text_coord_base": 45,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 35,
+      "text_coord_base": 47,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 37,
+      "text_coord_base": 49,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 39,
+      "text_coord_base": 51,
+      "codepoint_length": 2
+    },
+    {
+      "node_preorder": 44,
+      "text_coord_base": 53,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 47,
+      "text_coord_base": 66,
+      "codepoint_length": 12
+    },
+    {
+      "node_preorder": 51,
+      "text_coord_base": 78,
+      "codepoint_length": 13
+    },
+    {
+      "node_preorder": 54,
+      "text_coord_base": 91,
+      "codepoint_length": 19
+    }
+  ]
+}

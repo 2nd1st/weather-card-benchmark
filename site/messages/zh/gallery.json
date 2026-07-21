@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "画廊 — weather-card-benchmark",
+    "description": "同一道 prompt，每个模型一张卡。所有天气卡汇成一张可筛选的网格，任意一格都能实时渲染，可按 family、arm、通道过滤。"
+  },
+  "title": "画廊",
+  "intro": "所有 config 汇成一张网格。按 family、arm 与通道筛选，任意一格都能切到实时渲染。顺序固定：family → model → effort → arm。",
+  "search": {
+    "placeholder": "搜索 model id",
+    "label": "按 model id 搜索"
+  },
+  "facet": {
+    "family": "family",
+    "arm": "arm",
+    "grade": "通道",
+    "api": "api",
+    "harness": "harness"
+  },
+  "toggle": {
+    "live": "实时",
+    "validOnly": "仅有效",
+    "hasPatch": "已修复",
+    "showDev": "显示 dev 通道"
+  },
+  "devNote": "dev 通道的运行走的是私有反向代理——出于透明才展示，不作为可发布结果。",
+  "density": {
+    "label": "密度",
+    "comfortable": "宽松",
+    "compact": "紧凑"
+  },
+  "variant": {
+    "label": "变体"
+  },
+  "delay": {
+    "label": "延迟",
+    "off": "0s"
+  },
+  "reloadLive": "重载实时",
+  "filters": {
+    "show": "筛选 · {count} 个结果",
+    "hide": "收起筛选",
+    "active": "已选",
+    "remove": "移除筛选",
+    "clearAll": "全部清空"
+  },
+  "blank": "空白渲染",
+  "result": {
+    "showing": "{total} 个 config 中的 {shown} 个",
+    "live": "实时 · 屏内最多 8 帧",
+    "order": "顺序 · family → model → effort → arm",
+    "noOutputHidden": "已隐藏 {count} 个无有效产出的 config——详见「进度」页"
+  },
+  "loadMore": "再加载 {count} 个",
+  "loadRemaining": "还剩 {count} 个",
+  "empty": {
+    "title": "没有匹配的 config",
+    "message": "当前筛选条件下没有匹配的 config。清空筛选即可看到完整网格。",
+    "clear": "清空筛选",
+    "enableDev": "显示 {count} 个 dev 通道 config"
+  },
+  "gate": {
+    "title": "三次盲选",
+    "subtitle": "同一道 prompt，每个模型一张卡。选你更愿意看的那张——投票之前身份始终隐藏。三次盲选之后，画廊就交给你了。",
+    "loading": "正在取一对卡…",
+    "waitLoad": "两张卡加载中…",
+    "choose": {
+      "a": "A",
+      "b": "B",
+      "tie": "平局",
+      "bothBad": "都不行"
+    },
+    "cardA": "卡 A",
+    "cardB": "卡 B",
+    "skip": "不投票直接浏览",
+    "error": "竞技场暂时安静——先随便逛逛画廊。",
+    "retry": "重试"
+  }
+}

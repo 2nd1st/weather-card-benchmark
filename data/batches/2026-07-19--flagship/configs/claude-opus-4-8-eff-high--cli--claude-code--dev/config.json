@@ -1,0 +1,27 @@
+{
+  "N": 2,
+  "auth": {
+    "credential_ref": "WCB_NONE",
+    "method": "oauth-login"
+  },
+  "billing": "plan",
+  "config_id": "claude-opus-4-8-eff-high--cli--claude-code--dev",
+  "effort": "high",
+  "family": "claude",
+  "m": {
+    "min": 2,
+    "q": 2
+  },
+  "model_id": "claude-opus-4-8",
+  "protocol": "cli",
+  "served_model": "claude-opus-4-8",
+  "telemetry": {
+    "completion_tokens": 30117,
+    "cost_usd": null,
+    "prompt_tokens": 10,
+    "total_tokens": 30127,
+    "wall_ms": 333782
+  },
+  "transport": "claude-code-cli-headless",
+  "vendor_sanction_ref": null
+}

@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/slot-meta.schema.json",
+  "title": "Per-slot meta.json",
+  "description": "One record per slot, at data/batches/<batch>/configs/<config_id>/slots/<k>/meta.json. Records the slot terminal state (scheme §1.1 five terminal states + rate-limited-exhausted), and — only when state=valid — the L1 scalars, the data-fidelity verdict (scheme §3), telemetry, and flags. JUDGMENT CALL (flagged): scheme fixes the fidelity/L1 SEMANTICS byte-exactly but not the JSON field names; object shapes below are this contract's design, aligned field-by-field to scheme §3 / appendix A. Numeric compute values are JSON numbers here; see CONTRACT-NOTES for the determinism-serialization caveat on any file that enters a verify rehash. schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. The file-level schema_version lives here (structured $comment) so the lock-population loop (DATA-LAYOUT §4) reads one uniform source across all eleven schema files. Corrected this pass per DECISIONS-M0 §1 (condition stays 4-state), §6 (slot_index required for all six terminal states), §7 (fidelity decision trace moved to fidelity-trace.json).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slot_index",
+    "state",
+    "flags",
+    "telemetry",
+    "l1",
+    "fidelity"
+  ],
+  "properties": {
+    "slot_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Slot number k (matches the slots/<k>/ directory). REQUIRED for ALL SIX terminal states (DECISIONS-M0 §6 ruling, reverting the earlier scoping that removed it from rate-limited-exhausted/unreachable). Ruling model: every config × variant has N slot POSITIONS k=0..N-1; a slot is a position, and its terminal state records what happened at that position. The four model-reaching states (valid, model-failed, infra-failed, acceptance-unknown) FILL the position with a request that reached the model; unreachable and rate-limited-exhausted are the SAME positions left UNFILLED after retries exhausted (request never delivered to the model). '不占 slot' in scheme §1.1 means those retries do NOT consume cost / are NOT counted as samples (cost bound = model-reaching requests ≤ N) — it does NOT mean 'no slot record'. Therefore slot_index is a real position for all six states; L1/fidelity are null for the two unfilled (and every non-valid) state. gallery canonical slot = smallest slot_index that is valid (scheme §1.1). Attempt-level retry detail for a position (multiple 429 / not-sent tries before exhaustion) lives in the separate per-config send-log.json (DECISIONS-M0 §6)."
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "model-failed",
+        "infra-failed",
+        "acceptance-unknown",
+        "unreachable",
+        "rate-limited-exhausted"
+      ],
+      "description": "Slot terminal state (scheme §1.1). All six are outcomes of a slot POSITION k (DECISIONS-M0 §6); slot_index is required for every one. valid = complete response + valid HTML. model-failed = complete response, no valid HTML (no retry-replace). infra-failed = vendor accepted then died mid-stream (model-reaching, consumes cost, infra-health page). acceptance-unknown = bytes sent but acceptance unprovable (model-reaching, consumes cost, may have billed). unreachable = provably-not-sent (connection refused / DNS / TLS pre-write), 5 retries exhausted — an UNFILLED position (no cost consumed, not a sample). rate-limited-exhausted = provably-uncharged pre-model refusal (429/quota/503), backoff budget exhausted — also an UNFILLED position; NOT counted as model-failed (scheme §1.1 v12.1). '不占 slot' = does not consume cost / is not a sample, NOT 'no slot record'."
+    },
+    "fence": {
+      "type": "boolean",
+      "description": "Convenience mirror of the 'fence' flag: HTML was code-fence-wrapped and stripped to a valid document (state stays valid + fence flag). Optional; authoritative flag list is 'flags'.",
+      "$comment": "Not in required; present only when true is meaningful. Redundant with flags[] by design for quick filtering."
+    },
+    "flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "Version-locked flag set for this slot. Closed enum (scheme §2/§7 flag vocabulary). JUDGMENT CALL (flagged): scheme lists flags with a trailing '…'; this contract freezes the enum below and any new flag is a schema_version bump (keeps lock stable). Empty array = no flags.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "fence",
+          "content-not-ready",
+          "unstable-after-freeze",
+          "non-deterministic-render",
+          "icon-only",
+          "network-violation"
+        ]
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt_tokens", "completion_tokens", "total_tokens", "wall_ms", "cost_usd", "request_id"],
+      "description": "Per-slot telemetry. JUDGMENT CALL (flagged): field set is this contract's design. Any value may be null when unreported. request_id/response-header presence is the evidence that distinguishes infra-failed / acceptance-unknown (scheme §1.1).",
+      "properties": {
+        "prompt_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "completion_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "total_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "wall_ms": {"type": ["integer", "null"], "minimum": 0},
+        "cost_usd": {"type": ["string", "null"], "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Canonical decimal string or null."},
+        "request_id": {"type": ["string", "null"], "description": "Vendor request id / response-header evidence, if present."}
+      }
+    },
+    "l1": {
+      "type": ["object", "null"],
+      "description": "L1 single-card descriptive scalars (scheme §3 + appendix A). MUST be a full object when state=valid, and null otherwise (enforced by the conditional at the bottom). Numeric values are JSON numbers; per CONTRACT-NOTES, files entering a verify rehash must serialize numbers deterministically.",
+      "additionalProperties": false,
+      "required": ["bytes", "structure", "visual", "palette_top8"],
+      "properties": {
+        "bytes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["total", "html", "css", "js"],
+          "description": "Byte-size breakdown of the card document (scheme §3 'bytes 拆分'). Field split is contract design.",
+          "properties": {
+            "total": {"type": "integer", "minimum": 0},
+            "html": {"type": "integer", "minimum": 0},
+            "css": {"type": "integer", "minimum": 0},
+            "js": {"type": "integer", "minimum": 0}
+          }
+        },
+        "structure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dom_nodes", "css_rules", "js_bytes_present", "dom_depth"],
+          "description": "DOM/CSS/JS structural counts (scheme §3). Exact counter set is contract design.",
+          "properties": {
+            "dom_nodes": {"type": "integer", "minimum": 0},
+            "css_rules": {"type": "integer", "minimum": 0},
+            "js_bytes_present": {"type": "boolean"},
+            "dom_depth": {"type": "integer", "minimum": 0}
+          }
+        },
+        "visual": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["colorfulness", "brightness", "contrast", "whitespace_ratio", "frame_change"],
+          "description": "Visual scalars per appendix A formulas (Hasler-Susstrunk colorfulness; Rec.601 brightness; population-stddev contrast ddof=0; whitespace = most-frequent 64-bin ratio; frame-change median/max from §2.3).",
+          "properties": {
+            "colorfulness": {"type": "number", "minimum": 0},
+            "brightness": {"type": "number", "minimum": 0, "maximum": 255},
+            "contrast": {"type": "number", "minimum": 0},
+            "whitespace_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+            "frame_change": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["median", "max"],
+              "description": "Adjacent virtual-frame per-pixel change ratio (any channel diff>0), median and max (§2.3, appendix A).",
+              "properties": {
+                "median": {"type": "number", "minimum": 0, "maximum": 1},
+                "max": {"type": "number", "minimum": 0, "maximum": 1}
+              }
+            }
+          }
+        },
+        "palette_top8": {
+          "type": "array",
+          "maxItems": 8,
+          "description": "Top-8 Lab-bin swatches: ONLY non-zero-weight bins, <=8, sort key (-weight, Lab bin C-order index) (scheme §3, v-palette appendix A). Half-open bins [lo,hi), last bin per dim closed.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["bin_index", "weight", "lab"],
+            "properties": {
+              "bin_index": {"type": "integer", "minimum": 0, "description": "C-order (L,a,b) bin index."},
+              "weight": {"type": "number", "exclusiveMinimum": 0, "maximum": 1, "description": "Occupancy weight (proportion); strictly > 0 by construction."},
+              "lab": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["L", "a", "b"],
+                "description": "Bin-center CIELAB representative point.",
+                "properties": {
+                  "L": {"type": "number"},
+                  "a": {"type": "number"},
+                  "b": {"type": "number"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fidelity": {
+      "type": ["object", "null"],
+      "description": "Data-fidelity verdict (scheme §3). MUST be a full object when state=valid, null otherwise (conditional below). Field states use the {match,mismatch,ambiguous,not-found} enum; hourly point states use {match,mismatch,not-shown}. Carries the TERMINAL verdict + scalar reason ONLY. RULED (DECISIONS-M0 §7): the full binding decision trace scheme §3/§8 mandates ('候选、显著度、绑定决策、判定路径全部落盘') lives in the SEPARATE per-slot fidelity-trace.json (schema: fidelity-trace.schema.json), NOT inline here — meta.json stays lightweight for the card page; the trace is deep-audit data. This object is the terminal-verdict summary; fidelity-trace.json is the load-bearing '全部落盘' artifact and MUST be frozen before any fidelity verdict is published (LAW).",
+      "additionalProperties": false,
+      "required": ["extractor_version", "name", "date", "condition", "max", "min", "hourly", "request_side"],
+      "properties": {
+        "extractor_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "extractor_version that produced this verdict; frozen into lock (scheme §11)."
+        },
+        "name": {"$ref": "#/$defs/nameVerdict", "description": "name field: any candidate contains the expected name substring -> match, else not-found. Scheme §3 is explicit: name has ONLY {match, not-found} ('无 mismatch 态') — NO mismatch, NO ambiguous. Uses the 2-state nameVerdict, NOT the general 4-state fieldVerdict. reason in {no-visible-text, text-present-no-name-hit}."},
+        "date": {"$ref": "#/$defs/fieldVerdict", "description": "date field: parse ISO+locale templates to UTC day. hit->match, other day->mismatch, unparseable->not-found, multi-candidate conflict->ambiguous. Uses all four field states (scheme §3)."},
+        "condition": {"$ref": "#/$defs/fieldVerdict", "description": "condition field: WMO multilingual vocab text match; icon-only -> not-found + icon-only note. Uses the general 4-state fieldVerdict {match,mismatch,ambiguous,not-found}. RULED (DECISIONS-M0 §1): condition STAYS 4-state and is NOT constrained to {match,not-found}. Rationale (Fable 5): name is 2-state only because scheme §3 explicitly says name '无 mismatch 态'; condition carries no such restriction, and a displayed condition contradicting the WMO code (e.g. code=61 shown as 'Sunny') is a real mismatch signal that must not be discarded. Earlier owner-decision flag removed per this ruling."},
+        "max": {"$ref": "#/$defs/tempVerdict", "description": "daily max. Global one-to-one binding (scheme §3 max/min). value = canonical occurrence's matched decimal (nullable)."},
+        "min": {"$ref": "#/$defs/tempVerdict", "description": "daily min. Same binding machinery as max."},
+        "hourly": {"$ref": "#/$defs/hourlyVerdict", "description": "hourly field: pre-triage + max-cardinality injective binding (scheme §3 hourly)."},
+        "request_side": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "violations"],
+          "description": "Request-side hard validation of the contract query from the network log (endpoint, lat/lon +/-0.01, start/end_date, daily/hourly field sets, timezone=UTC, temperature_unit=celsius) — scheme §3 请求侧硬校验.",
+          "properties": {
+            "status": {"type": "string", "enum": ["match", "mismatch"], "description": "Overall contract-query match."},
+            "violations": {
+              "type": "array",
+              "uniqueItems": true,
+              "description": "Per-key mismatch descriptors; empty when status=match.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["key", "expected", "actual"],
+                "properties": {
+                  "key": {"type": "string", "minLength": 1},
+                  "expected": {"type": ["string", "null"]},
+                  "actual": {"type": ["string", "null"]}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fieldVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reason"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["match", "mismatch", "ambiguous", "not-found"],
+          "description": "General field terminal state (scheme §3 field-state enum). Used by date and condition."
+        },
+        "reason": {
+          "type": ["string", "null"],
+          "description": "Versioned reason code (e.g. no-visible-text, text-present-no-name-hit, no-temperature-candidate, insufficient-distinct-temperature-nodes), or null."
+        }
+      }
+    },
+    "nameVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reason"],
+      "description": "name-field verdict. Scheme §3 restricts name to TWO terminal states only ('无 mismatch 态'): a candidate contains the expected name substring -> match, otherwise not-found. No mismatch, no ambiguous.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["match", "not-found"],
+          "description": "name terminal state — ONLY match | not-found (scheme §3)."
+        },
+        "reason": {
+          "type": ["string", "null"],
+          "description": "Versioned reason code; scheme §3 names {no-visible-text, text-present-no-name-hit} for name, or null."
+        }
+      }
+    },
+    "tempVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reason", "value", "display_decimals"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["match", "mismatch", "ambiguous", "not-found"],
+          "description": "max/min terminal state (scheme §3)."
+        },
+        "reason": {
+          "type": ["string", "null"],
+          "description": "Versioned reason code (e.g. no-temperature-candidate, insufficient-distinct-temperature-nodes), or null."
+        },
+        "value": {
+          "type": ["string", "null"],
+          "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$",
+          "description": "Canonical decimal string of the bound canonical occurrence's displayed value, or null when no canonical published. Decimal-string to preserve displayed precision without float drift."
+        },
+        "display_decimals": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Displayed decimal places d used for the ROUND_HALF_UP quantize comparison (scheme §3 数值匹配), or null."
+        }
+      }
+    },
+    "hourlyVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reason", "points", "points_match", "points_mismatch", "points_not_shown", "coverage"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["match", "mismatch", "ambiguous", "not-found"],
+          "description": "hourly FIELD state aggregation (scheme §3): structural conflict->ambiguous; no candidate->not-found; else X=#mismatch,M=#match: X>=1->mismatch; X=0&M>=1->match; X=0&M=0->not-found."
+        },
+        "reason": {
+          "type": ["string", "null"],
+          "description": "Versioned reason / decision-path code, or null."
+        },
+        "points": {
+          "type": "array",
+          "minItems": 24,
+          "maxItems": 24,
+          "description": "Per-UTC-hour point states, hour 0..23 in order. Point-state enum {match,mismatch,not-shown} (distinct from field-state enum). scheme §3 hourly.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hour", "state"],
+            "properties": {
+              "hour": {"type": "integer", "minimum": 0, "maximum": 23},
+              "state": {"type": "string", "enum": ["match", "mismatch", "not-shown"]}
+            }
+          }
+        },
+        "points_match": {"type": "integer", "minimum": 0, "maximum": 24, "description": "M = count of point-wise match."},
+        "points_mismatch": {"type": "integer", "minimum": 0, "maximum": 24, "description": "X = count of point-wise mismatch."},
+        "points_not_shown": {"type": "integer", "minimum": 0, "maximum": 24, "description": "count of point-wise not-shown."},
+        "coverage": {
+          "type": ["string", "null"],
+          "description": "Coverage M/24 persistently displayed (scheme §3). String form e.g. '18/24', or null when not applicable."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "valid"}}},
+      "then": {"properties": {"l1": {"type": "object"}, "fidelity": {"type": "object"}}},
+      "else": {"properties": {"l1": {"type": "null"}, "fidelity": {"type": "null"}}}
+    }
+  ]
+}

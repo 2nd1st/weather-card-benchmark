@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, height=800, initial-scale=1.0">
+<title>Weather</title>
+<style>
+    :root {
+        --bg-color: #0f111a;
+        --card-bg: rgba(26, 29, 41, 0.7);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --text-main: #ffffff;
+        --text-muted: #8b949e;
+        --accent: #00f0ff;
+        --accent-glow: rgba(0, 240, 255, 0.3);
+        --chart-fill: rgba(0, 240, 255, 0.15);
+        --danger: #ff5555;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1280px;
+        height: 800px;
+        overflow: hidden;
+        background: radial-gradient(circle at top right, #1a1d29, #0f111a 70%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Ambient background shapes */
+    .bg-shape {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        z-index: 0;
+        opacity: 0.4;
+    }
+    .bg-shape-1 {
+        width: 400px;
+        height: 400px;
+        background: var(--accent);
+        top: -100px;
+        right: -100px;
+    }
+    .bg-shape-2 {
+        width: 600px;
+        height: 600px;
+        background: #7000ff;
+        bottom: -200px;
+        left: -100px;
+    }
+
+    /* Weather Card */
+    .card-container {
+        position: relative;
+        z-index: 10;
+        width: 1000px;
+        height: 640px;
+        background: var(--card-bg);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--card-border);
+        border-radius: 40px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.05);
+        padding: 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .card-container.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Top Section */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .location-info h1 {
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+        margin-bottom: 8px;
+        line-height: 1.1;
+    }
+
+    .location-info p {
+        font-size: 22px;
+        color: var(--accent);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .weather-condition {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .weather-condition svg {
+        width: 72px;
+        height: 72px;
+        stroke: var(--accent);
+        filter: drop-shadow(0 0 12px var(--accent-glow));
+        margin-bottom: 12px;
+    }
+
+    .weather-condition p {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+
+    /* Middle Section (Temps) */
+    .main-temp {
+        display: flex;
+        align-items: baseline;
+        margin-top: 24px;
+    }
+
+    .max-temp {
+        font-size: 140px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -5px;
+        margin-right: 32px;
+        background: linear-gradient(180deg, #ffffff 0%, #a0a5b0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .min-temp {
+        font-size: 40px;
+        color: var(--text-muted);
+        font-weight: 500;
+        letter-spacing: -1px;
+    }
+
+    /* Bottom Section (Hourly) */
+    .hourly-section {
+        margin-top: auto;
+    }
+
+    .hourly-title {
+        font-size: 16px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        margin-bottom: 24px;
+    }
+
+    .chart-container {
+        width: 100%;
+        height: 160px;
+        position: relative;
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    /* Error & Loading States */
+    .state-message {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: var(--card-bg);
+        border-radius: 40px;
+        z-index: 20;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+
+    .state-message.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .state-message svg {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 24px;
+    }
+
+    .state-message h2 {
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .state-message p {
+        font-size: 18px;
+        color: var(--text-muted);
+    }
+
+    .error-icon { stroke: var(--danger); }
+    .loading-icon { stroke: var(--accent); animation: spin 2s linear infinite; }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="bg-shape bg-shape-1"></div>
+<div class="bg-shape bg-shape-2"></div>
+
+<div class="card-container" id="weather-card">
+    <div class="header">
+        <div class="location-info">
+            <h1 id="ui-location">--</h1>
+            <p id="ui-date">--</p>
+        </div>
+        <div class="weather-condition">
+            <div id="ui-icon"></div>
+            <p id="ui-desc">--</p>
+        </div>
+    </div>
+
+    <div class="main-temp">
+        <span class="max-temp" id="ui-max">--°</span>
+        <span class="min-temp" id="ui-min">--°</span>
+    </div>
+
+    <div class="hourly-section">
+        <p class="hourly-title">Hourly Temperature</p>
+        <div class="chart-container">
+            <canvas id="hourly-chart" width="888" height="160"></canvas>
+        </div>
+    </div>
+
+    <div class="state-message" id="loading-state">
+        <svg class="loading-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="6"></line>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+            <line x1="2" y1="12" x2="6" y2="12"></line>
+            <line x1="18" y1="12" x2="22" y2="12"></line>
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+        </svg>
+        <h2>Fetching Data</h2>
+        <p>Analyzing atmospheric conditions...</p>
+    </div>
+
+    <div class="state-message" id="error-state">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <h2>Unable to load weather</h2>
+        <p>Data for this location and date could not be retrieved.</p>
+    </div>
+</div>
+
+<script>
+    // --- Icons Dictionary ---
+    const SVGS = {
+        sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>`,
+        cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>`,
+        fog: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path><path d="M8 22h8"></path><path d="M6 16h12"></path></svg>`,
+        rain: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 13v8"></path><path d="M8 13v8"></path><path d="M12 15v8"></path><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path></svg>`,
+        snow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><path d="M8 14v.01"></path><path d="M8 18v.01"></path><path d="M12 16v.01"></path><path d="M12 20v.01"></path><path d="M16 14v.01"></path><path d="M16 18v.01"></path></svg>`,
+        storm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path><polyline points="13 11 9 17 15 17 11 23"></polyline></svg>`
+    };
+
+    function getWeatherInfo(code) {
+        if (code === 0) return { label: 'Clear Sky', icon: SVGS.sun };
+        if (code <= 3) return { label: 'Cloudy', icon: SVGS.cloud };
+        if (code <= 48) return { label: 'Fog', icon: SVGS.fog };
+        if (code <= 57) return { label: 'Drizzle', icon: SVGS.rain };
+        if (code <= 67) return { label: 'Rain', icon: SVGS.rain };
+        if (code <= 77) return { label: 'Snow', icon: SVGS.snow };
+        if (code <= 82) return { label: 'Showers', icon: SVGS.rain };
+        if (code <= 86) return { label: 'Snow Showers', icon: SVGS.snow };
+        if (code >= 95) return { label: 'Thunderstorm', icon: SVGS.storm };
+        return { label: 'Unknown', icon: SVGS.cloud };
+    }
+
+    // --- Core Logic ---
+    function init() {
+        const params = new URLSearchParams(window.location.search);
+        const lat = params.get('lat') || '52.52';
+        const lon = params.get('lon') || '13.405';
+        const name = params.get('name') || 'Berlin';
+        
+        // Date parsing / Defaults to today UTC
+        const now = new Date();
+        const y = now.getUTCFullYear();
+        const m = String(now.getUTCMonth() + 1).padStart(2, '0');
+        const d = String(now.getUTCDate()).padStart(2, '0');
+        const todayStr = `${y}-${m}-${d}`;
+        
+        let reqDateStr = params.get('date') || todayStr;
+        // Validate date format rudimentarily
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(reqDateStr)) {
+            reqDateStr = todayStr;
+        }
+
+        // Display Name & Formatted Date
+        document.getElementById('ui-location').textContent = name;
+        const dateObj = new Date(reqDateStr);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+        document.getElementById('ui-date').textContent = dateObj.toLocaleDateString('en-US', options);
+
+        // Determine Endpoint
+        const isPast = reqDateStr < todayStr;
+        const apiPath = isPast ? '/api/om/archive' : '/api/om/forecast';
+
+        // Construct URL
+        const url = `${apiPath}?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m&timezone=UTC&temperature_unit=celsius&start_date=${reqDateStr}&end_date=${reqDateStr}`;
+
+        const card = document.getElementById('weather-card');
+        const loading = document.getElementById('loading-state');
+        const errorMsg = document.getElementById('error-state');
+
+        card.classList.add('visible');
+        loading.classList.add('active');
+
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error('API Response not ok');
+                return res.json();
+            })
+            .then(data => {
+                loading.classList.remove('active');
+                
+                if (!data.daily || !data.hourly || data.daily.temperature_2m_max.length === 0) {
+                    throw new Error('Incomplete data');
+                }
+
+                // Parse Data
+                const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
+                const minTemp = Math.round(data.daily.temperature_2m_min[0]);
+                const wCode = data.daily.weather_code[0];
+                const hourlyTemps = data.hourly.temperature_2m.slice(0, 24); 
+
+                const wInfo = getWeatherInfo(wCode);
+
+                // Update UI
+                document.getElementById('ui-max').textContent = `${maxTemp}°`;
+                document.getElementById('ui-min').textContent = `Min ${minTemp}°`;
+                document.getElementById('ui-icon').innerHTML = wInfo.icon;
+                document.getElementById('ui-desc').textContent = wInfo.label;
+
+                // Draw Chart
+                drawChart(hourlyTemps);
+            })
+            .catch(err => {
+                console.error(err);
+                loading.classList.remove('active');
+                errorMsg.classList.add('active');
+            });
+    }
+
+    function drawChart(temps) {
+        const canvas = document.getElementById('hourly-chart');
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width;
+        const H = canvas.height;
+
+        // Configuration
+        const paddingX = 30;
+        const paddingTop = 25;
+        const paddingBottom = 25;
+        
+        // Value bounds
+        const validTemps = temps.filter(t => t !== null);
+        if(validTemps.length === 0) return;
+        
+        const minT = Math.min(...validTemps) - 1.5;
+        const maxT = Math.max(...validTemps) + 1.5;
+        const range = maxT - minT;
+
+        const getX = (i) => paddingX + (i / 23) * (W - paddingX * 2);
+        const getY = (val) => H - paddingBottom - ((val - minT) / (range || 1)) * (H - paddingTop - paddingBottom);
+
+        const pts = temps.map((t, i) => ({
+            x: getX(i),
+            y: t !== null ? getY(t) : H,
+            val: t
+        }));
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Gradient Fill
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, H);
+        ctx.lineTo(pts[0].x, pts[0].y);
+        for (let i = 0; i < pts.length - 1; i++) {
+            const xc = (pts[i].x + pts[i + 1].x) / 2;
+            const yc = (pts[i].y + pts[i + 1].y) / 2;
+            ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+        }
+        ctx.quadraticCurveTo(pts[pts.length - 1].x, pts[pts.length - 1].y, pts[pts.length - 1].x, pts[pts.length - 1].y);
+        ctx.lineTo(pts[pts.length - 1].x, H);
+        ctx.lineTo(pts[0].x, H);
+        
+        const grad = ctx.createLinearGradient(0, 0, 0, H);
+        grad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
+        grad.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Line Stroke
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 0; i < pts.length - 1; i++) {
+            const xc = (pts[i].x + pts[i + 1].x) / 2;
+            const yc = (pts[i].y + pts[i + 1].y) / 2;
+            ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+        }
+        ctx.quadraticCurveTo(pts[pts.length - 1].x, pts[pts.length - 1].y, pts[pts.length - 1].x, pts[pts.length - 1].y);
+        
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+
+        // Data Points & Labels
+        ctx.textAlign = 'center';
+        pts.forEach((p, i) => {
+            // Draw every 3 hours and the last point
+            if (i % 3 === 0 || i === 23) {
+                // Circle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#1a1d29';
+                ctx.fill();
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+
+                // Temp Label
+                if (p.val !== null) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '600 15px -apple-system, sans-serif';
+                    ctx.fillText(`${Math.round(p.val)}°`, p.x, p.y - 14);
+                }
+
+                // Time Label
+                ctx.fillStyle = '#8b949e';
+                ctx.font = '500 13px -apple-system, sans-serif';
+                ctx.fillText(`${i.toString().padStart(2, '0')}:00`, p.x, H - 2);
+            }
+        });
+    }
+
+    // Run on load
+    window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

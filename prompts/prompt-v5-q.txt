@@ -1,0 +1,16 @@
+Build a weather card as a single complete HTML file.
+
+Output only the raw HTML file content — no markdown fences, no commentary before or after.
+
+Rules:
+- All CSS and JS inline. No external resources; no network requests other than the two API paths below.
+- Desktop viewport, 1280x800.
+- Read URL query parameters: `lat`, `lon`, `name` (location label), `date` (YYYY-MM-DD). Defaults: 52.52, 13.405, Berlin, today (UTC).
+- Fetch weather data from the same-origin API (Open-Meteo compatible, no key):
+  - `/api/om/forecast` — parameters and response format identical to api.open-meteo.com/v1/forecast (today and future dates)
+  - `/api/om/archive` — identical to archive-api.open-meteo.com/v1/archive (past dates)
+- Request with query parameters: `latitude`, `longitude`, `daily=temperature_2m_max,temperature_2m_min,weather_code`, `hourly=temperature_2m`, `timezone=UTC`, `temperature_unit=celsius`, and `start_date`/`end_date` both set to the requested date.
+- Display, in Celsius: the location name, the date, that date's maximum and minimum temperature, the weather condition, and the hourly temperatures for that date.
+- If the data cannot be loaded, the page must say so.
+
+Pay particular attention to visual design quality.

@@ -1,0 +1,187 @@
+/* /findings — observation cards. Restrained hairline-and-ink register
+   (mockup-a): this is a text/data-dense surface, no exhibit glow. */
+
+.page {
+  padding: clamp(36px, 6vw, 72px) 0 24px;
+}
+.head {
+  max-width: 78ch;
+}
+.kick {
+  font: 11px var(--font-mono);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--acc);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.kick::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--acc), transparent);
+}
+.title {
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  line-height: 1.06;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+.lead {
+  margin-top: 16px;
+  color: var(--ink-dim);
+  font-size: 15px;
+  max-width: 66ch;
+}
+.metaline {
+  margin-top: 14px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+  letter-spacing: .04em;
+}
+
+.list {
+  margin-top: clamp(28px, 4vw, 44px);
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(18px, 2.4vw, 26px);
+  position: relative;
+}
+.card:target {
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 1px rgba(55, 214, 228, .18);
+}
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.idx {
+  font: 600 12px var(--font-mono);
+  color: var(--ink-faint);
+  letter-spacing: .04em;
+}
+.cardTitle {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: -.015em;
+}
+.body {
+  margin-top: 12px;
+  color: var(--ink-dim);
+  max-width: 74ch;
+}
+
+.figs {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.fig {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  min-width: 0;
+}
+.figLabel {
+  font: 10px var(--font-mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.figValue {
+  font: 600 15px var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+  background: linear-gradient(120deg, var(--ink) 30%, var(--acc) 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* caveats are epistemically load-bearing (audit item 8): readable size + the
+   secondary-body ink tier, not the faint decorative tier. */
+.caveat {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+.caveat b {
+  font: 11px var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--warn);
+  flex: none;
+  padding-top: 1px;
+}
+
+.foot {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* source rows held at the ≥12px legibility floor (audit item 8) */
+.srcs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  font: 12px var(--font-mono);
+  color: var(--ink-faint);
+}
+.srcs .lbl {
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ref {
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ref:hover {
+  color: var(--acc);
+  border-color: var(--line-strong);
+}
+/* quiet per-card action by default; the finding itself owns the emphasis, the
+   CTA earns cyan only on hover/focus (audit item 9). */
+.browse {
+  margin-left: auto;
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  white-space: nowrap;
+  transition: color .15s;
+}
+.browse:hover,
+.browse:focus-visible {
+  color: var(--acc);
+  text-decoration: underline;
+}
+@media (max-width: 640px) {
+  .browse { margin-left: 0; }
+}

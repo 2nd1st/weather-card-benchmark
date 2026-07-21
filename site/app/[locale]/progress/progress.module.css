@@ -1,0 +1,622 @@
+/* /progress — coverage board. Restrained "etched" register per spec §5:
+   hairline-and-ink, no glow, no gradients (this is a data-dense surface).
+   Grade tint follows the design system: qualified→acc, dev→warn,
+   community→acc-2. Colours read from A2's globals.css :root tokens. */
+
+/* board content is constrained to a useful width so hairline rules don't run
+   across two-thirds void on wide screens (audit #13). */
+.board { max-width: 980px; }
+
+/* intro + compact "last updated" stacked directly beneath it (audit #27) */
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-block-end: 8px;
+}
+.asof {
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.asof b {
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+/* ---- lead metric: landed / planned + progress bar (the headline answer) ---- */
+.lead {
+  margin-block: 18px 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elev);
+}
+.leadTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.leadNums {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.leadLanded {
+  font: 700 clamp(30px, 4vw, 40px)/1 var(--font-mono);
+  letter-spacing: -0.03em;
+  color: var(--good);
+}
+.leadDenom {
+  font: 600 clamp(16px, 2vw, 20px) var(--font-mono);
+  color: var(--ink-dim);
+  letter-spacing: -0.01em;
+}
+.leadPct {
+  font: 700 clamp(22px, 2.6vw, 28px) var(--font-mono);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.leadBar {
+  margin-block-start: 12px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.leadBar > span {
+  display: block;
+  height: 100%;
+  background: var(--good);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.leadCaption {
+  margin-block-start: 8px;
+  font: 11.5px var(--font-mono);
+  color: var(--ink-dim);
+  letter-spacing: 0.02em;
+}
+.slotsNote {
+  margin-block: 6px 0;
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+
+/* ---- totals strip ---- */
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-block: 18px 10px;
+}
+.total {
+  background: var(--bg-elev);
+  padding: 14px 16px;
+}
+.total .n {
+  font: 600 clamp(20px, 2.2vw, 26px)/1.1 var(--font-mono);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.total .l {
+  font: 10px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-block-start: 5px;
+}
+.total.landed .n { color: var(--good); }
+.total.partial .n { color: var(--warn); }
+.total.gap .n { color: var(--bad); }
+.total.paused .n { color: var(--ink-dim); }
+
+/* ---- china gap callout ---- cyan info accent (violet is reserved for
+   community / vote semantics — audit #12); explanation left, metrics gridded
+   right. */
+.china {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 28px;
+  align-items: start;
+  margin-block: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--line-strong);
+  border-inline-start: 3px solid var(--acc);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+}
+@media (max-width: 720px) {
+  .china { grid-template-columns: 1fr; }
+}
+.chinaMain { min-width: 0; }
+.china h3 {
+  font: 600 15px/1.5 var(--font-sans);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.china p {
+  margin-block-start: 8px;
+  color: var(--ink-dim);
+  font-size: 12.5px;
+  max-width: 64ch;
+}
+.figs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 12px 22px;
+  min-width: 260px;
+}
+.figs span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font: 10px var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.figs b {
+  font: 600 17px var(--font-mono);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-transform: none;
+}
+
+/* ---- legend (reference key, with glyph + status + definition) ---- */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 7px 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  margin-block: 16px;
+  font: 11.5px var(--font-mono);
+  color: var(--ink-dim);
+}
+.legend .item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend .itemName {
+  color: var(--ink);
+  min-width: 62px;
+}
+/* swatch doubles as the glyph key — same shape/colour the chips use */
+.swatch {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  flex: 0 0 auto;
+  font: 700 10px/1 var(--font-mono);
+}
+.legend .def {
+  color: var(--ink-faint);
+}
+
+/* ---- sticky toolbar: show-control + search + compact status key ---- */
+.toolbar {
+  position: sticky;
+  top: 54px; /* below the 54px site nav */
+  z-index: 12;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  padding: 10px 0;
+  margin-block: 8px 4px;
+  background: var(--bg);
+  border-block-end: 1px solid var(--line);
+}
+.toolLeft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.toolLabel {
+  font: 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.search {
+  display: inline-flex;
+}
+.searchInput {
+  font: 12px var(--font-mono);
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 7px 11px;
+  width: 180px;
+  max-width: 100%;
+}
+.searchInput::placeholder { color: var(--ink-faint); }
+.searchInput:focus-visible { outline: none; border-color: var(--acc); }
+.keyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font: 10.5px var(--font-mono);
+  color: var(--ink-dim);
+}
+.keyItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.keyItem .swatch {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  font-size: 9px;
+}
+@media (max-width: 640px) {
+  .toolbar { position: static; }
+  .keyRow { width: 100%; }
+}
+
+.noMatch {
+  margin-block: 24px;
+  font: 12px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* ---- arm section ---- */
+.arm {
+  margin-block: 22px;
+}
+/* clickable, collapsible, and sticky just under the toolbar so the arm context
+   stays visible while scrolling the long board (audit #11). */
+.armHead {
+  position: sticky;
+  top: 104px; /* nav (54) + toolbar (~50) */
+  z-index: 8;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 8px 4px;
+  background: var(--bg);
+  border-block-end: 1px solid var(--line-strong);
+  margin-block-end: 12px;
+  cursor: pointer;
+  text-align: start;
+}
+.armHead:hover .armName { color: var(--acc); }
+.armHead:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.armChevron {
+  font: 10px var(--font-mono);
+  color: var(--ink-faint);
+}
+.armName {
+  font: 600 14px var(--font-mono);
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.armGroupTag {
+  font: 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.armCount {
+  font: 10px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+.armDesc {
+  flex: 1 1 100%;
+  font-size: 11.5px;
+  color: var(--ink-dim);
+}
+
+/* ---- per-model rows: true two-column grid (label | chips) so hairlines never
+   run across empty void (audit #13). ---- */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 16px;
+  padding-block: 5px;
+  border-block-end: 1px solid var(--line);
+}
+.row:last-child {
+  border-block-end: 0;
+}
+.rowLabel {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  overflow: hidden;
+}
+.rid {
+  font: 12px var(--font-mono);
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rfam {
+  flex: 0 0 auto;
+  font: 9.5px var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.chips {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---- one effort chip ---- */
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-dim);
+  font: 11px var(--font-mono);
+  letter-spacing: 0.01em;
+}
+/* status glyph — colour-blind-safe shape, inside every chip (audit #10) */
+.chipGlyph {
+  font: 700 10px/1 var(--font-mono);
+  opacity: 0.95;
+}
+.chipText {
+  line-height: 1;
+}
+.chipBtn {
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.chipBtn:hover {
+  border-color: var(--line-strong);
+}
+.chipBtn:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 1px;
+}
+/* gap affordance: a "+" corner badge, hidden until hover/focus — never a
+   permanent glyph (no add-button confusion). No layout shift. */
+.plus {
+  position: absolute;
+  top: -6px;
+  inset-inline-end: -5px;
+  width: 14px;
+  height: 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-elev);
+  border: 1px solid var(--acc);
+  color: var(--acc);
+  font: 700 10px/1 var(--font-mono);
+  opacity: 0;
+  transition: opacity 0.12s;
+  pointer-events: none;
+}
+.chipBtn:hover .plus,
+.chipBtn:focus-visible .plus {
+  opacity: 1;
+}
+
+/* status language — shared by chips (.chip) and legend swatches (.swatch);
+   these set ONLY fill/border/colour so both surfaces read identically. */
+.st_landed {
+  background: rgba(59, 217, 127, 0.18);
+  border-color: var(--good);
+  color: var(--good);
+}
+.st_partial {
+  /* half fill + amber outline */
+  background: linear-gradient(90deg, rgba(245, 180, 84, 0.24) 0 50%, transparent 50%);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.st_attempted {
+  /* red — faint fill + red outline so it reads unmistakably as a red state in
+     both the chips and the legend swatch (audit #9) */
+  background: rgba(240, 100, 122, 0.14);
+  border-color: var(--bad);
+  color: var(--bad);
+}
+.st_missing {
+  /* dashed dim border */
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--line-strong);
+  color: var(--ink-faint);
+}
+.st_paused {
+  /* diagonal hatch, dim */
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 3px,
+    rgba(147, 160, 184, 0.16) 3px 6px
+  );
+  border-color: var(--line);
+  color: var(--ink-faint);
+}
+
+/* grade tint: a thin inside ring, only when the backing entry is not qualified */
+.g_dev {
+  box-shadow: inset 0 0 0 1px rgba(245, 180, 84, 0.55);
+}
+.g_community {
+  box-shadow: inset 0 0 0 1px rgba(124, 140, 248, 0.6);
+}
+
+.selected {
+  outline: 2px solid var(--acc);
+  outline-offset: 1px;
+}
+
+/* ---- cost reference (collapsed behind a disclosure — audit #14) ---- */
+.costDisclosure {
+  margin-block-start: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  padding: 4px 16px 16px;
+}
+.costDisclosure[open] {
+  padding-block-end: 18px;
+}
+.costSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 12px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.costSummary::-webkit-details-marker { display: none; }
+.costSummary::before {
+  content: "▸";
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+}
+.costDisclosure[open] .costSummary::before { content: "▾"; }
+.costSummary:hover .sec { color: var(--acc); }
+.costHint {
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+.costWrap {
+  overflow-x: auto;
+  margin-block-start: 12px;
+}
+.cost {
+  border-collapse: collapse;
+  min-width: 100%;
+  font: 11.5px var(--font-mono);
+}
+.cost th {
+  text-align: start;
+  font-weight: 500;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 8px 12px;
+  border-block-end: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+.cost td {
+  padding: 9px 12px;
+  border-block-end: 1px solid var(--line);
+  color: var(--ink-dim);
+  vertical-align: top;
+}
+.cost td.usd {
+  color: var(--ink);
+  white-space: nowrap;
+}
+.cost .basis {
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.cost .note {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--ink-dim);
+  max-width: 46ch;
+}
+.disclaimer {
+  margin-block-start: 10px;
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* ---- contribute tray (sticky) ---- */
+.tray {
+  position: sticky;
+  inset-block-end: 12px;
+  z-index: 4;
+  margin-block-start: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--acc-2);
+  border-radius: var(--radius-lg);
+  background: rgba(21, 27, 41, 0.92);
+  backdrop-filter: blur(10px);
+}
+.tray .count {
+  font: 12px var(--font-mono);
+  color: var(--ink);
+}
+.tray .count b {
+  color: var(--acc-2);
+  font-weight: 600;
+}
+.tray .est {
+  font: 11px var(--font-mono);
+  color: var(--ink-dim);
+}
+.trayActions {
+  display: flex;
+  gap: 8px;
+  margin-inline-start: auto;
+  flex-wrap: wrap;
+}
+
+.hint {
+  font: 11px var(--font-mono);
+  color: var(--ink-faint);
+  margin-block-start: 8px;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

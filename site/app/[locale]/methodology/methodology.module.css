@@ -1,0 +1,533 @@
+/* /methodology — text/spec-dense surface. Restrained hairline-and-ink
+   register (mockup-a): no exhibit glow; violet only on the voting section
+   (community/vote element, spec §5). */
+
+.page {
+  padding: clamp(36px, 6vw, 72px) 0 24px;
+}
+.head {
+  max-width: 80ch;
+}
+.kick {
+  font: 11px var(--font-mono);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--acc);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.kick::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--acc), transparent);
+}
+.title {
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  line-height: 1.06;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+.lead {
+  margin-top: 16px;
+  color: var(--ink-dim);
+  font-size: 15px;
+  max-width: 68ch;
+}
+
+/* pinned declarations */
+.decls {
+  margin-top: 26px;
+  display: grid;
+  gap: 12px;
+}
+.decl {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--acc);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 13.5px;
+  max-width: 84ch;
+}
+.decl .n {
+  font: 600 12px var(--font-mono);
+  color: var(--acc);
+  flex: none;
+  padding-top: 1px;
+}
+
+/* sticky "On this page" index (item 12) — pinned below the global nav so
+   position + wayfinding never disappear in the long document; the active
+   section is highlighted by MethodologyToc. */
+.toc {
+  position: sticky;
+  top: 54px; /* clears the 54px sticky global nav */
+  z-index: 10;
+  margin: 22px 0 4px;
+  padding: 9px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  background: rgba(11, 14, 20, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.tocLabel {
+  flex: none;
+  font: 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.tocList {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tocList::-webkit-scrollbar {
+  display: none;
+}
+.tocList li {
+  flex: none;
+}
+.tocList a {
+  display: inline-block;
+  white-space: nowrap;
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.tocList a:hover {
+  color: var(--acc);
+}
+.tocList a.tocOn {
+  color: var(--acc);
+  background: rgba(55, 214, 228, 0.08);
+  border-color: rgba(55, 214, 228, 0.4);
+}
+
+/* anchor targets clear the sticky nav + TOC bar when jumped to (scoped under
+   the page root — CSS Modules requires a local class in every selector). */
+.page :global(#measure),
+.page :global(#patch),
+.page :global(#voting),
+.page :global(#contribute),
+.page :global(#provenance) {
+  scroll-margin-top: 108px;
+}
+
+.prose {
+  color: var(--ink-dim);
+  font-size: 14px;
+  max-width: 80ch;
+}
+.prose p { margin-top: 12px; }
+.prose strong { color: var(--ink); }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: .92em;
+  color: var(--acc);
+  background: var(--panel);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+/* layer strip */
+.layers {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+}
+.layer {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 16px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.layer .k {
+  font: 600 15px var(--font-mono);
+  color: var(--acc);
+  letter-spacing: .02em;
+}
+.layer .t {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14px;
+}
+.layer .d {
+  margin-top: 5px;
+  color: var(--ink-dim);
+  font-size: 13px;
+  max-width: 78ch;
+}
+
+.note {
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--ink-faint);
+  border-top: 1px dashed var(--line);
+  padding-top: 14px;
+  max-width: 80ch;
+}
+.note code {
+  font-family: var(--font-mono);
+  color: var(--ink-dim);
+}
+
+/* ordered invariant / rule lists */
+.rules {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+  counter-reset: rule;
+  max-width: 84ch;
+}
+.rule {
+  display: flex;
+  gap: 14px;
+  padding: 13px 16px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 13.5px;
+}
+.rule::before {
+  counter-increment: rule;
+  content: counter(rule);
+  font: 600 12px var(--font-mono);
+  color: var(--ink-faint);
+  flex: none;
+  width: 18px;
+  text-align: right;
+  padding-top: 1px;
+}
+.rule code {
+  font-family: var(--font-mono);
+  font-size: .92em;
+  color: var(--acc);
+}
+
+/* plain numbered rows with dividers — routine rules (voting, contribute).
+   Boxes (.rule above) are reserved for principles / warnings (item 13). */
+.rowlist {
+  margin-top: 18px;
+  list-style: none;
+  counter-reset: rule;
+  max-width: 84ch;
+  border-top: 1px solid var(--line);
+}
+.row {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13.5px;
+}
+.row::before {
+  counter-increment: rule;
+  content: counter(rule);
+  font: 600 12px var(--font-mono);
+  color: var(--ink-faint);
+  flex: none;
+  width: 20px;
+  text-align: right;
+}
+.row code {
+  font-family: var(--font-mono);
+  font-size: .92em;
+  color: var(--acc);
+}
+
+/* violet register for the voting section */
+.violet .rule {
+  border-left: 2px solid rgba(124, 140, 248, .55);
+}
+.violet .rule code,
+.violet .row code { color: var(--acc-2); }
+.violet .row::before { color: var(--acc-2); }
+.framing {
+  margin-top: 6px;
+  display: inline-block;
+  font: 12px var(--font-mono);
+  color: var(--acc-2);
+  border: 1px solid rgba(124, 140, 248, .5);
+  background: rgb(124 140 248 / 8%);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+.warnline {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--ink);
+  background: rgb(245 180 84 / 8%);
+  border: 1px solid rgba(245, 180, 84, .4);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  max-width: 84ch;
+}
+
+.actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* data tables (patches, provenance) */
+.tableWrap {
+  margin-top: 18px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font: 12px var(--font-mono);
+  min-width: 640px;
+}
+.tbl th {
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--ink-faint);
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--panel);
+  white-space: nowrap;
+}
+.tbl td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-dim);
+  vertical-align: middle;
+}
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl tr:target td { background: rgb(55 214 228 / 6%); }
+.tbl tr { scroll-margin-top: 112px; }
+.tbl td .cid { color: var(--ink); }
+.tbl a { color: var(--acc); }
+.tbl a:hover { text-decoration: underline; }
+.chips { display: inline-flex; gap: 5px; flex-wrap: wrap; }
+
+/* provenance ledger cells: single-line identifiers, ellipsis, copy (item 11) */
+.provSummary {
+  margin-top: 6px;
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  letter-spacing: 0.02em;
+}
+.nowrap { white-space: nowrap; }
+.idCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.idText {
+  display: inline-block;
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.hashText {
+  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-faint);
+}
+.copyBtn {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink-faint);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.copyBtn:hover {
+  color: var(--acc);
+  border-color: var(--line-strong);
+}
+.copyBtn[data-done] {
+  color: var(--good);
+  border-color: rgba(59, 217, 127, 0.5);
+}
+.viewAll {
+  margin-top: 12px;
+  font: 12px var(--font-mono);
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.viewAll:hover {
+  color: var(--acc);
+  border-color: var(--line-strong);
+}
+
+/* collapsible full scheme */
+.scheme {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elev);
+  overflow: hidden;
+}
+.scheme > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 15px 18px;
+  font: 13px var(--font-mono);
+  color: var(--ink-dim);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scheme > summary::-webkit-details-marker { display: none; }
+.scheme > summary::before {
+  content: "▸";
+  color: var(--ink-faint);
+  transition: transform .15s;
+}
+.scheme[open] > summary::before { transform: rotate(90deg); }
+.scheme > summary:hover { color: var(--ink); }
+/* clear expand row: action label leads, filename stays on one line (item 14) */
+.schemeLabel {
+  flex: 0 1 auto;
+  color: var(--ink);
+}
+.schemeFile {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink-faint);
+}
+.schemeBody {
+  padding: 4px 18px 22px;
+  border-top: 1px solid var(--line);
+}
+
+/* rendered markdown of the frozen scheme */
+.md {
+  color: var(--ink-dim);
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: break-word;
+}
+.md h1, .md h2, .md h3 {
+  color: var(--ink);
+  font-weight: 600;
+  margin: 26px 0 8px;
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+.md h1 { font-size: 20px; }
+.md h2 { font-size: 16px; }
+.md h3 { font-size: 14px; }
+.md p { margin: 8px 0; }
+.md ul, .md ol { margin: 8px 0 8px 22px; }
+.md li { margin: 4px 0; }
+.md code {
+  font-family: var(--font-mono);
+  color: var(--acc);
+  background: var(--panel);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: .92em;
+}
+.md pre {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.md pre code { background: none; padding: 0; color: var(--ink-dim); }
+.md table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  display: block;
+  overflow-x: auto;
+}
+.md th, .md td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  text-align: left;
+}
+.md th { color: var(--ink); background: var(--panel); }
+.md blockquote {
+  border-left: 2px solid var(--line-strong);
+  padding-left: 14px;
+  color: var(--ink-faint);
+  margin: 12px 0;
+}
+.md a { color: var(--acc); }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0; }
+
+.missing {
+  margin-top: 4px;
+  padding: 16px 18px;
+  color: var(--ink-faint);
+  font-size: 13px;
+}
+
+/* compact explicit empty state — a single affirmative line, not a faint void
+   floating in whitespace (item 15). */
+.emptyLine {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  color: var(--ink-dim);
+  font-size: 13px;
+  max-width: 84ch;
+}
+.emptyLine::before {
+  content: "✓";
+  flex: none;
+  color: var(--good);
+  font: 600 13px var(--font-mono);
+}

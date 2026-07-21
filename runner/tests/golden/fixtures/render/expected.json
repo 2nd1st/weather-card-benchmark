@@ -1,0 +1,30 @@
+{
+  "_doc": "Render golden anchor (scheme §11 / §2.2). The frozen main_pixel_hash is ENV-DEPENDENT: it is only valid under the captured env_digest (chromium build + platform + playwright + pinned flags). A run whose live env_digest differs MUST SKIP the strict-hash assertion (see GOLDEN-README). The double-render equality (determinism) and ready state-machine assertions hold env-independently.",
+  "card": "card.html",
+  "snapshot": {
+    "fetched_at": "2026-07-16T12:00:00Z"
+  },
+  "params": {
+    "lat": "52.52",
+    "lon": "13.405",
+    "name": "Berlin",
+    "date": "2026-07-16"
+  },
+  "launch_args": [
+    "--font-render-hinting=none",
+    "--disable-gpu",
+    "--force-color-profile=srgb",
+    "--hide-scrollbars"
+  ],
+  "main_pixel_hash": "03385915f86bbc8bb6ff546f0bf7d9769d3569a2d3b862ae7ad4650655136041",
+  "env": {
+    "env_digest": "6a2e650101c58961d763c8f38cca138e8f2bbad3d5dcc89afc87ffe41bff4cde",
+    "chromium_version": "149.0.7827.55",
+    "playwright_version": "1.61.0",
+    "os": {
+      "system": "Darwin",
+      "release": "25.4.0",
+      "machine": "arm64"
+    }
+  }
+}

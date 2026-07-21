@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "updated": "2026-07-18",
+  "note_en": "Observations from building the dataset. These are descriptive measurements, not quality judgments; every item links to the raw data that produced it. Single prompt family, small N — read as signals, not conclusions.",
+  "note_zh": "构建数据集过程中的观察。全部是描述性测量,不是质量评判;每条都指向产生它的原始数据。单一提示族、小 N——当信号看,别当结论。",
+  "findings": [
+    {
+      "id": "api-vs-harness-divergence",
+      "title_en": "The same model draws a different card through a harness",
+      "title_zh": "同一个模型,经 harness 画出的卡不一样",
+      "body_en": "For the same model at the same effort, cross-arm similarity between the plain api output and the CLI-harness output sits around 0.60-0.69 — far below the model's own within-arm self-consistency. The harness (system prompt, tool loop, file delivery) is a real variable of the drawing, not a transparent pipe.",
+      "body_zh": "同模型同 effort,api 直连输出与 CLI harness 输出之间的跨臂相似度只有 0.60-0.69,远低于各自臂内的自一致性。harness(系统提示、工具循环、文件交付)是作画的真实变量,不是透明管道。",
+      "figures": [{ "label_en": "cross-arm similarity", "label_zh": "跨臂相似度", "value": "0.60-0.69" }],
+      "refs": ["2026-07-18--official-gpt", "2026-07-17--dev-codex-oauth-gpt-5.4"],
+      "caveat_en": "Measured on the gpt family; N=4 per config.",
+      "caveat_zh": "在 gpt 家族上测得;每 config N=4。"
+    },
+    {
+      "id": "effort-scaling-claude",
+      "title_en": "Effort multiplies output size — up to 14x on fable-5",
+      "title_zh": "effort 放大输出体量——fable-5 最高 14 倍",
+      "body_en": "Through the Claude Code harness, raising effort from low to max grows the generated card by roughly 14x (fable-5), 12x (opus-4.8) and 9x (sonnet-5) in output volume. The knob visibly changes how much gets drawn.",
+      "body_zh": "经 Claude Code harness,effort 从 low 拉到 max,产出卡片体量约放大 14 倍(fable-5)、12 倍(opus-4.8)、9 倍(sonnet-5)。这个旋钮真实改变了画多少东西。",
+      "figures": [
+        { "label_en": "fable-5 low→max", "label_zh": "fable-5 low→max", "value": "~14x" },
+        { "label_en": "opus-4.8 low→max", "label_zh": "opus-4.8 low→max", "value": "~12x" },
+        { "label_en": "sonnet-5 low→max", "label_zh": "sonnet-5 low→max", "value": "~9x" }
+      ],
+      "refs": ["2026-07-17--dev-cc-fable5", "2026-07-17--dev-cc-opus48", "2026-07-17--dev-cc-sonnet5"],
+      "caveat_en": "Output volume, not quality; single prompt family.",
+      "caveat_zh": "是输出体量不是质量;单一提示族。"
+    },
+    {
+      "id": "effort-flat-models",
+      "title_en": "On some models the effort knob does nothing measurable",
+      "title_zh": "有些模型的 effort 旋钮拧了没反应",
+      "body_en": "haiku-4.5 (Claude Code harness) and grok-4.5 (official api) produce statistically indistinguishable output volume across every effort tier we ran. grok-4.3 on the same official api does respond to the knob.",
+      "body_zh": "haiku-4.5(Claude Code harness)和 grok-4.5(官方 api)在我们跑过的所有 effort 档位上输出体量无可辨差异。同一官方 api 上的 grok-4.3 对旋钮有响应。",
+      "figures": [{ "label_en": "flat models", "label_zh": "无响应模型", "value": "haiku-4.5, grok-4.5" }],
+      "refs": ["2026-07-17--dev-cc-haiku45", "2026-07-18--official-grok"],
+      "caveat_en": "Volume-based observation; N=4.",
+      "caveat_zh": "基于体量的观察;N=4。"
+    },
+    {
+      "id": "minimal-is-channel-mapping",
+      "title_en": "\"minimal\" effort does not exist on the official gpt api",
+      "title_zh": "官方 gpt api 不存在 \"minimal\" 档",
+      "body_en": "The official /responses endpoint returns 400 for effort=minimal on every gpt model we probed. Where a \"minimal\" tier appears through proxy or harness channels, it is mapped by the channel, not the model provider.",
+      "body_zh": "官方 /responses 对 effort=minimal 一律 400(我们探测过的每个 gpt 模型)。代理或 harness 通道里出现的 \"minimal\" 档是通道侧映射,不是官方档位。",
+      "figures": [{ "label_en": "official minimal", "label_zh": "官方 minimal", "value": "400 (all gpt models probed)" }],
+      "refs": ["2026-07-18--official-gpt"],
+      "caveat_en": "Probed by behavior (accept/reject), 2026-07-18.",
+      "caveat_zh": "行为探测(接受/拒绝)所得,2026-07-18。"
+    },
+    {
+      "id": "max-only-56-family",
+      "title_en": "\"max\" effort is a gpt-5.6-family exclusive",
+      "title_zh": "\"max\" 档是 gpt-5.6 系独占",
+      "body_en": "Effort=max is accepted by gpt-5.6-sol / terra / luna and rejected (400) by every earlier gpt model on the official api.",
+      "body_zh": "官方 api 上 effort=max 仅 gpt-5.6-sol/terra/luna 接受,更早的 gpt 模型全部 400。",
+      "figures": [{ "label_en": "max acceptors", "label_zh": "接受 max 的模型", "value": "gpt-5.6-sol / terra / luna" }],
+      "refs": ["2026-07-18--official-gpt"],
+      "caveat_en": "Probed by behavior, 2026-07-18.",
+      "caveat_zh": "行为探测所得,2026-07-18。"
+    },
+    {
+      "id": "official-vs-proxy-volume",
+      "title_en": "Official api outputs run 5-8x larger than the same model via a proxy channel",
+      "title_zh": "官方 api 输出比同模型代理通道大 5-8 倍",
+      "body_en": "For the same gpt model and effort, the official api produced 5-8x more card HTML than the reverse-proxy dev channel. Channel identity materially changes what you get — one reason this dataset separates channel grades.",
+      "body_zh": "同一 gpt 模型同一 effort,官方 api 产出的卡片 HTML 是反代 dev 通道的 5-8 倍。通道本身实质性改变产出——这是本数据集区分通道等级的原因之一。",
+      "figures": [{ "label_en": "volume ratio", "label_zh": "体量比", "value": "5-8x" }],
+      "refs": ["2026-07-18--official-gpt"],
+      "caveat_en": "Dev-channel data is not published; the comparison informed our channel-grade policy.",
+      "caveat_zh": "dev 通道数据不发布;该对比塑造了通道分级政策。"
+    },
+    {
+      "id": "agentic-harness-axis",
+      "title_en": "Working inside an agentic harness is its own capability axis",
+      "title_zh": "在 agentic harness 里干活是一条独立的能力轴",
+      "body_en": "Several previous-generation models that answer fine over the plain api fail outright (server 500) when driven through the opencode agentic harness on the same subscription channel. Tool-loop operation is not implied by api competence.",
+      "body_zh": "多个上一代模型 api 直连正常作答,但在同一订阅通道的 opencode agentic harness 里直接 500。会答 api 不等于会在工具循环里干活。",
+      "figures": [{ "label_en": "pattern", "label_zh": "现象", "value": "api ok / harness 500" }],
+      "refs": ["2026-07-18--dev-opencode-cli-extra", "2026-07-18--dev-go-extra"],
+      "caveat_en": "Gateway-side effect cannot be fully excluded.",
+      "caveat_zh": "无法完全排除网关侧因素。"
+    },
+    {
+      "id": "k3-variant-thinking",
+      "title_en": "kimi-k3 spends ~10x thinking on the qualitative prompt variant",
+      "title_zh": "kimi-k3 在质性提示变体上思考量 ~10 倍",
+      "body_en": "On the P-q (qualitative) prompt variant, kimi-k3's reasoning volume ran about 10x its P-min behavior — the largest variant sensitivity we observed.",
+      "body_zh": "在 P-q(质性)提示变体上,kimi-k3 的思考量约为 P-min 的 10 倍——我们观察到的最大变体敏感度。",
+      "figures": [{ "label_en": "P-q vs P-min thinking", "label_zh": "P-q vs P-min 思考量", "value": "~10x" }],
+      "refs": ["2026-07-17--dev-expanded"],
+      "caveat_en": "Single model observation on a dev-grade channel; to be re-verified on a qualified channel.",
+      "caveat_zh": "单模型、dev 级通道上的观察;待合格通道复核。"
+    }
+  ]
+}

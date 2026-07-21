@@ -1,0 +1,36 @@
+# dev-qoder-cli.yaml — Qoder CLI harness 臂(阿里官方,qwen 第一方纯正)。
+# qodercli(v1.0.48,Claude Code 兼容 fork,iFlow CLI 官方继任)headless
+# `-p --dangerously-skip-permissions`,登录态直用(全局 config 已确认干净,无需隔离)。
+# file-only delivery(卡片写 cwd,stdout 只有总结)。--reasoning-effort 对 qwen
+# 静默忽略(qwen 用 thinking_budget 非 level),故只跑默认档不展开 effort。
+# provider_model_id = Qoder 侧驼峰模型名。
+version: 1
+N: 2
+
+transport:
+  base_url: local-cli
+  descriptor: qoder-cli-stock-login-alibaba
+  proxy: none
+
+configs:
+  - config_id: qwen3.8-max-preview--cli--qoder--dev
+    family: qwen
+    model_id: qwen3.8-max-preview
+    provider_model_id: Qwen3.8-Max-Preview
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: qoder
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }
+
+  - config_id: qwen3.7-max--cli--qoder--dev
+    family: qwen
+    model_id: qwen3.7-max
+    provider_model_id: Qwen3.7-Max
+    effort: null
+    effort_param: null
+    protocol: cli
+    harness: qoder
+    billing: plan
+    auth: { method: oauth-login, credential_ref: WCB_NONE }

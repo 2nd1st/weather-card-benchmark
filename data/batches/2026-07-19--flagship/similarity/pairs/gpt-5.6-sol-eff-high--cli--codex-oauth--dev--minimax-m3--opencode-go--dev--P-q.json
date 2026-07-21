@@ -1,0 +1,82 @@
+{
+ "batch_id": "2026-07-19--unified",
+ "channels": [
+  "v-phash",
+  "v-dhash",
+  "v-color",
+  "v-palette",
+  "v-layout",
+  "v-edge",
+  "v-ssim",
+  "c-shingle",
+  "c-winnow",
+  "c-feature",
+  "c-ast-js",
+  "c-css-prop",
+  "c-ncd",
+  "d-geom",
+  "d-text",
+  "d-pqgram",
+  "d-tagpath"
+ ],
+ "config_a": "gpt-5.6-sol-eff-high--cli--codex-oauth--dev",
+ "config_b": "minimax-m3--opencode-go--dev",
+ "kind": "cross",
+ "pairs": [
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.8021201413427561,
+    "v_ssim_raw": 0.23881349373470476
+   },
+   "s": {
+    "c-ast-js": 0.9638170205288596,
+    "c-css-prop": 0.8825109389057854,
+    "c-feature": 0.410958904109589,
+    "c-ncd": 0.1978798586572439,
+    "c-shingle": 0.21666785180971343,
+    "c-winnow": 0.18427518427518427,
+    "d-geom": 0.779705896800002,
+    "d-pqgram": 0.3237250554323725,
+    "d-tagpath": 0.10256410256410256,
+    "d-text": 0.05555555555555555,
+    "v-color": 0.16743877673412097,
+    "v-dhash": 0.56640625,
+    "v-edge": 0.8496688848788398,
+    "v-layout": 0.8949976489494473,
+    "v-palette": 0.022030476011541244,
+    "v-phash": 0.53125,
+    "v-ssim": 0.6194067468673524
+   },
+   "slot_a": 0,
+   "slot_b": 1
+  },
+  {
+   "diagnostics": {
+    "c_ncd_ncd_sym": 0.8156873614190687,
+    "v_ssim_raw": 0.5954897188659946
+   },
+   "s": {
+    "c-ast-js": 0.9667160802044735,
+    "c-css-prop": 0.8612191620787428,
+    "c-feature": 0.44666666666666666,
+    "c-ncd": 0.18431263858093128,
+    "c-shingle": 0.2146684527796383,
+    "c-winnow": 0.1891891891891892,
+    "d-geom": 0.7814081282198043,
+    "d-pqgram": 0.35714285714285715,
+    "d-tagpath": 0.10256410256410256,
+    "d-text": 0.0,
+    "v-color": 0.7546468899954284,
+    "v-dhash": 0.6015625,
+    "v-edge": 0.8182218512630645,
+    "v-layout": 0.8947575748025335,
+    "v-palette": 0.1518472529340528,
+    "v-phash": 0.65625,
+    "v-ssim": 0.7977448594329972
+   },
+   "slot_a": 1,
+   "slot_b": 1
+  }
+ ],
+ "variant": "P-q"
+}

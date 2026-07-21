@@ -1,0 +1,239 @@
+{
+  "fidelity": {
+    "condition": {
+      "reason": null,
+      "state": "match"
+    },
+    "date": {
+      "reason": null,
+      "state": "match"
+    },
+    "extractor_version": "fidelity-extractor-v1+Berlin-2026-07-15",
+    "hourly": {
+      "coverage": null,
+      "points": [
+        {
+          "hour": 0,
+          "state": "not-shown"
+        },
+        {
+          "hour": 1,
+          "state": "not-shown"
+        },
+        {
+          "hour": 2,
+          "state": "not-shown"
+        },
+        {
+          "hour": 3,
+          "state": "not-shown"
+        },
+        {
+          "hour": 4,
+          "state": "not-shown"
+        },
+        {
+          "hour": 5,
+          "state": "not-shown"
+        },
+        {
+          "hour": 6,
+          "state": "not-shown"
+        },
+        {
+          "hour": 7,
+          "state": "not-shown"
+        },
+        {
+          "hour": 8,
+          "state": "not-shown"
+        },
+        {
+          "hour": 9,
+          "state": "not-shown"
+        },
+        {
+          "hour": 10,
+          "state": "not-shown"
+        },
+        {
+          "hour": 11,
+          "state": "not-shown"
+        },
+        {
+          "hour": 12,
+          "state": "not-shown"
+        },
+        {
+          "hour": 13,
+          "state": "not-shown"
+        },
+        {
+          "hour": 14,
+          "state": "not-shown"
+        },
+        {
+          "hour": 15,
+          "state": "not-shown"
+        },
+        {
+          "hour": 16,
+          "state": "not-shown"
+        },
+        {
+          "hour": 17,
+          "state": "not-shown"
+        },
+        {
+          "hour": 18,
+          "state": "not-shown"
+        },
+        {
+          "hour": 19,
+          "state": "not-shown"
+        },
+        {
+          "hour": 20,
+          "state": "not-shown"
+        },
+        {
+          "hour": 21,
+          "state": "not-shown"
+        },
+        {
+          "hour": 22,
+          "state": "not-shown"
+        },
+        {
+          "hour": 23,
+          "state": "not-shown"
+        }
+      ],
+      "points_match": 0,
+      "points_mismatch": 0,
+      "points_not_shown": 24,
+      "reason": "daily-canonical-incomplete",
+      "state": "ambiguous"
+    },
+    "max": {
+      "display_decimals": 0,
+      "reason": "max-equals-min",
+      "state": "ambiguous",
+      "value": "17"
+    },
+    "min": {
+      "display_decimals": 0,
+      "reason": "max-equals-min",
+      "state": "ambiguous",
+      "value": "17"
+    },
+    "name": {
+      "reason": null,
+      "state": "match"
+    },
+    "request_side": {
+      "status": "match",
+      "violations": []
+    }
+  },
+  "flags": [],
+  "l1": {
+    "bytes": {
+      "css": 2783,
+      "html": 311,
+      "js": 3943,
+      "total": 7037
+    },
+    "palette_top8": [
+      {
+        "bin_index": 20,
+        "lab": {
+          "L": 12.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.61083984375
+      },
+      {
+        "bin_index": 56,
+        "lab": {
+          "L": 37.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.3818359375
+      },
+      {
+        "bin_index": 92,
+        "lab": {
+          "L": 62.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.00517578125
+      },
+      {
+        "bin_index": 128,
+        "lab": {
+          "L": 87.5,
+          "a": 18.333333333333314,
+          "b": -18.333333333333343
+        },
+        "weight": 0.00185546875
+      },
+      {
+        "bin_index": 93,
+        "lab": {
+          "L": 62.5,
+          "a": 18.333333333333314,
+          "b": 18.333333333333314
+        },
+        "weight": 9.765625e-05
+      },
+      {
+        "bin_index": 122,
+        "lab": {
+          "L": 87.5,
+          "a": -18.333333333333343,
+          "b": -18.333333333333343
+        },
+        "weight": 9.765625e-05
+      },
+      {
+        "bin_index": 129,
+        "lab": {
+          "L": 87.5,
+          "a": 18.333333333333314,
+          "b": 18.333333333333314
+        },
+        "weight": 9.765625e-05
+      }
+    ],
+    "structure": {
+      "css_rules": 26,
+      "dom_depth": 4,
+      "dom_nodes": 10,
+      "js_bytes_present": true
+    },
+    "visual": {
+      "brightness": 52.8280763671875,
+      "colorfulness": 19.475246719446663,
+      "contrast": 17.49355552286249,
+      "frame_change": {
+        "max": 0.0,
+        "median": 0.0
+      },
+      "whitespace_ratio": 0.83017578125
+    }
+  },
+  "slot_index": 1,
+  "state": "valid",
+  "telemetry": {
+    "completion_tokens": 2702,
+    "cost_usd": null,
+    "prompt_tokens": 558,
+    "request_id": null,
+    "total_tokens": 3260,
+    "wall_ms": 40020
+  }
+}

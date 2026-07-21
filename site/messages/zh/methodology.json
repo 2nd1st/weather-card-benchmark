@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "方法 — weather-card-benchmark",
+    "description": "本站如何测量相似度、如何统计社区投票、补丁政策、每次测量会话的溯源,以及零信任的贡献路径。"
+  },
+  "title": "方法",
+  "lead": "同一条提示、每个模型、同一份天气 fixture。这里讲清楚数字是怎么算出来的、社区投票怎么统计,以及补丁是什么、不是什么。",
+  "onThisPage": "本页目录",
+  "prompt": {
+    "title": "任务本身",
+    "intro": "本站每一张卡片都由这段文本生成 —— 没有 system prompt、没有追问、没有带提示的重试。两个变体对每个模型完全一致。",
+    "heading": "prompt(原文)",
+    "download": "下载",
+    "note": "P-min 是纯任务;P-q 多一句质量要求。每份 manifest 都钉住了下面这些字节的 sha256。"
+  },
+  "declarations": [
+    "相似度指标是测量,不是质量评分。下面这些通道量化的是两张卡片有多像——我们不会把它换算成谁更强的判断。",
+    "社区投票排名是一种 UI 偏好——大家更喜欢看哪张卡片。票数是公开的;它不是模型能力的 benchmark。",
+    "全过程确定且可复现。每个批次都锚定在一个你能自行重算的 manifest_hash 上;被测量的像素,就是算法读到的那些像素。"
+  ],
+  "measure": {
+    "title": "相似度是怎么测的",
+    "body": "每个模型从同一条提示、针对同一份冻结的天气快照,画出一张单文件 HTML 天气卡;在钉版 Chromium、固定视口、冻结虚拟时钟下渲染。相似度只在有效产出之间、逐 pair、逐通道计算——没有合成总分。管道分四层:",
+    "layers": [
+      {
+        "k": "L1",
+        "t": "单卡描述量",
+        "d": "逐卡标量:字节与 DOM/CSS/JS 结构、视觉量(色彩丰富度、亮度、对比度、留白、帧变化),以及固定网格 Lab 色板;外加一套版本化的、对照快照的数据保真判定。"
+      },
+      {
+        "k": "L2",
+        "t": "相似度通道",
+        "d": "视觉(phash/dhash/color/palette/layout/edge/ssim)、代码(shingle/winnow/feature/ast-js/css-prop)、DOM(geom/text/pqgram)通道——各自是独立、冻结的定义。不计算、也不展示任何合成视图;空 pair 保持 null。"
+      },
+      {
+        "k": "L3",
+        "t": "统计",
+        "d": "只做描述统计,N 很小(3–5 个 slot)。有效 pair 上的均值与 IQR、自一致性、LORO 敏感度,以及一项针对提示变体敏感度的随机化配对检验。区间都是描述性的,不是推断。"
+      },
+      {
+        "k": "L4",
+        "t": "行为探针",
+        "d": "契约层的 pass/indeterminate/fail(网络管控、错误处理),外加契约外的 observed/not-observed 记录(加载中间态、console 错误、无 JS 兜底)。"
+      }
+    ],
+    "reproNote": "每个批次都把两个 prompt hash、天气快照 hash、城市/日期集、渲染环境、管道 commit 冻结进一份 manifest,其 SHA-256 即 manifest_hash。重算它即可验证——可复现正是本项目的核心。"
+  },
+  "patch": {
+    "title": "补丁政策",
+    "intro": "一张画坏的模型卡可以被手工修到能渲染,并附一条诚实、可见的说明;原始版本始终保留、并默认展示。四条不变量,无一例外:",
+    "invariants": [
+      "补丁绝不改变 slot 状态、validCount 或任何覆盖率状态。坏的 slot 在每一处计数里都仍然是坏的;补丁只是额外提供一个可查看的修复渲染。",
+      "所有指标——相似度、保真、shot.webp、遥测——都来自原始产出。卡片页明示:\"指标指向原始产出\"。",
+      "竞技场以及一切投票 / 偏好界面只呈现原始 card.html。投票行带有 patched_served(恒为 0;审计列)。",
+      "category 枚举是封闭的;硬规则是\"补丁只能让卡片渲染,绝不改善其内容或设计\"。存档的 unified diff 让这一点可审计。"
+    ],
+    "listTitle": "已应用的补丁",
+    "listIntro": "数据根目录里的每一个补丁都列在这里——config、类别,以及指向精确的 原始→补丁 diff 的链接——整层在一页上即可审计。",
+    "empty": "尚未应用任何补丁。每张卡片都严格按模型的原始产出呈现。",
+    "cols": {
+      "config": "config",
+      "variant": "slot",
+      "category": "类别",
+      "reason": "原因",
+      "diff": "diff"
+    }
+  },
+  "voting": {
+    "title": "票是怎么统计的",
+    "framing": "社区 UI 偏好——大家更喜欢看哪张卡片;不是能力度量。",
+    "rules": [
+      "Bradley–Terry(简单的迭代 MM 拟合)只在 pair 投票上运行,逐 angle × variant。",
+      "平局(tie)各计半票给两边。",
+      "both_bad 不进入 Bradley–Terry(否则它会变成一个压制杠杆),而是作为每个 config 的 bothBadRate 单独报告——它本身就是诚实的社区数据。",
+      "Gate 票(source=gate——为解锁而被迫投的票)作为质量最低的一批,从默认聚合中排除;它们仍保留在 CSV 导出里并被标注。竞技场与分享票计入。",
+      "prefRate 带 Wilson 置信区间;maxSingleVoterShare 予以展示,用于集中度透明(给刷票行为晒太阳)。",
+      "当一个 config 的票数少于 20 或独立投票者少于 8 时,标记为 insufficient——这类行不带任何数字,也不在任何坐标轴上占位。"
+    ],
+    "gameability": "无认证、以 localStorage 身份投出的网页票——极易被操纵;当作社区信号看,别当测量。",
+    "blind": "投票是盲投:在票被记录之前,身份信息绝不到达浏览器(不可解码的一次性 token、只发原始 HTML、只用 qualified 级卡片)。",
+    "exportLabel": "下载完整投票 CSV"
+  },
+  "contribute": {
+    "title": "贡献跑批——零信任路径",
+    "intro": "你可以提供一个 API key,只用于你挑选的那些 cell,来帮忙补齐覆盖缺口。key 的处理规则,原文照录:",
+    "rules": [
+      "你的 API key 只留在内存里——不持久化、不记日志。",
+      "它只用于你选定的那些跑批,用完即弃。",
+      "runner 是开源的;它到底做了什么你可以逐行读。",
+      "零信任替代方案:在本地跑批并提一个 pull request——key 永不离开你的机器。"
+    ],
+    "review": "贡献的跑批会立即带着\"unreviewed community\"徽章进入画廊,但在维护者审核之前绝不进入竞技场投票池。贡献产出会提交到 community/<jobId> 分支,未经人工审核绝不推向默认分支。",
+    "linkLabel": "打开贡献页"
+  },
+  "provenance": {
+    "title": "溯源——测量会话",
+    "intro": "每个批次是针对一份 fixture 的、一次冻结、只追加的跑批。批次现在只是溯源,不再是浏览画廊的方式。相似度数字只在同一次会话内可比——同一 fixture、同一快照。",
+    "cols": {
+      "session": "会话",
+      "date": "日期",
+      "configs": "config 数",
+      "variants": "变体",
+      "hash": "manifest_hash"
+    },
+    "summary": "{n, plural, other {# 次测量会话}},按时间倒序。",
+    "viewAll": "查看全部 {n} 次会话",
+    "viewLess": "收起",
+    "copy": "复制",
+    "copied": "已复制",
+    "empty": "index.json 里没有记录任何测量会话。"
+  },
+  "scheme": {
+    "title": "完整对比方案",
+    "note": "冻结的技术参考——试验期间撰写的确定性相似度方案。本站的呈现遵循上方的定位。",
+    "summary": "展开完整对比方案",
+    "missing": "本次部署未打包完整技术方案;上方的摘要与分层说明即本站侧的权威说明。"
+  },
+  "i18n": {
+    "title": "关于语言",
+    "body": "本站提供英文与简体中文。模型 id、effort token、arm 名、grade 标签、通道名、config slug 在两种语言下都保持英文——它们是仪表标签而非行文,给它们套上中文会破坏 mono 仪表观感。其余内容按语言各自撰写,而非机器翻译,数字也按当前语言格式化。"
+  }
+}

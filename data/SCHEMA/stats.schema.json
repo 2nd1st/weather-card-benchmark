@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weathercard.secondfirst.ai/schema/stats.schema.json",
+  "title": "stats.json",
+  "description": "Per-batch L3 statistics output (scheme §5). Two parts: (1) DESCRIPTIVE summaries over the pair sets (self = C(m,2) unordered; cross = A×B cartesian, not doubled) — per channel: mean, median, IQR, n_eff, plus self-consistency, separation(A), distinctiveness(A), and the LORO leave-one-run-out sensitivity (min–max + valid-drop count, the ONLY sensitivity量; bootstrap bands deleted). (2) The SINGLE inferential procedure permitted: the P-min/P-q quality-instruction randomization test — per-config exploratory (exact Ω_c enumeration, granularity 1/|Ω_c|) and the pooled MAIN test (B_perm=10000, p=(b+1)/(B_perm+1), per-hypothesis seed_h stream, strict null propagation → p=null, Holm with null假设 excluded from ranking but the FULL pre-registered family size k as step-down denominator). DESCRIPTIVE-ONLY: this schema carries statistics and p-values, NO inferential CLAIM fields (no significant/reject/winner/effect-size interpretation — banned by scheme §0/§2 no-scoring + lint). Diagnostics c-ncd/d-tagpath are EXCLUDED from all statistics and hypothesis families (scheme §4), so only the 15 formal channels appear here. JUDGMENT CALL (flagged): scheme §5 fixes the statistics byte-exactly but not the JSON shape; the layout is this contract's design. This file ENTERS the §8 verify rehash → runner fixes one canonical float serialization (CONTRACT-NOTES §6/§8). schema_version 1.0.0; file SHA256 + version frozen into lock (scheme §11).",
+  "$comment": "schema_version: 1.0.0. Determinism (FLAGGED): numbers typed as JSON numbers for readability but the file feeds a verify rehash — runner fixes one canonical serialization (CONTRACT-NOTES §8). Seed domains: per-hypothesis seed_h = uint64_le(SHA256(b\"perm\\0\"‖NFC(hypothesis_id))[0:8]) XOR 20260716 (CONTRACT-NOTES §6); zero stream sharing. Holm family + hypothesis IDs are frozen in the lock BEFORE any p is emitted (scheme §5/§11).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "configs", "formal_channels", "descriptive", "randomization_test"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1, "description": "Owning batch id."},
+    "configs": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "description": "Config ids in the manifest's PERSISTED array order (§4); every use site takes this order verbatim."
+    },
+    "formal_channels": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 15,
+      "maxItems": 15,
+      "description": "The 15 FORMAL channels (scheme §4). The 2 diagnostics c-ncd / d-tagpath are permanently excluded from statistics and never appear in this file.",
+      "items": {"$ref": "#/$defs/formalChannel"}
+    },
+    "descriptive": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 2,
+      "description": "Descriptive statistics, one entry per prompt variant present (P-min / P-q). Within-variant (scheme §9 default analysis).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["variant", "self_consistency", "cross", "separation", "distinctiveness"],
+        "properties": {
+          "variant": {"type": "string", "enum": ["P-min", "P-q"]},
+          "self_consistency": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "Per (config, formal channel): the self pair set C(m,2) descriptive stats. self-consistency := mean of non-null S on the self pair set (scheme §5). Eligibility n_eff≥4; m=1 → self=null; m=0 → absent (config omitted). (config_id,channel) composite uniqueness runner-enforced.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["config_id", "channel", "self_consistency", "mean", "median", "iqr", "n_eff", "m", "loro", "eligible"],
+              "properties": {
+                "config_id": {"type": "string", "minLength": 1},
+                "channel": {"$ref": "#/$defs/formalChannel"},
+                "self_consistency": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Mean of non-null self-pair S (scheme §5 self-consistency); null when ineligible."},
+                "mean": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Arithmetic mean of non-null S on the self pair set (== self_consistency; mirrored for symmetry with cross)."},
+                "median": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Median of non-null S (the /matrix diagonal display value, DESIGN §5); null when ineligible."},
+                "iqr": {"$ref": "#/$defs/iqr"},
+                "n_eff": {"type": "integer", "minimum": 0, "description": "Count of non-null S on the self pair set (scheme §5)."},
+                "m": {"type": "integer", "minimum": 0, "description": "count(valid) for this config."},
+                "loro": {"$ref": "#/$defs/loro"},
+                "eligible": {"type": "boolean", "description": "n_eff≥4 (scheme §5 summary eligibility, self)."}
+              }
+            }
+          },
+          "cross": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "Per (config_a, config_b, formal channel) for a<b in persisted order: the cross pair set A×B descriptive stats (mean = arithmetic mean of non-null S; scheme §5). Eligibility n_eff≥4 ∧ m_a≥2 ∧ m_b≥2. (config_a,config_b,channel) composite uniqueness runner-enforced.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["config_a", "config_b", "channel", "mean", "median", "iqr", "n_eff", "m_a", "m_b", "loro", "eligible"],
+              "properties": {
+                "config_a": {"type": "string", "minLength": 1, "description": "Precedes config_b in persisted config order (§4)."},
+                "config_b": {"type": "string", "minLength": 1},
+                "channel": {"$ref": "#/$defs/formalChannel"},
+                "mean": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+                "median": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+                "iqr": {"$ref": "#/$defs/iqr"},
+                "n_eff": {"type": "integer", "minimum": 0},
+                "m_a": {"type": "integer", "minimum": 0},
+                "m_b": {"type": "integer", "minimum": 0},
+                "loro": {"$ref": "#/$defs/loro"},
+                "eligible": {"type": "boolean", "description": "n_eff≥4 ∧ m_a≥2 ∧ m_b≥2 (scheme §5 cross eligibility)."}
+              }
+            }
+          },
+          "separation": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "separation(A) per (config, formal channel) = mean(intra A self) − mean over B of sim(A,B) (scheme §5). B set = every OTHER pre-registered config meeting cross eligibility, equal-weight. Eligibility = self n_eff≥4 ∧ B set non-empty; coverage = |B| / (pre-registered config total − 1), denom 0 → null, coverage <80% → value null. exploratory (folded by default, §7).",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["config_id", "channel", "value", "coverage", "b_set_size", "registered_total"],
+              "properties": {
+                "config_id": {"type": "string", "minLength": 1},
+                "channel": {"$ref": "#/$defs/formalChannel"},
+                "value": {"type": ["number", "null"], "description": "separation(A); null when ineligible or coverage<80% (scheme §5). Not bounded to [0,1] (it is a difference of means)."},
+                "coverage": {"type": ["string", "null"], "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "|B|/(registered−1) as a canonical decimal string, or null when denom 0. Value forced null when this is <0.8."},
+                "b_set_size": {"type": "integer", "minimum": 0, "description": "|B set| — count of eligible other configs."},
+                "registered_total": {"type": "integer", "minimum": 1, "description": "Total pre-registered config count (denominator base = this − 1)."}
+              }
+            }
+          },
+          "distinctiveness": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "distinctiveness(A) per (config, formal channel) = 1 − max over B of sim(A,B) (scheme §5). B set / eligibility / coverage / null rules identical to separation. Carries the nearest-neighbor config; ties → NFC UTF-8 byte-order smallest config_id. exploratory (folded).",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["config_id", "channel", "value", "coverage", "nearest_config_id"],
+              "properties": {
+                "config_id": {"type": "string", "minLength": 1},
+                "channel": {"$ref": "#/$defs/formalChannel"},
+                "value": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "1 − max_B sim(A,B); null when ineligible/coverage<80%."},
+                "coverage": {"type": ["string", "null"], "pattern": "^(0|-?(0\\.[0-9]*[1-9]|[1-9][0-9]*(\\.[0-9]*[1-9])?))$", "description": "Same as separation.coverage."},
+                "nearest_config_id": {"type": ["string", "null"], "description": "argmax_B sim(A,B); tie → NFC UTF-8 byte-order smallest config_id (scheme §5). null when no eligible value."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "randomization_test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B_perm", "p_formula", "holm_family", "family_size_k", "per_config", "pooled"],
+      "description": "The single §5 quality-instruction sensitivity test (P-min vs P-q). Unified statistic T_{config,h}: channel h → self_consistency_q − self_consistency_min; L1-scalar h → mean_q − mean_min (either side ineligible / no valid run → null). Re-randomization draws a fresh assignment in Ω_c (§1.2 encoding), re-labels the outcome by (block, time-position), recomputes T from scratch.",
+      "properties": {
+        "B_perm": {"type": "integer", "const": 10000, "description": "Pooled Monte-Carlo permutation count (scheme §5 / appendix A)."},
+        "p_formula": {"type": "string", "const": "(b+1)/(B_perm+1)", "description": "Pooled p-value formula (scheme §5)."},
+        "holm_family": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "description": "The pre-registered Holm family = full list of pooled hypothesis_ids, frozen into the lock BEFORE any p is emitted (scheme §5/§11). Its length is the step-down denominator k."
+        },
+        "family_size_k": {"type": "integer", "minimum": 1, "description": "k = |holm_family| = FULL pre-registered family size. Used as the Holm step-down denominator EVEN when some hypotheses have p=null (null假设 excluded from ranking but k stays full — scheme §5 conservative)."},
+        "per_config": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Per-config EXPLORATORY test (scheme §5): exact full enumeration of Ω_c (N=5 → |Ω_c|=20, no MC). Two-sided p = #{ω: |T(ω)|≥|T_obs|}/|Ω_c| (observed included in Ω). p=null if T_obs=null OR any ω gives T(ω)=null. Granularity 1/|Ω_c| annotated. exploratory only (scheme §10).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hypothesis_id", "config_id", "target", "T_obs", "p", "omega_size", "p_granularity"],
+            "properties": {
+              "hypothesis_id": {"type": "string", "minLength": 1, "description": "Locked hypothesis id (level × config × h)."},
+              "config_id": {"type": "string", "minLength": 1},
+              "target": {"$ref": "#/$defs/hypothesisTarget"},
+              "T_obs": {"type": ["number", "null"], "description": "Observed T_{config,h} (q − min). null when either variant side is ineligible/no-valid-run."},
+              "p": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Two-sided exploratory p; null per the null-propagation rule."},
+              "omega_size": {"type": "integer", "enum": [6, 20], "description": "|Ω_c|. For N∈{3,4,5}: N=3→6, N=4→6, N=5→20. Tightened to enum per DECISIONS-M0.5 §1 (catches miscomputed |Ω_c|; never rejects valid data)."},
+              "p_granularity": {"type": "string", "pattern": "^1/[1-9][0-9]*$", "description": "Reported granularity 1/|Ω_c| (e.g. '1/20' for N=5), scheme §5 '如实标注'."}
+            }
+          }
+        },
+        "pooled": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Pooled MAIN test, one entry per pooled hypothesis (scheme §5). mask_h = the frozen complete config_id list (missing/failed configs stay in the mask under strict null propagation). Strict null pre-check: exhaustively compute T_{config,h}(ω) over mask × all ω∈Ω_c BEFORE sampling; ANY null → p=null, no sampling. Otherwise B_perm=10000 draws, T_pool(ω)=equal-weight mean over the mask, b=Σ 1[|T_pool(ω_j)|≥|T_pool(ω_obs)|], p=(b+1)/(B_perm+1).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hypothesis_id", "target", "mask_h", "seed_h", "omega_size", "precheck_null", "T_pool_obs", "b", "p", "holm"],
+            "properties": {
+              "hypothesis_id": {"type": "string", "minLength": 1, "description": "Locked pooled hypothesis id; MUST be in holm_family."},
+              "target": {"$ref": "#/$defs/hypothesisTarget"},
+              "mask_h": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["config_ids", "hash"],
+                "description": "Frozen pooled mask (scheme §5/§11): the complete config_id list (build-time NFC UTF-8 byte order, persisted; failed configs NOT removed) + its list hash.",
+                "properties": {
+                  "config_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}, "description": "Persisted config order (§4); use sites never re-sort."},
+                  "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "Lowercase-hex SHA256 of the config_id array's canonical JSON (JCS), same discipline as manifest mask_h (CONTRACT-NOTES §4)."}
+                }
+              },
+              "seed_h": {"type": "integer", "minimum": 0, "description": "uint64 per-hypothesis PRNG seed = uint64_le(SHA256(b'perm\\0'‖NFC(hypothesis_id))[0:8]) XOR 20260716 (scheme §5 / appendix A). Independent stream, zero sharing."},
+              "omega_size": {"type": "integer", "enum": [6, 20], "description": "|Ω_c| for the batch N (N=3/4→6, N=5→20). Tightened to enum per DECISIONS-M0.5 §1."},
+              "precheck_null": {"type": "boolean", "description": "true iff the exhaustive mask×Ω pre-check found any null T → sampling skipped, p=null (scheme §5 v11 穷举预检)."},
+              "T_pool_obs": {"type": ["number", "null"], "description": "Observed pooled statistic T_pool(ω_obs) = equal-weight mean of T_{config,h}(ω_obs) over the mask; null iff precheck_null (⇔ any T_obs undefined)."},
+              "b": {"type": ["integer", "null"], "minimum": 0, "maximum": 10000, "description": "Σ_j 1[|T_pool(ω_j)|≥|T_pool(ω_obs)|] over B_perm draws; null when p=null (not sampled)."},
+              "p": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "(b+1)/(B_perm+1), or null under strict null propagation."},
+              "holm": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["rank", "adjusted_p", "excluded_null"],
+                "description": "Holm step-down result. null假设 (p=null) are EXCLUDED from the ordering but the denominator stays the FULL pre-registered family size k (scheme §5, conservative). NO significance/reject verdict is stored (descriptive-only).",
+                "properties": {
+                  "rank": {"type": ["integer", "null"], "minimum": 1, "description": "1-based ascending-p rank among NON-null hypotheses, or null when this hypothesis is excluded (p=null)."},
+                  "adjusted_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Holm-adjusted p (step-down with denominator k − rank + 1, cumulative max), or null when excluded. A p-value, not a claim."},
+                  "excluded_null": {"type": "boolean", "description": "true iff p=null so the hypothesis was excluded from ranking (k unchanged)."}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "formalChannel": {
+      "type": "string",
+      "enum": [
+        "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
+        "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop",
+        "d-geom", "d-text", "d-pqgram"
+      ],
+      "description": "The 15 formal channels (scheme §4). Diagnostics c-ncd / d-tagpath are excluded from all statistics."
+    },
+    "iqr": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["p25", "p75"],
+      "description": "Inter-quartile range via linear interpolation, IQR=P75−P25 (appendix A). null when ineligible.",
+      "properties": {
+        "p25": {"type": "number", "minimum": 0, "maximum": 1},
+        "p75": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "loro": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["min", "max", "n_drops"],
+      "description": "Leave-one-run-out sensitivity (scheme §5): the ONLY sensitivity量 (bootstrap bands deleted). A valid drop needs self remaining run≥2 / cross both sides non-empty AND remaining non-null pair≥1; after dropping, n_eff≥4 is NOT re-checked. Reports the min–max of the recomputed statistic across valid drops + the valid-drop count. null when ineligible or fewer than 1 valid drop.",
+      "properties": {
+        "min": {"type": "number", "minimum": 0, "maximum": 1, "description": "Minimum recomputed statistic across valid drops."},
+        "max": {"type": "number", "minimum": 0, "maximum": 1, "description": "Maximum recomputed statistic across valid drops."},
+        "n_drops": {"type": "integer", "minimum": 1, "description": "Number of valid leave-one-out drops."}
+      }
+    },
+    "hypothesisTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "channel", "l1_scalar"],
+      "description": "The quantity h the test statistic is built on: a formal channel (T = self_consistency_q − self_consistency_min) OR a version-locked L1 scalar (T = mean_q − mean_min). Exactly one of channel / l1_scalar is non-null, per kind.",
+      "properties": {
+        "kind": {"type": "string", "enum": ["channel", "l1-scalar"]},
+        "channel": {"oneOf": [{"$ref": "#/$defs/formalChannel"}, {"type": "null"}], "description": "Formal channel when kind=channel, else null."},
+        "l1_scalar": {"type": ["string", "null"], "description": "Version-locked L1 scalar id (e.g. colorfulness, brightness, contrast, whitespace_ratio, frame_change_median) when kind=l1-scalar, else null. Exact set locked in the Holm family (scheme §11)."}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "channel"}}},
+          "then": {"properties": {"channel": {"$ref": "#/$defs/formalChannel"}, "l1_scalar": {"type": "null"}}},
+          "else": {"properties": {"channel": {"type": "null"}, "l1_scalar": {"type": "string", "minLength": 1}}}
+        }
+      ]
+    }
+  }
+}
