@@ -14,6 +14,8 @@ MIT
 
 **English** &nbsp;·&nbsp; [中文](README.zh.md)
 
+<a href="https://buymeacoffee.com/2nd1st"><img src="https://img.shields.io/badge/Buy_me_a_coffee-2nd1st-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
+
 </div>
 
 ---
@@ -175,6 +177,9 @@ This is one person's ongoing sweep, and the frontier moves every week. Ways to h
   and we'll arrange a private channel to coordinate. **Never post a key, token, or
   cookie in public** (an issue, a PR, a comment — anywhere), and I will never ask you
   to. Secrets only ever move through a private channel you control.
+- **Fund a run.** Every configuration is real API and subscription spend. A coffee at
+  [buymeacoffee.com/2nd1st](https://buymeacoffee.com/2nd1st) goes straight into
+  covering more models, more often.
 
 ## License
 

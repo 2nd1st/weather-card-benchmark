@@ -14,6 +14,8 @@ MIT
 
 [English](README.md) &nbsp;·&nbsp; **中文**
 
+<a href="https://buymeacoffee.com/2nd1st"><img src="https://img.shields.io/badge/Buy_me_a_coffee-2nd1st-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
+
 </div>
 
 ---
@@ -124,6 +126,7 @@ prompts/    两份逐字任务 prompt
 - **贡献一次 run。** 站点的 **Contribute** 流程会接收你在本地生成的一张卡,用同样的方式渲染、打分,并并入数据集。
 - **指出一个缺口。** 缺某个 model、某个 harness、某个 effort 档?开一个 [issue](https://github.com/2nd1st/weather-card-benchmark/issues) —— 站点上的 coverage 视图记录了已覆盖和计划中的内容。
 - **借出访问权。** 如果你手上有尚未覆盖的 model 或 harness 的账号 / API 访问权,并且愿意让它跑这个 benchmark —— 开一个 issue,我们私下约一个渠道对接。**绝不要在公开处(issue、PR、评论,任何地方)贴出 key、token 或 cookie**,我也永远不会这样问你要。密钥只走你自己掌控的私密渠道。
+- **赞助一次 run。** 每个 configuration 都是真金白银的 API 和订阅开销。一杯咖啡 [buymeacoffee.com/2nd1st](https://buymeacoffee.com/2nd1st) 会直接变成更多模型、更勤的重跑。
 
 ## 许可
 
