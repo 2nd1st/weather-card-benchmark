@@ -57,6 +57,34 @@ families clustering with themselves; the thin bright diagonal is each config's
 **self-consistency** (how much a model agrees with its *own* re-runs). Similarity
 here is a **measurement, not a quality score** — it captures convergence, nothing more.
 
+### In the matrix
+
+Some things only show up here. The numbers below are the merged, non-diagnostic
+similarity on the `P-min` set — **signals, not proof** (single prompt family, small
+N), and two confounds run through all of them: low-effort cards converge toward a
+generic baseline, and a shared harness (opencode / Kiro / Qoder) adds scaffolding of
+its own. Read accordingly.
+
+- **Family is a real but weak grouping.** A config agrees with its own re-runs most
+  (self-consistency ≈ **0.66**), with its own family next (**0.55**), and with other
+  families least (**0.51**) — but the gaps are small. A model's low-effort card can
+  resemble another lab's card more than it resembles its own high-effort one.
+- **Max-effort frontier Claude is a global outlier.** `claude-fable-5 @max`
+  (**0.478**) and `claude-opus-4.8 @max` (**0.489**) sit *farther from the rest of
+  Claude* than Claude's own family average (**0.562**) — and farther from everything
+  else too. The strongest model at full effort goes somewhere no other config, its own
+  siblings included, follows.
+- **High effort pushes older Opus off its family.** `opus-4.6` and `opus-4.7` drift
+  from the Claude cluster at **high / xhigh** effort (≈ 0.55) but stay closer at
+  medium / low / max (up to **0.61**) — effort changes *where in design-space* a model
+  lands, not just how much it writes.
+- **Grok resembles everyone a little; GPT resembles no one.** Grok has the highest
+  cross-family reach (**0.524**) of any well-sampled family; GPT the lowest
+  (**0.496**) — GPT's cards are the most idiosyncratic on the board.
+- **Some models barely agree with themselves.** kimi (k2.6 **0.48**, k3 0.52) and
+  gemini-pro (0.54) have the lowest self-consistency — a different card most re-runs;
+  others are far more deterministic.
+
 ## What it is
 
 **The task.** Two prompt variants — `P-min` (minimal) and `P-q` (qualified) — both
