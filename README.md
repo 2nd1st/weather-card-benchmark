@@ -52,7 +52,7 @@ prompt family, small N). Every one links back to the raw data on the site.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="118×118 config-vs-config similarity heatmap, merged consensus channel" width="82%">
+<img src="docs/matrix.png" alt="123×123 config-vs-config similarity heatmap, merged consensus channel" width="82%">
 </div>
 
 Every measured configuration against every other, merged across all channels.
@@ -76,21 +76,26 @@ the findings are robust to the channel set.)*
   (self-consistency ≈ **0.72**), with its own family next (**0.63**), and with other
   families least (**0.59**) — but the gaps are small. A model's low-effort card can
   resemble another lab's card more than it resembles its own high-effort one.
-- **Max-effort frontier Claude is a global outlier.** `claude-fable-5 @max`
-  (**0.573**) and `claude-opus-4.8 @max` (**0.589**) sit *farther from the rest of
-  Claude* than Claude's own family average (**0.630**) — and farther from everything
-  else too. The strongest model at full effort goes somewhere no other config, its own
-  siblings included, follows.
+- **Max-effort frontier Claude is a global outlier.** `claude-opus-5 @max` (**0.551**),
+  `claude-fable-5 @max` (**0.578**) and `claude-opus-4.8 @max` (**0.592**) sit
+  *farther from the rest of Claude* than Claude's own family average (**0.623**) — and
+  farther from everything else too. The strongest model at full effort goes somewhere
+  no other config, its own siblings included, follows. Read this as a P-min statement:
+  on the `P-q` set the same three are still below their family average, but their
+  order among themselves changes.
 - **High effort pushes older Opus off its family.** `opus-4.6` and `opus-4.7` drift
   from the Claude cluster at **high / xhigh** effort (≈ **0.62**) but stay closer at
-  medium / low / max (up to **0.68**) — effort changes *where in design-space* a model
-  lands, not just how much it writes.
+  medium (**0.63–0.67**) — effort changes *where in design-space* a model lands, not
+  just how much it writes.
 - **Grok resembles everyone a little; GPT resembles no one.** Grok has the highest
   cross-family reach (**0.602**) of any well-sampled family; GPT the lowest
-  (**0.578**) — GPT's cards are the most idiosyncratic on the board.
-- **Some models barely agree with themselves.** `kimi-k3` (**0.66**) and
-  `gemini-pro` (**0.64**) have the lowest self-consistency — a different card most
-  re-runs; others are far more deterministic.
+  (**0.579**) — GPT's cards are the most idiosyncratic on the board.
+- **Some models barely agree with themselves.** `kimi-k2.7-code` (**0.60**),
+  `deepseek-v4-flash` (**0.63**) and `kimi-k2.6` (**0.63**) have the lowest
+  self-consistency — a different card most re-runs; others are far more deterministic.
+  Only 18 models have a self-consistency reading at all: it needs several re-runs of
+  one config in one variant, and the CLI-harness arms run too few for the estimate to
+  qualify.
 
 ## What it is
 
@@ -147,14 +152,14 @@ The site resolves its data root from `WCB_DATA_ROOT` (defaulting to the in-repo
 
 ## The data
 
-The full measured set is large (190+ configurations × multiple slots × screenshots),
+The full measured set is large (200+ configurations × multiple slots × screenshots),
 so the repo ships a **flagship subset** — one canonical configuration per frontier lab
 — under [`data/batches/`](data/batches/). The site renders it out of the box.
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-19.tar.gz>
-  (~385 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-25.tar.gz>
+  (~535 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
   at the extracted directory to serve the whole set locally.
 
 ## Layout

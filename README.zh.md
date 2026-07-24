@@ -40,7 +40,7 @@ MIT
 ## 这张地图
 
 <div align="center">
-<img src="docs/matrix.png" alt="118×118 config 对 config 相似度热力图,merged 合并通道" width="82%">
+<img src="docs/matrix.png" alt="123×123 config 对 config 相似度热力图,merged 合并通道" width="82%">
 </div>
 
 每个被测 configuration 对上其余每一个,跨所有通道合并。亮 = 相似,暗 = 分化。对角线上的亮块是各**模型家族**在自我聚类;那条细亮对角线是每个 config 的**自一致性**(一个模型和它*自己*重跑之间有多像)。这里的相似度是**测量,不是质量分** —— 它只刻画收敛,别无其他。
@@ -50,10 +50,10 @@ MIT
 有些东西只在这里现形。下面的数字都是 `P-min` 集上 merged、非诊断通道(**20 条正式通道**)的相似度 —— **是信号,不是证明**(单一 prompt 家族、小 N),而且有两个混淆项贯穿始终:低 effort 的卡会向一个通用基线收敛,共享的 harness(opencode / Kiro / Qoder)本身也会带进脚手架。请据此理解。*(这些是加入 `x-*` 代码特征通道族后的 20 条通道;那次扩展把每个数字抬高了约 0.07,但更早的 15 通道 merged 呈现**同样的结构** —— 这些发现对通道集是稳健的。)*
 
 - **家族是真实但"弱"的分组。** 一个 config 和自己重跑最像(自一致性 ≈ **0.72**),和自家家族次之(**0.63**),和别家最不像(**0.59**)—— 但差距很小。一个模型低 effort 的卡,可能比它自己高 effort 的卡更像别家。
-- **满血 frontier Claude 是全局离群点。** `claude-fable-5 @max`(**0.573**)和 `claude-opus-4.8 @max`(**0.589**)离*其余 Claude* 比 Claude 家族自身的平均(**0.630**)还要远 —— 离别家也更远。最强的模型开到满 effort,去了一个连它自家同门都不跟去的地方。
-- **高 effort 把老 Opus 推离家族。** `opus-4.6` 和 `opus-4.7` 在 **high / xhigh** 档漂离 Claude 簇(≈ **0.62**),而在 medium / low / max 档更贴近(高至 **0.68**)—— effort 改变的是模型*落在设计空间的哪里*,不只是写多少。
-- **grok 谁都像一点;GPT 谁都不像。** 在样本充足的家族里,grok 的跨家族触达最高(**0.602**),GPT 最低(**0.578**)—— GPT 的卡是全场最我行我素的。
-- **有些模型和自己都不像。** `kimi-k3`(**0.66**)和 `gemini-pro`(**0.64**)自一致性最低 —— 多数重跑画得都不一样;别的模型确定性强得多。
+- **满血 frontier Claude 是全局离群点。** `claude-opus-5 @max`(**0.551**)、`claude-fable-5 @max`(**0.578**)和 `claude-opus-4.8 @max`(**0.592**)离*其余 Claude* 比 Claude 家族自身的平均(**0.623**)还要远 —— 离别家也更远。最强的模型开到满 effort,去了一个连它自家同门都不跟去的地方。这是 P-min 上的陈述:在 `P-q` 集上这三个仍低于家族均值,但它们**彼此之间的排序会变**。
+- **高 effort 把老 Opus 推离家族。** `opus-4.6` 和 `opus-4.7` 在 **high / xhigh** 档漂离 Claude 簇(≈ **0.62**),而在 medium 档更贴近(**0.63–0.67**)—— effort 改变的是模型*落在设计空间的哪里*,不只是写多少。
+- **grok 谁都像一点;GPT 谁都不像。** 在样本充足的家族里,grok 的跨家族触达最高(**0.602**),GPT 最低(**0.579**)—— GPT 的卡是全场最我行我素的。
+- **有些模型和自己都不像。** `kimi-k2.7-code`(**0.60**)、`deepseek-v4-flash`(**0.63**)和 `kimi-k2.6`(**0.63**)自一致性最低 —— 多数重跑画得都不一样;别的模型确定性强得多。注意:**全集只有 18 个模型拿得到自一致性读数** —— 它需要同一 config 在同一变体下有足够多次重跑,而 CLI harness 各臂跑得太少,估计值不够格。
 
 ## 这是什么
 
@@ -103,12 +103,12 @@ cd site && npm install && npm run dev   # http://localhost:3000
 
 ## 数据
 
-完整测量集很大(190+ configurations × 多个 slot × 截图),所以仓库只带一份**旗舰子集** —— 每个前沿实验室一个 canonical configuration —— 放在 [`data/batches/`](data/batches/)。站点开箱即用地渲染它。
+完整测量集很大(200+ configurations × 多个 slot × 截图),所以仓库只带一份**旗舰子集** —— 每个前沿实验室一个 canonical configuration —— 放在 [`data/batches/`](data/batches/)。站点开箱即用地渲染它。
 
 **完整集**可在线浏览,也能作为单个 pack 下载:
 
-- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-19.tar.gz>
-  (~385 MB)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
+- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-25.tar.gz>
+  (~535 MB)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
 
 ## 目录
 
