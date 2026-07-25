@@ -43,6 +43,7 @@ import {
   type ChannelFamily,
   type Variant,
 } from "@/lib/variant";
+import { effortRung, rungOrder } from "@/lib/effort";
 import type { ArmGroup } from "@/lib/channel";
 import type { Grade } from "@/app/components/Badge";
 import { PairDrawer, type SummaryCell } from "./PairDrawer";
@@ -89,6 +90,10 @@ interface Props {
 
 // ---------------------------- Geometry helpers -----------------------------
 
+/** Model portion of a config_id — everything before the effort suffix. The
+ *  matrix roster carries no modelId field, and the id is the only place it is. */
+const modelOf = (configId: string): string => configId.split("-eff-")[0];
+
 const clampInt = (x: number, lo: number, hi: number) =>
   Math.max(lo, Math.min(hi, x));
 
@@ -104,7 +109,7 @@ const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
  *  a glance. The first attempt kept per-config names and they collapsed into an
  *  unreadable smear (193 names sharing ~384px). Names are therefore DROPPED here
  *  by design; identity comes from the model-cluster bands beside the grid plus
- *  the hover crosshair (2026-07-20: "不显示具体模型名 然后显示模型簇"). */
+ *  the hover crosshair (Leo 2026-07-20: "不显示具体模型名 然后显示模型簇"). */
 const MIN_CELL_FIT = 3;
 const MIN_CELL_DETAIL = 11;
 const MAX_CELL = 96;
@@ -125,14 +130,46 @@ const BAND_PX = 84;
  *  the runner produces — it is derived in the client from the real channels, so
  *  it never appears in a summary file or a pair document. */
 const MERGED_CHANNEL = "merged" as const;
+/** Per-family consensus alongside the all-channel one. The single `merged` mixes
+ *  7 visual with 13 structural channels, so a pair that looks nothing alike but
+ *  shares a code style still scores mid — the family merges are how you see
+ *  which kind of similarity is doing the work. */
+const FAMILY_MERGE = { v: "v-merged", c: "c-merged", d: "d-merged", x: "x-merged" } as const;
+const MERGE_CHANNELS = [
+  MERGED_CHANNEL,
+  ...(Object.values(FAMILY_MERGE) as string[]),
+] as const;
+const isMergeChannel = (ch: string): boolean =>
+  (MERGE_CHANNELS as readonly string[]).includes(ch);
+/** The family a merge pseudo-channel folds, or null for the all-channel merge. */
+const mergeFamilyOf = (ch: string): ChannelFamily | null => {
+  for (const [fam, id] of Object.entries(FAMILY_MERGE)) {
+    if (id === ch) return fam as ChannelFamily;
+  }
+  return null;
+};
 /** What the view can have selected: a real measured Channel, or the derived
  *  consensus. Kept distinct from `Channel` so nothing can accidentally hand
  *  "merged" to code that indexes real summary/pair documents. */
-type ViewChannel = Channel | typeof MERGED_CHANNEL;
+type ViewChannel = Channel | (typeof MERGE_CHANNELS)[number];
+/** Shape of similarity/merge-domain.lock.json — the frozen per-channel stretch
+ *  domain. Written by runner/tools/build_merge_domain_lock.py; the `schema` field
+ *  is checked before use so a future format can never be silently misread. */
+const MERGE_LOCK_SCHEMA = "merge-domain-lock/1";
+interface MergeDomainLock {
+  schema: string;
+  batch_id: string;
+  variants: Record<string, { channels: Record<string, { lo: number; hi: number }> }>;
+}
+
 /** A merged cell needs at least this many contributing channels to be shown;
  *  below it the average says more about which channels happened to be eligible
  *  than about the pair. */
 const MERGE_MIN_CH = 6;
+/** Minimum contributing channels for a family merge — 6 would disqualify every
+ *  family (d has only 3 formal channels), so it scales with what the family has
+ *  while still refusing an average over one or two lucky channels. */
+const familyMergeMin = (size: number): number => Math.max(2, Math.ceil(size * 0.6));
 
 /** Contiguous runs of one family in the CURRENT display order. In catalog order
  *  these are the natural model clusters; in clustered order they fragment, which
@@ -272,12 +309,22 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
   const [armFilter, setArmFilter] = useState<Set<string>>(() => new Set());
 
   // arm-group view — the matrix defaults to the HARNESS group (api and harness
-  // arms are separated by default, 2026-07-19); "all" restores the mixed
+  // arms are separated by default, Leo 2026-07-19); "all" restores the mixed
   // roster. Filters rows AND cols in lockstep via baseConfigs below.
   const [armView, setArmView] = useState<ArmGroup | "all">("harness");
 
   const [activeChannel, setActiveChannel] = useState<ViewChannel>(channels[0]);
   const [hover, setHover] = useState<{ r: number; c: number } | null>(null);
+  // Axis highlight — hovering a HEADER lights ONE strip: the row for a row
+  // head, the column for a column head. A cross means "this pair", and a header
+  // is not a pair (Leo); the cross stays exclusive to pointing at a cell. In
+  // fit mode the heads are family bands, so the strip spans that cluster's
+  // whole range — hence a range rather than a single index. Separate from
+  // `hover`, which belongs to the canvas and carries the tooltip: this one must
+  // not pop a tooltip for a cell nobody pointed at.
+  const [axis, setAxis] = useState<
+    { start: number; len: number; dir: "row" | "col" } | null
+  >(null);
   const [tip, setTip] = useState<{ x: number; y: number } | null>(null);
   const [theme, setTheme] = useState<ThemeColors>(readThemeColors);
   const [drawer, setDrawer] = useState<{ a: string; b: string } | null>(null);
@@ -293,11 +340,25 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
   // ---- filtered axis (catalog order): arm-group AND grade AND (arm if picked) ----
   const baseConfigs = useMemo(() => {
     const arms = armFilter;
-    return session.configs.filter(
+    const kept = session.configs.filter(
       (c) =>
         (armView === "all" || c.armGroup === armView) &&
         gradeFilter.has(c.grade) &&
         (arms.size === 0 || arms.has(c.arm)),
+    );
+    // Catalog order sorted the config_ids as strings, so a model's tiers came
+    // out alphabetically — high, low, max, medium, xhigh — which reads as noise
+    // next to a heatmap whose whole point is that effort moves a card. Order by
+    // the effort LADDER within each model instead (lib/effort), family and model
+    // still alphabetical so the family blocks stay contiguous.
+    return [...kept].sort(
+      (a, b) =>
+        a.family.localeCompare(b.family) ||
+        modelOf(a.id).localeCompare(modelOf(b.id)) ||
+        rungOrder(effortRung(a.effort)) - rungOrder(effortRung(b.effort)) ||
+        String(a.effort ?? "").localeCompare(String(b.effort ?? "")) ||
+        a.arm.localeCompare(b.arm) ||
+        a.id.localeCompare(b.id),
     );
   }, [session, gradeFilter, armFilter, armView]);
 
@@ -351,6 +412,36 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
   const cellCache = useRef<Map<string, SummaryCell[]>>(new Map());
   const [cells, setCells] = useState<SummaryCell[] | null>(null);
   const [cellsErr, setCellsErr] = useState<string | null>(null);
+
+  // ---- frozen merge domain (runner/tools/build_merge_domain_lock.py) --------
+  // The per-channel contrast-stretch domain `merged` averages over. Computed
+  // ONCE over the full production set and shipped as a lock, so a merged value
+  // is the same number whatever the view is filtered to — and the same number
+  // the README quotes. Absent (older deploys, batches with no lock) → null, and
+  // mergedIndex falls back to deriving the domain from the current view, which
+  // is what the client always used to do.
+  const lockCache = useRef<Map<string, MergeDomainLock | null>>(new Map());
+  const [mergeLock, setMergeLock] = useState<MergeDomainLock | null>(null);
+  useEffect(() => {
+    const cached = lockCache.current.get(batchId);
+    if (cached !== undefined) {
+      setMergeLock(cached);
+      return;
+    }
+    let alive = true;
+    setMergeLock(null);
+    fetch(`/b/${batchId}/similarity/merge-domain.lock.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null)
+      .then((j: MergeDomainLock | null) => {
+        const v = j && j.schema === MERGE_LOCK_SCHEMA ? j : null;
+        lockCache.current.set(batchId, v);
+        if (alive) setMergeLock(v);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [batchId]);
 
   useEffect(() => {
     const key = `${batchId}::${variant}`;
@@ -416,7 +507,7 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
     // merged is derived, not measured — it stays valid across every data set,
     // so only a REAL channel that vanished falls back to the first one.
     setActiveChannel((ch) =>
-      ch === MERGED_CHANNEL || channels.includes(ch as Channel) ? ch : channels[0],
+      isMergeChannel(ch) || channels.includes(ch as Channel) ? ch : channels[0],
     );
   }, [batchId, channels]);
 
@@ -476,41 +567,68 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
   // ---- MERGED channel: consensus across every scored channel ----------------
   //
   // Channels are NOT on a common scale — v-phash clusters near 0.5, the code
-  // channels sit far lower — so a plain mean would just be "whichever channel
-  // has the widest spread". Each channel is therefore contrast-stretched to
-  // [0,1] over its OWN cross-pair p5–p95 first (the same normalisation the
-  // colour ramp already applies per channel), and only then averaged. Every
-  // channel then contributes equally (2026-07-20).
+  // channels sit far lower, the x-* family sits near 0.95 — so a plain mean
+  // would just be "whichever channel has the widest spread and the highest
+  // baseline". (Not hypothetical: adding the 5 x-* channels in v13 lifted every
+  // published figure by ~0.07 for exactly that reason.) Each channel is
+  // therefore contrast-stretched to [0,1] over its OWN cross-pair range first
+  // and only then averaged, so every channel contributes equally (Leo
+  // 2026-07-20).
+  //
+  // The domain itself comes from the FROZEN LOCK (2026-07-25). It used to be
+  // recomputed over whatever configs the view currently showed, which meant
+  // filtering the matrix changed every merged value — fine as a display, but it
+  // made merged uncitable and let the site and the README disagree while both
+  // calling their number "merged". p1–p99, not p5–p95: the tighter band
+  // saturated a THIRD of the self-consistency diagonal at a flat 1.0.
   //
   // Diagnostic channels are excluded — the scheme marks them "displayed, never
   // statted", so folding them into a score would contradict that.
   // A pair needs at least MERGE_MIN_CH contributing channels, else it reads as
   // insufficient rather than as a confident average over two lucky channels.
   const mergedIndex = useMemo(() => {
-    if (activeChannel !== MERGED_CHANNEL) return null;
-    const scored = channels.filter((ch) => !isDiagnosticChannel(ch));
-    // per-channel stretch domain over this view's eligible cross medians
+    if (!isMergeChannel(activeChannel)) return null;
+    const fam = mergeFamilyOf(activeChannel);
+    const scored = channels.filter(
+      (ch) => !isDiagnosticChannel(ch) && (fam === null || channelFamily(ch) === fam),
+    );
+    if (scored.length === 0) return null;
+    const minCh = fam === null ? MERGE_MIN_CH : familyMergeMin(scored.length);
+
+    // Per-channel stretch domain. PREFERRED: the frozen lock, computed once over
+    // the whole production set — so merged does not move when the view is
+    // filtered, and matches the figures published off-site. FALLBACK (no lock
+    // shipped): derive it from this view's eligible cross medians, the original
+    // behaviour, which is view-dependent by construction.
     const dom = new Map<string, { lo: number; hi: number }>();
-    for (const ch of scored) {
-      const vals: number[] = [];
-      for (let r = 0; r < n; r++) {
-        for (let c = 0; c < n; c++) {
-          if (r === c) continue;
-          const cell = rawLookup(ch, r, c);
-          if (cell && isSufficient(cell)) vals.push(cell.median as number);
-        }
+    const locked = mergeLock?.variants?.[variant]?.channels;
+    if (locked) {
+      for (const ch of scored) {
+        const d = locked[ch];
+        if (d && d.hi - d.lo >= 0.02) dom.set(ch, d);
       }
-      if (vals.length < 8) continue;
-      vals.sort((a, b) => a - b);
-      const pct = (p: number) => {
-        const i = (vals.length - 1) * p;
-        const f = Math.floor(i);
-        const cl = Math.ceil(i);
-        return f === cl ? vals[f] : vals[f] + (vals[cl] - vals[f]) * (i - f);
-      };
-      const lo = pct(0.05);
-      const hi = pct(0.95);
-      if (hi - lo >= 0.02) dom.set(ch, { lo, hi });
+    } else {
+      for (const ch of scored) {
+        const vals: number[] = [];
+        for (let r = 0; r < n; r++) {
+          for (let c = 0; c < n; c++) {
+            if (r === c) continue;
+            const cell = rawLookup(ch, r, c);
+            if (cell && isSufficient(cell)) vals.push(cell.median as number);
+          }
+        }
+        if (vals.length < 8) continue;
+        vals.sort((a, b) => a - b);
+        const pct = (p: number) => {
+          const i = (vals.length - 1) * p;
+          const f = Math.floor(i);
+          const cl = Math.ceil(i);
+          return f === cl ? vals[f] : vals[f] + (vals[cl] - vals[f]) * (i - f);
+        };
+        const lo = pct(0.01);
+        const hi = pct(0.99);
+        if (hi - lo >= 0.02) dom.set(ch, { lo, hi });
+      }
     }
     // fold every pair
     const out = new Map<string, SummaryCell>();
@@ -531,33 +649,33 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
         const b = configs[c]?.id;
         if (a == null || b == null) continue;
         const [lo, hi] = compareSlug(a, b) <= 0 ? [a, b] : [b, a];
-        out.set(`${MERGED_CHANNEL} ${lo} ${hi}`, {
+        out.set(`${activeChannel} ${lo} ${hi}`, {
           config_a: lo,
           config_b: hi,
-          channel: MERGED_CHANNEL as unknown as Channel,
+          channel: activeChannel as unknown as Channel,
           kind: r === c ? "self" : "cross",
-          median: k >= MERGE_MIN_CH ? sum / k : null,
+          median: k >= minCh ? sum / k : null,
           iqr: null,
           // n_eff drives the sufficiency gate downstream; 0 when too few channels
-          n_eff: k >= MERGE_MIN_CH ? nEff : 0,
+          n_eff: k >= minCh ? nEff : 0,
           m_a: k,
           m_b: k,
         });
       }
     }
     return out;
-  }, [activeChannel, channels, n, rawLookup, configs]);
+  }, [activeChannel, channels, n, rawLookup, configs, mergeLock, variant]);
 
   /** Channel-aware cell access: the merged pseudo-channel is served from its own
    *  derived index, everything else straight from the summary. */
   const lookup = useCallback(
     (channel: string, r: number, c: number): SummaryCell | undefined => {
-      if (channel !== MERGED_CHANNEL) return rawLookup(channel, r, c);
+      if (!isMergeChannel(channel)) return rawLookup(channel, r, c);
       const a = configs[r]?.id;
       const b = configs[c]?.id;
       if (a == null || b == null) return undefined;
       const [lo, hi] = compareSlug(a, b) <= 0 ? [a, b] : [b, a];
-      return mergedIndex?.get(`${MERGED_CHANNEL} ${lo} ${hi}`);
+      return mergedIndex?.get(`${channel} ${lo} ${hi}`);
     },
     [rawLookup, mergedIndex, configs],
   );
@@ -743,16 +861,15 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
 
   function Crosshair({ cell, size }: { cell: number; size: number }) {
     if (!hover) return null;
-    const band = "rgba(55, 214, 228, 0.16)";
     return (
       <div className={sc("mx-cross")} aria-hidden>
         <div
           className={sc("mx-crossband")}
-          style={{ left: 0, top: hover.r * cell, width: size, height: cell, background: band }}
+          style={{ left: 0, top: hover.r * cell, width: size, height: cell }}
         />
         <div
           className={sc("mx-crossband")}
-          style={{ left: hover.c * cell, top: 0, width: cell, height: size, background: band }}
+          style={{ left: hover.c * cell, top: 0, width: cell, height: size }}
         />
         <div
           className={sc("mx-cellbox")}
@@ -762,9 +879,35 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
     );
   }
 
+  /** The single strip for the hovered header — horizontal from a row head,
+   *  vertical from a column head. `len` > 1 in fit mode (a whole family). */
+  function AxisHighlight({ cell, size }: { cell: number; size: number }) {
+    if (!axis) return null;
+    const off = axis.start * cell;
+    const span = axis.len * cell;
+    return (
+      <div className={sc("mx-cross")} aria-hidden>
+        <div
+          className={sc("mx-crossband")}
+          style={
+            axis.dir === "row"
+              ? { left: 0, top: off, width: size, height: span }
+              : { left: off, top: 0, width: span, height: size }
+          }
+        />
+      </div>
+    );
+  }
+
+  /** Is index i inside the hovered header range, on that header's own axis?
+   *  Drives the head `hot` state — a row head must not light up because a
+   *  COLUMN head is hovered, or the "one strip" reading falls apart. */
+  const inAxis = (i: number, dir: "row" | "col") =>
+    !!axis && axis.dir === dir && i >= axis.start && i < axis.start + axis.len;
+
   // ------------------------------ Render -------------------------------------
 
-  const groups: ChannelFamily[] = ["v", "c", "d"];
+  const groups: ChannelFamily[] = ["v", "c", "d", "x"];
   const familyLabel = (fam: ChannelFamily) => t(`main.family.${fam}`);
 
   return (
@@ -971,6 +1114,23 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                   <div key={fam} className={sc("mx-group")}>
                     <div className={sc("mx-group-label", `mx-fam-${fam}`)}>{familyLabel(fam)}</div>
                     <div className={sc("mx-tabs")}>
+                      {/* the family's own consensus, first — the same relationship
+                          `merged` has to all channels, scoped to this family */}
+                      {chs.some((ch) => !isDiagnosticChannel(ch)) ? (
+                        <button
+                          type="button"
+                          className={sc(
+                            "mx-tab",
+                            "mx-tab-merge",
+                            activeChannel === FAMILY_MERGE[fam] && "active",
+                          )}
+                          onClick={() => setActiveChannel(FAMILY_MERGE[fam])}
+                          title={t("merged.familyDesc", { family: familyLabel(fam) })}
+                          aria-pressed={activeChannel === FAMILY_MERGE[fam]}
+                        >
+                          <span className={sc("mx-tab-label")}>{FAMILY_MERGE[fam]}</span>
+                        </button>
+                      ) : null}
                       {chs.map((ch) => (
                         <button
                           key={ch}
@@ -999,7 +1159,7 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
           <section className={sc("mx-main")} ref={mainSecRef}>
             <div className={sc("mx-main-title")}>
               <span className={sc("mx-chan")}>{activeChannel}</span>
-              {activeChannel !== MERGED_CHANNEL && isDiagnosticChannel(activeChannel) && (
+              {!isMergeChannel(activeChannel) && isDiagnosticChannel(activeChannel as Channel) && (
                 <span className={sc("mx-diag")} title={t("main.diagnosticTitle")}>
                   {t("main.diagnostic")}
                 </span>
@@ -1007,13 +1167,19 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
               <span className={sc("mx-sub")}>
                 {" "}
                 —{" "}
-                {activeChannel === MERGED_CHANNEL
-                  ? t("merged.group")
-                  : familyLabel(channelFamily(activeChannel))}
+                {isMergeChannel(activeChannel)
+                  ? mergeFamilyOf(activeChannel)
+                    ? familyLabel(mergeFamilyOf(activeChannel) as ChannelFamily)
+                    : t("merged.group")
+                  : familyLabel(channelFamily(activeChannel as Channel))}
               </span>
               <span className={sc("mx-chan-desc")}>
-                {activeChannel === MERGED_CHANNEL
-                  ? t("merged.desc")
+                {isMergeChannel(activeChannel)
+                  ? mergeFamilyOf(activeChannel)
+                    ? t("merged.familyDesc", {
+                        family: familyLabel(mergeFamilyOf(activeChannel) as ChannelFamily),
+                      })
+                    : t("merged.desc")
                   : t(`channelDesc.${activeChannel}`)}
               </span>
             </div>
@@ -1071,9 +1237,17 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                       ? runs.map((run) => (
                           <div
                             key={`c-${run.start}`}
-                            className={sc("mx-band", "mx-band-col")}
+                            className={sc(
+                              "mx-band",
+                              "mx-band-col",
+                              inAxis(run.start, "col") && "hot",
+                            )}
                             style={{ width: run.len * mainCell }}
                             title={`${run.family} · ${run.len}`}
+                            onMouseEnter={() =>
+                              setAxis({ start: run.start, len: run.len, dir: "col" })
+                            }
+                            onMouseLeave={() => setAxis(null)}
                           >
                             {run.len * mainCell >= 46 ? <span>{run.family}</span> : null}
                           </div>
@@ -1082,9 +1256,11 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                       <Link
                         key={cfg.id}
                         href={`/card/${encodeURIComponent(cfg.id)}`}
-                        className={sc("mx-colhead", hover?.c === c && "hot")}
+                        className={sc("mx-colhead", (hover?.c === c || inAxis(c, "col")) && "hot")}
                         style={{ width: mainCell }}
                         title={cfg.id}
+                        onMouseEnter={() => setAxis({ start: c, len: 1, dir: "col" })}
+                        onMouseLeave={() => setAxis(null)}
                       >
                         <span>{cfg.label}</span>
                       </Link>
@@ -1099,9 +1275,17 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                       ? runs.map((run) => (
                           <div
                             key={`r-${run.start}`}
-                            className={sc("mx-band", "mx-band-row")}
+                            className={sc(
+                              "mx-band",
+                              "mx-band-row",
+                              inAxis(run.start, "row") && "hot",
+                            )}
                             style={{ height: run.len * mainCell }}
                             title={`${run.family} · ${run.len}`}
+                            onMouseEnter={() =>
+                              setAxis({ start: run.start, len: run.len, dir: "row" })
+                            }
+                            onMouseLeave={() => setAxis(null)}
                           >
                             {run.len * mainCell >= 14 ? <span>{run.family}</span> : null}
                           </div>
@@ -1110,9 +1294,11 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                       <Link
                         key={cfg.id}
                         href={`/card/${encodeURIComponent(cfg.id)}`}
-                        className={sc("mx-rowhead", hover?.r === r && "hot")}
+                        className={sc("mx-rowhead", (hover?.r === r || inAxis(r, "row")) && "hot")}
                         style={{ height: mainCell }}
                         title={cfg.id}
+                        onMouseEnter={() => setAxis({ start: r, len: 1, dir: "row" })}
+                        onMouseLeave={() => setAxis(null)}
                       >
                         <span>{cfg.label}</span>
                       </Link>
@@ -1127,6 +1313,7 @@ export function MatrixView({ sessions, defaultBatchId, channels }: Props) {
                     onClick={onMainClick}
                   >
                     <canvas ref={mainRef} className={sc("mx-canvas")} />
+                    <AxisHighlight cell={mainCell} size={mainPx} />
                     <Crosshair cell={mainCell} size={mainPx} />
                   </div>
                 </div>

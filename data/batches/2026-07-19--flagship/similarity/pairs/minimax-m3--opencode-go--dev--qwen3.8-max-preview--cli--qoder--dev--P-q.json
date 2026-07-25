@@ -1,82 +1,97 @@
 {
- "batch_id": "2026-07-19--unified",
- "channels": [
-  "v-phash",
-  "v-dhash",
-  "v-color",
-  "v-palette",
-  "v-layout",
-  "v-edge",
-  "v-ssim",
-  "c-shingle",
-  "c-winnow",
-  "c-feature",
-  "c-ast-js",
-  "c-css-prop",
-  "c-ncd",
-  "d-geom",
-  "d-text",
-  "d-pqgram",
-  "d-tagpath"
- ],
- "config_a": "minimax-m3--opencode-go--dev",
- "config_b": "qwen3.8-max-preview--cli--qoder--dev",
- "kind": "cross",
- "pairs": [
-  {
-   "diagnostics": {
-    "c_ncd_ncd_sym": 0.8103651354534747,
-    "v_ssim_raw": 0.5650925022693759
-   },
-   "s": {
-    "c-ast-js": 0.9334121726259113,
-    "c-css-prop": 0.8715506736925667,
-    "c-feature": 0.4953271028037383,
-    "c-ncd": 0.18963486454652534,
-    "c-shingle": 0.22165945298830464,
-    "c-winnow": 0.252,
-    "d-geom": 0.7736300301549345,
-    "d-pqgram": 0.2914572864321608,
-    "d-tagpath": 0.4,
-    "d-text": 0.0,
-    "v-color": 0.802496234308003,
-    "v-dhash": 0.5,
-    "v-edge": 0.6969966341387855,
-    "v-layout": 0.8692026539525873,
-    "v-palette": 0.9672977477216239,
-    "v-phash": 0.625,
-    "v-ssim": 0.7825462511346879
-   },
-   "slot_a": 1,
-   "slot_b": 0
-  },
-  {
-   "diagnostics": {
-    "c_ncd_ncd_sym": 0.790341578327444,
-    "v_ssim_raw": 0.6391997985571969
-   },
-   "s": {
-    "c-ast-js": 0.8945089350602837,
-    "c-css-prop": 0.8637058002284411,
-    "c-feature": 0.6206896551724138,
-    "c-ncd": 0.209658421672556,
-    "c-shingle": 0.2647203866259,
-    "c-winnow": 0.2581967213114754,
-    "d-geom": 0.7863031071655047,
-    "d-pqgram": 0.3116438356164384,
-    "d-tagpath": 0.3,
-    "d-text": 0.1,
-    "v-color": 0.8006540776231929,
-    "v-dhash": 0.515625,
-    "v-edge": 0.7401920283744805,
-    "v-layout": 0.8918760154183109,
-    "v-palette": 0.9644243858950668,
-    "v-phash": 0.71875,
-    "v-ssim": 0.8195998992785984
-   },
-   "slot_a": 1,
-   "slot_b": 1
-  }
- ],
- "variant": "P-q"
+  "batch_id": "2026-07-19--flagship",
+  "channels": [
+    "v-phash",
+    "v-dhash",
+    "v-color",
+    "v-palette",
+    "v-layout",
+    "v-edge",
+    "v-ssim",
+    "c-shingle",
+    "c-winnow",
+    "c-feature",
+    "c-ast-js",
+    "c-css-prop",
+    "c-ncd",
+    "d-geom",
+    "d-text",
+    "d-pqgram",
+    "d-tagpath",
+    "x-color",
+    "x-css-values",
+    "x-layout",
+    "x-naming",
+    "x-semantics"
+  ],
+  "config_a": "minimax-m3--opencode-go--dev",
+  "config_b": "qwen3.8-max-preview--cli--qoder--dev",
+  "kind": "cross",
+  "pairs": [
+    {
+      "diagnostics": {
+        "c_ncd_ncd_sym": 0.8103651354534747,
+        "v_ssim_raw": 0.5650925022693759
+      },
+      "s": {
+        "c-ast-js": 0.9334121726259113,
+        "c-css-prop": 0.8715506736925667,
+        "c-feature": 0.4953271028037383,
+        "c-ncd": 0.18963486454652534,
+        "c-shingle": 0.22165945298830464,
+        "c-winnow": 0.252,
+        "d-geom": 0.7736300301549345,
+        "d-pqgram": 0.2914572864321608,
+        "d-tagpath": 0.4,
+        "d-text": 0.07692307692307693,
+        "v-color": 0.802496234308003,
+        "v-dhash": 0.5,
+        "v-edge": 0.6969966341387855,
+        "v-layout": 0.8692026539525873,
+        "v-palette": 0.9672977477216239,
+        "v-phash": 0.625,
+        "v-ssim": 0.7825462511346879,
+        "x-color": 0.9000142355094386,
+        "x-css-values": 0.9755951208962336,
+        "x-layout": 0.8702255143203519,
+        "x-naming": 0.9372598222329594,
+        "x-semantics": 0.9809710308483202
+      },
+      "slot_a": 1,
+      "slot_b": 0
+    },
+    {
+      "diagnostics": {
+        "c_ncd_ncd_sym": 0.790341578327444,
+        "v_ssim_raw": 0.6391997985571969
+      },
+      "s": {
+        "c-ast-js": 0.8945089350602837,
+        "c-css-prop": 0.8637058002284411,
+        "c-feature": 0.6206896551724138,
+        "c-ncd": 0.209658421672556,
+        "c-shingle": 0.2647203866259,
+        "c-winnow": 0.2581967213114754,
+        "d-geom": 0.7863031071655047,
+        "d-pqgram": 0.3116438356164384,
+        "d-tagpath": 0.3,
+        "d-text": 0.1794871794871795,
+        "v-color": 0.8006540776231929,
+        "v-dhash": 0.515625,
+        "v-edge": 0.7401920283744805,
+        "v-layout": 0.8918760154183109,
+        "v-palette": 0.9644243858950668,
+        "v-phash": 0.71875,
+        "v-ssim": 0.8195998992785984,
+        "x-color": 0.9057076806640539,
+        "x-css-values": 0.9786992716989769,
+        "x-layout": 0.8862013201611684,
+        "x-naming": 0.9941107298533141,
+        "x-semantics": 0.9919832156841301
+      },
+      "slot_a": 1,
+      "slot_b": 1
+    }
+  ],
+  "variant": "P-q"
 }

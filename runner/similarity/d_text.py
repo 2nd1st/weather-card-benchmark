@@ -30,19 +30,33 @@ pins. Every scheme-silent choice is FLAGGED in the implementation report.
    scheme lists them. [FLAG: scheme does not spell out the d-text tokenizer; we use
    the standard §3 normalization + a ``\\w+`` Unicode word tokenizer.]
 
-3. **"剔除动态字段" (excise dynamic fields).** The scheme does NOT enumerate what a
-   "dynamic field" is. Since every devset / batch card renders the SAME frozen
-   weather snapshot, the dynamic *data* is precisely the numeric values that vary
-   with the data (temperatures, hourly clock labels, dates, percentages, wind
-   speeds…). We define a token as dynamic iff it CONTAINS ANY UNICODE DIGIT and
-   REMOVE it entirely ("剔除" = excise, not placeholder-substitute). This excises the
-   weather data while retaining the card's design vocabulary (labels like "today",
-   "max", "min", "humidity", "wind", condition words). [FLAG — scheme-silent: the
-   exact dynamic-field definition is a judgment call; a WMO condition string (e.g.
-   "cloudy") is arguably dynamic too but is textual, not numeric, and is not
-   enumerated, so it is retained. Chosen rule = digit-bearing tokens, being the most
-   deterministic, language-independent reading most consistent with the stated
-   rules.]
+3. **"剔除动态字段" (excise dynamic fields) — v14, PLACEHOLDER not deletion.** The
+   scheme does NOT enumerate what a "dynamic field" is, nor how it is neutralized.
+   Since every devset / batch card renders the SAME frozen weather snapshot, the
+   dynamic *data* is precisely the numeric values that vary with the data
+   (temperatures, hourly clock labels, dates, percentages, wind speeds…). A token
+   is dynamic iff it CONTAINS ANY UNICODE DIGIT; such a token is REPLACED BY THE
+   PLACEHOLDER ``#``, keeping its POSITION in the token sequence.
+
+   [v14 amendment — 2026-07-25, evidenced. v13 and earlier DELETED the token
+   outright. Measured on the full production set that made the channel dead: the
+   post-excision stream had a median of 11 non-digit tokens, so the k=5 shingle set
+   had a median size of 7, and the channel returned **S = 0.000 as its median over
+   all 20100 production cross-pairs** (72.5% exact zeros on the calibration
+   sample) — a constant, not a measurement. Deletion also silently JOINS text
+   across the hole ("high 25° low 16°" → "high low"), fabricating adjacencies that
+   are not in the card. The placeholder fixes both: the shape of the text is
+   preserved ("high # low #"), the stream keeps its real length (median 14 → 86
+   tokens), exact zeros fall to 13.7%, and family discrimination is the BEST of
+   every variant measured (AUC 0.566 vs 0.535 for deletion at the same k, and
+   above deletion at k=2 and k=3 as well). Crucially this changes only the
+   scheme-SILENT half of the rule: appendix A pins **k=5**, and k=5 is retained.
+   Calibration: scratchpad/calibrate.py + calibrate2.py, 80 configs / 3160 pairs.]
+
+   [FLAG — still scheme-silent: a WMO condition string (e.g. "cloudy") is arguably
+   dynamic too, but it is textual rather than numeric and is not enumerated, so it
+   is retained. Digit-bearing is the most deterministic, language-independent
+   reading of "dynamic field".]
 
 4. **Token stream & shingling across node boundaries.** Tokens are extracted
    PER visible text node (so two adjacent nodes never merge into one token — cf. §3
@@ -95,6 +109,10 @@ K = 5  # k = 5 token shingle
 # dynamic-field predicate (any Unicode decimal digit).
 _TOKEN_RE = re.compile(r"\w+", re.UNICODE)
 _DIGIT_RE = re.compile(r"\d", re.UNICODE)
+
+# v14 dynamic-field placeholder. "#" is outside \w, so the tokenizer can NEVER
+# emit it from card text — it cannot collide with a real token.
+DYNAMIC = "#"
 
 _NFC = "NFC"
 _UTF8 = "utf-8"
@@ -196,11 +214,12 @@ def _is_dynamic(token: str) -> bool:
 
 
 def visible_text_tokens(dom: dict | None) -> list[str]:
-    """Retained (post dynamic-field excision) token sequence for one card.
+    """Retained (post dynamic-field neutralization) token sequence for one card.
 
     Visible text nodes (``type == "text"`` ∧ ``text_visible``) in preorder →
-    NFC+casefold → ``\\w+`` tokens → drop digit-bearing (dynamic) tokens →
-    concatenated global sequence.
+    NFC+casefold → ``\\w+`` tokens → digit-bearing (dynamic) tokens replaced by
+    ``DYNAMIC`` in place → concatenated global sequence. (v14: replace, not
+    delete — see docstring item 3.)
     """
     if not isinstance(dom, Mapping):
         return []
@@ -223,8 +242,7 @@ def visible_text_tokens(dom: dict | None) -> list[str]:
         if not isinstance(raw, str) or not raw:
             continue
         for tok in _TOKEN_RE.findall(_normalize(raw)):
-            if not _is_dynamic(tok):
-                tokens.append(tok)
+            tokens.append(DYNAMIC if _is_dynamic(tok) else tok)
     return tokens
 
 

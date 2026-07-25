@@ -31,6 +31,8 @@ from runner.fidelity import (
 )
 from runner.render import l1_visual
 
+from .conftest import requires_devset
+
 REPO = Path(__file__).resolve().parents[2]
 SCHEMA = REPO / "data" / "SCHEMA"
 GOLDEN_CARD = REPO / "data" / "batches-dev" / "devset-42" / "cards" / "r1__gpt-5.6-sol"
@@ -48,6 +50,7 @@ def _slot_meta_validator() -> Draft202012Validator:
 # --------------------------------------------------------------------------- #
 # L1 visual scalars — golden on one devset card
 # --------------------------------------------------------------------------- #
+@requires_devset
 def test_l1_visual_golden() -> None:
     png = (GOLDEN_CARD / "shot.png").read_bytes()
     html = (GOLDEN_CARD / "card.html").read_text()
@@ -73,6 +76,7 @@ def test_l1_visual_golden() -> None:
     assert set(pal[0]["lab"]) == {"L", "a", "b"}
 
 
+@requires_devset
 def test_l1_conforms_to_slot_meta_subschema() -> None:
     png = (GOLDEN_CARD / "shot.png").read_bytes()
     html = (GOLDEN_CARD / "card.html").read_text()
@@ -134,6 +138,7 @@ def test_frame_change_fewer_than_two_frames() -> None:
 # --------------------------------------------------------------------------- #
 # expected-value table derived from the batch snapshot (not hardcoded Berlin)
 # --------------------------------------------------------------------------- #
+@requires_devset
 def test_expected_from_snapshot_m1() -> None:
     snap = json.loads(M1_SNAPSHOT.read_text())
     exp = expected_from_snapshot(snap)
@@ -150,6 +155,7 @@ def test_expected_from_snapshot_m1() -> None:
     assert ev.startswith(EXTRACTOR_BASE + "+")
 
 
+@requires_devset
 def test_extractor_version_stamped_into_verdict() -> None:
     snap = json.loads(M1_SNAPSHOT.read_text())
     exp = expected_from_snapshot(snap)

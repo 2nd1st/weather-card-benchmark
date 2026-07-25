@@ -1,6 +1,6 @@
 """GOLDEN — L2 channel anchors (scheme §4 / §11 lock item 2).
 
-For EACH of the 17 L2 channels (15 formal + the 2 permanent diagnostics
+For EACH of the 22 L2 channels (20 formal + the 2 permanent diagnostics
 c-ncd / d-tagpath) the fixture pins:
 
   * one real devset card PAIR (input refs) + the EXACT S value (full float repr),
@@ -39,7 +39,7 @@ MOD = {name: mod for name, mod in CHANNELS}
 
 # every channel in the registry must have exactly one golden entry.
 assert {e["channel"] for e in ENTRIES} == set(MOD), "channel set drift"
-assert len(ENTRIES) == 17
+assert len(ENTRIES) == 22
 
 
 def _art(slug: str) -> dict:
@@ -68,6 +68,20 @@ def _degenerate_art(kind: str) -> dict:
     raise AssertionError(f"unknown degenerate kind {kind!r}")
 
 
+# The bit-exact anchors need the devset-42 card corpus, which the public repo
+# deliberately does not ship (it carries the flagship subset only). Without this
+# guard every anchor FAILS there — and the public README tells a new contributor
+# to run `pytest -q` as their setup check, so the first thing they saw was a
+# screenful of red that had nothing to do with their machine. Absent corpus is a
+# skip; a WRONG value is still a failure.
+_HAVE_CORPUS = CARDS.is_dir()
+_NO_CORPUS = pytest.mark.skipif(
+    not _HAVE_CORPUS,
+    reason=f"devset-42 card corpus not present at {CARDS} (not shipped publicly)",
+)
+
+
+@_NO_CORPUS
 @pytest.mark.parametrize("entry", ENTRIES, ids=[e["channel"] for e in ENTRIES])
 def test_channel_pair_value_is_bit_exact(entry):
     mod = MOD[entry["channel"]]

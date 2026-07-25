@@ -98,6 +98,11 @@ from . import (
     v_palette,
     v_phash,
     v_ssim,
+    x_color,
+    x_css_values,
+    x_layout,
+    x_naming,
+    x_semantics,
 )
 from . import cache as C
 
@@ -121,6 +126,14 @@ CHANNELS: list[tuple[str, Any]] = [
     ("d-text", d_text),
     ("d-pqgram", d_pqgram),
     ("d-tagpath", d_tagpath),
+    # v13 extended code-feature family (§4 v13): interpretable feature-distribution
+    # signatures from card.html — declared color / CSS values / layout technique /
+    # class naming / HTML semantics. Formal (non-diagnostic); cosine over vectors.
+    ("x-color", x_color),
+    ("x-css-values", x_css_values),
+    ("x-layout", x_layout),
+    ("x-naming", x_naming),
+    ("x-semantics", x_semantics),
 ]
 CHANNEL_NAMES: list[str] = [name for name, _ in CHANNELS]
 

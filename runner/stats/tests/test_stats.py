@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+
+import pytest
 from pathlib import Path
 
 import rfc8785
@@ -42,6 +44,13 @@ from runner.stats.serialize import (
 )
 
 BATCH = Path(__file__).resolve().parents[3] / "data" / "batches-dev" / "2026-07-16--m1-dev-e2e-smoke"
+
+# BATCH is a dev smoke batch that no longer exists — it was removed in the data
+# cleanup, and it was never published. Absent corpus is a skip, not a failure
+# (see runner/tests/conftest.py for the same rule elsewhere).
+_requires_batch = pytest.mark.skipif(
+    not BATCH.is_dir(), reason=f"stats smoke batch not present: {BATCH.name}"
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -316,6 +325,7 @@ def test_descriptive_low_coverage_forces_null_value():
 # --------------------------------------------------------------------------- #
 # integration determinism on the M1 dev batch
 # --------------------------------------------------------------------------- #
+@_requires_batch
 def test_m1_build_is_deterministic():
     from runner.stats.load import load_batch
     from runner.stats.run import build_stats_doc
@@ -334,6 +344,7 @@ def test_m1_build_is_deterministic():
     assert len(d1["randomization_test"]["pooled"]) == 20
 
 
+@_requires_batch
 def test_m1_only_schema_error_is_omega_enum():
     from runner.stats.run import run
     res = run(BATCH, dev=True)

@@ -1,12 +1,12 @@
 {
   "meta": {
     "title": "Matrix",
-    "description": "Cross-config similarity across 17 channels, per measured set. Contrast-stretched or fixed [0,1] viridis; similarity is a measurement, not a quality score."
+    "description": "Cross-config similarity across 22 channels, per measured set. Contrast-stretched or fixed [0,1] viridis; similarity is a measurement, not a quality score."
   },
   "tag": "matrix · cross-config similarity",
   "num": "§ matrix",
   "title": "Matrix",
-  "subtitle": "Every config against every other, across all 17 similarity channels.",
+  "subtitle": "Every config against every other, across all 22 similarity channels.",
   "honesty": "Similarity is a measurement, not a quality score — it captures convergence, nothing else. Values are only comparable within one measured set — the same fixture.",
   "set": "{city} · {date} · {n} of {m} configs measured together",
   "session": {
@@ -53,16 +53,17 @@
   },
   "main": {
     "diagnostic": "diagnostic",
-    "diagnosticTitle": "permanent diagnostic (not in the formal 15)",
-    "hint": "Hover a cell to sync all 17 channels · click a cell for pair detail · click a header to open that config. The bordered diagonal is self-consistency.",
+    "diagnosticTitle": "permanent diagnostic (not in the formal 20)",
+    "hint": "Hover a cell to sync all 22 channels · click a cell for pair detail · click a header to open that config. The bordered diagonal is self-consistency.",
     "family": {
       "v": "Visual",
       "c": "Code",
-      "d": "DOM structure"
+      "d": "DOM structure",
+      "x": "Code-feature"
     }
   },
   "multiples": {
-    "title": "17 channels — pick one for the main view"
+    "title": "22 channels — pick one for the main view"
   },
   "channelDesc": {
     "v-phash": "Perceptual hash — coarse whole-image visual fingerprint.",
@@ -81,7 +82,12 @@
     "d-geom": "DOM box-geometry (bounding-box) similarity.",
     "d-text": "DOM text-content overlap.",
     "d-pqgram": "pq-gram tree-edit similarity of the DOM.",
-    "d-tagpath": "Tag-path profile similarity (diagnostic)."
+    "d-tagpath": "Tag-path profile similarity (diagnostic).",
+    "x-color": "Declared-color palette from the CSS (code-side, no render).",
+    "x-css-values": "CSS value vocabulary — units, functions, color notation.",
+    "x-layout": "Layout technique — flex/grid/position and at-rules.",
+    "x-naming": "Class-naming style (BEM / utility / kebab / camel).",
+    "x-semantics": "HTML semantic profile — semantic tags, depth, ARIA."
   },
   "tooltip": {
     "self": "self-consistency",
@@ -93,10 +99,10 @@
   },
   "drawer": {
     "title": "Pair detail",
-    "subtitle": "Two configs across all 17 channels. Similarity is a measurement, not a quality score.",
+    "subtitle": "Two configs across all 22 channels. Similarity is a measurement, not a quality score.",
     "self": "self-consistency",
     "cross": "cross",
-    "aggregateHeading": "Aggregate similarity — all 17 channels",
+    "aggregateHeading": "Aggregate similarity — all 22 channels",
     "aggregateNote": "Median across non-empty slot-pairs, on the fixed [0,1] scale. A value only shows with enough effective comparisons (n_eff ≥ 4, and ≥2 valid slots per side for a cross pair); otherwise insufficient data, never a number.",
     "perPairHeading": "Per slot-pair (raw, ungated)",
     "perPairNote": "Per-slot-pair values are shown raw (no gate) so the underlying distribution is fully visible — the gated aggregate above is what the matrix uses.",
@@ -116,6 +122,7 @@
   },
   "merged": {
     "group": "consensus",
-    "desc": "All scored channels folded into one view: each channel is contrast-stretched over its own p5–p95 first (so no channel dominates by scale), then averaged. Diagnostic channels are excluded; a pair needs ≥6 contributing channels."
+    "desc": "All scored channels folded into one view: each channel is contrast-stretched over its own p1–p99 across the WHOLE set first (so no channel dominates by scale), then averaged. The stretch range is frozen, so a value doesn't move when you filter the matrix — it's the same number the published findings quote. Diagnostic channels are excluded; a pair needs ≥6 contributing channels. Derived, not measured.",
+    "familyDesc": "One consensus over every non-diagnostic channel in the {family} family — what merged is to all channels, scoped to this one."
   }
 }

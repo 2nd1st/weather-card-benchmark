@@ -50,15 +50,30 @@ def test_tokenize_lowercases_nfc():
     assert toks == ["today", "max", "min"]
 
 
-def test_dynamic_digit_tokens_excised():
-    # "27" and "14" (and "00" from 14:00) are dynamic → excised; letters kept.
+def test_dynamic_digit_tokens_placeholdered():
+    # v14: "27", "14", "00" (from 14:00) and "88" are dynamic → replaced by the
+    # DYNAMIC placeholder IN PLACE, not deleted. The shape of the text survives.
     toks = dt.visible_text_tokens(_dom("Max 27° Min 14° at 14:00 humidity 88%"))
-    assert toks == ["max", "min", "at", "humidity"]  # °C leftover 'c' not here
+    assert toks == ["max", "#", "min", "#", "at", "#", "#", "humidity", "#"]
+
+
+def test_placeholder_keeps_non_adjacent_words_apart():
+    # v14 regression: under deletion this collapsed to ["high","low"], fabricating
+    # an adjacency ("high low") that appears nowhere on the card.
+    assert dt.visible_text_tokens(_dom("high 25° low 16°")) == [
+        "high", "#", "low", "#",
+    ]
 
 
 def test_leftover_letter_from_unit_kept():
-    # "27°C" → \w+ tokens "27","c"; "27" excised, "c" retained.
-    assert dt.visible_text_tokens(_dom("27°C")) == ["c"]
+    # "27°C" → \w+ tokens "27","c"; "27" → placeholder, "c" retained.
+    assert dt.visible_text_tokens(_dom("27°C")) == ["#", "c"]
+
+
+def test_placeholder_cannot_collide_with_a_real_token():
+    # DYNAMIC is outside \w+, so no card text can ever tokenize to it.
+    assert not dt._TOKEN_RE.fullmatch(dt.DYNAMIC)
+    assert dt.visible_text_tokens(_dom("# ## hash")) == ["hash"]
 
 
 def test_invisible_text_dropped():
@@ -134,10 +149,21 @@ def test_no_dom_is_none():
     assert dt.compute(None, None)["s"] is None
 
 
-def test_all_dynamic_tokens_is_none():
-    # only numeric tokens → all excised → empty → None
+def test_all_dynamic_tokens_is_defined_not_none():
+    # v14: an all-numeric card is no longer "empty". It HAS visible text, and its
+    # text-shape is "########" — a real, comparable signal. So S is DEFINED (0.0
+    # against a labelled card: no shared 5-gram), where v13 returned None because
+    # deletion had emptied the stream. Null is reserved for "no text at all".
     dom = _dom("27 14 88 12 06 18 24 00")
-    assert dt.compute({"dom": dom}, {"dom": _dom(_WORDS)})["s"] is None
+    assert dt.compute({"dom": dom}, {"dom": _dom(_WORDS)})["s"] == 0.0
+    # two pure-numeric cards agree on that shape — degenerate but honest.
+    assert dt.compute({"dom": dom}, {"dom": _dom("1 2 3 4 5 6 7 8")})["s"] == 1.0
+
+
+def test_no_visible_text_at_all_is_none():
+    # the surviving null path: nothing visible → empty stream → S = None.
+    blank = _dom(_WORDS, visible=False)
+    assert dt.compute({"dom": blank}, {"dom": _dom(_WORDS)})["s"] is None
 
 
 # --------------------------------------------------------------------------

@@ -16,7 +16,8 @@
   "declarations": [
     "Similarity metrics are measurements, not quality scores. The channels below quantify how alike two cards are — we don't convert that into a judgment of which model is better.",
     "Community vote standings are a UI preference — which cards people prefer to look at. Vote counts are visible; they are not a model-capability benchmark.",
-    "Everything is deterministic and reproducible. Every batch is anchored to a manifest_hash you can recompute; the measured pixels are the exact pixels the algorithms read."
+    "Everything is deterministic and reproducible. Every batch is anchored to a manifest_hash you can recompute; the measured pixels are the exact pixels the algorithms read.",
+    "Some channels are coarser than their names suggest, and we say so rather than quietly smoothing them. v-palette's Gaussian kernel is inert at the frozen Lab grid (adjacent bin centres sit 25–37 ΔE apart against σ=10), so it behaves as a hard-binned colour cosine; v-color quantizes to 4 levels per channel, where a typical card puts over half its pixels in one bin. Both therefore read closer to \"same dominant colour or not\" than to a perceptual palette distance. Widening either was tested against the full set and made discrimination worse, so the frozen definitions stand and the limit is documented instead."
   ],
   "measure": {
     "title": "How similarity is measured",
@@ -30,7 +31,7 @@
       {
         "k": "L2",
         "t": "similarity channels",
-        "d": "Visual (phash/dhash/color/palette/layout/edge/ssim), code (shingle/winnow/feature/ast-js/css-prop), and DOM (geom/text/pqgram) channels — each a distinct, frozen definition. No composite is computed or shown; a null pair stays null."
+        "d": "Visual (phash/dhash/color/palette/layout/edge/ssim), code (shingle/winnow/feature/ast-js/css-prop), extended code-feature (x-color/x-css-values/x-layout/x-naming/x-semantics), and DOM (geom/text/pqgram) channels — 20 formal plus 2 permanent diagnostics, each a distinct, frozen definition; a null pair stays null. The matrix also offers a derived `merged` consensus: because the channels are not on a common scale, each is first stretched over its own p1–p99 across the whole set (a frozen domain, so the value doesn't move when you filter) and only then averaged. It is derived, never measured."
       },
       {
         "k": "L3",

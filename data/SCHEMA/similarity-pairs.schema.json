@@ -17,8 +17,8 @@
       "type": "array",
       "uniqueItems": true,
       "minItems": 17,
-      "maxItems": 17,
-      "description": "All 17 L2 channel names (scheme §4), the exact key set of every pair's s object. Includes the 2 permanent diagnostics c-ncd / d-tagpath.",
+      "maxItems": 22,
+      "description": "All 22 L2 channel names (scheme §4, v13), the exact key set of every pair's s object. Includes the 2 permanent diagnostics c-ncd / d-tagpath. Bounds are 17..22 (not 22..22) so pair documents written before the v13 x-* expansion still validate. NOTE 2026-07-25: v13 updated the s-object `required` list and the summary schema to 22 but left THIS array at 17/17 and the channelName enum at 17 names, so every 22-channel pair document written since has been invalid against the frozen schema — the production runner does not schema-validate pair docs at write time, only the tests do, which is why it went unseen.",
       "items": {"$ref": "#/$defs/channelName"}
     },
     "pairs": {
@@ -38,9 +38,10 @@
             "required": [
               "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
               "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
-              "d-geom", "d-text", "d-pqgram", "d-tagpath"
+              "d-geom", "d-text", "d-pqgram", "d-tagpath",
+              "x-color", "x-css-values", "x-layout", "x-naming", "x-semantics"
             ],
-            "description": "Per-channel S for this slot-pair. Every one of the 17 channels present; S in [0,1] by construction, or null when either side is a zero-vector / empty set / empty bag (scheme §4 'S=null'; double-empty is also null). c-ncd and d-tagpath values are DIAGNOSTIC (displayed, excluded from pruning/stats/hypotheses).",
+            "description": "Per-channel S for this slot-pair. Every one of the 22 channels present (v13); S in [0,1] by construction, or null when either side is a zero-vector / empty set / empty bag (scheme §4 'S=null'; double-empty is also null). c-ncd and d-tagpath values are DIAGNOSTIC (displayed, excluded from pruning/stats/hypotheses). The x-* family (v13) are formal code-feature-distribution cosine channels from card.html.",
             "properties": {
               "v-phash": {"$ref": "#/$defs/sValue"},
               "v-dhash": {"$ref": "#/$defs/sValue"},
@@ -58,7 +59,12 @@
               "d-geom": {"$ref": "#/$defs/sValue"},
               "d-text": {"$ref": "#/$defs/sValue"},
               "d-pqgram": {"$ref": "#/$defs/sValue"},
-              "d-tagpath": {"$ref": "#/$defs/sValue", "description": "Diagnostic channel (root→leaf tag path set Jaccard)."}
+              "d-tagpath": {"$ref": "#/$defs/sValue", "description": "Diagnostic channel (root→leaf tag path set Jaccard)."},
+              "x-color": {"$ref": "#/$defs/sValue", "description": "v13. Declared-color HSL-bucket histogram cosine (code-side palette)."},
+              "x-css-values": {"$ref": "#/$defs/sValue", "description": "v13. CSS value-vocabulary (units/functions/color-notation) cosine."},
+              "x-layout": {"$ref": "#/$defs/sValue", "description": "v13. Layout-technique (display/position/at-rules/props) cosine."},
+              "x-naming": {"$ref": "#/$defs/sValue", "description": "v13. Class-naming-style profile cosine."},
+              "x-semantics": {"$ref": "#/$defs/sValue", "description": "v13. HTML semantic-profile (semantic ratios, depth) cosine."}
             }
           },
           "diagnostics": {
@@ -92,7 +98,8 @@
       "enum": [
         "v-phash", "v-dhash", "v-color", "v-palette", "v-layout", "v-edge", "v-ssim",
         "c-shingle", "c-winnow", "c-feature", "c-ast-js", "c-css-prop", "c-ncd",
-        "d-geom", "d-text", "d-pqgram", "d-tagpath"
+        "d-geom", "d-text", "d-pqgram", "d-tagpath",
+        "x-color", "x-css-values", "x-layout", "x-naming", "x-semantics"
       ]
     },
     "sValue": {

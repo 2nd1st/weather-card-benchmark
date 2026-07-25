@@ -1,82 +1,97 @@
 {
- "batch_id": "2026-07-19--unified",
- "channels": [
-  "v-phash",
-  "v-dhash",
-  "v-color",
-  "v-palette",
-  "v-layout",
-  "v-edge",
-  "v-ssim",
-  "c-shingle",
-  "c-winnow",
-  "c-feature",
-  "c-ast-js",
-  "c-css-prop",
-  "c-ncd",
-  "d-geom",
-  "d-text",
-  "d-pqgram",
-  "d-tagpath"
- ],
- "config_a": "deepseek-v4-pro--cli--opencode--dev",
- "config_b": "minimax-m3--opencode-go--dev",
- "kind": "cross",
- "pairs": [
-  {
-   "diagnostics": {
-    "c_ncd_ncd_sym": 0.8121319199057715,
-    "v_ssim_raw": 0.674599011376096
-   },
-   "s": {
-    "c-ast-js": 0.8963291512281601,
-    "c-css-prop": 0.8960967109994206,
-    "c-feature": 0.42857142857142855,
-    "c-ncd": 0.1878680800942285,
-    "c-shingle": 0.205108491371946,
-    "c-winnow": 0.19508196721311474,
-    "d-geom": 0.1537533323979235,
-    "d-pqgram": 0.2116788321167883,
-    "d-tagpath": 0.23809523809523808,
-    "d-text": 0.0,
-    "v-color": 0.7993253658671657,
-    "v-dhash": 0.71875,
-    "v-edge": 0.7053914684268073,
-    "v-layout": 0.8764510726178333,
-    "v-palette": 0.9991992430139136,
-    "v-phash": 0.5,
-    "v-ssim": 0.837299505688048
-   },
-   "slot_a": 0,
-   "slot_b": 1
-  },
-  {
-   "diagnostics": {
-    "c_ncd_ncd_sym": 0.8085983510011778,
-    "v_ssim_raw": 0.6074515351958508
-   },
-   "s": {
-    "c-ast-js": 0.8970399417056095,
-    "c-css-prop": 0.9166515109796054,
-    "c-feature": 0.4172661870503597,
-    "c-ncd": 0.19140164899882217,
-    "c-shingle": 0.22138406034765498,
-    "c-winnow": 0.19666666666666666,
-    "d-geom": 0.5274261603375532,
-    "d-pqgram": 0.3089171974522293,
-    "d-tagpath": 0.42857142857142855,
-    "d-text": 0.0,
-    "v-color": 0.6894872164227709,
-    "v-dhash": 0.63671875,
-    "v-edge": 0.6598186872488832,
-    "v-layout": 0.8291236890305845,
-    "v-palette": 0.9890012038889789,
-    "v-phash": 0.625,
-    "v-ssim": 0.8037257675979255
-   },
-   "slot_a": 1,
-   "slot_b": 1
-  }
- ],
- "variant": "P-q"
+  "batch_id": "2026-07-19--flagship",
+  "channels": [
+    "v-phash",
+    "v-dhash",
+    "v-color",
+    "v-palette",
+    "v-layout",
+    "v-edge",
+    "v-ssim",
+    "c-shingle",
+    "c-winnow",
+    "c-feature",
+    "c-ast-js",
+    "c-css-prop",
+    "c-ncd",
+    "d-geom",
+    "d-text",
+    "d-pqgram",
+    "d-tagpath",
+    "x-color",
+    "x-css-values",
+    "x-layout",
+    "x-naming",
+    "x-semantics"
+  ],
+  "config_a": "deepseek-v4-pro--cli--opencode--dev",
+  "config_b": "minimax-m3--opencode-go--dev",
+  "kind": "cross",
+  "pairs": [
+    {
+      "diagnostics": {
+        "c_ncd_ncd_sym": 0.8121319199057715,
+        "v_ssim_raw": 0.674599011376096
+      },
+      "s": {
+        "c-ast-js": 0.8963291512281601,
+        "c-css-prop": 0.8960967109994206,
+        "c-feature": 0.42857142857142855,
+        "c-ncd": 0.1878680800942285,
+        "c-shingle": 0.205108491371946,
+        "c-winnow": 0.19508196721311474,
+        "d-geom": 0.1537533323979235,
+        "d-pqgram": 0.2116788321167883,
+        "d-tagpath": 0.23809523809523808,
+        "d-text": 0.0,
+        "v-color": 0.7993253658671657,
+        "v-dhash": 0.71875,
+        "v-edge": 0.7053914684268073,
+        "v-layout": 0.8764510726178333,
+        "v-palette": 0.9991992430139136,
+        "v-phash": 0.5,
+        "v-ssim": 0.837299505688048,
+        "x-color": 0.8245203297727662,
+        "x-css-values": 0.9318536614548508,
+        "x-layout": 0.8154670468534695,
+        "x-naming": 0.931689440071139,
+        "x-semantics": 0.984231383474093
+      },
+      "slot_a": 0,
+      "slot_b": 1
+    },
+    {
+      "diagnostics": {
+        "c_ncd_ncd_sym": 0.8085983510011778,
+        "v_ssim_raw": 0.6074515351958508
+      },
+      "s": {
+        "c-ast-js": 0.8970399417056095,
+        "c-css-prop": 0.9166515109796054,
+        "c-feature": 0.4172661870503597,
+        "c-ncd": 0.19140164899882217,
+        "c-shingle": 0.22138406034765498,
+        "c-winnow": 0.19666666666666666,
+        "d-geom": 0.5274261603375532,
+        "d-pqgram": 0.3089171974522293,
+        "d-tagpath": 0.42857142857142855,
+        "d-text": 0.08695652173913043,
+        "v-color": 0.6894872164227709,
+        "v-dhash": 0.63671875,
+        "v-edge": 0.6598186872488832,
+        "v-layout": 0.8291236890305845,
+        "v-palette": 0.9890012038889789,
+        "v-phash": 0.625,
+        "v-ssim": 0.8037257675979255,
+        "x-color": 0.3171444968333343,
+        "x-css-values": 0.8927922074600878,
+        "x-layout": 0.9174418502442596,
+        "x-naming": 0.9213587381092608,
+        "x-semantics": 0.991506491538977
+      },
+      "slot_a": 1,
+      "slot_b": 1
+    }
+  ],
+  "variant": "P-q"
 }

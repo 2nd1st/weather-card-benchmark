@@ -1,5 +1,5 @@
 {
-  "_doc": "Per-channel cross-implementation anchor (scheme §4). Each entry pins one devset card pair and the EXACT S value (full float repr via json round-trip). The test rebuilds artifacts from the referenced devset cards, runs channel.compute, and asserts S is bit-identical. Visual channels read shot.png (frozen original); DOM channels read dom.json; code channels read card.html. | 2026-07-20: v-phash & v-dhash re-blessed after the Pillow float-LANCZOS imaging fix (F-mode downscale returned NaN/1e35, collapsing v-phash to all-zero hashes); grayscale now resizes via uint8 convert(\"L\") like the sibling channels. Other 15 unchanged.",
+  "_doc": "Per-channel cross-implementation anchor (scheme §4). Each entry pins one devset card pair and the EXACT S value (full float repr via json round-trip). The test rebuilds artifacts from the referenced devset cards, runs channel.compute, and asserts S is bit-identical. Visual channels read shot.png (frozen original); DOM channels read dom.json; code channels read card.html. | 2026-07-20: v-phash & v-dhash re-blessed after the Pillow float-LANCZOS imaging fix (F-mode downscale returned NaN/1e35, collapsing v-phash to all-zero hashes); grayscale now resizes via uint8 convert(\"L\") like the sibling channels. Other 15 unchanged. | 2026-07-25: +5 x-* code-feature channels (v13, 17 -> 22) blessed on the same devset pair; all read card.html and null out on empty-html per §4; blessed AFTER the _xcommon.cosine sorted-key fix (unordered accumulation was seed-dependent in the last ULP). | 2026-07-25 (v14): d-text re-blessed 0.0 -> 0.05172413793103448 after the dynamic-field rule changed from DELETE to PLACEHOLDER ('#'). The old golden pinned a LITERAL ZERO: post-deletion the stream held a median 11 tokens, so the k=5 shingle set was near-empty and S=0.000 was the channel's median over all 20100 production cross-pairs — the anchor was blessing a dead channel, not a measurement. k=5 (appendix A pinned) is unchanged; only the scheme-silent excision rule moved. Other 21 channels unchanged.",
   "corpus": "data/batches-dev/devset-42/cards",
   "channels": [
     {
@@ -104,7 +104,7 @@
       "channel": "d-text",
       "card_a": "r1__claude-fable-5",
       "card_b": "r1__codex-cli",
-      "s": 0.0,
+      "s": 0.05172413793103448,
       "degenerate": "empty-dom"
     },
     {
@@ -120,6 +120,41 @@
       "card_b": "r1__codex-cli",
       "s": 0.14893617021276595,
       "degenerate": "empty-dom"
+    },
+    {
+      "channel": "x-color",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.3214777122977706,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "x-css-values",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.9343517800131956,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "x-layout",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.8248238301715085,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "x-naming",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.6572209258850958,
+      "degenerate": "empty-html"
+    },
+    {
+      "channel": "x-semantics",
+      "card_a": "r1__claude-fable-5",
+      "card_b": "r1__codex-cli",
+      "s": 0.9153469574326683,
+      "degenerate": "empty-html"
     }
   ]
 }

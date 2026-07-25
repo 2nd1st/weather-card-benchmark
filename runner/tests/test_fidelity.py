@@ -238,10 +238,27 @@ def test_same_span_both_labels_voided():
 # --------------------------------------------------------------------------
 # real-card end-to-end: every devset card must produce a schema-valid trace+meta
 # --------------------------------------------------------------------------
-@pytest.mark.parametrize("slug", sorted(
-    p.name for p in (REPO / "data/batches-dev/devset-42/cards").iterdir()
-    if p.is_dir() and (p / "dom.json").exists()
-))
+def _devset_slugs() -> list[str]:
+    """Devset card slugs, or [] when the corpus is absent.
+
+    This runs at COLLECTION time, so an unguarded iterdir() raises
+    FileNotFoundError before any test runs and aborts the whole session — which
+    is exactly what happened in the public repo, where the devset-42 corpus is
+    deliberately not shipped: `pytest -q`, the setup check the README hands new
+    contributors, could not even collect.
+    """
+    cards = REPO / "data/batches-dev/devset-42/cards"
+    if not cards.is_dir():
+        return []
+    return sorted(
+        p.name for p in cards.iterdir() if p.is_dir() and (p / "dom.json").exists()
+    )
+
+
+@pytest.mark.skipif(
+    not _devset_slugs(), reason="devset-42 card corpus not present (not shipped publicly)"
+)
+@pytest.mark.parametrize("slug", _devset_slugs())
 def test_devset_card_schema_valid(slug):
     from runner.fidelity import DEVSET_EXPECTED
     dom = json.loads((REPO / f"data/batches-dev/devset-42/cards/{slug}/dom.json").read_text())

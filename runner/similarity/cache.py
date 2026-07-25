@@ -228,6 +228,18 @@ def _runtime_versions() -> dict[str, str]:
     return versions
 
 
+def _helper_sources() -> dict[str, str]:
+    """Shared in-package helper modules (``_*.py``) the channels compute through.
+
+    Hashing only ``mod.__file__`` per channel leaves a hole: a channel whose math
+    lives in a shared helper (the x-* family computes through ``_xcommon``) can
+    change behaviour with every channel file byte-identical, and the cache would
+    happily serve stale pair values. Cover the helpers explicitly.
+    """
+    here = Path(__file__).resolve().parent
+    return {p.name: sha256_file(p) for p in sorted(here.glob("_*.py"))}
+
+
 def build_engine_fingerprint(
     channel_modules: list[tuple[str, Any]],
     channel_names: list[str],
@@ -237,14 +249,16 @@ def build_engine_fingerprint(
     """Full engine fingerprint. Returns a dict carrying both the raw material and
     the two derived digests (``pair_engine_digest`` / ``summary_engine_digest``).
 
-    Pair-engine coverage: per-channel source hashes, node helper + node version,
-    Pillow / numpy / skimage / zlib / Python versions, artifact/serializer/schema
-    version boundaries. Summary-engine wraps the pair-engine digest (a pair change
-    is also a summary change) plus its own version / eligibility params.
+    Pair-engine coverage: per-channel source hashes, shared helper-module hashes,
+    node helper + node version, Pillow / numpy / skimage / zlib / Python versions,
+    artifact/serializer/schema version boundaries. Summary-engine wraps the
+    pair-engine digest (a pair change is also a summary change) plus its own
+    version / eligibility params.
     """
     channel_sources = {
         name: sha256_file(Path(mod.__file__)) for name, mod in channel_modules
     }
+    helper_sources = _helper_sources()
     node_helpers = {
         label: _node_helper_digests(d) for label, d in sorted(node_helper_dirs.items())
     }
@@ -254,6 +268,7 @@ def build_engine_fingerprint(
         "serializer_version": SERIALIZER_VERSION,
         "channel_names": list(channel_names),
         "channel_sources": channel_sources,
+        "helper_sources": helper_sources,
         "node_version": _node_version(),
         "node_helpers": node_helpers,
         "runtime": _runtime_versions(),

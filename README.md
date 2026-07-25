@@ -63,39 +63,60 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 
 ### In the matrix
 
-Some things only show up here. The numbers below are the merged, non-diagnostic
-similarity on the `P-min` set — the **20 formal channels** — **signals, not proof**
-(single prompt family, small N), and two confounds run through all of them:
-low-effort cards converge toward a generic baseline, and a shared harness (opencode /
-Kiro / Qoder) adds scaffolding of its own. Read accordingly. *(These are the 20
-channels after the `x-*` code-feature family was added; that addition raised every
-number by ~0.07, but the earlier 15-channel merged showed the **same structure** —
-the findings are robust to the channel set.)*
+Some things only show up here. The numbers below are the merged **consensus score**
+on the `P-min` set over the **20 formal channels** — **signals, not proof** (single
+prompt family, small N), and two confounds run through all of them: low-effort cards
+converge toward a generic baseline, and a shared harness (opencode / Kiro / Qoder)
+adds scaffolding of its own. Read accordingly.
 
-- **Family is a real but weak grouping.** A config agrees with its own re-runs most
-  (self-consistency ≈ **0.72**), with its own family next (**0.63**), and with other
-  families least (**0.59**) — but the gaps are small. A model's low-effort card can
-  resemble another lab's card more than it resembles its own high-effort one.
-- **Max-effort frontier Claude is a global outlier.** `claude-opus-5 @max` (**0.551**),
-  `claude-fable-5 @max` (**0.578**) and `claude-opus-4.8 @max` (**0.592**) sit
-  *farther from the rest of Claude* than Claude's own family average (**0.623**) — and
-  farther from everything else too. The strongest model at full effort goes somewhere
-  no other config, its own siblings included, follows. Read this as a P-min statement:
-  on the `P-q` set the same three are still below their family average, but their
-  order among themselves changes.
-- **High effort pushes older Opus off its family.** `opus-4.6` and `opus-4.7` drift
-  from the Claude cluster at **high / xhigh** effort (≈ **0.62**) but stay closer at
-  medium (**0.63–0.67**) — effort changes *where in design-space* a model lands, not
-  just how much it writes.
+> **What the number is.** Channels are not on a common scale — `c-winnow`'s median
+> cross-pair value is 0.22, `x-semantics`' is 0.95 — so a plain average of them is
+> mostly "whichever channels have the widest spread". Each channel is therefore
+> stretched over its own p1–p99 across the whole set before averaging, so every
+> channel gets an equal vote. The stretch range is **frozen** into the published
+> data, which means these figures are the same ones the live matrix shows and do
+> not move when you filter it. **A consensus score is not a percentage of
+> similarity**: 0.50 means "middling for this corpus", not "half alike".
+
+- **Family is a real grouping, and stronger than we first published.** A config
+  agrees with its own re-runs most (self-consistency **0.752**), with its own family
+  next (**0.582**), and with other families least (**0.498**). An earlier version of
+  this table put those at 0.72 / 0.63 / 0.59 and called the gaps small — that was an
+  artefact of averaging raw channel values, where channels that sit near 0.95 for
+  *every* pair add a constant to everything and squash the spread. It still holds
+  that a model's low-effort card can resemble another lab's card more than its own
+  high-effort one.
+- **The family signal is almost entirely in the code, not the pixels.** Splitting
+  the merge by channel family, `c-merged` separates same-family from cross-family
+  pairs at **AUC 0.769** and `x-merged` at **0.737**, while `v-merged` manages only
+  **0.585** — and `v-ssim` alone lands at **0.482**, below chance. Models inherit a
+  house style in *how they write the code*; how the card ends up *looking* is far
+  more convergent across labs.
+- **Max-effort frontier Claude is a global outlier.** `claude-opus-5 @max` (**0.425**),
+  `claude-fable-5 @max` (**0.482**) and `claude-opus-4.8 @max` (**0.512**) sit
+  *farther from the rest of Claude* than Claude's own family average (**0.581**) — and
+  farther from everything else too; `claude-opus-5 @xhigh` (**0.477**) sits in the
+  same band. The strongest model at full effort goes somewhere no other config, its
+  own siblings included, follows. Read this as a P-min statement: on the `P-q` set
+  the same models stay below their family average (**0.554** there), but their order
+  among themselves changes — `claude-sonnet-5 @max` leads that list instead.
+- **High effort pushes older Opus off its family — clearly on 4.7, marginally on 4.6.**
+  `opus-4.7` drifts from the Claude cluster at **xhigh** (**0.577**) and **high**
+  (**0.605**) against **0.665** at medium. On `opus-4.6` the same direction holds but
+  the gap is within noise (**0.600** at high vs **0.616** at medium), so read the
+  effect as one model's, not the generation's. Effort changes *where in design-space*
+  a model lands, not just how much it writes.
 - **Grok resembles everyone a little; GPT resembles no one.** Grok has the highest
-  cross-family reach (**0.602**) of any well-sampled family; GPT the lowest
-  (**0.579**) — GPT's cards are the most idiosyncratic on the board.
-- **Some models barely agree with themselves.** `kimi-k2.7-code` (**0.60**),
-  `deepseek-v4-flash` (**0.63**) and `kimi-k2.6` (**0.63**) have the lowest
+  cross-family reach (**0.528**) of any well-sampled family; GPT the lowest
+  (**0.468**) — GPT's cards are the most idiosyncratic on the board. Two single-config
+  families score lower still (`north` **0.302**, `opencode` **0.471**) but on 200
+  pairs each, far too thin to call.
+- **Some models barely agree with themselves.** `deepseek-v4-flash` (**0.486**),
+  `kimi-k2.6` (**0.490**) and `kimi-k2.7-code` (**0.557**) have the lowest
   self-consistency — a different card most re-runs; others are far more deterministic.
-  Only 18 models have a self-consistency reading at all: it needs several re-runs of
-  one config in one variant, and the CLI-harness arms run too few for the estimate to
-  qualify.
+  Only 18 models (51 configs) have a self-consistency reading at all: it needs
+  several re-runs of one config in one variant, and the CLI-harness arms run too few
+  for the estimate to qualify.
 
 ## What it is
 
@@ -159,7 +180,7 @@ so the repo ships a **flagship subset** — one canonical configuration per fron
 The **full set** is browsable live, and downloadable as a single pack:
 
 - **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-25.tar.gz>
-  (~535 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
+  (~464 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
   at the extracted directory to serve the whole set locally.
 
 ## Layout

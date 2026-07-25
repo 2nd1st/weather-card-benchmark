@@ -24,6 +24,8 @@ from runner.render import (
     render_card,
 )
 
+from .conftest import requires_trial_cache
+
 REPO = Path(__file__).resolve().parents[2]
 TRIAL = REPO / "trial-20260715"
 TRIAL_CACHE = TRIAL / "api-cache"
@@ -65,6 +67,7 @@ def test_env_digest_format_and_stability():
     assert desc["viewport"] == {"width": 1280, "height": 800}
 
 
+@requires_trial_cache
 def test_cache_key_matches_trial_serve():
     # trial serve.py: sha256(url).hexdigest()[:32]
     import hashlib
@@ -75,6 +78,7 @@ def test_cache_key_matches_trial_serve():
     assert (TRIAL_CACHE / f"{cache_key(_GROK_BERLIN_URL)}.json").exists()
 
 
+@requires_trial_cache
 def test_local_server_serves_from_cache_no_upstream():
     server = LocalCardServer(
         cache_dirs=[TRIAL_CACHE], overlay_dir=None, allow_upstream=False
@@ -136,6 +140,7 @@ def test_mulberry32_js_matches_python(browser, server):
     assert seq_js == seq_py
 
 
+@requires_trial_cache
 def test_render_and_double_render_grok(browser, server):
     card = CARDS / "grok-4.5.html"
     out_dir = REPO / "data" / "batches-dev" / "smoke-r4" / "shots"

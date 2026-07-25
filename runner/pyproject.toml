@@ -3,7 +3,7 @@ name = "weather-card-benchmark-runner"
 version = "0.0.0"
 description = "Deterministic sampling / render / L1-L3 similarity runner for the weather-card benchmark."
 requires-python = ">=3.11"
-authors = [{ name = "2nd1st" }]
+authors = [{ name = "LEOYUN", email = "zxyleo@hotmail.com" }]
 dependencies = [
     "requests",
     "playwright",
@@ -20,6 +20,15 @@ dependencies = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+# The CLI-harness home dirs (_codex_home*, _grok_home, …) are throwaway caches
+# the harness arms write into, and they contain VENDORED third-party plugin test
+# suites. Collecting those made `pytest -q` from the repo root report failures in
+# code this project does not own and cannot fix.
+norecursedirs = [
+    "_codex_home", "_codex_home_oauth", "_grok_home", "_kiro_home",
+    "_opencode_home", "_postcss", "_ast_js_node", "node_modules",
+    ".venv", "__pycache__",
+]
 
 [build-system]
 requires = ["setuptools>=68"]

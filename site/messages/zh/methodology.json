@@ -16,7 +16,8 @@
   "declarations": [
     "相似度指标是测量,不是质量评分。下面这些通道量化的是两张卡片有多像——我们不会把它换算成谁更强的判断。",
     "社区投票排名是一种 UI 偏好——大家更喜欢看哪张卡片。票数是公开的;它不是模型能力的 benchmark。",
-    "全过程确定且可复现。每个批次都锚定在一个你能自行重算的 manifest_hash 上;被测量的像素,就是算法读到的那些像素。"
+    "全过程确定且可复现。每个批次都锚定在一个你能自行重算的 manifest_hash 上;被测量的像素,就是算法读到的那些像素。",
+    "有些通道比它们的名字更粗糙,我们选择讲明,而不是悄悄把它们抹平。v-palette 的高斯核在冻结的 Lab 网格上是失效的(相邻 bin 中心相距 25–37 ΔE,而 σ=10),所以它实际表现为一个硬分箱的颜色 cosine;v-color 每通道只量化到 4 级,而一张典型卡片有一半以上像素落在同一个bin 里。因此两者更接近\"主色是否相同\",而不是感知意义上的色板距离。放宽任一参数都在全集上实测过,结果是判别力更差,所以冻结定义保持不变,改为把这个限制写明。"
   ],
   "measure": {
     "title": "相似度是怎么测的",
@@ -30,7 +31,7 @@
       {
         "k": "L2",
         "t": "相似度通道",
-        "d": "视觉(phash/dhash/color/palette/layout/edge/ssim)、代码(shingle/winnow/feature/ast-js/css-prop)、DOM(geom/text/pqgram)通道——各自是独立、冻结的定义。不计算、也不展示任何合成视图;空 pair 保持 null。"
+        "d": "视觉(phash/dhash/color/palette/layout/edge/ssim)、代码(shingle/winnow/feature/ast-js/css-prop)、扩展代码特征(x-color/x-css-values/x-layout/x-naming/x-semantics)、DOM(geom/text/pqgram)通道——20 个正式通道 + 2 个永久诊断通道,各自是独立、冻结的定义;空 pair 保持 null。矩阵另提供一个派生的 `merged` 共识视图:通道之间量纲不可比,所以先把每个通道按其在全集上的 p1–p99 拉伸(域是冻结的,筛选视图不会改变取值),再取平均。它是派生量,不是测量量。"
       },
       {
         "k": "L3",

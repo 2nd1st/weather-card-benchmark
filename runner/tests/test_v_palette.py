@@ -15,6 +15,8 @@ import pytest
 
 from runner.similarity import v_palette as vp
 
+from .conftest import requires_devset
+
 CARDS = Path(__file__).resolve().parents[2] / "data/batches-dev/devset-42/cards"
 
 
@@ -131,12 +133,14 @@ def _first_real_card() -> Path:
     pytest.skip("no devset card with shot.png")
 
 
+@requires_devset
 def test_real_identity_is_one():
     d = _first_real_card()
     out = vp.compute(d, d)
     assert out["s"] == pytest.approx(1.0, abs=1e-9)
 
 
+@requires_devset
 def test_real_symmetry():
     cards = [d for d in sorted(CARDS.iterdir()) if (d / "shot.png").is_file()]
     if len(cards) < 2:
@@ -145,6 +149,7 @@ def test_real_symmetry():
     assert vp.compute(a, b)["s"] == pytest.approx(vp.compute(b, a)["s"], abs=1e-12)
 
 
+@requires_devset
 def test_real_determinism_repeat_call():
     cards = [d for d in sorted(CARDS.iterdir()) if (d / "shot.png").is_file()]
     if len(cards) < 2:
@@ -156,6 +161,7 @@ def test_real_determinism_repeat_call():
     assert 0.0 <= s1 <= 1.0
 
 
+@requires_devset
 def test_real_value_in_unit_interval():
     cards = [d for d in sorted(CARDS.iterdir()) if (d / "shot.png").is_file()][:6]
     for x in range(len(cards)):
@@ -164,6 +170,7 @@ def test_real_value_in_unit_interval():
             assert s is None or (0.0 <= s <= 1.0)
 
 
+@requires_devset
 def test_swatch_top8_shape_and_order():
     d = _first_real_card()
     out = vp.compute(d, d)

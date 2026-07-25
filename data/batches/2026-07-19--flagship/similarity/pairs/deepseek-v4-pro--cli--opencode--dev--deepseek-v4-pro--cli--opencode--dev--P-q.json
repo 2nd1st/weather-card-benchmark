@@ -1,55 +1,65 @@
 {
- "batch_id": "2026-07-19--unified",
- "channels": [
-  "v-phash",
-  "v-dhash",
-  "v-color",
-  "v-palette",
-  "v-layout",
-  "v-edge",
-  "v-ssim",
-  "c-shingle",
-  "c-winnow",
-  "c-feature",
-  "c-ast-js",
-  "c-css-prop",
-  "c-ncd",
-  "d-geom",
-  "d-text",
-  "d-pqgram",
-  "d-tagpath"
- ],
- "config_a": "deepseek-v4-pro--cli--opencode--dev",
- "config_b": "deepseek-v4-pro--cli--opencode--dev",
- "kind": "self",
- "pairs": [
-  {
-   "diagnostics": {
-    "c_ncd_ncd_sym": 0.7270779777206513,
-    "v_ssim_raw": 0.7085691089423373
-   },
-   "s": {
-    "c-ast-js": 0.9742759747567645,
-    "c-css-prop": 0.9031003101112114,
-    "c-feature": 0.4589041095890411,
-    "c-ncd": 0.2729220222793487,
-    "c-shingle": 0.2889521640091116,
-    "c-winnow": 0.3238255033557047,
-    "d-geom": 0.23509639149777564,
-    "d-pqgram": 0.11926605504587157,
-    "d-tagpath": 0.29411764705882354,
-    "d-text": 0.0,
-    "v-color": 0.9861545936140013,
-    "v-dhash": 0.68359375,
-    "v-edge": 0.48051094585760074,
-    "v-layout": 0.8178992195139194,
-    "v-palette": 0.9905387866426758,
-    "v-phash": 0.46875,
-    "v-ssim": 0.8542845544711686
-   },
-   "slot_a": 0,
-   "slot_b": 1
-  }
- ],
- "variant": "P-q"
+  "batch_id": "2026-07-19--flagship",
+  "channels": [
+    "v-phash",
+    "v-dhash",
+    "v-color",
+    "v-palette",
+    "v-layout",
+    "v-edge",
+    "v-ssim",
+    "c-shingle",
+    "c-winnow",
+    "c-feature",
+    "c-ast-js",
+    "c-css-prop",
+    "c-ncd",
+    "d-geom",
+    "d-text",
+    "d-pqgram",
+    "d-tagpath",
+    "x-color",
+    "x-css-values",
+    "x-layout",
+    "x-naming",
+    "x-semantics"
+  ],
+  "config_a": "deepseek-v4-pro--cli--opencode--dev",
+  "config_b": "deepseek-v4-pro--cli--opencode--dev",
+  "kind": "self",
+  "pairs": [
+    {
+      "diagnostics": {
+        "c_ncd_ncd_sym": 0.7270779777206513,
+        "v_ssim_raw": 0.7085691089423373
+      },
+      "s": {
+        "c-ast-js": 0.9742759747567645,
+        "c-css-prop": 0.9031003101112114,
+        "c-feature": 0.4589041095890411,
+        "c-ncd": 0.2729220222793487,
+        "c-shingle": 0.2889521640091116,
+        "c-winnow": 0.3238255033557047,
+        "d-geom": 0.23509639149777564,
+        "d-pqgram": 0.11926605504587157,
+        "d-tagpath": 0.29411764705882354,
+        "d-text": 0.0,
+        "v-color": 0.9861545936140013,
+        "v-dhash": 0.68359375,
+        "v-edge": 0.48051094585760074,
+        "v-layout": 0.8178992195139194,
+        "v-palette": 0.9905387866426758,
+        "v-phash": 0.46875,
+        "v-ssim": 0.8542845544711686,
+        "x-color": 0.5900865015342355,
+        "x-css-values": 0.9486482999835929,
+        "x-layout": 0.8894391845682442,
+        "x-naming": 0.9783645453774781,
+        "x-semantics": 0.9928583391437635
+      },
+      "slot_a": 0,
+      "slot_b": 1
+    }
+  ],
+  "variant": "P-q"
 }
