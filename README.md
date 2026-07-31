@@ -117,20 +117,32 @@ adds scaffolding of its own. Read accordingly.
   Only 20 models (56 configs) have a self-consistency reading at all: it needs
   several re-runs of one config in one variant, and the CLI-harness arms run too few
   for the estimate to qualify.
-- **A vendor changed a model under a fixed name, and we mostly could not measure it.**
-  DeepSeek re-post-trained `deepseek-v4-flash` on 2026-07-31 without changing the API
-  string ("same model architecture and size … only re-post-trained"). We hold a
-  capture from **2026-07-19**, before it landed, so both epochs sit in the set side by
-  side. Comparing them against each epoch's *own* re-run noise: at `high` effort on
-  `P-min` the two epochs score **0.529**, a full **0.154** below the lower of their
-  self-consistencies (0.728 / 0.683) — about as far apart as two *different* DeepSeek
-  models (0.565). But the other three cells (P-min `max`, P-q `max`) land inside
-  re-run noise, and P-q `high` has no reading at all (3 valid slots, below the n_eff
-  gate). **One cell in four.** The reason is structural: this model has among the
-  worst self-consistency on the board (**0.488**), so its run-to-run variance is the
-  same size as the change we are trying to see. Read this as a limit of the
-  instrument, not as evidence the model did or did not move — at N=4 we cannot tell.
-  Old cards were never re-run or overwritten; the new epoch is separate seats.
+- **A vendor changed a model under a fixed name — the similarity channels missed it,
+  the token counter did not.** DeepSeek re-post-trained `deepseek-v4-flash` on
+  2026-07-31 without changing the API string ("same model architecture and size …
+  only re-post-trained"). We hold a capture from **2026-07-19**, before it landed, so
+  both epochs sit in the set side by side.
+
+  On the **similarity** axis the change is nearly invisible. Compared against each
+  epoch's *own* re-run noise, only one of four cells separates (`P-min` @high: the
+  epochs score **0.529** against self-consistencies of 0.728 / 0.683); the rest land
+  inside noise or have no eligible reading. That is a property of the instrument, not
+  a verdict: this model has among the worst self-consistency on the board (**0.488**),
+  so at N=4 its run-to-run variance is the size of the effect.
+
+  On the **output-volume** axis the same change is unmissable. At an identical effort
+  setting the new epoch emits **2–4× more completion tokens** — median 6,546 → 25,972
+  at `high`/`P-min` (**4.0×**) and 12,376 → 52,332 at `high`/`P-q` (**4.2×**) — and in
+  three of the four cells the two epochs' token ranges **do not overlap at all**
+  (P(new > old) = **0.961** over every slot pair). Its two failed slots are the tail
+  of that same effect: they are 2 of only 4 slots in the entire 1064-slot set that ran
+  past the provider's 65,536-token output ceiling without finishing a card.
+
+  The lesson is about the benchmark, not the model: **a design-similarity metric and a
+  volume metric can disagree completely about whether anything happened.** Old cards
+  were never re-run or overwritten; the new epoch is separate seats, and the failed
+  slots are kept as failures rather than retried, because retrying only the failures
+  would condition on success and hide exactly this.
 
 ## What it is
 
