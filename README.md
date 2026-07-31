@@ -79,8 +79,8 @@ adds scaffolding of its own. Read accordingly.
 > similarity**: 0.50 means "middling for this corpus", not "half alike".
 
 - **Family is a real grouping, and stronger than we first published.** A config
-  agrees with its own re-runs most (self-consistency **0.752**), with its own family
-  next (**0.582**), and with other families least (**0.498**). An earlier version of
+  agrees with its own re-runs most (self-consistency **0.745**), with its own family
+  next (**0.583**), and with other families least (**0.500**). An earlier version of
   this table put those at 0.72 / 0.63 / 0.59 and called the gaps small — that was an
   artefact of averaging raw channel values, where channels that sit near 0.95 for
   *every* pair add a constant to everything and squash the spread. It still holds
@@ -94,7 +94,7 @@ adds scaffolding of its own. Read accordingly.
   more convergent across labs.
 - **Max-effort frontier Claude is a global outlier.** `claude-opus-5 @max` (**0.425**),
   `claude-fable-5 @max` (**0.482**) and `claude-opus-4.8 @max` (**0.512**) sit
-  *farther from the rest of Claude* than Claude's own family average (**0.581**) — and
+  *farther from the rest of Claude* than Claude's own family average (**0.582**) — and
   farther from everything else too; `claude-opus-5 @xhigh` (**0.477**) sits in the
   same band. The strongest model at full effort goes somewhere no other config, its
   own siblings included, follows. Read this as a P-min statement: on the `P-q` set
@@ -107,16 +107,30 @@ adds scaffolding of its own. Read accordingly.
   effect as one model's, not the generation's. Effort changes *where in design-space*
   a model lands, not just how much it writes.
 - **Grok resembles everyone a little; GPT resembles no one.** Grok has the highest
-  cross-family reach (**0.528**) of any well-sampled family; GPT the lowest
-  (**0.468**) — GPT's cards are the most idiosyncratic on the board. Two single-config
-  families score lower still (`north` **0.302**, `opencode` **0.471**) but on 200
+  cross-family reach (**0.531**) of any well-sampled family; GPT the lowest
+  (**0.469**) — GPT's cards are the most idiosyncratic on the board. Two single-config
+  families score lower still (`north` **0.302**, `opencode` **0.472**) but on 200
   pairs each, far too thin to call.
-- **Some models barely agree with themselves.** `deepseek-v4-flash` (**0.486**),
-  `kimi-k2.6` (**0.490**) and `kimi-k2.7-code` (**0.557**) have the lowest
+- **Some models barely agree with themselves.** `deepseek-v4-flash` (**0.488**),
+  `kimi-k2.6` (**0.492**) and `kimi-k2.7-code` (**0.558**) have the lowest
   self-consistency — a different card most re-runs; others are far more deterministic.
-  Only 18 models (51 configs) have a self-consistency reading at all: it needs
+  Only 20 models (56 configs) have a self-consistency reading at all: it needs
   several re-runs of one config in one variant, and the CLI-harness arms run too few
   for the estimate to qualify.
+- **A vendor changed a model under a fixed name, and we mostly could not measure it.**
+  DeepSeek re-post-trained `deepseek-v4-flash` on 2026-07-31 without changing the API
+  string ("same model architecture and size … only re-post-trained"). We hold a
+  capture from **2026-07-19**, before it landed, so both epochs sit in the set side by
+  side. Comparing them against each epoch's *own* re-run noise: at `high` effort on
+  `P-min` the two epochs score **0.529**, a full **0.154** below the lower of their
+  self-consistencies (0.728 / 0.683) — about as far apart as two *different* DeepSeek
+  models (0.565). But the other three cells (P-min `max`, P-q `max`) land inside
+  re-run noise, and P-q `high` has no reading at all (3 valid slots, below the n_eff
+  gate). **One cell in four.** The reason is structural: this model has among the
+  worst self-consistency on the board (**0.488**), so its run-to-run variance is the
+  same size as the change we are trying to see. Read this as a limit of the
+  instrument, not as evidence the model did or did not move — at N=4 we cannot tell.
+  Old cards were never re-run or overwritten; the new epoch is separate seats.
 
 ## What it is
 
@@ -179,8 +193,8 @@ so the repo ships a **flagship subset** — one canonical configuration per fron
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-25.tar.gz>
-  (~464 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-31.tar.gz>
+  (~481 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
   at the extracted directory to serve the whole set locally.
 
 ## Layout

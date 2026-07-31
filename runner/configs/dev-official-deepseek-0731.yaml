@@ -1,0 +1,107 @@
+# dev-official-deepseek-0731.yaml — DeepSeek V4-Flash after the 2026-07-31
+# re-post-training. Official API, N=4, metered.
+#
+# WHY A SEPARATE MODEL_ID FOR THE SAME API STRING
+# -----------------------------------------------
+# The vendor changed the model behind `deepseek-v4-flash` without changing the
+# API model string. DeepSeek's own changelog (2026-07-31):
+#
+#   "DeepSeek-V4-Flash-0731 keeps the same model architecture and size as
+#    DeepSeek-V4-Flash-preview, and was only re-post-trained."
+#   "Note: This update only upgrades the DeepSeek-V4-Flash API. The
+#    DeepSeek-V4-Pro API and the APP/WEB models are unchanged."
+#
+# Our existing `deepseek-v4-flash-*--api--official--dev` seats were captured
+# 2026-07-19 — i.e. against the PREVIEW post-training, before this update. Those
+# cards stay exactly as measured; nothing here overwrites them (Leo's standing
+# rule: a re-run never replaces measured data). Instead these are NEW seats under
+# the vendor's own name for the new post-training, `deepseek-v4-flash-0731`, so
+# the two epochs sit side by side and the matrix's own cross-config similarity —
+# read against each config's self-consistency — measures how far the model moved.
+#
+# There is no documented way to pin the preview weights, so the 07-19 capture is
+# the only record of them that exists here.
+#
+# NOT re-run: deepseek-v4-pro (vendor says unchanged), and the opencode / zen /
+# go gateway arms (the changelog scopes the change to the official API; what a
+# gateway serves under the same name is its own question, not evidenced here).
+#
+# EFFORT LADDER — probed 2026-07-31 against the updated model:
+#   accepted: none, minimal, low, medium, high, max
+#   rejected: "ultra", "bogus-tier"  → the API really does validate the value,
+#             so the six tiers are a real ladder, not a silently-ignored field.
+#   `none` is the only tier that returns NO reasoning_content — it genuinely
+#   disables thinking; minimal/low/medium/high/max all think.
+# CAVEAT: our 07-19 config exercised only high/max. Because the preview weights
+# cannot be pinned, we CANNOT say whether the ladder widened at this update or
+# whether we simply under-sampled it before. Do not report it as a widening.
+version: 1
+N: 4
+
+transport:
+  base_url: https://api.deepseek.com
+  descriptor: deepseek-official-api
+  proxy: none
+
+configs:
+  - config_id: deepseek-v4-flash-0731-eff-none--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: none
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-0731-eff-minimal--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: minimal
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-0731-eff-low--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: low
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-0731-eff-medium--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: medium
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  # high / max also serve as the DRIFT CONTROL: the 07-19 preview capture has
+  # exactly these two tiers, so these two pairs are the like-for-like comparison.
+  - config_id: deepseek-v4-flash-0731-eff-high--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: high
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }
+
+  - config_id: deepseek-v4-flash-0731-eff-max--api--official--dev
+    family: deepseek
+    model_id: deepseek-v4-flash-0731
+    provider_model_id: deepseek-v4-flash   # our label != the wire string
+    effort: max
+    effort_param: reasoning_effort
+    protocol: api
+    billing: metered
+    auth: { method: api-key, credential_ref: WCB_DEEPSEEK_KEY }

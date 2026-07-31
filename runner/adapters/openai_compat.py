@@ -164,6 +164,22 @@ def extract_output(raw_text: str) -> Extraction:
 # ---------------------------------------------------------------------------
 
 
+def provider_model(config: dict) -> str:
+    """The exact model string to put on the wire.
+
+    ``model_id`` is OUR label for a measured model; ``provider_model_id`` is what
+    the vendor's API actually accepts. They diverge whenever a vendor changes the
+    model behind a fixed API string — e.g. DeepSeek re-post-trained
+    ``deepseek-v4-flash`` on 2026-07-31 without renaming it, so the two epochs
+    need distinct model_ids here while both send `deepseek-v4-flash` upstream.
+
+    kiro_cli and qoder_cli already honoured this; this adapter did not, and sent
+    the internal label upstream — every slot came back infra-failed with
+    served=None. Same precedence as the siblings: provider override, else label.
+    """
+    return config.get("provider_model_id") or config["model_id"]
+
+
 def endpoint_for(family: Optional[str], config: Optional[dict] = None) -> str:
     """Return "responses" or "chat" for a family. GPT -> /responses, everything
     else -> /chat/completions. An explicit config ``endpoint`` key wins."""
@@ -466,7 +482,7 @@ def call_model_background(
 ) -> AdapterResult:
     """Run one /responses completion in background mode and poll to a terminal
     status. Only meaningful for the responses endpoint (gpt family)."""
-    model = config["model_id"]
+    model = provider_model(config)
     effort = config.get("effort")
     url = base_url.rstrip("/") + "/responses"
     body = build_body(endpoint="responses", model=model, prompt=prompt, effort=effort)
@@ -596,11 +612,12 @@ def call_model(
     """Run one streaming completion for ``config`` and classify the outcome.
 
     ``config`` mirrors config.schema.json axes; the keys used here are
-    ``family``, ``model_id``, ``effort`` and optional ``endpoint``. ``base_url``
-    already includes the ``/v1`` route root (e.g. the dev gateway).
+    ``family``, ``model_id`` / ``provider_model_id``, ``effort`` and optional
+    ``endpoint``. ``base_url`` already includes the ``/v1`` route root (e.g. the
+    dev gateway).
     """
     family = config.get("family")
-    model = config["model_id"]
+    model = provider_model(config)
     effort = config.get("effort")
     endpoint = endpoint_for(family, config)
 
