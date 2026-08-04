@@ -48,8 +48,22 @@ export interface ArenaStrings {
   };
   unavailableTitle: string;
   unavailableMsg: string;
+  faultTitle: string;
+  faultMsg: string;
+  retry: string;
   leaderboard: LeaderboardStrings;
   attributionExtra: string;
+}
+
+/** A pair-fetch failure that is OUR fault, not a property of the pool.
+ *  The API returns 503 + a named reason (pool-too-small) for genuine
+ *  unavailability; anything else reaching the client is a 500 ("error") or a
+ *  dead transport ("network"). Allow-list the data reasons so a NEW server-side
+ *  failure code defaults to "fault" rather than silently claiming empty data. */
+const POOL_REASONS = new Set(["pool-too-small", "share-not-found", "bad-share"]);
+
+function isFault(code: string): boolean {
+  return !POOL_REASONS.has(code);
 }
 
 export function ArenaBoard({
@@ -170,7 +184,27 @@ export function ArenaBoard({
       ) : null}
 
       {errCode ? (
-        <EmptyState title={strings.unavailableTitle} message={strings.unavailableMsg} icon="◌" />
+        // Two very different things used to share one message. A 503 from the
+        // API carries a real reason code (pool-too-small) and means the data is
+        // thin; "error"/"network" mean the SERVER or the transport failed and
+        // says nothing about the pool. Claiming "no qualified cards yet" for the
+        // latter sent a real outage looking like a data gap (2026-08-04: a
+        // Mach-O better_sqlite3.node made every /api/arena/* 500 while the pool
+        // was full). Never explain a fault as a data state.
+        isFault(errCode) ? (
+          <EmptyState
+            title={strings.faultTitle}
+            message={strings.faultMsg}
+            icon="!"
+            action={
+              <button className="btn" onClick={() => load(angle)}>
+                {strings.retry}
+              </button>
+            }
+          />
+        ) : (
+          <EmptyState title={strings.unavailableTitle} message={strings.unavailableMsg} icon="◌" />
+        )
       ) : pair ? (
         <div className="exhibit">
           <PairStage

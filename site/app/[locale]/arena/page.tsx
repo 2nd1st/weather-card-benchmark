@@ -97,6 +97,9 @@ export default async function ArenaPage({
     },
     unavailableTitle: t("unavailableTitle"),
     unavailableMsg: t("unavailableMsg"),
+    faultTitle: t("faultTitle"),
+    faultMsg: t("faultMsg"),
+    retry: t("retry"),
     leaderboard: {
       title: t("leaderboard.title"),
       framing: t("leaderboard.framing"),

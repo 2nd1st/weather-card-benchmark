@@ -48,6 +48,9 @@
   },
   "unavailableTitle": "Arena needs qualified pairs",
   "unavailableMsg": "No qualified cards are in the pool yet. Once qualified batches land, blind pairs appear here. Explore the gallery in the meantime.",
+  "faultTitle": "Couldn't load a pair",
+  "faultMsg": "The arena service hit an error on our side — the card pool is fine. Try again, or come back shortly.",
+  "retry": "Try again",
   "leaderboard": {
     "title": "Community preference · this angle",
     "framing": "Community UI preference — which cards people prefer to look at, not a capability measure.",
