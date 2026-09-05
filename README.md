@@ -52,7 +52,7 @@ prompt family, small N). Every one links back to the raw data on the site.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="123×123 config-vs-config similarity heatmap, merged consensus channel" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (396-config harness view of the 502-config set), merged consensus channel" width="82%">
 </div>
 
 Every measured configuration against every other, merged across all channels.
@@ -64,7 +64,9 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 ### In the matrix
 
 Some things only show up here. The numbers below are the merged **consensus score**
-on the `P-min` set over the **20 formal channels** — **signals, not proof** (single
+on the `P-min` set over the **20 formal channels**, computed on the **2026-08
+snapshot** of the set — the board has grown since (now **502 configurations**), and
+the live matrix always shows the current values. **Signals, not proof** (single
 prompt family, small N), and two confounds run through all of them: low-effort cards
 converge toward a generic baseline, and a shared harness (opencode / Kiro / Qoder)
 adds scaffolding of its own. Read accordingly.
@@ -199,15 +201,16 @@ The site resolves its data root from `WCB_DATA_ROOT` (defaulting to the in-repo
 
 ## The data
 
-The full measured set is large (200+ configurations × multiple slots × screenshots),
+The full measured set is large (500+ configurations × multiple slots × screenshots),
 so the repo ships a **flagship subset** — one canonical configuration per frontier lab
 — under [`data/batches/`](data/batches/). The site renders it out of the box.
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-07-31.tar.gz>
-  (~481 MB). Extracts to `2026-07-19--unified/` + `index.json`; point `WCB_DATA_ROOT`
-  at the extracted directory to serve the whole set locally.
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-09-05.tar.gz>
+  (~1.3 GB, sha256 `27764e1b…dca20`). Extracts to `2026-07-19--unified/` +
+  `index.json`; point `WCB_DATA_ROOT` at the extracted directory to serve the
+  whole set locally.
 
 ## Layout
 
