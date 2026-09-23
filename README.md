@@ -52,7 +52,7 @@ prompt family, small N). Every one links back to the raw data on the site.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (400-config harness view of the 513-config set), merged consensus channel" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (416-config harness view of the 535-config set), merged consensus channel" width="82%">
 </div>
 
 Every measured configuration against every other, merged across all channels.
@@ -65,7 +65,7 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 
 Some things only show up here. The numbers below are the merged **consensus score**
 on the `P-min` set over the **20 formal channels**, computed on the **2026-08
-snapshot** of the set — the board has grown since (now **513 configurations**), and
+snapshot** of the set — the board has grown since (now **535 configurations**), and
 the live matrix always shows the current values. **Signals, not proof** (single
 prompt family, small N), and two confounds run through all of them: low-effort cards
 converge toward a generic baseline, and a shared harness (opencode / Kiro / Qoder)
@@ -207,8 +207,8 @@ so the repo ships a **flagship subset** — one canonical configuration per fron
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-09-13.tar.gz>
-  (~1.4 GB, sha256 `cbc5a181…cd3bb9`). Extracts to `2026-07-19--unified/` +
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-09-23.tar.gz>
+  (~1.4 GB, sha256 `ea6b3b55…0b4a4a`). Extracts to `2026-07-19--unified/` +
   `index.json`; point `WCB_DATA_ROOT` at the extracted directory to serve the
   whole set locally.
 

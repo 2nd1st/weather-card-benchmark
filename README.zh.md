@@ -40,14 +40,14 @@ MIT
 ## 这张地图
 
 <div align="center">
-<img src="docs/matrix.png" alt="config 对 config 相似度热力图(513 config 集的 400 config harness 视图),merged 合并通道" width="82%">
+<img src="docs/matrix.png" alt="config 对 config 相似度热力图(535 config 集的 416 config harness 视图),merged 合并通道" width="82%">
 </div>
 
 每个被测 configuration 对上其余每一个,跨所有通道合并。亮 = 相似,暗 = 分化。对角线上的亮块是各**模型家族**在自我聚类;那条细亮对角线是每个 config 的**自一致性**(一个模型和它*自己*重跑之间有多像)。这里的相似度是**测量,不是质量分** —— 它只刻画收敛,别无其他。
 
 ### 从矩阵里才看得到的
 
-有些东西只在这里现形。下面的数字都是 `P-min` 集上、跨 **20 条正式通道**的 merged **共识分**,计算于集合的 **2026-08 快照** —— 此后板面继续在长(现为 **513 个 configuration**),线上矩阵永远显示当前值。**是信号,不是证明**(单一 prompt 家族、小 N),而且有两个混淆项贯穿始终:低 effort 的卡会向一个通用基线收敛,共享的 harness(opencode / Kiro / Qoder)本身也会带进脚手架。请据此理解。
+有些东西只在这里现形。下面的数字都是 `P-min` 集上、跨 **20 条正式通道**的 merged **共识分**,计算于集合的 **2026-08 快照** —— 此后板面继续在长(现为 **535 个 configuration**),线上矩阵永远显示当前值。**是信号,不是证明**(单一 prompt 家族、小 N),而且有两个混淆项贯穿始终:低 effort 的卡会向一个通用基线收敛,共享的 harness(opencode / Kiro / Qoder)本身也会带进脚手架。请据此理解。
 
 > **这个数是什么。** 通道之间量纲不可比 —— `c-winnow` 的跨对中位数是 0.22,`x-semantics` 是 0.95 —— 所以直接平均,结果基本上等于"谁的方差大就听谁的"。因此每条通道先按它在全集上的 p1–p99 拉伸,再取平均,让每条通道票权相等。拉伸区间是**冻结**在已发布数据里的,所以这里的数字和线上矩阵显示的是同一个数,筛选视图也不会让它变。**共识分不是相似度百分比**:0.50 的意思是"在这个语料里属于中游",不是"像了一半"。
 
@@ -117,8 +117,8 @@ cd site && npm install && npm run dev   # http://localhost:3000
 
 **完整集**可在线浏览,也能作为单个 pack 下载:
 
-- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-09-13.tar.gz>
-  (~1.4 GB,sha256 `cbc5a181…cd3bb9`)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
+- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-09-23.tar.gz>
+  (~1.4 GB,sha256 `ea6b3b55…0b4a4a`)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
 
 ## 目录
 
