@@ -40,7 +40,7 @@ MIT
 ## 这张地图
 
 <div align="center">
-<img src="docs/matrix.png" alt="config 对 config 相似度热力图(535 config 集的 416 config harness 视图),merged 合并通道" width="82%">
+<img src="docs/matrix.png" alt="config 对 config 相似度热力图(535 config 集的 386 config harness 视图),merged 合并通道" width="82%">
 </div>
 
 每个被测 configuration 对上其余每一个,跨所有通道合并。亮 = 相似,暗 = 分化。对角线上的亮块是各**模型家族**在自我聚类;那条细亮对角线是每个 config 的**自一致性**(一个模型和它*自己*重跑之间有多像)。这里的相似度是**测量,不是质量分** —— 它只刻画收敛,别无其他。

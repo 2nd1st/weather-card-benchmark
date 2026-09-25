@@ -52,7 +52,7 @@ prompt family, small N). Every one links back to the raw data on the site.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (416-config harness view of the 535-config set), merged consensus channel" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (386-config harness view of the 535-config set), merged consensus channel" width="82%">
 </div>
 
 Every measured configuration against every other, merged across all channels.
