@@ -41,13 +41,13 @@ they describe *how the code is written*, never where a model came from.
 - **Claude's 2025 coding style outlived Claude.** Claude Sonnet 4 / 4.5, Opus 4.5 and
   Haiku 4.5 write like MiniMax M2.x, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2,
   Qwen3-Coder-Next and Gemini 3 Flash — and no longer like Claude Opus 4.8 / Claude 5.
-- **At high effort, Claude and GPT start writing alike — and DeepSeek V4.1 already
-  writes that way**, at almost any effort setting.
-- **Some labs change hands between generations; GPT never does.** DeepSeek V4.1 and
-  Kimi K3 broke with their own lineage; GPT-6 still writes like GPT-5.
+- **Some labs change hands between generations.** DeepSeek V4.1 and Kimi K3 broke
+  with their own lineage; GPT-6 still writes like a GPT.
+- **High effort writes defensively.** Reduced-motion handling and cancelling stale
+  requests show up in most high-effort Claude Opus 5.x and GPT Sol cards and almost
+  never at low effort.
 - **The harness changes how much a model draws — not how it writes.** Through a
-  different harness the same model keeps its code habits; what moves is the look and,
-  above all, the volume.
+  different harness the same model keeps its code habits; what moves is the volume.
 - **Effort multiplies output size — up to 14× on one model.** More "thinking" doesn't
   mean a little more code; it can mean an order of magnitude more.
 - **On some models the effort knob does nothing measurable.** The parameter is
@@ -76,8 +76,9 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > **What the number is.** Each pair of configurations is compared on ten
 > code channels — token shingles, winnowed fingerprints, feature sets, the JS syntax
 > tree, CSS properties and values, layout, naming, colour literals, semantic markup.
-> Each channel is first corrected for each config's baseline (some cards resemble
-> *everything* a little; that is not resemblance to anyone in particular), then the
+> Card size comes out first: raw similarity depends on how long the two cards are, so
+> each pair is compared with the average for pairs of the same two sizes. Then a
+> quarter of each config's general resemblance to everything is taken off, the
 > channels are combined with weights learned by how well each one tells models apart,
 > and the result is shown as a **percentile among all cross pairs**: 0.50 is a typical
 > pair from two different labs, two configs of the same model sit around 0.97. The
@@ -85,65 +86,65 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > relative to the current set and are refitted when it changes.
 >
 > Why code and not pixels: in leave-models-out cross-validation the fingerprint
-> recognises the same model at **AUC 0.91** and the same family at **0.74**, and the
-> same model *across effort levels* at **0.90**; the looks view manages **0.76 /
-> 0.59**, and the old equal-weight merge of every channel **0.87 / 0.68**. How a card
+> recognises the same model at **AUC 0.92**, the same family at **0.74**, and the
+> same model *across effort levels* at **0.92**; the looks view manages **0.74 /
+> 0.57**, and the old equal-weight merge of every channel **0.87 / 0.68**. How a card
 > *looks* converges across labs; how it is *written* does not.
+>
+> **A correction.** The first version of this score (v15, live for a few days)
+> subtracted each config's whole general resemblance. That pulled configs that
+> resemble nobody — mostly long, high-effort cards — towards each other, and two
+> findings published here rested on it: that high-effort Claude and GPT converge, and
+> that DeepSeek V4.1 sits in that "frontier zone". With card size handled directly
+> neither holds, and both are withdrawn. The methodology page has the comparison.
 
 All figures are percentiles on the 585-configuration set, `P-min` / `P-q` where both
 are given. Signals, not proof: one prompt family, and some models have few configs —
-those are marked.
+those are marked. Every finding below holds under each of the scoring variants we
+tested that identify models at least as well as this one, not just the one shown.
 
-- **Family is a real grouping.** A config agrees with its own re-runs most (**0.958**
-  on `P-min`), with its own family next (**0.699**), and with other families least
-  (**0.441**).
+- **Family is a real grouping.** A config agrees with its own re-runs most (**0.94**
+  on `P-min`), with its own family next (**0.70**), and with other families least
+  (**0.44**).
 - **Claude's 2025 coding style outlived Claude.** Claude Sonnet 4 / 4.5, Opus 4.5 and
   Haiku 4.5 form one tight cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok
   4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs
-  score **0.96–1.00** on both prompts — as close as two configs of one model — across
-  harnesses, efforts and all ten code channels. Claude itself moved on: Claude 4.5
-  against Claude Opus 4.8 / Claude 5 scores **0.44 / 0.23**, no closer than two
-  unrelated labs. One telltale line, `const today = new Date().toISOString().split('T')[0];`,
-  is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and in
-  none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined.
-- **At high effort, Claude and GPT start writing alike.** Claude Opus 5 / 5.5 and GPT
-  Sol are far apart at none–medium effort (**0.40 / 0.41**) but meet at xhigh and above
-  (**0.90 / 0.78**), across five harnesses. Ordinary cross-family pairs gain almost
-  nothing from high effort (0.37 → 0.43), so this is not "long answers look alike". The
-  shared code is defensive engineering — `prefers-reduced-motion` handling, aborting
-  stale requests with `AbortController`, `finally` clean-up — which low-effort Sol cards
-  almost never contain (0–2%). It also explains why **max-effort Claude 5.5 sits closer
-  to other labs than to its own family** (`claude-opus-5-5 @max`: **0.33** to Claude,
-  **0.56** to everyone else on `P-min`).
-- **DeepSeek V4.1 writes in that frontier zone.** The 1017 build scores **0.86 / 0.91**
-  against the high-effort Claude/GPT set — the closest of 49 models from other labs —
-  and **0.54 / 0.37** against low-effort GPT Sol, on both the official API and
-  DeepSeek's own dsh harness. Unlike Claude and GPT, it gets there at almost any effort
-  setting. The 0910 build was already close (**0.71 / 0.85**). DeepSeek's dsh harness
-  carries the defensive idioms far more often than the API arm (reduced-motion 88% vs
-  25% of cards); the fingerprint result holds on both.
-- **Some labs change hands between generations; GPT never does.** GPT-6 still scores
-  **0.86 / 0.81** against GPT-5.x (3,300 config pairs). DeepSeek V4.1 against every
-  earlier DeepSeek: **0.56 / 0.49** — an unrelated pair — while its own two builds
-  agree at **0.82 / 0.89**. Kimi K3 against Kimi K2.x: **0.56 / 0.55**; K3 sits closer
-  to Claude Fable 5 / Opus 4.8 (**0.84 / 0.82**, 500+ config pairs).
+  score **0.87–1.00** on both prompts, MiniMax at **0.98 / 0.98** — as close as two
+  configs of one model — across harnesses, efforts and all ten code channels. Claude
+  itself moved on: Claude 4.5 against Claude Opus 4.8 / Claude 5 scores **0.22 /
+  0.14**, farther apart than two unrelated labs. One telltale line,
+  `const today = new Date().toISOString().split('T')[0];`, is in 63% of Claude Sonnet
+  4/4.5 cards, 34% of the other members' cards, and in none of 571 Claude Opus 4.8+
+  cards. GPT models of the same period never joined.
+- **Some labs change hands between generations.** DeepSeek V4.1 against every earlier
+  DeepSeek: **0.54 / 0.46** — an unrelated pair — while its own two builds agree at
+  **0.75 / 0.73**. Kimi K3 against Kimi K2.x: **0.53 / 0.62**; K3 sits closer to Claude
+  Fable 5 / Opus 4.8 (**0.89 / 0.82**, 400+ config pairs). GPT-6 against GPT-5.x stays
+  at **0.75 / 0.73**, an ordinary same-family level.
+- **High effort writes defensively.** Counted directly in the cards: `prefers-reduced-motion`
+  handling and aborting stale requests with `AbortController` appear in 55–69% of
+  high-effort (xhigh and above) Claude Opus 5.x and GPT Sol cards, and in 0–2% of
+  low-effort GPT Sol cards. DeepSeek V4.1 1017 writes them in 25–33% of its API cards
+  and in 88% of the cards from DeepSeek's own dsh harness. On the whole-code
+  fingerprint this does *not* make those models alike — it is three idioms, not a
+  shared style.
 - **The harness doesn't write the code; the model does.** The same model at the same
-  effort through a different harness scores **0.99 / 0.98** — the same as its own
-  re-runs — and two different-family models gain only 1–2 points from sharing a
-  harness. The looks view does move (**0.88–0.89** across harnesses vs **0.92–0.94** for
-  re-runs), and output volume moves most of all.
-- **Some models barely agree with themselves.** `kimi-k3 @high` (**0.51 / 0.61**) and
-  `deepseek-v4-pro-0812 @high` (**0.68** on `P-min`) have the lowest self-consistency —
-  a different card most re-runs. 105 configs have a reading at all: it needs several
-  re-runs of one config in one variant.
+  effort through a different harness scores **0.99 / 0.99** — the same as its own
+  re-runs (**0.98 / 0.99**) — while two different-family models gain only 6–7 points
+  from sharing a harness (**0.49** vs **0.42**), against a gap of about 50 between
+  "same model" and "different lab". What the harness does move is the volume.
+- **Some models barely agree with themselves.** `deepseek-v4-flash-vision-exp @high`
+  (**0.40** on `P-min`), `kimi-k2.7-code` (**0.41**) and `kimi-k3 @high` (**0.45 /
+  0.40**) have the lowest self-consistency — a different card most re-runs. 105
+  configs have a reading at all: it needs several re-runs of one config in one variant.
 
 **Notable pairs** — strong signals on small samples:
 
-- **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**1.00 / 1.00**, closer than to
+- **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**0.99 / 0.99**, closer than to
   any Qwen), down to the same `var d = document.createElement('div')` HTML-escaping
   helper found in 64% of Opus 4.6 cards and almost nowhere else. One config, 4 cards.
-  MiMo-V2.5-Pro shows the same pull (**0.97 / 0.96**, 66 config pairs).
-- **Cursor's Composer 2.5 writes like Grok 4.5** (**0.98 / 0.94**, across four Grok
+  MiMo-V2.5-Pro shows the same pull (**0.92 / 0.92**, 66 config pairs).
+- **Cursor's Composer 2.5 writes like Grok 4.5** (**0.99 / 0.98**, across four Grok
   harnesses), sharing its exact CSS vocabulary (`--bg-deep`,
   `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 2 of the other 2,436
   cards. One config, 8 cards.
@@ -154,10 +155,10 @@ API string ("same model architecture and size … only re-post-trained"). We hol
 capture from **2026-07-19**, before it landed, so both epochs sit in the set side by
 side.
 
-On the **code fingerprint** the change shows at one effort and vanishes at the other:
-at `high` the two epochs score **0.78 / 0.83** against each other while each epoch's
-own re-runs sit at **0.90–0.99**; at `max` they score **0.87 / 0.93** against re-runs
-of **0.88–0.95** — inside noise.
+On the **code fingerprint** the change barely registers: at `high` the two epochs
+score **0.90 / 0.93** against each other while each epoch's own re-runs sit at
+**0.95–0.99**; at `max` they score **0.92 / 0.94** against re-runs of **0.90–0.96** —
+inside noise.
 
 On the **output-volume** axis the same change is unmissable. At an identical effort
 setting the new epoch emits **2–4× more completion tokens** — median 6,546 → 25,972

@@ -8,90 +8,90 @@
       "id": "claude-45-code-cluster",
       "title_en": "Claude's 2025 coding style outlived Claude",
       "title_zh": "Claude 2025 年的写法,比 Claude 自己活得久",
-      "body_en": "Claude Sonnet 4 / 4.5, Opus 4.5 and Haiku 4.5 form one tight code-habit cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs score in the 96th–100th percentile on both prompts, as close as two configs of one model, across harnesses, efforts and all ten code channels. Claude itself moved on — Claude 4.5 against Claude Opus 4.8 / Claude 5 sits at the 23rd–44th percentile, no closer than two unrelated labs. One telltale line, “const today = new Date().toISOString().split('T')[0];”, is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined the cluster.",
-      "body_zh": "Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的代码习惯簇:跨厂商的配对在两个 prompt 上都落在第 96–100 百分位,和同一模型的两个 config 一样近,跨 harness、跨 effort、十个代码通道全部一致。Claude 自己却走开了——Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有第 23–44 百分位,和两个不相干的厂商一样远。一行标志性代码 「const today = new Date().toISOString().split('T')[0];」 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未进入这个簇。",
+      "body_en": "Claude Sonnet 4 / 4.5, Opus 4.5 and Haiku 4.5 form one tight code-habit cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs score in the 87th–100th percentile on both prompts (MiniMax at the 98th), as close as two configs of one model, across harnesses, efforts and all ten code channels. Claude itself moved on — Claude 4.5 against Claude Opus 4.8 / Claude 5 sits at the 14th–22nd percentile, farther apart than two unrelated labs. One telltale line, “const today = new Date().toISOString().split('T')[0];”, is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined the cluster.",
+      "body_zh": "Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的代码习惯簇:跨厂商的配对在两个 prompt 上落在第 87–100 百分位(MiniMax 在第 98),和同一模型的两个 config 一样近,跨 harness、跨 effort、十个代码通道全部一致。Claude 自己却走开了——Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有第 14–22 百分位,比两个不相干的厂商还远。一行标志性代码 「const today = new Date().toISOString().split('T')[0];」 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未进入这个簇。",
       "figures": [
         {
           "label_en": "cross-lab pairs in the cluster",
           "label_zh": "簇内跨厂商配对",
-          "value": "96th–100th pct"
+          "value": "87th–100th pct"
         },
         {
           "label_en": "Claude 4.5 vs Claude Opus 4.8 / 5",
           "label_zh": "Claude 4.5 对 Opus 4.8 / 5",
-          "value": "23rd–44th pct"
+          "value": "14th–22nd pct"
         }
       ],
       "refs": [
         "2026-07-19--unified"
       ],
-      "caveat_en": "Code-habit fingerprint (v15), percentile among cross pairs of this 585-config set. Describes how the code is written, not where a model came from.",
-      "caveat_zh": "代码习惯指纹(v15),在本 585 个 config 的跨配对中的百分位。描述的是代码怎么写,不是模型从哪来。"
+      "caveat_en": "Code-habit fingerprint (v16), percentile among cross pairs of this 585-config set; holds under every scoring variant tested. Describes how the code is written, not where a model came from.",
+      "caveat_zh": "代码习惯指纹(v16),在本 585 个 config 的跨配对中的百分位;在测试过的各种评分方案下都成立。描述的是代码怎么写,不是模型从哪来。"
     },
     {
-      "id": "frontier-high-effort-convergence",
-      "title_en": "At high effort, Claude and GPT start writing alike — and DeepSeek V4.1 already writes that way",
-      "title_zh": "高 effort 下 Claude 和 GPT 开始写得一样——而 DeepSeek V4.1 本来就这么写",
-      "body_en": "Claude Opus 5 / 5.5 and GPT Sol are far apart at none–medium effort (40th–41st percentile) but meet at xhigh and above (78th–90th), across five harnesses; ordinary cross-family pairs gain almost nothing from high effort (37th→43rd). The shared code is defensive engineering — reduced-motion handling, aborting stale requests, “finally” clean-up — which low-effort Sol cards almost never contain (0–2%). DeepSeek V4.1 Flash 1017 scores at the 86th–91st percentile against that high-effort Claude/GPT set — the closest of 49 models from other labs — on both the official API and DeepSeek's own dsh harness, and reaches it at almost any effort setting.",
-      "body_zh": "Claude Opus 5 / 5.5 和 GPT Sol 在 none–medium 档相距很远(第 40–41 百分位),到 xhigh 及以上却汇合(第 78–90 百分位),五个 harness 上都成立;普通跨家族配对从高 effort 里几乎得不到什么(第 37→43 百分位)。共同的代码是防御型工程写法——处理减少动画偏好、中止过期请求、「finally」 收尾——低档 Sol 的卡几乎从不出现(0–2%)。DeepSeek V4.1 Flash 1017 对这组高档 Claude/GPT 落在第 86–91 百分位,是其他 49 个外家模型里最近的;官方 API 和 DeepSeek 自家 dsh harness 上都成立,而且几乎任何 effort 档都到得了。",
+      "id": "high-effort-defensive-code",
+      "title_en": "High effort writes defensively",
+      "title_zh": "高 effort 写得更“防御”",
+      "body_en": "Counted directly in the cards: “prefers-reduced-motion” handling and aborting stale requests with “AbortController” appear in 55–69% of high-effort (xhigh and above) Claude Opus 5.x and GPT Sol cards, and in 0–2% of low-effort GPT Sol cards. DeepSeek V4.1 1017 writes them in 25–33% of its API cards and in 88% of the cards from DeepSeek's own dsh harness. On the whole-code fingerprint this does not make those models alike: it is three idioms, not a shared style.",
+      "body_zh": "直接数卡片里的代码:“prefers-reduced-motion”处理、用“AbortController”中止过期请求,出现在 55–69% 的高 effort(xhigh 及以上)Claude Opus 5.x 和 GPT Sol 卡里,低 effort 的 GPT Sol 卡只有 0–2%。DeepSeek V4.1 1017 的 API 卡有 25–33% 这样写,DeepSeek 自家 dsh harness 出的卡是 88%。在整份代码的指纹上,这并不让这些模型变得相像:这是三种写法,不是共同的风格。",
       "figures": [
         {
-          "label_en": "Opus 5.x × Sol, none–medium → xhigh+",
-          "label_zh": "Opus 5.x × Sol,none–medium → xhigh+",
-          "value": "40th → 78th–90th pct"
+          "label_en": "high-effort Opus 5.x / Sol cards",
+          "label_zh": "高 effort Opus 5.x / Sol 卡",
+          "value": "55–69%"
         },
         {
-          "label_en": "DeepSeek V4.1 1017 vs that set",
-          "label_zh": "DeepSeek V4.1 1017 对这组",
-          "value": "86th–91st pct (rank 1 of 49)"
+          "label_en": "low-effort Sol cards",
+          "label_zh": "低 effort Sol 卡",
+          "value": "0–2%"
         }
       ],
       "refs": [
         "2026-07-19--unified"
       ],
-      "caveat_en": "Code-habit fingerprint (v15). DeepSeek's dsh harness carries the defensive idioms more often than its API arm (88% vs 25% for reduced-motion); the fingerprint result holds on both.",
-      "caveat_zh": "代码习惯指纹(v15)。DeepSeek 的 dsh harness 比 API 更常出现这些防御写法(reduced-motion 88% 对 25%);指纹结论在两边都成立。"
+      "caveat_en": "Replaces an earlier card (“At high effort, Claude and GPT start writing alike — and DeepSeek V4.1 already writes that way”) that rested on the v15 fingerprint, which pulled configs that resemble nobody towards each other. With card size handled directly (v16) neither half holds; see the methodology page.",
+      "caveat_zh": "取代旧的一条(“高 effort 下 Claude 和 GPT 开始写得一样——而 DeepSeek V4.1 本来就这么写”)。那一条建立在 v15 指纹上,v15 会把和谁都不像的 config 拉到一起;直接处理卡片体积(v16)之后,两半都不成立。见方法论页。"
     },
     {
       "id": "lineage-breaks",
-      "title_en": "Some labs change hands between generations; GPT never does",
-      "title_zh": "有的厂商换代就换了一手写法,GPT 从来没换",
-      "body_en": "GPT-6 cards still score at the 81st–86th percentile against GPT-5.x (3,300 config pairs). DeepSeek V4.1 against every earlier DeepSeek scores at the 49th–56th — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 82nd–89th. Kimi K3 against Kimi K2.x: 55th–56th; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–84th).",
-      "body_zh": "GPT-6 的卡对 GPT-5.x 仍在第 81–86 百分位(3,300 个 config 对)。DeepSeek V4.1 对所有更早的 DeepSeek 只有第 49–56 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 82–89。Kimi K3 对 Kimi K2.x:第 55–56;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–84)。",
+      "title_en": "Some labs change hands between generations",
+      "title_zh": "有的厂商换代就换了一手写法",
+      "body_en": "DeepSeek V4.1 against every earlier DeepSeek scores at the 46th–54th percentile — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 73rd–75th. Kimi K3 against Kimi K2.x: 53rd–62nd; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–89th). GPT-6 against GPT-5.x stays at the 73rd–75th, an ordinary same-family level.",
+      "body_zh": "DeepSeek V4.1 对所有更早的 DeepSeek 只有第 46–54 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 73–75。Kimi K3 对 Kimi K2.x:第 53–62;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–89)。GPT-6 对 GPT-5.x 是第 73–75,普通的同家族水平。",
       "figures": [
-        {
-          "label_en": "GPT-6 vs GPT-5.x",
-          "label_zh": "GPT-6 对 GPT-5.x",
-          "value": "81st–86th pct"
-        },
         {
           "label_en": "DeepSeek V4.1 vs earlier DeepSeek",
           "label_zh": "DeepSeek V4.1 对前代",
-          "value": "49th–56th pct"
+          "value": "46th–54th pct"
+        },
+        {
+          "label_en": "Kimi K3 vs Kimi K2.x",
+          "label_zh": "Kimi K3 对 K2.x",
+          "value": "53rd–62nd pct"
         }
       ],
       "refs": [
         "2026-07-19--unified"
       ],
-      "caveat_en": "Code-habit fingerprint (v15); same-family-different-model pairs median 75th percentile for reference.",
-      "caveat_zh": "代码习惯指纹(v15);同家族不同模型配对的中位数是第 75 百分位,可作参照。"
+      "caveat_en": "Code-habit fingerprint (v16); holds under every scoring variant tested. Same-family-different-model pairs sit around the 70th percentile for reference.",
+      "caveat_zh": "代码习惯指纹(v16);在测试过的各种评分方案下都成立。同家族不同模型配对大约在第 70 百分位,可作参照。"
     },
     {
       "id": "api-vs-harness-divergence",
       "title_en": "The harness changes how much a model draws — not how it writes",
       "title_zh": "harness 改变模型画多少,不改变它怎么写",
-      "body_en": "Through a different harness the same model at the same effort keeps its code habits: on the v15 fingerprint, cross-harness pairs sit at the 98th–99th percentile, the same as the model's own re-runs, and two different-family models gain only 1–2 percentile points from sharing a harness. What the harness does move is the look (looks view: 88th against 92nd–94th for re-runs) and, above all, the volume of what gets drawn.",
-      "body_zh": "同一模型、同一 effort 换一个 harness,代码习惯不变:在 v15 指纹上,跨 harness 配对落在第 98–99 百分位,和模型自己重跑一样;两个不同家族的模型共用一个 harness 也只多 1–2 个百分点。harness 真正改变的是外观(外观视角:第 88 百分位,重跑是第 92–94)和——最主要的——画出来的体量。",
+      "body_en": "Through a different harness the same model at the same effort keeps its code habits: on the code fingerprint, cross-harness pairs sit at the 99th percentile, the same as the model's own re-runs, and two different-family models gain only 6–7 percentile points from sharing a harness. What the harness does move is, above all, the volume of what gets drawn.",
+      "body_zh": "同一模型、同一 effort 换一个 harness,代码习惯不变:在代码指纹上,跨 harness 配对落在第 99 百分位,和模型自己重跑一样;两个不同家族的模型共用一个 harness 也只多 6–7 个百分点。harness 真正改变的,主要是画出来的体量。",
       "figures": [
         {
           "label_en": "same model, other harness (code)",
           "label_zh": "同模型换 harness(代码)",
-          "value": "98th–99th pct"
+          "value": "99th pct"
         },
         {
-          "label_en": "same model, other harness (looks)",
-          "label_zh": "同模型换 harness(外观)",
-          "value": "88th pct"
+          "label_en": "shared harness, different families",
+          "label_zh": "不同家族共用 harness",
+          "value": "+6–7 pct points"
         }
       ],
       "refs": [
