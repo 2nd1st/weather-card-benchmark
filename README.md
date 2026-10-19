@@ -52,8 +52,8 @@ they describe *how the code is written*, never where a model came from.
   mean a little more code; it can mean an order of magnitude more.
 - **On some models the effort knob does nothing measurable.** The parameter is
   accepted; the output doesn't move.
-- **`minimal` effort doesn't exist on the official GPT API** — and **`max` is a
-  gpt-5.6-family exclusive.** Effort ladders are per-vendor and full of holes.
+- **Effort ladders grow with the generation.** GPT's `max` arrived with gpt-5.6 —
+  every earlier GPT model rejects it; the newer ones have it.
 - **Official-API outputs run 5–8× larger** than the *same model* reached through a
   proxy channel.
 - **kimi-k3 spends ~10× the thinking** on the qualitative prompt variant vs. the

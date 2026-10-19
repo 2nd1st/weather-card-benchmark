@@ -152,42 +152,23 @@
       "caveat_zh": "基于体量的观察;N=4。"
     },
     {
-      "id": "minimal-is-channel-mapping",
-      "title_en": "\"minimal\" effort does not exist on the official gpt api",
-      "title_zh": "官方 gpt api 不存在 \"minimal\" 档",
-      "body_en": "The official /responses endpoint returns 400 for effort=minimal on every gpt model we probed. Where a \"minimal\" tier appears through proxy or harness channels, it is mapped by the channel, not the model provider.",
-      "body_zh": "官方 /responses 对 effort=minimal 一律 400(我们探测过的每个 gpt 模型)。代理或 harness 通道里出现的 \"minimal\" 档是通道侧映射,不是官方档位。",
+      "id": "max-arrived-with-56",
+      "title_en": "GPT's \"max\" effort arrived with gpt-5.6 — older models just don't have it",
+      "title_zh": "GPT 的 \"max\" 档从 gpt-5.6 起才有——只是旧模型没有",
+      "body_en": "On the official api, effort=max is rejected (400) by every gpt model before gpt-5.6 and accepted by gpt-5.6-sol / terra / luna. The newer gpt-6 / 6.1 models take it too (run here through Codex). The effort ladder grows with the generation; it is not one family's exclusive.",
+      "body_zh": "官方 api 上,gpt-5.6 之前的 gpt 模型对 effort=max 一律 400,gpt-5.6-sol/terra/luna 接受。更新的 gpt-6 / 6.1 也有 max(本集经 Codex 跑)。effort 梯子随代际变长,不是某一系独占。",
       "figures": [
         {
-          "label_en": "official minimal",
-          "label_zh": "官方 minimal",
-          "value": "400 (all gpt models probed)"
+          "label_en": "first gpt with max",
+          "label_zh": "最早有 max 的 gpt",
+          "value": "gpt-5.6"
         }
       ],
       "refs": [
         "2026-07-18--official-gpt"
       ],
-      "caveat_en": "Probed by behavior (accept/reject), 2026-07-18.",
-      "caveat_zh": "行为探测(接受/拒绝)所得,2026-07-18。"
-    },
-    {
-      "id": "max-only-56-family",
-      "title_en": "\"max\" effort is a gpt-5.6-family exclusive",
-      "title_zh": "\"max\" 档是 gpt-5.6 系独占",
-      "body_en": "Effort=max is accepted by gpt-5.6-sol / terra / luna and rejected (400) by every earlier gpt model on the official api.",
-      "body_zh": "官方 api 上 effort=max 仅 gpt-5.6-sol/terra/luna 接受,更早的 gpt 模型全部 400。",
-      "figures": [
-        {
-          "label_en": "max acceptors",
-          "label_zh": "接受 max 的模型",
-          "value": "gpt-5.6-sol / terra / luna"
-        }
-      ],
-      "refs": [
-        "2026-07-18--official-gpt"
-      ],
-      "caveat_en": "Probed by behavior, 2026-07-18.",
-      "caveat_zh": "行为探测所得,2026-07-18。"
+      "caveat_en": "Official-api acceptance probed by behavior on 2026-07-18; gpt-6 / 6.1 max observed through the Codex harness.",
+      "caveat_zh": "官方 api 的接受情况为 2026-07-18 行为探测所得;gpt-6 / 6.1 的 max 是经 Codex harness 观察到的。"
     },
     {
       "id": "official-vs-proxy-volume",
