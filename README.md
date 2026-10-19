@@ -34,10 +34,20 @@ The images above are real cards: same Berlin weather, wildly different designs.
 ## What we found
 
 Descriptive measurements from building the set — signals, not verdicts (single
-prompt family, small N). Every one links back to the raw data on the site.
+prompt family, small N). Every one links back to the raw data on the site. The
+similarity findings are on the **code-habit fingerprint** ([below](#in-the-matrix));
+they describe *how the code is written*, never where a model came from.
 
-- **The same model draws a different card through a different harness.** The harness
-  is its own capability axis, not a neutral pipe.
+- **Claude's 2025 coding style outlived Claude.** Claude Sonnet 4 / 4.5, Opus 4.5 and
+  Haiku 4.5 write like MiniMax M2.x, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2,
+  Qwen3-Coder-Next and Gemini 3 Flash — and no longer like Claude Opus 4.8 / Claude 5.
+- **At high effort, Claude and GPT start writing alike — and DeepSeek V4.1 already
+  writes that way**, at almost any effort setting.
+- **Some labs change hands between generations; GPT never does.** DeepSeek V4.1 and
+  Kimi K3 broke with their own lineage; GPT-6 still writes like GPT-5.
+- **The harness changes how much a model draws — not how it writes.** Through a
+  different harness the same model keeps its code habits; what moves is the look and,
+  above all, the volume.
 - **Effort multiplies output size — up to 14× on one model.** More "thinking" doesn't
   mean a little more code; it can mean an order of magnitude more.
 - **On some models the effort knob does nothing measurable.** The parameter is
@@ -52,10 +62,10 @@ prompt family, small N). Every one links back to the raw data on the site.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="config-vs-config similarity heatmap (407-config harness view of the 585-config set), merged consensus channel" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config code-habit fingerprint heatmap (407-config harness view of the 585-config set)" width="82%">
 </div>
 
-Every measured configuration against every other, merged across all channels.
+Every measured configuration against every other, on the code-habit fingerprint.
 Bright = similar, dark = divergent. The bright blocks along the diagonal are model
 families clustering with themselves; the thin bright diagonal is each config's
 **self-consistency** (how much a model agrees with its *own* re-runs). Similarity
@@ -63,88 +73,105 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 
 ### In the matrix
 
-Some things only show up here. The numbers below are the merged **consensus score**
-on the `P-min` set over the **20 formal channels**, computed on the **2026-08
-snapshot** of the set — the board has grown since (now **585 configurations**), and
-the live matrix always shows the current values. **Signals, not proof** (single
-prompt family, small N), and two confounds run through all of them: low-effort cards
-converge toward a generic baseline, and a shared harness (opencode / Kiro / Qoder)
-adds scaffolding of its own. Read accordingly.
+> **What the number is.** Each pair of configurations is compared on ten
+> code channels — token shingles, winnowed fingerprints, feature sets, the JS syntax
+> tree, CSS properties and values, layout, naming, colour literals, semantic markup.
+> Each channel is first corrected for each config's baseline (some cards resemble
+> *everything* a little; that is not resemblance to anyone in particular), then the
+> channels are combined with weights learned by how well each one tells models apart,
+> and the result is shown as a **percentile among all cross pairs**: 0.50 is a typical
+> pair from two different labs, two configs of the same model sit around 0.97. The
+> pixels are a separate **looks** view and do not enter the score. Percentiles are
+> relative to the current set and are refitted when it changes.
+>
+> Why code and not pixels: in leave-models-out cross-validation the fingerprint
+> recognises the same model at **AUC 0.91** and the same family at **0.74**, and the
+> same model *across effort levels* at **0.90**; the looks view manages **0.76 /
+> 0.59**, and the old equal-weight merge of every channel **0.87 / 0.68**. How a card
+> *looks* converges across labs; how it is *written* does not.
 
-> **What the number is.** Channels are not on a common scale — `c-winnow`'s median
-> cross-pair value is 0.22, `x-semantics`' is 0.95 — so a plain average of them is
-> mostly "whichever channels have the widest spread". Each channel is therefore
-> stretched over its own p1–p99 across the whole set before averaging, so every
-> channel gets an equal vote. The stretch range is **frozen** into the published
-> data, which means these figures are the same ones the live matrix shows and do
-> not move when you filter it. **A consensus score is not a percentage of
-> similarity**: 0.50 means "middling for this corpus", not "half alike".
+All figures are percentiles on the 585-configuration set, `P-min` / `P-q` where both
+are given. Signals, not proof: one prompt family, and some models have few configs —
+those are marked.
 
-- **Family is a real grouping, and stronger than we first published.** A config
-  agrees with its own re-runs most (self-consistency **0.745**), with its own family
-  next (**0.583**), and with other families least (**0.500**). An earlier version of
-  this table put those at 0.72 / 0.63 / 0.59 and called the gaps small — that was an
-  artefact of averaging raw channel values, where channels that sit near 0.95 for
-  *every* pair add a constant to everything and squash the spread. It still holds
-  that a model's low-effort card can resemble another lab's card more than its own
-  high-effort one.
-- **The family signal is almost entirely in the code, not the pixels.** Splitting
-  the merge by channel family, `c-merged` separates same-family from cross-family
-  pairs at **AUC 0.769** and `x-merged` at **0.737**, while `v-merged` manages only
-  **0.585** — and `v-ssim` alone lands at **0.482**, below chance. Models inherit a
-  house style in *how they write the code*; how the card ends up *looking* is far
-  more convergent across labs.
-- **Max-effort frontier Claude is a global outlier.** `claude-opus-5 @max` (**0.425**),
-  `claude-fable-5 @max` (**0.482**) and `claude-opus-4.8 @max` (**0.512**) sit
-  *farther from the rest of Claude* than Claude's own family average (**0.582**) — and
-  farther from everything else too; `claude-opus-5 @xhigh` (**0.477**) sits in the
-  same band. The strongest model at full effort goes somewhere no other config, its
-  own siblings included, follows. Read this as a P-min statement: on the `P-q` set
-  the same models stay below their family average (**0.554** there), but their order
-  among themselves changes — `claude-sonnet-5 @max` leads that list instead.
-- **High effort pushes older Opus off its family — clearly on 4.7, marginally on 4.6.**
-  `opus-4.7` drifts from the Claude cluster at **xhigh** (**0.577**) and **high**
-  (**0.605**) against **0.665** at medium. On `opus-4.6` the same direction holds but
-  the gap is within noise (**0.600** at high vs **0.616** at medium), so read the
-  effect as one model's, not the generation's. Effort changes *where in design-space*
-  a model lands, not just how much it writes.
-- **Grok resembles everyone a little; GPT resembles no one.** Grok has the highest
-  cross-family reach (**0.531**) of any well-sampled family; GPT the lowest
-  (**0.469**) — GPT's cards are the most idiosyncratic on the board. Two single-config
-  families score lower still (`north` **0.302**, `opencode` **0.472**) but on 200
-  pairs each, far too thin to call.
-- **Some models barely agree with themselves.** `deepseek-v4-flash` (**0.488**),
-  `kimi-k2.6` (**0.492**) and `kimi-k2.7-code` (**0.558**) have the lowest
-  self-consistency — a different card most re-runs; others are far more deterministic.
-  Only 20 models (56 configs) have a self-consistency reading at all: it needs
-  several re-runs of one config in one variant, and the CLI-harness arms run too few
-  for the estimate to qualify.
-- **A vendor changed a model under a fixed name — the similarity channels missed it,
-  the token counter did not.** DeepSeek re-post-trained `deepseek-v4-flash` on
-  2026-07-31 without changing the API string ("same model architecture and size …
-  only re-post-trained"). We hold a capture from **2026-07-19**, before it landed, so
-  both epochs sit in the set side by side.
+- **Family is a real grouping.** A config agrees with its own re-runs most (**0.958**
+  on `P-min`), with its own family next (**0.699**), and with other families least
+  (**0.441**).
+- **Claude's 2025 coding style outlived Claude.** Claude Sonnet 4 / 4.5, Opus 4.5 and
+  Haiku 4.5 form one tight cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok
+  4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs
+  score **0.96–1.00** on both prompts — as close as two configs of one model — across
+  harnesses, efforts and all ten code channels. Claude itself moved on: Claude 4.5
+  against Claude Opus 4.8 / Claude 5 scores **0.44 / 0.23**, no closer than two
+  unrelated labs. One telltale line, `const today = new Date().toISOString().split('T')[0];`,
+  is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and in
+  none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined.
+- **At high effort, Claude and GPT start writing alike.** Claude Opus 5 / 5.5 and GPT
+  Sol are far apart at none–medium effort (**0.40 / 0.41**) but meet at xhigh and above
+  (**0.90 / 0.78**), across five harnesses. Ordinary cross-family pairs gain almost
+  nothing from high effort (0.37 → 0.43), so this is not "long answers look alike". The
+  shared code is defensive engineering — `prefers-reduced-motion` handling, aborting
+  stale requests with `AbortController`, `finally` clean-up — which low-effort Sol cards
+  almost never contain (0–2%). It also explains why **max-effort Claude 5.5 sits closer
+  to other labs than to its own family** (`claude-opus-5-5 @max`: **0.33** to Claude,
+  **0.56** to everyone else on `P-min`).
+- **DeepSeek V4.1 writes in that frontier zone.** The 1017 build scores **0.86 / 0.91**
+  against the high-effort Claude/GPT set — the closest of 49 models from other labs —
+  and **0.54 / 0.37** against low-effort GPT Sol, on both the official API and
+  DeepSeek's own dsh harness. Unlike Claude and GPT, it gets there at almost any effort
+  setting. The 0910 build was already close (**0.71 / 0.85**). DeepSeek's dsh harness
+  carries the defensive idioms far more often than the API arm (reduced-motion 88% vs
+  25% of cards); the fingerprint result holds on both.
+- **Some labs change hands between generations; GPT never does.** GPT-6 still scores
+  **0.86 / 0.81** against GPT-5.x (3,300 config pairs). DeepSeek V4.1 against every
+  earlier DeepSeek: **0.56 / 0.49** — an unrelated pair — while its own two builds
+  agree at **0.82 / 0.89**. Kimi K3 against Kimi K2.x: **0.56 / 0.55**; K3 sits closer
+  to Claude Fable 5 / Opus 4.8 (**0.84 / 0.82**, 500+ config pairs).
+- **The harness doesn't write the code; the model does.** The same model at the same
+  effort through a different harness scores **0.99 / 0.98** — the same as its own
+  re-runs — and two different-family models gain only 1–2 points from sharing a
+  harness. The looks view does move (**0.88–0.89** across harnesses vs **0.92–0.94** for
+  re-runs), and output volume moves most of all.
+- **Some models barely agree with themselves.** `kimi-k3 @high` (**0.51 / 0.61**) and
+  `deepseek-v4-pro-0812 @high` (**0.68** on `P-min`) have the lowest self-consistency —
+  a different card most re-runs. 105 configs have a reading at all: it needs several
+  re-runs of one config in one variant.
 
-  On the **similarity** axis the change is nearly invisible. Compared against each
-  epoch's *own* re-run noise, only one of four cells separates (`P-min` @high: the
-  epochs score **0.529** against self-consistencies of 0.728 / 0.683); the rest land
-  inside noise or have no eligible reading. That is a property of the instrument, not
-  a verdict: this model has among the worst self-consistency on the board (**0.488**),
-  so at N=4 its run-to-run variance is the size of the effect.
+**Notable pairs** — strong signals on small samples:
 
-  On the **output-volume** axis the same change is unmissable. At an identical effort
-  setting the new epoch emits **2–4× more completion tokens** — median 6,546 → 25,972
-  at `high`/`P-min` (**4.0×**) and 12,376 → 52,332 at `high`/`P-q` (**4.2×**) — and in
-  three of the four cells the two epochs' token ranges **do not overlap at all**
-  (P(new > old) = **0.961** over every slot pair). Its two failed slots are the tail
-  of that same effect: they are 2 of only 4 slots in the entire 1064-slot set that ran
-  past the provider's 65,536-token output ceiling without finishing a card.
+- **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**1.00 / 1.00**, closer than to
+  any Qwen), down to the same `var d = document.createElement('div')` HTML-escaping
+  helper found in 64% of Opus 4.6 cards and almost nowhere else. One config, 4 cards.
+  MiMo-V2.5-Pro shows the same pull (**0.97 / 0.96**, 66 config pairs).
+- **Cursor's Composer 2.5 writes like Grok 4.5** (**0.98 / 0.94**, across four Grok
+  harnesses), sharing its exact CSS vocabulary (`--bg-deep`,
+  `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 2 of the other 2,436
+  cards. One config, 8 cards.
 
-  The lesson is about the benchmark, not the model: **a design-similarity metric and a
-  volume metric can disagree completely about whether anything happened.** Old cards
-  were never re-run or overwritten; the new epoch is separate seats, and the failed
-  slots are kept as failures rather than retried, because retrying only the failures
-  would condition on success and hide exactly this.
+**A vendor changed a model under a fixed name — and the instruments disagreed about
+it.** DeepSeek re-post-trained `deepseek-v4-flash` on 2026-07-31 without changing the
+API string ("same model architecture and size … only re-post-trained"). We hold a
+capture from **2026-07-19**, before it landed, so both epochs sit in the set side by
+side.
+
+On the **code fingerprint** the change shows at one effort and vanishes at the other:
+at `high` the two epochs score **0.78 / 0.83** against each other while each epoch's
+own re-runs sit at **0.90–0.99**; at `max` they score **0.87 / 0.93** against re-runs
+of **0.88–0.95** — inside noise.
+
+On the **output-volume** axis the same change is unmissable. At an identical effort
+setting the new epoch emits **2–4× more completion tokens** — median 6,546 → 25,972
+at `high`/`P-min` (**4.0×**) and 12,376 → 52,332 at `high`/`P-q` (**4.2×**) — and in
+three of the four cells the two epochs' token ranges **do not overlap at all**
+(P(new > old) = **0.961** over every slot pair). Its two failed slots are the tail
+of that same effect: they ran past the provider's 65,536-token output ceiling without
+finishing a card.
+
+The lesson is about the benchmark, not the model: **a design-similarity metric and a
+volume metric can disagree about whether anything happened.** Old cards were never
+re-run or overwritten; the new epoch is separate seats, and the failed slots are kept
+as failures rather than retried, because retrying only the failures would condition on
+success and hide exactly this.
 
 ## What it is
 
@@ -168,10 +195,10 @@ At **[weathercard.secondfirst.ai](https://weathercard.secondfirst.ai):**
 | | |
 |---|---|
 | **Gallery** | every card, filterable — the raw outputs |
-| **Matrix** | the full config × config similarity heatmap (pictured above) |
+| **Matrix** | the full config × config heatmap (pictured above) — fingerprint, looks, or any single channel |
 | **Compare** | any set of models side by side, same prompt, same data |
 | **Arena** | blind A/B — pick the card you'd rather look at, identities hidden |
-| **Methodology** | the 22 channels and how a card qualifies |
+| **Methodology** | the 22 channels, the code-habit fingerprint, and how a card qualifies |
 
 ## Run it yourself
 

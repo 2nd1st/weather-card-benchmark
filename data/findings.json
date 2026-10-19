@@ -1,19 +1,104 @@
 {
-  "version": 1,
-  "updated": "2026-07-18",
+  "version": 2,
+  "updated": "2026-10-19",
   "note_en": "Observations from building the dataset. These are descriptive measurements, not quality judgments; every item links to the raw data that produced it. Single prompt family, small N — read as signals, not conclusions.",
   "note_zh": "构建数据集过程中的观察。全部是描述性测量,不是质量评判;每条都指向产生它的原始数据。单一提示族、小 N——当信号看,别当结论。",
   "findings": [
     {
+      "id": "claude-45-code-cluster",
+      "title_en": "Claude's 2025 coding style outlived Claude",
+      "title_zh": "Claude 2025 年的写法,比 Claude 自己活得久",
+      "body_en": "Claude Sonnet 4 / 4.5, Opus 4.5 and Haiku 4.5 form one tight code-habit cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs score in the 96th–100th percentile on both prompts, as close as two configs of one model, across harnesses, efforts and all ten code channels. Claude itself moved on — Claude 4.5 against Claude Opus 4.8 / Claude 5 sits at the 23rd–44th percentile, no closer than two unrelated labs. One telltale line, “const today = new Date().toISOString().split('T')[0];”, is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined the cluster.",
+      "body_zh": "Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的代码习惯簇:跨厂商的配对在两个 prompt 上都落在第 96–100 百分位,和同一模型的两个 config 一样近,跨 harness、跨 effort、十个代码通道全部一致。Claude 自己却走开了——Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有第 23–44 百分位,和两个不相干的厂商一样远。一行标志性代码 「const today = new Date().toISOString().split('T')[0];」 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未进入这个簇。",
+      "figures": [
+        {
+          "label_en": "cross-lab pairs in the cluster",
+          "label_zh": "簇内跨厂商配对",
+          "value": "96th–100th pct"
+        },
+        {
+          "label_en": "Claude 4.5 vs Claude Opus 4.8 / 5",
+          "label_zh": "Claude 4.5 对 Opus 4.8 / 5",
+          "value": "23rd–44th pct"
+        }
+      ],
+      "refs": [
+        "2026-07-19--unified"
+      ],
+      "caveat_en": "Code-habit fingerprint (v15), percentile among cross pairs of this 585-config set. Describes how the code is written, not where a model came from.",
+      "caveat_zh": "代码习惯指纹(v15),在本 585 个 config 的跨配对中的百分位。描述的是代码怎么写,不是模型从哪来。"
+    },
+    {
+      "id": "frontier-high-effort-convergence",
+      "title_en": "At high effort, Claude and GPT start writing alike — and DeepSeek V4.1 already writes that way",
+      "title_zh": "高 effort 下 Claude 和 GPT 开始写得一样——而 DeepSeek V4.1 本来就这么写",
+      "body_en": "Claude Opus 5 / 5.5 and GPT Sol are far apart at none–medium effort (40th–41st percentile) but meet at xhigh and above (78th–90th), across five harnesses; ordinary cross-family pairs gain almost nothing from high effort (37th→43rd). The shared code is defensive engineering — reduced-motion handling, aborting stale requests, “finally” clean-up — which low-effort Sol cards almost never contain (0–2%). DeepSeek V4.1 Flash 1017 scores at the 86th–91st percentile against that high-effort Claude/GPT set — the closest of 49 models from other labs — on both the official API and DeepSeek's own dsh harness, and reaches it at almost any effort setting.",
+      "body_zh": "Claude Opus 5 / 5.5 和 GPT Sol 在 none–medium 档相距很远(第 40–41 百分位),到 xhigh 及以上却汇合(第 78–90 百分位),五个 harness 上都成立;普通跨家族配对从高 effort 里几乎得不到什么(第 37→43 百分位)。共同的代码是防御型工程写法——处理减少动画偏好、中止过期请求、「finally」 收尾——低档 Sol 的卡几乎从不出现(0–2%)。DeepSeek V4.1 Flash 1017 对这组高档 Claude/GPT 落在第 86–91 百分位,是其他 49 个外家模型里最近的;官方 API 和 DeepSeek 自家 dsh harness 上都成立,而且几乎任何 effort 档都到得了。",
+      "figures": [
+        {
+          "label_en": "Opus 5.x × Sol, none–medium → xhigh+",
+          "label_zh": "Opus 5.x × Sol,none–medium → xhigh+",
+          "value": "40th → 78th–90th pct"
+        },
+        {
+          "label_en": "DeepSeek V4.1 1017 vs that set",
+          "label_zh": "DeepSeek V4.1 1017 对这组",
+          "value": "86th–91st pct (rank 1 of 49)"
+        }
+      ],
+      "refs": [
+        "2026-07-19--unified"
+      ],
+      "caveat_en": "Code-habit fingerprint (v15). DeepSeek's dsh harness carries the defensive idioms more often than its API arm (88% vs 25% for reduced-motion); the fingerprint result holds on both.",
+      "caveat_zh": "代码习惯指纹(v15)。DeepSeek 的 dsh harness 比 API 更常出现这些防御写法(reduced-motion 88% 对 25%);指纹结论在两边都成立。"
+    },
+    {
+      "id": "lineage-breaks",
+      "title_en": "Some labs change hands between generations; GPT never does",
+      "title_zh": "有的厂商换代就换了一手写法,GPT 从来没换",
+      "body_en": "GPT-6 cards still score at the 81st–86th percentile against GPT-5.x (3,300 config pairs). DeepSeek V4.1 against every earlier DeepSeek scores at the 49th–56th — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 82nd–89th. Kimi K3 against Kimi K2.x: 55th–56th; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–84th).",
+      "body_zh": "GPT-6 的卡对 GPT-5.x 仍在第 81–86 百分位(3,300 个 config 对)。DeepSeek V4.1 对所有更早的 DeepSeek 只有第 49–56 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 82–89。Kimi K3 对 Kimi K2.x:第 55–56;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–84)。",
+      "figures": [
+        {
+          "label_en": "GPT-6 vs GPT-5.x",
+          "label_zh": "GPT-6 对 GPT-5.x",
+          "value": "81st–86th pct"
+        },
+        {
+          "label_en": "DeepSeek V4.1 vs earlier DeepSeek",
+          "label_zh": "DeepSeek V4.1 对前代",
+          "value": "49th–56th pct"
+        }
+      ],
+      "refs": [
+        "2026-07-19--unified"
+      ],
+      "caveat_en": "Code-habit fingerprint (v15); same-family-different-model pairs median 75th percentile for reference.",
+      "caveat_zh": "代码习惯指纹(v15);同家族不同模型配对的中位数是第 75 百分位,可作参照。"
+    },
+    {
       "id": "api-vs-harness-divergence",
-      "title_en": "The same model draws a different card through a harness",
-      "title_zh": "同一个模型,经 harness 画出的卡不一样",
-      "body_en": "For the same model at the same effort, cross-arm similarity between the plain api output and the CLI-harness output sits around 0.60-0.69 — far below the model's own within-arm self-consistency. The harness (system prompt, tool loop, file delivery) is a real variable of the drawing, not a transparent pipe.",
-      "body_zh": "同模型同 effort,api 直连输出与 CLI harness 输出之间的跨臂相似度只有 0.60-0.69,远低于各自臂内的自一致性。harness(系统提示、工具循环、文件交付)是作画的真实变量,不是透明管道。",
-      "figures": [{ "label_en": "cross-arm similarity", "label_zh": "跨臂相似度", "value": "0.60-0.69" }],
-      "refs": ["2026-07-18--official-gpt", "2026-07-17--dev-codex-oauth-gpt-5.4"],
-      "caveat_en": "Measured on the gpt family; N=4 per config.",
-      "caveat_zh": "在 gpt 家族上测得;每 config N=4。"
+      "title_en": "The harness changes how much a model draws — not how it writes",
+      "title_zh": "harness 改变模型画多少,不改变它怎么写",
+      "body_en": "Through a different harness the same model at the same effort keeps its code habits: on the v15 fingerprint, cross-harness pairs sit at the 98th–99th percentile, the same as the model's own re-runs, and two different-family models gain only 1–2 percentile points from sharing a harness. What the harness does move is the look (looks view: 88th against 92nd–94th for re-runs) and, above all, the volume of what gets drawn.",
+      "body_zh": "同一模型、同一 effort 换一个 harness,代码习惯不变:在 v15 指纹上,跨 harness 配对落在第 98–99 百分位,和模型自己重跑一样;两个不同家族的模型共用一个 harness 也只多 1–2 个百分点。harness 真正改变的是外观(外观视角:第 88 百分位,重跑是第 92–94)和——最主要的——画出来的体量。",
+      "figures": [
+        {
+          "label_en": "same model, other harness (code)",
+          "label_zh": "同模型换 harness(代码)",
+          "value": "98th–99th pct"
+        },
+        {
+          "label_en": "same model, other harness (looks)",
+          "label_zh": "同模型换 harness(外观)",
+          "value": "88th pct"
+        }
+      ],
+      "refs": [
+        "2026-07-19--unified"
+      ],
+      "caveat_en": "Replaces an earlier version of this card (cross-arm 0.60–0.69 on the old raw channel average, measured on the gpt family only), which mistook the old scale's spread for a harness effect.",
+      "caveat_zh": "取代本卡的旧版(旧的原始通道平均下跨臂 0.60–0.69,只在 gpt 家族测得),那一版把旧尺度的离散误读成了 harness 效应。"
     },
     {
       "id": "effort-scaling-claude",
@@ -22,11 +107,27 @@
       "body_en": "Through the Claude Code harness, raising effort from low to max grows the generated card by roughly 14x (fable-5), 12x (opus-4.8) and 9x (sonnet-5) in output volume. The knob visibly changes how much gets drawn.",
       "body_zh": "经 Claude Code harness,effort 从 low 拉到 max,产出卡片体量约放大 14 倍(fable-5)、12 倍(opus-4.8)、9 倍(sonnet-5)。这个旋钮真实改变了画多少东西。",
       "figures": [
-        { "label_en": "fable-5 low→max", "label_zh": "fable-5 low→max", "value": "~14x" },
-        { "label_en": "opus-4.8 low→max", "label_zh": "opus-4.8 low→max", "value": "~12x" },
-        { "label_en": "sonnet-5 low→max", "label_zh": "sonnet-5 low→max", "value": "~9x" }
+        {
+          "label_en": "fable-5 low→max",
+          "label_zh": "fable-5 low→max",
+          "value": "~14x"
+        },
+        {
+          "label_en": "opus-4.8 low→max",
+          "label_zh": "opus-4.8 low→max",
+          "value": "~12x"
+        },
+        {
+          "label_en": "sonnet-5 low→max",
+          "label_zh": "sonnet-5 low→max",
+          "value": "~9x"
+        }
       ],
-      "refs": ["2026-07-17--dev-cc-fable5", "2026-07-17--dev-cc-opus48", "2026-07-17--dev-cc-sonnet5"],
+      "refs": [
+        "2026-07-17--dev-cc-fable5",
+        "2026-07-17--dev-cc-opus48",
+        "2026-07-17--dev-cc-sonnet5"
+      ],
       "caveat_en": "Output volume, not quality; single prompt family.",
       "caveat_zh": "是输出体量不是质量;单一提示族。"
     },
@@ -36,8 +137,17 @@
       "title_zh": "有些模型的 effort 旋钮拧了没反应",
       "body_en": "haiku-4.5 (Claude Code harness) and grok-4.5 (official api) produce statistically indistinguishable output volume across every effort tier we ran. grok-4.3 on the same official api does respond to the knob.",
       "body_zh": "haiku-4.5(Claude Code harness)和 grok-4.5(官方 api)在我们跑过的所有 effort 档位上输出体量无可辨差异。同一官方 api 上的 grok-4.3 对旋钮有响应。",
-      "figures": [{ "label_en": "flat models", "label_zh": "无响应模型", "value": "haiku-4.5, grok-4.5" }],
-      "refs": ["2026-07-17--dev-cc-haiku45", "2026-07-18--official-grok"],
+      "figures": [
+        {
+          "label_en": "flat models",
+          "label_zh": "无响应模型",
+          "value": "haiku-4.5, grok-4.5"
+        }
+      ],
+      "refs": [
+        "2026-07-17--dev-cc-haiku45",
+        "2026-07-18--official-grok"
+      ],
       "caveat_en": "Volume-based observation; N=4.",
       "caveat_zh": "基于体量的观察;N=4。"
     },
@@ -47,8 +157,16 @@
       "title_zh": "官方 gpt api 不存在 \"minimal\" 档",
       "body_en": "The official /responses endpoint returns 400 for effort=minimal on every gpt model we probed. Where a \"minimal\" tier appears through proxy or harness channels, it is mapped by the channel, not the model provider.",
       "body_zh": "官方 /responses 对 effort=minimal 一律 400(我们探测过的每个 gpt 模型)。代理或 harness 通道里出现的 \"minimal\" 档是通道侧映射,不是官方档位。",
-      "figures": [{ "label_en": "official minimal", "label_zh": "官方 minimal", "value": "400 (all gpt models probed)" }],
-      "refs": ["2026-07-18--official-gpt"],
+      "figures": [
+        {
+          "label_en": "official minimal",
+          "label_zh": "官方 minimal",
+          "value": "400 (all gpt models probed)"
+        }
+      ],
+      "refs": [
+        "2026-07-18--official-gpt"
+      ],
       "caveat_en": "Probed by behavior (accept/reject), 2026-07-18.",
       "caveat_zh": "行为探测(接受/拒绝)所得,2026-07-18。"
     },
@@ -58,8 +176,16 @@
       "title_zh": "\"max\" 档是 gpt-5.6 系独占",
       "body_en": "Effort=max is accepted by gpt-5.6-sol / terra / luna and rejected (400) by every earlier gpt model on the official api.",
       "body_zh": "官方 api 上 effort=max 仅 gpt-5.6-sol/terra/luna 接受,更早的 gpt 模型全部 400。",
-      "figures": [{ "label_en": "max acceptors", "label_zh": "接受 max 的模型", "value": "gpt-5.6-sol / terra / luna" }],
-      "refs": ["2026-07-18--official-gpt"],
+      "figures": [
+        {
+          "label_en": "max acceptors",
+          "label_zh": "接受 max 的模型",
+          "value": "gpt-5.6-sol / terra / luna"
+        }
+      ],
+      "refs": [
+        "2026-07-18--official-gpt"
+      ],
       "caveat_en": "Probed by behavior, 2026-07-18.",
       "caveat_zh": "行为探测所得,2026-07-18。"
     },
@@ -69,8 +195,16 @@
       "title_zh": "官方 api 输出比同模型代理通道大 5-8 倍",
       "body_en": "For the same gpt model and effort, the official api produced 5-8x more card HTML than the reverse-proxy dev channel. Channel identity materially changes what you get — one reason this dataset separates channel grades.",
       "body_zh": "同一 gpt 模型同一 effort,官方 api 产出的卡片 HTML 是反代 dev 通道的 5-8 倍。通道本身实质性改变产出——这是本数据集区分通道等级的原因之一。",
-      "figures": [{ "label_en": "volume ratio", "label_zh": "体量比", "value": "5-8x" }],
-      "refs": ["2026-07-18--official-gpt"],
+      "figures": [
+        {
+          "label_en": "volume ratio",
+          "label_zh": "体量比",
+          "value": "5-8x"
+        }
+      ],
+      "refs": [
+        "2026-07-18--official-gpt"
+      ],
       "caveat_en": "Dev-channel data is not published; the comparison informed our channel-grade policy.",
       "caveat_zh": "dev 通道数据不发布;该对比塑造了通道分级政策。"
     },
@@ -80,8 +214,17 @@
       "title_zh": "在 agentic harness 里干活是一条独立的能力轴",
       "body_en": "Several previous-generation models that answer fine over the plain api fail outright (server 500) when driven through the opencode agentic harness on the same subscription channel. Tool-loop operation is not implied by api competence.",
       "body_zh": "多个上一代模型 api 直连正常作答,但在同一订阅通道的 opencode agentic harness 里直接 500。会答 api 不等于会在工具循环里干活。",
-      "figures": [{ "label_en": "pattern", "label_zh": "现象", "value": "api ok / harness 500" }],
-      "refs": ["2026-07-18--dev-opencode-cli-extra", "2026-07-18--dev-go-extra"],
+      "figures": [
+        {
+          "label_en": "pattern",
+          "label_zh": "现象",
+          "value": "api ok / harness 500"
+        }
+      ],
+      "refs": [
+        "2026-07-18--dev-opencode-cli-extra",
+        "2026-07-18--dev-go-extra"
+      ],
       "caveat_en": "Gateway-side effect cannot be fully excluded.",
       "caveat_zh": "无法完全排除网关侧因素。"
     },
@@ -91,8 +234,16 @@
       "title_zh": "kimi-k3 在质性提示变体上思考量 ~10 倍",
       "body_en": "On the P-q (qualitative) prompt variant, kimi-k3's reasoning volume ran about 10x its P-min behavior — the largest variant sensitivity we observed.",
       "body_zh": "在 P-q(质性)提示变体上,kimi-k3 的思考量约为 P-min 的 10 倍——我们观察到的最大变体敏感度。",
-      "figures": [{ "label_en": "P-q vs P-min thinking", "label_zh": "P-q vs P-min 思考量", "value": "~10x" }],
-      "refs": ["2026-07-17--dev-expanded"],
+      "figures": [
+        {
+          "label_en": "P-q vs P-min thinking",
+          "label_zh": "P-q vs P-min 思考量",
+          "value": "~10x"
+        }
+      ],
+      "refs": [
+        "2026-07-17--dev-expanded"
+      ],
       "caveat_en": "Single model observation on a dev-grade channel; to be re-verified on a qualified channel.",
       "caveat_zh": "单模型、dev 级通道上的观察;待合格通道复核。"
     }
