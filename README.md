@@ -62,7 +62,7 @@ they describe *how the code is written*, never where a model came from.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="config-vs-config code-habit fingerprint heatmap (407-config harness view of the 585-config set)" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config code-habit fingerprint heatmap (413-config harness view of the 596-config set)" width="82%">
 </div>
 
 Every measured configuration against every other, on the code-habit fingerprint.
@@ -82,13 +82,16 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > channels are combined with weights learned by how well each one tells models apart,
 > and the result is shown as a **percentile among all cross pairs**: 0.50 is a typical
 > pair from two different labs, two configs of the same model sit around 0.97. The
-> pixels are a separate **looks** view and do not enter the score. Percentiles are
+> pixels are a separate **looks** view and do not enter the score; a **style** view
+> scores only what the code says the card looks like (colours, CSS values, layout,
+> naming, semantic markup). Percentiles are
 > relative to the current set and are refitted when it changes.
 >
 > Why code and not pixels: in leave-models-out cross-validation the fingerprint
 > recognises the same model at **AUC 0.92**, the same family at **0.74**, and the
-> same model *across effort levels* at **0.92**; the looks view manages **0.74 /
-> 0.57**, and the old equal-weight merge of every channel **0.87 / 0.68**. How a card
+> same model *across effort levels* at **0.91**; the style view manages **0.84 /
+> 0.67**, the looks view **0.73 / 0.57**, and the old equal-weight merge of every
+> channel **0.87 / 0.68**. How a card
 > *looks* converges across labs; how it is *written* does not.
 >
 > **A correction.** The first version of this score (v15, live for a few days)
@@ -98,7 +101,7 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > that DeepSeek V4.1 sits in that "frontier zone". With card size handled directly
 > neither holds, and both are withdrawn. The methodology page has the comparison.
 
-All figures are percentiles on the 585-configuration set, `P-min` / `P-q` where both
+All figures are percentiles on the 596-configuration set, `P-min` / `P-q` where both
 are given. Signals, not proof: one prompt family, and some models have few configs —
 those are marked. Every finding below holds under each of the scoring variants we
 tested that identify models at least as well as this one, not just the one shown.
@@ -117,10 +120,10 @@ tested that identify models at least as well as this one, not just the one shown
   4/4.5 cards, 34% of the other members' cards, and in none of 571 Claude Opus 4.8+
   cards. GPT models of the same period never joined.
 - **Some labs change hands between generations.** DeepSeek V4.1 against every earlier
-  DeepSeek: **0.54 / 0.46** — an unrelated pair — while its own two builds agree at
-  **0.75 / 0.73**. Kimi K3 against Kimi K2.x: **0.53 / 0.62**; K3 sits closer to Claude
+  DeepSeek: **0.52 / 0.46** — an unrelated pair — while its own two builds agree at
+  **0.75 / 0.74**. Kimi K3 against Kimi K2.x: **0.53 / 0.63**; K3 sits closer to Claude
   Fable 5 / Opus 4.8 (**0.89 / 0.82**, 400+ config pairs). GPT-6 against GPT-5.x stays
-  at **0.75 / 0.73**, an ordinary same-family level.
+  at **0.75 / 0.72**, an ordinary same-family level.
 - **High effort writes defensively.** Counted directly in the cards: `prefers-reduced-motion`
   handling and aborting stale requests with `AbortController` appear in 55–69% of
   high-effort (xhigh and above) Claude Opus 5.x and GPT Sol cards, and in 0–2% of
@@ -130,12 +133,12 @@ tested that identify models at least as well as this one, not just the one shown
   shared style.
 - **The harness doesn't write the code; the model does.** The same model at the same
   effort through a different harness scores **0.99 / 0.99** — the same as its own
-  re-runs (**0.98 / 0.99**) — while two different-family models gain only 6–7 points
-  from sharing a harness (**0.49** vs **0.42**), against a gap of about 50 between
+  re-runs (**0.98 / 0.99**) — while two different-family models gain only 5 points
+  from sharing a harness (**0.48** vs **0.43**), against a gap of about 50 between
   "same model" and "different lab". What the harness does move is the volume.
 - **Some models barely agree with themselves.** `deepseek-v4-flash-vision-exp @high`
-  (**0.40** on `P-min`), `kimi-k2.7-code` (**0.41**) and `kimi-k3 @high` (**0.45 /
-  0.40**) have the lowest self-consistency — a different card most re-runs. 105
+  (**0.35** on `P-min`), `kimi-k2.7-code` (**0.43**) and `kimi-k3 @high` (**0.48 /
+  0.46**) have the lowest self-consistency — a different card most re-runs. 110
   configs have a reading at all: it needs several re-runs of one config in one variant.
 
 **Notable pairs** — strong signals on small samples:
@@ -143,10 +146,10 @@ tested that identify models at least as well as this one, not just the one shown
 - **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**0.99 / 0.99**, closer than to
   any Qwen), down to the same `var d = document.createElement('div')` HTML-escaping
   helper found in 64% of Opus 4.6 cards and almost nowhere else. One config, 4 cards.
-  MiMo-V2.5-Pro shows the same pull (**0.92 / 0.92**, 66 config pairs).
+  MiMo-V2.5-Pro shows the same pull (**0.92 / 0.90**, 66 config pairs).
 - **Cursor's Composer 2.5 writes like Grok 4.5** (**0.99 / 0.98**, across four Grok
   harnesses), sharing its exact CSS vocabulary (`--bg-deep`,
-  `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 2 of the other 2,436
+  `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 3 of the other 2,499
   cards. One config, 8 cards.
 
 **A vendor changed a model under a fixed name — and the instruments disagreed about
@@ -157,7 +160,7 @@ side.
 
 On the **code fingerprint** the change barely registers: at `high` the two epochs
 score **0.90 / 0.93** against each other while each epoch's own re-runs sit at
-**0.95–0.99**; at `max` they score **0.92 / 0.94** against re-runs of **0.90–0.96** —
+**0.95–0.99**; at `max` they score **0.91 / 0.93** against re-runs of **0.89–0.96** —
 inside noise.
 
 On the **output-volume** axis the same change is unmissable. At an identical effort
@@ -186,7 +189,7 @@ runs. The verbatim prompts live in [`prompts/`](prompts/). Each model runs the t
 - **model** — the frontier model (Claude, GPT, Gemini, Qwen, GLM, Kimi, DeepSeek,
   Grok, Doubao, MiMo, MiniMax …)
 - **harness** — how it was driven: an official API, or a coding CLI/harness
-  (Claude Code, Codex, Qoder, opencode, Kiro, grok-cli …)
+  (Claude Code, Codex, Qoder, opencode, Kiro, grok-cli, MiniMax Code …)
 - **effort** — the reasoning-effort / thinking level, where the model exposes one
 
 ## Explore
@@ -196,10 +199,10 @@ At **[weathercard.secondfirst.ai](https://weathercard.secondfirst.ai):**
 | | |
 |---|---|
 | **Gallery** | every card, filterable — the raw outputs |
-| **Matrix** | the full config × config heatmap (pictured above) — fingerprint, looks, or any single channel |
+| **Matrix** | the full config × config heatmap (pictured above) — fingerprint, style, looks, or any single channel; filter out older models by release date |
 | **Compare** | any set of models side by side, same prompt, same data |
 | **Arena** | blind A/B — pick the card you'd rather look at, identities hidden |
-| **Methodology** | the 22 channels, the code-habit fingerprint, and how a card qualifies |
+| **Methodology** | the 22 channels, the code-habit fingerprint and style views, and how a card qualifies |
 
 ## Run it yourself
 
@@ -235,8 +238,8 @@ so the repo ships a **flagship subset** — one canonical configuration per fron
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-10-18.tar.gz>
-  (~1.7 GB, sha256 `8edf43eb…48e3ef`). Extracts to `2026-07-19--unified/` +
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-10-20.tar.gz>
+  (~1.7 GB, sha256 `de905e7f…d652fe`). Extracts to `2026-07-19--unified/` +
   `index.json`; point `WCB_DATA_ROOT` at the extracted directory to serve the
   whole set locally.
 

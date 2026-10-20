@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-10-19",
+  "updated": "2026-10-20",
   "note_en": "Observations from building the dataset. These are descriptive measurements, not quality judgments; every item links to the raw data that produced it. Single prompt family, small N — read as signals, not conclusions.",
   "note_zh": "构建数据集过程中的观察。全部是描述性测量,不是质量评判;每条都指向产生它的原始数据。单一提示族、小 N——当信号看,别当结论。",
   "findings": [
@@ -25,8 +25,8 @@
       "refs": [
         "2026-07-19--unified"
       ],
-      "caveat_en": "Code-habit fingerprint (v16), percentile among cross pairs of this 585-config set; holds under every scoring variant tested. Describes how the code is written, not where a model came from.",
-      "caveat_zh": "代码习惯指纹(v16),在本 585 个 config 的跨配对中的百分位;在测试过的各种评分方案下都成立。描述的是代码怎么写,不是模型从哪来。"
+      "caveat_en": "Code-habit fingerprint (v16), percentile among cross pairs of this 596-config set; holds under every scoring variant tested. Describes how the code is written, not where a model came from.",
+      "caveat_zh": "代码习惯指纹(v16),在本 596 个 config 的跨配对中的百分位;在测试过的各种评分方案下都成立。描述的是代码怎么写,不是模型从哪来。"
     },
     {
       "id": "high-effort-defensive-code",
@@ -56,18 +56,18 @@
       "id": "lineage-breaks",
       "title_en": "Some labs change hands between generations",
       "title_zh": "有的厂商换代就换了一手写法",
-      "body_en": "DeepSeek V4.1 against every earlier DeepSeek scores at the 46th–54th percentile — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 73rd–75th. Kimi K3 against Kimi K2.x: 53rd–62nd; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–89th). GPT-6 against GPT-5.x stays at the 73rd–75th, an ordinary same-family level.",
-      "body_zh": "DeepSeek V4.1 对所有更早的 DeepSeek 只有第 46–54 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 73–75。Kimi K3 对 Kimi K2.x:第 53–62;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–89)。GPT-6 对 GPT-5.x 是第 73–75,普通的同家族水平。",
+      "body_en": "DeepSeek V4.1 against every earlier DeepSeek scores at the 46th–52nd percentile — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 74th–75th. Kimi K3 against Kimi K2.x: 53rd–63rd; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–89th). GPT-6 against GPT-5.x stays at the 72nd–75th, an ordinary same-family level.",
+      "body_zh": "DeepSeek V4.1 对所有更早的 DeepSeek 只有第 46–52 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 74–75。Kimi K3 对 Kimi K2.x:第 53–63;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–89)。GPT-6 对 GPT-5.x 是第 72–75,普通的同家族水平。",
       "figures": [
         {
           "label_en": "DeepSeek V4.1 vs earlier DeepSeek",
           "label_zh": "DeepSeek V4.1 对前代",
-          "value": "46th–54th pct"
+          "value": "46th–52nd pct"
         },
         {
           "label_en": "Kimi K3 vs Kimi K2.x",
           "label_zh": "Kimi K3 对 K2.x",
-          "value": "53rd–62nd pct"
+          "value": "53rd–63rd pct"
         }
       ],
       "refs": [
@@ -80,8 +80,8 @@
       "id": "api-vs-harness-divergence",
       "title_en": "The harness changes how much a model draws — not how it writes",
       "title_zh": "harness 改变模型画多少,不改变它怎么写",
-      "body_en": "Through a different harness the same model at the same effort keeps its code habits: on the code fingerprint, cross-harness pairs sit at the 99th percentile, the same as the model's own re-runs, and two different-family models gain only 6–7 percentile points from sharing a harness. What the harness does move is, above all, the volume of what gets drawn.",
-      "body_zh": "同一模型、同一 effort 换一个 harness,代码习惯不变:在代码指纹上,跨 harness 配对落在第 99 百分位,和模型自己重跑一样;两个不同家族的模型共用一个 harness 也只多 6–7 个百分点。harness 真正改变的,主要是画出来的体量。",
+      "body_en": "Through a different harness the same model at the same effort keeps its code habits: on the code fingerprint, cross-harness pairs sit at the 99th percentile, the same as the model's own re-runs, and two different-family models gain only 5 percentile points from sharing a harness. What the harness does move is, above all, the volume of what gets drawn.",
+      "body_zh": "同一模型、同一 effort 换一个 harness,代码习惯不变:在代码指纹上,跨 harness 配对落在第 99 百分位,和模型自己重跑一样;两个不同家族的模型共用一个 harness 也只多 5 个百分点。harness 真正改变的,主要是画出来的体量。",
       "figures": [
         {
           "label_en": "same model, other harness (code)",
@@ -91,7 +91,7 @@
         {
           "label_en": "shared harness, different families",
           "label_zh": "不同家族共用 harness",
-          "value": "+6–7 pct points"
+          "value": "+5 pct points"
         }
       ],
       "refs": [
