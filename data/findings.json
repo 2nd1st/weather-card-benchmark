@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-10-20",
+  "updated": "2026-10-24",
   "note_en": "Observations from building the dataset. These are descriptive measurements, not quality judgments; every item links to the raw data that produced it. Single prompt family, small N — read as signals, not conclusions.",
   "note_zh": "构建数据集过程中的观察。全部是描述性测量,不是质量评判;每条都指向产生它的原始数据。单一提示族、小 N——当信号看,别当结论。",
   "findings": [
@@ -8,8 +8,8 @@
       "id": "claude-45-code-cluster",
       "title_en": "Claude's 2025 coding style outlived Claude",
       "title_zh": "Claude 2025 年的写法,比 Claude 自己活得久",
-      "body_en": "Claude Sonnet 4 / 4.5, Opus 4.5 and Haiku 4.5 form one tight code-habit cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs score in the 87th–100th percentile on both prompts (MiniMax at the 98th), as close as two configs of one model, across harnesses, efforts and all ten code channels. Claude itself moved on — Claude 4.5 against Claude Opus 4.8 / Claude 5 sits at the 14th–22nd percentile, farther apart than two unrelated labs. One telltale line, “const today = new Date().toISOString().split('T')[0];”, is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined the cluster.",
-      "body_zh": "Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的代码习惯簇:跨厂商的配对在两个 prompt 上落在第 87–100 百分位(MiniMax 在第 98),和同一模型的两个 config 一样近,跨 harness、跨 effort、十个代码通道全部一致。Claude 自己却走开了——Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有第 14–22 百分位,比两个不相干的厂商还远。一行标志性代码 「const today = new Date().toISOString().split('T')[0];」 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未进入这个簇。",
+      "body_en": "Claude Sonnet 4 / 4.5, Opus 4.5 and Haiku 4.5 form one tight code-habit cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok 4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs score in the 87th–100th percentile on both prompts (MiniMax at the 98th), as close as two configs of one model, across harnesses, efforts and all ten code channels. Claude itself moved on — Claude 4.5 against Claude Opus 4.8 / Claude 5 sits at the 14th–23rd percentile, farther apart than two unrelated labs. One telltale line, “const today = new Date().toISOString().split('T')[0];”, is in 63% of Claude Sonnet 4/4.5 cards, 34% of the other members' cards, and none of 571 Claude Opus 4.8+ cards. GPT models of the same period never joined the cluster.",
+      "body_zh": "Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的代码习惯簇:跨厂商的配对在两个 prompt 上落在第 87–100 百分位(MiniMax 在第 98),和同一模型的两个 config 一样近,跨 harness、跨 effort、十个代码通道全部一致。Claude 自己却走开了——Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有第 14–23 百分位,比两个不相干的厂商还远。一行标志性代码 「const today = new Date().toISOString().split('T')[0];」 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未进入这个簇。",
       "figures": [
         {
           "label_en": "cross-lab pairs in the cluster",
@@ -19,14 +19,14 @@
         {
           "label_en": "Claude 4.5 vs Claude Opus 4.8 / 5",
           "label_zh": "Claude 4.5 对 Opus 4.8 / 5",
-          "value": "14th–22nd pct"
+          "value": "14th–23rd pct"
         }
       ],
       "refs": [
         "2026-07-19--unified"
       ],
-      "caveat_en": "Code-habit fingerprint (v16), percentile among cross pairs of this 596-config set; holds under every scoring variant tested. Describes how the code is written, not where a model came from.",
-      "caveat_zh": "代码习惯指纹(v16),在本 596 个 config 的跨配对中的百分位;在测试过的各种评分方案下都成立。描述的是代码怎么写,不是模型从哪来。"
+      "caveat_en": "Code-habit fingerprint (v16), percentile among cross pairs of this 599-config set; holds under every scoring variant tested. Describes how the code is written, not where a model came from.",
+      "caveat_zh": "代码习惯指纹(v16),在本 599 个 config 的跨配对中的百分位;在测试过的各种评分方案下都成立。描述的是代码怎么写,不是模型从哪来。"
     },
     {
       "id": "high-effort-defensive-code",
@@ -56,8 +56,8 @@
       "id": "lineage-breaks",
       "title_en": "Some labs change hands between generations",
       "title_zh": "有的厂商换代就换了一手写法",
-      "body_en": "DeepSeek V4.1 against every earlier DeepSeek scores at the 46th–52nd percentile — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 74th–75th. Kimi K3 against Kimi K2.x: 53rd–63rd; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–89th). GPT-6 against GPT-5.x stays at the 72nd–75th, an ordinary same-family level.",
-      "body_zh": "DeepSeek V4.1 对所有更早的 DeepSeek 只有第 46–52 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 74–75。Kimi K3 对 Kimi K2.x:第 53–63;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–89)。GPT-6 对 GPT-5.x 是第 72–75,普通的同家族水平。",
+      "body_en": "DeepSeek V4.1 against every earlier DeepSeek scores at the 46th–52nd percentile — an unrelated pair — while its two V4.1 builds (0910, 1017) agree at the 74th–75th. Kimi K3 against Kimi K2.x: 54th–63rd; K3 sits closer to Claude Fable 5 / Opus 4.8 (82nd–90th). GPT-6 against GPT-5.x stays at the 72nd–75th, an ordinary same-family level.",
+      "body_zh": "DeepSeek V4.1 对所有更早的 DeepSeek 只有第 46–52 百分位——相当于不相干的一对——而它自己的两个构建(0910、1017)之间是第 74–75。Kimi K3 对 Kimi K2.x:第 54–63;K3 反而更靠近 Claude Fable 5 / Opus 4.8(第 82–90)。GPT-6 对 GPT-5.x 是第 72–75,普通的同家族水平。",
       "figures": [
         {
           "label_en": "DeepSeek V4.1 vs earlier DeepSeek",
@@ -67,7 +67,7 @@
         {
           "label_en": "Kimi K3 vs Kimi K2.x",
           "label_zh": "Kimi K3 对 K2.x",
-          "value": "53rd–63rd pct"
+          "value": "54th–63rd pct"
         }
       ],
       "refs": [

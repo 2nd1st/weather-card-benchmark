@@ -43,7 +43,7 @@ MIT
 ## 这张地图
 
 <div align="center">
-<img src="docs/matrix.png" alt="config 对 config 代码习惯指纹热力图(596 config 集的 413 config harness 视图)" width="82%">
+<img src="docs/matrix.png" alt="config 对 config 代码习惯指纹热力图(599 config 集的 413 config harness 视图)" width="82%">
 </div>
 
 每个被测 configuration 对上其余每一个,用的是代码习惯指纹。亮 = 相似,暗 = 分化。对角线上的亮块是各**模型家族**在自我聚类;那条细亮对角线是每个 config 的**自一致性**(一个模型和它*自己*重跑之间有多像)。这里的相似度是**测量,不是质量分** —— 它只刻画收敛,别无其他。
@@ -52,27 +52,27 @@ MIT
 
 > **这个数是什么。** 每一对 configuration 在十条代码通道上比较 —— token shingle、winnowing 指纹、特征集合、JS 语法树、CSS 属性与取值、布局、命名、颜色字面量、语义标记。先去掉卡片体积的影响:原始相似度取决于两张卡有多长,所以每一对都和"同样两种体积的配对"的平均值比较。再扣掉每个 config"和谁都有点像"的四分之一,按"这条通道多能区分模型"学出来的权重合并,最后显示为**在全部跨配对中的百分位**:0.50 是两个不同厂商的一对典型配对,同一模型的两个 config 大约在 0.97。像素是单独的**外观**视角,不进这个分数;**风格**视角只看代码里写出来的样子(颜色、CSS 取值、布局、命名、语义标记)。百分位相对于当前集合,集合变了就重新拟合。
 >
-> 为什么看代码不看像素:在按模型留出的交叉验证里,指纹认出同一模型的 **AUC 是 0.92**,认出同一家族 **0.74**,跨 effort 档认出同一模型 **0.91**;风格视角是 **0.84 / 0.67**,外观视角只有 **0.73 / 0.57**,旧的全通道等权合并是 **0.87 / 0.68**。卡片*长什么样*,各家越来越趋同;*怎么写*,则不然。
+> 为什么看代码不看像素:在按模型留出的交叉验证里,指纹认出同一模型的 **AUC 是 0.92**,认出同一家族 **0.73**,跨 effort 档认出同一模型 **0.91**;风格视角是 **0.84 / 0.67**,外观视角只有 **0.73 / 0.57**,旧的全通道等权合并是 **0.87 / 0.68**。卡片*长什么样*,各家越来越趋同;*怎么写*,则不然。
 >
 > **一处更正。** 这个分数的第一版(v15,上线了几天)把每个 config"和谁都像"的部分整个扣掉。这会把和谁都不像的 config —— 多是又长又高 effort 的卡 —— 推到一起,而这里发布过的两条发现正建立在它上面:高 effort 的 Claude 和 GPT 写法趋同,以及 DeepSeek V4.1 落在这个"前沿区"。直接处理卡片体积之后,两条都不成立,已撤回。方法论页有完整对比。
 
-下面的数字都是 596 个 configuration 集上的百分位,给两个数时是 `P-min` / `P-q`。是信号不是证明:单一 prompt 家族,而且有些模型 config 很少 —— 这些都标出来了。下面每一条在我们测过的、认人能力不低于它的各种评分方案下都成立,不只是这里显示的这一种。
+下面的数字都是 599 个 configuration 集上的百分位,给两个数时是 `P-min` / `P-q`。是信号不是证明:单一 prompt 家族,而且有些模型 config 很少 —— 这些都标出来了。下面每一条在我们测过的、认人能力不低于它的各种评分方案下都成立,不只是这里显示的这一种。
 
 - **家族是真实的分组。** 一个 config 和自己重跑最像(`P-min` 上 **0.94**),和自家家族次之(**0.70**),和别家最不像(**0.44**)。
-- **Claude 2025 年的写法,比 Claude 自己活得久。** Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的簇:跨厂商配对在两个 prompt 上是 **0.87–1.00**,MiniMax 是 **0.98 / 0.98** —— 和同一模型的两个 config 一样近 —— 跨 harness、跨 effort、十条代码通道全部一致。Claude 自己却走开了:Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有 **0.22 / 0.14**,比两个不相干的厂商还远。一行标志性代码 `const today = new Date().toISOString().split('T')[0];` 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未加入。
-- **有的厂商换代就换了一手写法。** DeepSeek V4.1 对所有更早的 DeepSeek:**0.52 / 0.46** —— 相当于不相干的一对 —— 而它自己的两个构建之间是 **0.75 / 0.74**。Kimi K3 对 Kimi K2.x:**0.53 / 0.63**;K3 反而更靠近 Claude Fable 5 / Opus 4.8(**0.89 / 0.82**,400+ 个 config 对)。GPT-6 对 GPT-5.x 是 **0.75 / 0.72**,普通的同家族水平。
+- **Claude 2025 年的写法,比 Claude 自己活得久。** Claude Sonnet 4 / 4.5、Opus 4.5、Haiku 4.5 和 MiniMax M2.1–M2.7、豆包 Seed 2.1 Pro、Grok 4.3、DeepSeek V3.2、Qwen3-Coder-Next、Gemini 3 Flash / 3.1 Pro 组成一个紧密的簇:跨厂商配对在两个 prompt 上是 **0.87–1.00**,MiniMax 是 **0.98 / 0.98** —— 和同一模型的两个 config 一样近 —— 跨 harness、跨 effort、十条代码通道全部一致。Claude 自己却走开了:Claude 4.5 对 Claude Opus 4.8 / Claude 5 只有 **0.23 / 0.14**,比两个不相干的厂商还远。一行标志性代码 `const today = new Date().toISOString().split('T')[0];` 出现在 63% 的 Claude Sonnet 4/4.5 卡、34% 的其他成员卡里,而 571 张 Claude Opus 4.8+ 卡一张都没有。同时期的 GPT 从未加入。
+- **有的厂商换代就换了一手写法。** DeepSeek V4.1 对所有更早的 DeepSeek:**0.52 / 0.46** —— 相当于不相干的一对 —— 而它自己的两个构建之间是 **0.75 / 0.74**。Kimi K3 对 Kimi K2.x:**0.54 / 0.63**;K3 反而更靠近 Claude Fable 5 / Opus 4.8(**0.90 / 0.82**,400+ 个 config 对)。GPT-6 对 GPT-5.x 是 **0.75 / 0.72**,普通的同家族水平。
 - **高 effort 写得更"防御"。** 直接数卡片里的代码:`prefers-reduced-motion` 处理、用 `AbortController` 中止过期请求,出现在 55–69% 的高 effort(xhigh 及以上)Claude Opus 5.x 和 GPT Sol 卡里,低 effort 的 GPT Sol 卡只有 0–2%。DeepSeek V4.1 1017 的 API 卡有 25–33% 这样写,DeepSeek 自家 dsh harness 出的卡是 88%。在整份代码的指纹上,这**并不**让这些模型变得相像 —— 这是三种写法,不是共同的风格。
 - **代码是模型写的,不是 harness 写的。** 同一模型同一 effort 换一个 harness,是 **0.99 / 0.99** —— 和它自己重跑一样(**0.98 / 0.99**)—— 两个不同家族的模型共用一个 harness 只多 5 个点(**0.48** 对 **0.43**),而"同一模型"和"不同厂商"之间差了约 50 个点。harness 真正改变的是体量。
-- **有些模型和自己都不像。** `deepseek-v4-flash-vision-exp @high`(`P-min` 上 **0.35**)、`kimi-k2.7-code`(**0.43**)和 `kimi-k3 @high`(**0.48 / 0.46**)自一致性最低 —— 多数重跑画得都不一样。全集有 110 个 config 拿得到读数:它需要同一 config 在同一变体下有好几次重跑。
+- **有些模型和自己都不像。** `deepseek-v4-flash-vision-exp @high`(`P-min` 上 **0.36**)、`kimi-k2.7-code`(**0.43**)和 `kimi-k3 @high`(**0.47 / 0.46**)自一致性最低 —— 多数重跑画得都不一样。全集有 113 个 config 拿得到读数:它需要同一 config 在同一变体下有好几次重跑。
 
 **值得一提的配对** —— 信号强,但样本小:
 
 - **Qwen3.8-Max-Preview 写得像 Claude Opus 4.6**(**0.99 / 0.99**,比像任何 Qwen 都近),连 HTML 转义 helper `var d = document.createElement('div')` 都一样 —— 64% 的 Opus 4.6 卡有它,别处几乎没有。只有一个 config、4 张卡。MiMo-V2.5-Pro 也有同样的拉力(**0.92 / 0.90**,66 个 config 对)。
-- **Cursor 的 Composer 2.5 写得像 Grok 4.5**(**0.99 / 0.98**,跨四个 Grok harness),CSS 词汇一模一样(`--bg-deep`、`--card-bg: rgba(255,255,255,0.07)`);`--bg-deep` 在其余 2,499 张卡里只出现 3 次。只有一个 config、8 张卡。
+- **Cursor 的 Composer 2.5 写得像 Grok 4.5**(**0.99 / 0.98**,跨四个 Grok harness),CSS 词汇一模一样(`--bg-deep`、`--card-bg: rgba(255,255,255,0.07)`);`--bg-deep` 在其余 2,523 张卡里只出现 3 次。只有一个 config、8 张卡。
 
 **厂商在固定型号名下换掉了模型 —— 几把尺子对此意见不一。** DeepSeek 于 2026-07-31 对 `deepseek-v4-flash` 重做了 post-training,API 型号名不变(官方原话:架构与参数量不变,"only re-post-trained")。我们手上有一份 **2026-07-19** 的采集,正好在更新之前,于是两个纪元并排留在集合里。
 
-在**代码指纹**上,这次变化几乎看不出来:`high` 档两个纪元互相是 **0.90 / 0.93**,而各自重跑在 **0.95–0.99**;`max` 档互相是 **0.91 / 0.93**,重跑是 **0.89–0.96** —— 落在噪声里。
+在**代码指纹**上,这次变化几乎看不出来:`high` 档两个纪元互相是 **0.90 / 0.93**,而各自重跑在 **0.95–0.99**;`max` 档互相是 **0.91 / 0.94**,重跑是 **0.89–0.96** —— 落在噪声里。
 
 但在**输出体积**这条轴上,同一个变化明显到无法忽视。**同一个 effort 档位**下,新纪元的 completion token 涨了 **2–4 倍** —— `high`/`P-min` 中位数 6,546 → 25,972(**4.0×**),`high`/`P-q` 12,376 → 52,332(**4.2×**)—— 而且四格里有三格两个纪元的 token 区间**完全不相交**(逐 slot 两两比较,P(新 > 旧) = **0.961**)。它那两个失败的 slot 正是同一效应的尾巴:写到撑破厂商 65,536 的输出上限还没收尾。
 
@@ -130,8 +130,8 @@ cd site && npm install && npm run dev   # http://localhost:3000
 
 **完整集**可在线浏览,也能作为单个 pack 下载:
 
-- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-10-20.tar.gz>
-  (~1.7 GB,sha256 `de905e7f…d652fe`)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
+- **完整数据集** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-10-24.tar.gz>
+  (~1.8 GB,sha256 `ddf0cabb…196c39`)。解压出 `2026-07-19--unified/` + `index.json`;把 `WCB_DATA_ROOT` 指向解压目录即可在本地跑整套。
 
 ## 目录
 
