@@ -62,7 +62,7 @@ they describe *how the code is written*, never where a model came from.
 ## The map
 
 <div align="center">
-<img src="docs/matrix.png" alt="config-vs-config code-habit fingerprint heatmap (418-config harness view of the 610-config set)" width="82%">
+<img src="docs/matrix.png" alt="config-vs-config code-habit fingerprint heatmap (423-config harness view of the 615-config set)" width="82%">
 </div>
 
 Every measured configuration against every other, on the code-habit fingerprint.
@@ -88,8 +88,8 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > relative to the current set and are refitted when it changes.
 >
 > Why code and not pixels: in leave-models-out cross-validation the fingerprint
-> recognises the same model at **AUC 0.92**, the same family at **0.74**, and the
-> same model *across effort levels* at **0.91**; the style view manages **0.85 /
+> recognises the same model at **AUC 0.92**, the same family at **0.73**, and the
+> same model *across effort levels* at **0.92**; the style view manages **0.85 /
 > 0.67**, the looks view **0.74 / 0.56**, and the old equal-weight merge of every
 > channel **0.87 / 0.68**. How a card
 > *looks* converges across labs; how it is *written* does not.
@@ -101,29 +101,29 @@ here is a **measurement, not a quality score** — it captures convergence, noth
 > that DeepSeek V4.1 sits in that "frontier zone". With card size handled directly
 > neither holds, and both are withdrawn. The methodology page has the comparison.
 
-All figures are percentiles on the 610-configuration set, `P-min` / `P-q` where both
+All figures are percentiles on the 615-configuration set, `P-min` / `P-q` where both
 are given. Signals, not proof: one prompt family, and some models have few configs —
 those are marked. Every finding below holds under each of the scoring variants we
 tested that identify models at least as well as this one, not just the one shown.
 
 - **Family is a real grouping.** A config agrees with its own re-runs most (**0.94**
-  on `P-min`), with its own family next (**0.70**), and with other families least
+  on `P-min`), with its own family next (**0.69**), and with other families least
   (**0.44**).
 - **Claude's 2025 coding style outlived Claude.** Claude Sonnet 4 / 4.5, Opus 4.5 and
   Haiku 4.5 form one tight cluster with MiniMax M2.1–M2.7, Doubao Seed 2.1 Pro, Grok
   4.3, DeepSeek V3.2, Qwen3-Coder-Next and Gemini 3 Flash / 3.1 Pro: cross-lab pairs
-  score **0.87–1.00** on both prompts, MiniMax at **0.98 / 0.98** — as close as two
+  score **0.86–1.00** on both prompts, MiniMax at **0.98 / 0.99** — as close as two
   configs of one model — across harnesses, efforts and all ten code channels. Claude
-  itself moved on: Claude 4.5 against Claude Opus 4.8 / Claude 5 scores **0.24 /
+  itself moved on: Claude 4.5 against Claude Opus 4.8 / Claude 5 scores **0.25 /
   0.15**, farther apart than two unrelated labs. One telltale line,
   `const today = new Date().toISOString().split('T')[0];`, is in 63% of Claude Sonnet
-  4/4.5 cards, 34% of the other members' cards, and in none of 571 Claude Opus 4.8+
+  4/4.5 cards, 34% of the other members' cards, and in none of 591 Claude Opus 4.8+
   cards. GPT models of the same period never joined.
 - **Some labs change hands between generations.** DeepSeek V4.1 against every earlier
-  DeepSeek: **0.54 / 0.47** — an unrelated pair — while its own two builds agree at
-  **0.76 / 0.74**. Kimi K3 against Kimi K2.x: **0.55 / 0.63**; K3 sits closer to Claude
+  DeepSeek: **0.55 / 0.47** — an unrelated pair — while its own two builds agree at
+  **0.76 / 0.74**. Kimi K3 against Kimi K2.x: **0.56 / 0.63**; K3 sits closer to Claude
   Fable 5 / Opus 4.8 (**0.90 / 0.82**, 400+ config pairs). GPT-6 against GPT-5.x stays
-  at **0.77 / 0.73**, an ordinary same-family level.
+  at **0.78 / 0.73**, an ordinary same-family level.
 - **High effort writes defensively.** Counted directly in the cards: `prefers-reduced-motion`
   handling and aborting stale requests with `AbortController` appear in 55–69% of
   high-effort (xhigh and above) Claude Opus 5.x and GPT Sol cards, and in 0–2% of
@@ -134,22 +134,22 @@ tested that identify models at least as well as this one, not just the one shown
 - **The harness doesn't write the code; the model does.** The same model at the same
   effort through a different harness scores **0.99 / 0.99** — the same as its own
   re-runs (**0.98 / 0.99**) — while two different-family models gain only about 5 points
-  from sharing a harness (**0.478** vs **0.424**), against a gap of about 50 between
+  from sharing a harness (**0.481** vs **0.425**), against a gap of about 50 between
   "same model" and "different lab". What the harness does move is the volume.
 - **Some models barely agree with themselves.** `deepseek-v4-flash-vision-exp @high`
-  (**0.36** on `P-min`), `kimi-k2.7-code` (**0.43**) and `kimi-k3 @high` (**0.50 /
-  0.47**) have the lowest self-consistency — a different card most re-runs. 119
+  (**0.38** on `P-min`), `kimi-k2.7-code` (**0.44**) and `kimi-k3 @high` (**0.51 /
+  0.46**) have the lowest self-consistency — a different card most re-runs. 119
   configs have a reading at all: it needs several re-runs of one config in one variant.
 
 **Notable pairs** — strong signals on small samples:
 
-- **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**0.99 / 0.99**, closer than to
+- **Qwen3.8-Max-Preview writes like Claude Opus 4.6** (**0.99 / 1.00**, closer than to
   any Qwen), down to the same `var d = document.createElement('div')` HTML-escaping
   helper found in 64% of Opus 4.6 cards and almost nowhere else. One config, 4 cards.
   MiMo-V2.5-Pro shows the same pull (**0.92 / 0.90**, 66 config pairs).
 - **Cursor's Composer 2.5 writes like Grok 4.5** (**0.99 / 0.98**, across four Grok
   harnesses), sharing its exact CSS vocabulary (`--bg-deep`,
-  `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 3 of the other 2,591
+  `--card-bg: rgba(255,255,255,0.07)`); `--bg-deep` appears in 3 of the other 2,611
   cards. One config, 8 cards.
 
 **A vendor changed a model under a fixed name — and the instruments disagreed about
@@ -159,7 +159,7 @@ capture from **2026-07-19**, before it landed, so both epochs sit in the set sid
 side.
 
 On the **code fingerprint** the change barely registers: at `high` the two epochs
-score **0.89 / 0.93** against each other while each epoch's own re-runs sit at
+score **0.90 / 0.93** against each other while each epoch's own re-runs sit at
 **0.95–0.99**; at `max` they score **0.93 / 0.94** against re-runs of **0.89–0.96** —
 inside noise.
 
@@ -238,8 +238,8 @@ so the repo ships a **flagship subset** — one canonical configuration per fron
 
 The **full set** is browsable live, and downloadable as a single pack:
 
-- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-10-27.tar.gz>
-  (~1.8 GB, sha256 `8055969b…251f3b`). Extracts to `2026-07-19--unified/` +
+- **Full dataset** → <https://weathercard.secondfirst.ai/downloads/wcb-full-dataset-2026-11-10.tar.gz>
+  (~1.8 GB, sha256 `8e3d395b…fbc73a`). Extracts to `2026-07-19--unified/` +
   `index.json`; point `WCB_DATA_ROOT` at the extracted directory to serve the
   whole set locally.
 
